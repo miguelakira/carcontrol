@@ -1,0 +1,88 @@
+<%= form_for(@car) do |f| %>
+  <% if @car.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved:</h2>
+      <h2><%= pluralize(@comprador.errors.count, "error") %> prohibited this car from being saved:</h2>
+
+      <ul>
+      <% @car.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      <% @comprador.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<h2> Dados do Comprador </h2>
+<!-- Dados do comprador -->
+  <%= f.fields_for :comprador do |builder| %>
+    <div class="field">
+      <%= builder.label :firstname, "Primeiro Nome" %><br />
+      <%= builder.text_field :firstname %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :middlename, "Nome(s) do meio" %><br />
+      <%= builder.text_field :middlename %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :lastname, "Sobrenome" %><br />
+      <%= builder.text_field :lastname %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :email, "E-Mail" %><br />
+      <%= builder.text_field :email %>
+    </div
+
+    <div class="field">
+      <%= builder.label :rg, "RG" %><br />
+      <%= builder.text_field :rg %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :telefone %><br />
+      <%= builder.text_field :telefone %> (Por exemplo: (43)3371-1893)
+    </div>
+
+    <div class="field">
+      <%= builder.label :celular %><br />
+      <%= builder.text_field :celular %> (Por exemplo: (43)9151-1893)
+    </div>
+  <% end %>
+  <!-- fim dos dados do comprador -->
+
+  <!-- dados do veículo -->
+  <h2> Dados do Veículo </h2>
+  <div class="field">
+    <%= f.label :placa %><br />
+    <%= f.text_field :placa %> (Digite apenas letras e números, sem hífen - por exemplo, DFQ1045)
+  </div>
+
+  <div class="field">
+    <%= f.label :modelo %><br />
+    <%= f.text_field :modelo %> (Por exemplo: Ford Ka)
+  </div>
+    
+  <div class="field">
+    <%= f.label :status_pagamento_id %><br />
+    <%= f.collection_select :status_pagamento_id, @status_pagamentos, :id, :status %>
+  
+  </div>
+  <div class="field">
+    <%= f.label :rota_id %><br />
+    <%= f.number_field :rota_id %>
+  </div>
+  <div class="field">
+    <%= f.label :localizacao %><br />
+    <%= f.text_field :localizacao %>
+  </div>
+
+  <!-- fim dos dados do veículo -->  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

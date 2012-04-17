@@ -1,0 +1,31 @@
+<h1>Listing compradores</h1>
+
+<table>
+  <tr>
+    <th>Nome</th>
+    <th>Email</th>
+    <th>Rg</th>
+    <th>Telefone</th>
+    <th>Celular</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @compradores.each do |comprador| %>
+  <tr>
+    <td><%= comprador.nome %></td>
+    <td><%= comprador.email %></td>
+    <td><%= comprador.rg %></td>
+    <td><%= comprador.telefone %></td>
+    <td><%= comprador.celular %></td>
+    <td><%= link_to 'Show', comprador %></td>
+    <td><%= link_to 'Edit', edit_comprador_path(comprador) %></td>
+    <td><%= link_to 'Destroy', comprador, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Comprador', new_comprador_path %>

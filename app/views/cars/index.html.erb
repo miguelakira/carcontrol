@@ -1,0 +1,33 @@
+<h1>Listing cars</h1>
+
+<table>
+  <tr>
+    <th>Placa</th>
+    <th>Modelo</th>
+    <th>Dono</th>
+    <th>Status pagamento</th>
+    <th>Rota</th>
+    <th>Localizacao</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+ 
+<% @cars.each do |car| %>
+  <tr>
+    <td><%= car.placa %></td>
+    <td><%= car.modelo %></td>
+    <td><%= car.dono_id %></td>
+    <td><%= car.status_pagamento %></td>
+    <td><%= car.rota_id %></td>
+    <td><%= car.localizacao %></td>
+    <td><%= link_to 'Show', car %></td>
+    <td><%= link_to 'Edit', edit_car_path(car) %></td>
+    <td><%= link_to 'Destroy', car, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Car', new_car_path %>

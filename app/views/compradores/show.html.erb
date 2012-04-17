@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nome:</b>
+  <%= @comprador.nome %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @comprador.email %>
+</p>
+
+<p>
+  <b>Rg:</b>
+  <%= @comprador.rg %>
+</p>
+
+<p>
+  <b>Telefone:</b>
+  <%= @comprador.telefone %>
+</p>
+
+<p>
+  <b>Celular:</b>
+  <%= @comprador.celular %>
+</p>
+
+
+<%= link_to 'Edit', edit_comprador_path(@comprador) %> |
+<%= link_to 'Back', compradores_path %>
