@@ -28,6 +28,7 @@ end
 
 group :production do
 	gem 'pg'
+	gem 'multi-json'. '~> 1.0.1'
 end
 
 gem 'jquery-rails'
