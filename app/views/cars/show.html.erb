@@ -11,13 +11,13 @@
 </p>
 
 <p>
-  <b>Dono:</b>
-  <%= @car.dono_id %>
+  <b>Comprador:</b>
+  <%= @car.comprador.firstname %> <%= @car.comprador.lastname %>
 </p>
 
 <p>
   <b>Status pagamento:</b>
-  <%= @car.status_pagamento %>
+  <%= @car.status_pagamento.status %>
 </p>
 
 <p>

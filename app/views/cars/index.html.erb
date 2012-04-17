@@ -4,10 +4,10 @@
   <tr>
     <th>Placa</th>
     <th>Modelo</th>
-    <th>Dono</th>
-    <th>Status pagamento</th>
+    <th>Comprador</th>
+    <th>Status do Pagamento</th>
+    <th>Localização Atual</th>
     <th>Rota</th>
-    <th>Localizacao</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,10 +17,10 @@
   <tr>
     <td><%= car.placa %></td>
     <td><%= car.modelo %></td>
-    <td><%= car.dono_id %></td>
-    <td><%= car.status_pagamento %></td>
-    <td><%= car.rota_id %></td>
+    <td><%= car.comprador.firstname %> <%= car.comprador.lastname %></td>
+    <td><%= car.status_pagamento.status %></td>
     <td><%= car.localizacao %></td>
+    <td><%= car.rota_id %></td>
     <td><%= link_to 'Show', car %></td>
     <td><%= link_to 'Edit', edit_car_path(car) %></td>
     <td><%= link_to 'Destroy', car, confirm: 'Are you sure?', method: :delete %></td>

@@ -2,15 +2,12 @@
   <% if @car.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved:</h2>
-      <h2><%= pluralize(@comprador.errors.count, "error") %> prohibited this car from being saved:</h2>
-
+      
       <ul>
       <% @car.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
-      <% @comprador.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+      
       </ul>
     </div>
   <% end %>
@@ -40,17 +37,17 @@
 
     <div class="field">
       <%= builder.label :rg, "RG" %><br />
-      <%= builder.text_field :rg %>
+      <%= builder.text_field :rg %> (Sem pontuação - por exemplo: 41063411X)
     </div>
 
     <div class="field">
       <%= builder.label :telefone %><br />
-      <%= builder.text_field :telefone %> (Por exemplo: (43)3371-1893)
+      <%= builder.text_field :telefone %> (Por exemplo: 43-3371-1893)
     </div>
 
     <div class="field">
       <%= builder.label :celular %><br />
-      <%= builder.text_field :celular %> (Por exemplo: (43)9151-1893)
+      <%= builder.text_field :celular %> (Por exemplo: 43-9151-1893)
     </div>
   <% end %>
   <!-- fim dos dados do comprador -->

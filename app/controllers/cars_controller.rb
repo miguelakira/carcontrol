@@ -39,13 +39,16 @@ class CarsController < ApplicationController
   # GET /cars/1/edit
   def edit
     @car = Car.find(params[:id])
+    @status_pagamentos = StatusPagamento.all
+
   end
 
   # POST /cars
   # POST /cars.json
   def create
+    
     @car = Car.new(params[:car])
-
+    @status_pagamentos = StatusPagamento.all
     respond_to do |format|
       if @car.save
         format.html { redirect_to @car, notice: 'Car was successfully created.' }
