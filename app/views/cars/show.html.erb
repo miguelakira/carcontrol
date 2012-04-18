@@ -16,7 +16,7 @@
 </p>
 
 <p>
-  <b>Status pagamento:</b>
+  <b>Status do Pagamento:</b>
   <%= @car.status_pagamento.status %>
 </p>
 
@@ -31,5 +31,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_car_path(@car) %> |
-<%= link_to 'Back', cars_path %>
+<%= button('Editar', edit_car_path(@car)) %>
+<%= button('Voltar', cars_path) %>

@@ -1,8 +1,7 @@
-<h1>Listing cars</h1>
+<p><h1>Listando Vendas</h1></p>
 
-<table>
-  <tr>
-    <th>Placa</th>
+<table id="mytable" cellspacing="0" summary="Lista de Vendas">  <tr>
+    <th class = 'begin'>Placa</th>
     <th>Modelo</th>
     <th>Comprador</th>
     <th>Status do Pagamento</th>
@@ -12,22 +11,34 @@
     <th></th>
     <th></th>
   </tr>
- 
+
+<% x = 0%>
+
+
 <% @cars.each do |car| %>
+
+<% if car.status_pagamento.id == 1  
+        @row_class = 'nao-pago' 
+    elsif car.status_pagamento.id == 2
+        @row_class = 'pendente' 
+    else
+        @row_class = ""; 
+    end %>
+
   <tr>
-    <td><%= car.placa %></td>
-    <td><%= car.modelo %></td>
-    <td><%= car.comprador.firstname %> <%= car.comprador.lastname %></td>
-    <td><%= car.status_pagamento.status %></td>
-    <td><%= car.localizacao %></td>
-    <td><%= car.rota_id %></td>
-    <td><%= link_to 'Show', car %></td>
-    <td><%= link_to 'Edit', edit_car_path(car) %></td>
-    <td><%= link_to 'Destroy', car, confirm: 'Are you sure?', method: :delete %></td>
+    <td class = "<%= @row_class %> begin"><%= car.placa %></td>
+    <td class = "<%= @row_class %>"><%= car.modelo %></td>
+    <td class = "<%= @row_class %>"><%= car.comprador.firstname %> <%= car.comprador.lastname %></td>
+    <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
+    <td class = "<%= @row_class %>"><%= car.localizacao %></td>
+    <td class = "<%= @row_class %>"><%= car.rota_id %></td>
+    <td class = "<%= @row_class %>"><%= link_to 'Detalhes', car %></td>
+    <td class = "<%= @row_class %>"><%= link_to 'Editar', edit_car_path(car) %></td>
+    <td class = "<%= @row_class %>"><%= link_to 'Apagar', car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Car', new_car_path %>
+<%= button('Nova Venda', new_car_path)%>

@@ -8,12 +8,44 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<ul class="hmenu">
-  <%= render 'devise/menu/registration_items' %>
-  <%= render 'devise/menu/login_items' %>
-</ul>
-
-<%= yield %>
-
+<div id='wrapper'>
+	<div id='wrapper2'>
+		<div id='top-menu'>
+			<div id="account">
+			  <ul>
+			  	<li><%= render 'devise/menu/registration_items' %></li>
+			  	<li><%= render 'devise/menu/login_items' %></li>
+			  </ul>
+			</div>
+		</div>
+		<!-- depois colocar o search do thinking sphynx ou searchlogic -->
+		<div id='header'>
+			<div id='quick-search'><form method='get' action='/search'>Buscar: <input id="q" class="small" type="text" size="20" name="q" accesskey="f"></form>
+			</div>
+			<h1>Controle de Transporte</h1>
+			<div id='main-menu'>
+				<ul>
+					<li><a href="/cars">Carros</a></li>
+					<li><a href="/cars">Compradores</a></li>
+					<li><a href="/cars">Rotas</a></li>
+				</ul>
+			</div>
+			
+		</div>
+		<div id='main'>
+			<div id='content'>
+				<%= yield %>
+			</div>
+		</div>
+		<div id='footer'>
+			<div class='bgl'>
+				<div class='bgr'>
+					Powered by <a href='http://www.rubyonrails.org'>Ruby on Rails</a> &copy; 2012 - Akirayoshida Solutions. <br />
+					Licenciado para Transcar ou whatever.
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

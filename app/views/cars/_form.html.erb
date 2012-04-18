@@ -1,7 +1,7 @@
 <%= form_for(@car) do |f| %>
   <% if @car.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved:</h2>
+      <h1><%= pluralize(@car.errors.count, "error") %> impediram que a compra fosse salva:</h1>
       
       <ul>
       <% @car.errors.full_messages.each do |msg| %>
@@ -12,8 +12,8 @@
     </div>
   <% end %>
 
-<h2> Dados do Comprador </h2>
 <!-- Dados do comprador -->
+<fieldset> <legend><h5 style="font-size: 1.3em">Dados do Comprador</h5></legend>
   <%= f.fields_for :comprador do |builder| %>
     <div class="field">
       <%= builder.label :firstname, "Primeiro Nome" %><br />
@@ -33,7 +33,7 @@
     <div class="field">
       <%= builder.label :email, "E-Mail" %><br />
       <%= builder.text_field :email %>
-    </div
+    </div>
 
     <div class="field">
       <%= builder.label :rg, "RG" %><br />
@@ -50,10 +50,12 @@
       <%= builder.text_field :celular %> (Por exemplo: 43-9151-1893)
     </div>
   <% end %>
+  </fieldset>
   <!-- fim dos dados do comprador -->
 
   <!-- dados do veículo -->
-  <h2> Dados do Veículo </h2>
+<fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
+  
   <div class="field">
     <%= f.label :placa %><br />
     <%= f.text_field :placa %> (Digite apenas letras e números, sem hífen - por exemplo, DFQ1045)
@@ -77,9 +79,9 @@
     <%= f.label :localizacao %><br />
     <%= f.text_field :localizacao %>
   </div>
-
+</fieldset>
   <!-- fim dos dados do veículo -->  
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Finalizar" %>
   </div>
 <% end %>
