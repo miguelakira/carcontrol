@@ -12,8 +12,14 @@
 
 <p>
   <b>Comprador:</b>
-  <%= @car.comprador.firstname %> <%= @car.comprador.lastname %>
+  <%= @car.comprador.firstname %> <%= @car.comprador.lastname %>, <%= @car.comprador.email %>
 </p>
+
+<p>
+  <b>RG do Comprador:</b>
+  <%= @car.comprador.rg %> 
+</p>
+
 
 <p>
   <b>Status do Pagamento:</b>

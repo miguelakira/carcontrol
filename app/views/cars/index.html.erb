@@ -1,12 +1,12 @@
 <p><h1>Listando Vendas</h1></p>
 
 <table id="mytable" cellspacing="0" summary="Lista de Vendas">  <tr>
-    <th class = 'begin'>Placa</th>
-    <th>Modelo</th>
-    <th>Comprador</th>
-    <th>Status do Pagamento</th>
-    <th>Localização Atual</th>
-    <th>Rota</th>
+    <th class = 'begin'> <%= sortable "placa" %></th>
+    <th><%= sortable "modelo" %> </th>
+    <th><%= sortable "firstname", "comprador" %></th>
+    <th><%= sortable "status_pagamento", "Status do Pagamento" %></th>
+    <th><%= sortable "localizacao", "Localização Atual" %></th>
+    <th><%= sortable "Rota" %></th>
     <th></th>
     <th></th>
     <th></th>
@@ -38,6 +38,8 @@
   </tr>
 <% end %>
 </table>
+
+<%= will_paginate @cars %>
 
 <br />
 

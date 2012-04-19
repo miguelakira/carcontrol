@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120417192722) do
+ActiveRecord::Schema.define(:version => 20120419205523) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20120417192722) do
     t.string   "localizacao"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.datetime "data_compra"
   end
 
   create_table "compradores", :force => true do |t|

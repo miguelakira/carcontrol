@@ -11,6 +11,28 @@ class Car < ActiveRecord::Base
   validates :modelo,
   			:presence => true
 
+  
+  before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula
+  after_find :capitaliza_modelo
 
+  def transforma_placa_em_maiuscula
+  	self.placa.upcase!
+  end
 
+  def transforma_modelo_em_minuscula
+  	self.modelo.downcase!
+  end  
+
+  def capitaliza_modelo
+  	self.modelo = self.modelo.titleize
+  end
+
+=begin
+  define_index do 
+  	indexes placa
+  	indexes modelo, :sortable => true
+  	indexes localizacao, :sortable => true
+
+  end
+=end
 end
