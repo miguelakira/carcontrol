@@ -15,6 +15,15 @@ class Car < ActiveRecord::Base
   before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula
   after_find :capitaliza_modelo
 
+  def self.search(search)
+    if search
+      search = "%" + search + "%"
+      where{{placa.like => search}}
+    else
+      scoped
+    end
+  end
+
   def transforma_placa_em_maiuscula
   	self.placa.upcase!
   end

@@ -20,7 +20,12 @@
 		</div>
 		<!-- depois colocar o search do thinking sphynx ou searchlogic -->
 		<div id='header'>
-			<div id='quick-search'><form method='get' action='/search'>Buscar: <input id="q" class="small" type="text" size="20" name="q" accesskey="f"></form>
+			<div id='quick-search'>
+				<%= form_tag cars_path, :method => 'get' do %>
+					<%= text_field_tag :search, params[:search] %>
+					<%= submit_tag "Buscar Placa", :name => nil %> <br />
+					<%= link_to "Busca Avançada", :controller => :search, :action => :index %>
+				<% end -%>
 			</div>
 			<h1>Controle de Transporte (pre-alpha build) </h1>
 			<div id='main-menu'>

@@ -4,7 +4,8 @@ class CarsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @cars = Car.order(sort_column + " " + sort_direction).paginate(:per_page => 5, :page => params[:page])
+    @cars = Car.search(params[:search]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page])
+    
 
     respond_to do |format|
       format.html # index.html.erb
