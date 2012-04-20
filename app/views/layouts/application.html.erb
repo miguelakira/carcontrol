@@ -23,7 +23,8 @@
 			<div id='quick-search'>
 				<%= form_tag cars_path, :method => 'get' do %>
 					<%= text_field_tag :search, params[:search] %>
-					<%= submit_tag "Buscar Placa", :name => nil %> <br />
+					<%= select_tag(:search_by, options_for_select([:placa, :comprador]))%> 
+					<%= submit_tag "Buscar", :name => nil %> <br />
 					<%= link_to "Busca Avançada", :controller => :search, :action => :index %>
 				<% end -%>
 			</div>

@@ -4,13 +4,36 @@ class CarsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @cars = Car.search(params[:search]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page])
-    
+    if params[:sort] == "firstname"
+      @cars = sort_by_comprador
+    elsif params[:sort] == 'status_pagamento'
+      @cars = sort_by_status_pagamento
+    else
+      
+      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page])
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @cars }
     end
+  end
+
+  def sort_by_comprador
+    Car.paginate(
+      :per_page => 5, 
+      :page => params[:page], 
+      :joins => :comprador, 
+      :order => "firstname #{sort_direction}")
+  end
+
+  def sort_by_status_pagamento
+    Car.paginate(
+      :per_page => 5, 
+      :page => params[:page], 
+      :joins => :status_pagamento, 
+      :order => "value #{sort_direction}")
   end
 
   # GET /cars/1

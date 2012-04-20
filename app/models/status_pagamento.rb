@@ -1,4 +1,4 @@
 class StatusPagamento < ActiveRecord::Base
-  attr_accessible :status
+  attr_accessible :status, :value
   has_many :cars
 end

@@ -18,7 +18,17 @@ module ApplicationHelper
   def sortable(column, title = nil)
     title ||= column.titleize  
     css_class = (column == sort_column) ? "current #{sort_direction}" : nil  
+    if column == 'firstname'
+      if sort_direction == 'asc'
+        direction = 'desc'
+      end
+    elsif column == 'status_pagamento'
+      if sort_direction == 'asc'
+        direction = 'desc'
+      end
+    else
     direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"  
+    end
     link_to title, :sort => column, :direction => direction  
   end
 

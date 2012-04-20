@@ -3,7 +3,7 @@
 <table id="mytable" cellspacing="0" summary="Lista de Vendas">  <tr>
     <th class = 'begin'> <%= sortable "placa" %></th>
     <th><%= sortable "modelo" %> </th>
-    <th>Comprador</th>
+    <th><%= sortable "firstname", "comprador" %></th>
     <th><%= sortable "status_pagamento", "Status do Pagamento" %></th>
     <th><%= sortable "localizacao", "Localização Atual" %></th>
     <th><%= sortable "Rota" %></th>
@@ -17,9 +17,9 @@
 
 <% @cars.each do |car| %>
 
-<% if car.status_pagamento.id == 1  
+<% if car.status_pagamento.value == 1  
         @row_class = 'nao-pago' 
-    elsif car.status_pagamento.id == 2
+    elsif car.status_pagamento.value == 2
         @row_class = 'pendente' 
     else
         @row_class = ""; 

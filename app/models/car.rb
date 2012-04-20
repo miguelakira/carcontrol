@@ -15,10 +15,14 @@ class Car < ActiveRecord::Base
   before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula
   after_find :capitaliza_modelo
 
-  def self.search(search)
+  def self.search(search, search_by)
     if search
-      search = "%" + search + "%"
-      where{{placa.like => search}}
+      if search_by == 'placa'
+        where{{placa.like => "%#{search}%"}}
+      elsif search_by == 'comprador'
+        search = search.split(" ")
+        joins(:comprador).where{(comprador.firstname.like_any search) | (comprador.middlename.like_any search) | (comprador.lastname.like_any search)}
+      end
     else
       scoped
     end
