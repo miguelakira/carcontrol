@@ -1,3 +1,6 @@
+<%= javascript_include_tag "autocomplete-rails.js" %>
+
+
 <%= form_for(@car) do |f| %>
   <% if @car.errors.any? %>
     <div id="error_explanation">
@@ -77,7 +80,11 @@
   </div>
   <div class="field">
     <%= f.label :localizacao %><br />
-    <%= f.text_field :localizacao %>
+    <%= select :search, :estado, Estado.all.collect { |m| [m.nome, m.id] }.sort, {:prompt=>'Por favor selecione...'} %>
+    <%= observe_field(:estado, :url => { :action => :update_city_menu },
+                  :update => :city_field_div,
+                  :with => :estado
+    
   </div>
 </fieldset>
   <!-- fim dos dados do veículo -->  
@@ -85,3 +92,4 @@
     <%= f.submit "Finalizar" %>
   </div>
 <% end %>
+

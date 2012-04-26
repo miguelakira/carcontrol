@@ -74,6 +74,8 @@ GEM
     netrc (0.7.1)
     orm_adapter (0.0.7)
     pg (0.13.2)
+    pjax_rails (0.2.0)
+      jquery-rails
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
@@ -147,6 +149,7 @@ DEPENDENCIES
   jquery-rails
   mysql2
   pg
+  pjax_rails
   rails (= 3.2.3)
   sass-rails (~> 3.2.3)
   squeel

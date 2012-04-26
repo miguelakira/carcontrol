@@ -1,0 +1,5 @@
+<% if @estado.cities.present? %>
+  <select id="neighborhood_field" name="search[city_field]">
+     <%= options_from_collection_for_select(@estado.cidades, :id, :name) %>
+  </select>
+<% end %>
