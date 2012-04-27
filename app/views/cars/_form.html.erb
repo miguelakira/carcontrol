@@ -1,4 +1,4 @@
-<%= javascript_include_tag "autocomplete-rails.js" %>
+<%= javascript_include_tag :defaults %>
 
 
 <%= form_for(@car) do |f| %>
@@ -44,6 +44,11 @@
     </div>
 
     <div class="field">
+      <%= builder.label :cpf, "CPF" %><br />
+      <%= builder.text_field :cpf %> (Sem pontuação - por exemplo: 33164431858)
+    </div>
+
+    <div class="field">
       <%= builder.label :telefone %><br />
       <%= builder.text_field :telefone %> (Por exemplo: 43-3371-1893)
     </div>
@@ -74,17 +79,7 @@
     <%= f.collection_select :status_pagamento_id, @status_pagamentos, :id, :status %>
   
   </div>
-  <div class="field">
-    <%= f.label :rota_id %><br />
-    <%= f.number_field :rota_id %>
-  </div>
-  <div class="field">
-    <%= f.label :localizacao %><br />
-    <%= select :search, :estado, Estado.all.collect { |m| [m.nome, m.id] }.sort, {:prompt=>'Por favor selecione...'} %>
-    <%= observe_field(:estado, :url => { :action => :update_city_menu },
-                  :update => :city_field_div,
-                  :with => :estado
-    
+      
   </div>
 </fieldset>
   <!-- fim dos dados do veículo -->  

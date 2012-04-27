@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120426201333) do
+ActiveRecord::Schema.define(:version => 20120427184329) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -25,13 +25,13 @@ ActiveRecord::Schema.define(:version => 20120426201333) do
     t.integer  "estado_id"
   end
 
-  create_table "cidades", :id => false, :force => true do |t|
-    t.string  "nome",    :limit => 40, :null => false
-    t.string  "uf",      :limit => 2,  :null => false
-    t.boolean "capital",               :null => false
+  create_table "cidades", :force => true do |t|
+    t.string  "nome",      :limit => 40, :null => false
+    t.integer "estado_id",               :null => false
+    t.boolean "capital",                 :null => false
   end
 
-  add_index "cidades", ["uf"], :name => "uf"
+  add_index "cidades", ["estado_id"], :name => "uf"
 
   create_table "compradores", :force => true do |t|
     t.string   "nome"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20120426201333) do
     t.string   "middlename"
     t.string   "lastname"
     t.integer  "car_id"
+    t.string   "cpf"
   end
 
   create_table "estados", :force => true do |t|

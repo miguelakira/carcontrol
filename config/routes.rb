@@ -1,7 +1,7 @@
 Carcontrol::Application.routes.draw do
  
   get "search/index"
-  match "cars/ajusta", :controller => 'cars', :action => 'ajusta'
+  
   resources :compradores
 
   resources :cars

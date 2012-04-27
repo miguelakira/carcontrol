@@ -119,126 +119,19 @@ class CarsController < ApplicationController
       format.json { head :no_content }
     end
   end
-end
 
-def sort_direction  
-  %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
-end  
+  def sort_direction  
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
+  end  
 
-def sort_column  
-  Car.column_names.include?(params[:sort]) ? params[:sort] : "placa"  
-end  
+  def sort_column  
+    Car.column_names.include?(params[:sort]) ? params[:sort] : "placa"  
+  end  
 
-def ajusta
-  cidades = Cidade.all
-  cidades.each do |cidade|
-    if cidade.uf == 'AC'
-      cidade.uf = 1
-      cidade.save
-    end
-    if cidade.uf == 'AL'
-      cidade.uf = 2
-      cidade.save
-    end
-    if cidade.uf == 'AP'
-      cidade.uf = 3
-      cidade.save
-    end
-    if cidade.uf == 'AM'
-      cidade.uf = 4
-      cidade.save
-    end
-    if cidade.uf == 'BA'
-      cidade.uf = 5
-      cidade.save
-    end
-    if cidade.uf == 'CE'
-      cidade.uf = 6
-      cidade.save
-    end
-    if cidade.uf == 'DF'
-      cidade.uf = 7
-      cidade.save
-    end
-    if cidade.uf == 'ES'
-      cidade.uf = 8
-      cidade.save
-    end
-    if cidade.uf == 'GO'
-      cidade.uf = 9
-      cidade.save
-    end
-    if cidade.uf == 'MA'
-      cidade.uf = 10
-      cidade.save
-    end
-    if cidade.uf == 'MT'
-      cidade.uf = 11
-      cidade.save
-    end
-    if cidade.uf == 'MS'
-      cidade.uf = 12
-      cidade.save
-    end
-    if cidade.uf == 'MG'
-      cidade.uf = 13
-      cidade.save
-    end
-    if cidade.uf == 'PA'
-      cidade.uf = 14
-      cidade.save
-    end
-    if cidade.uf == 'PB'
-      cidade.uf = 15
-      cidade.save
-    end
-    if cidade.uf == 'PR'
-      cidade.uf = 16
-      cidade.save
-    end
-    if cidade.uf == 'PE'
-      cidade.uf = 17
-      cidade.save
-    end
-    if cidade.uf == 'PI'
-      cidade.uf = 18
-      cidade.save
-    end
-    if cidade.uf == 'RJ'
-      cidade.uf = 19
-      cidade.save
-    end
-    if cidade.uf == 'RN'
-      cidade.uf = 20
-      cidade.save
-    end
-    if cidade.uf == 'RS'
-      cidade.uf = 21
-      cidade.save
-    end
-    if cidade.uf == 'RO'
-      cidade.uf = 22
-      cidade.save
-    end
-    if cidade.uf == 'RR'
-      cidade.uf = 23
-      cidade.save
-    end
-    if cidade.uf == 'SC'
-      cidade.uf = 24
-      cidade.save
-    end
-    if cidade.uf == 'SP'
-      cidade.uf = 25
-      cidade.save
-    end
-    if cidade.uf == 'SE'
-      cidade.uf = 26
-      cidade.save
-    end
-    if cidade.uf == 'TO'
-      cidade.uf = 27
-      cidade.save
-    end
+  def for_sectionid
+      @subsections = Cidade.find( :all, :conditions => [" estado_id = ?", params[:id]]  ).sort_by{ |k| k['nome'] }    
+      respond_to do |format|
+        format.json  { render :json => @subsections }      
+      end
   end
 end
