@@ -1,12 +1,13 @@
 <p><h1>Listando Vendas</h1></p>
 
 <table id="mytable" cellspacing="0" summary="Lista de Vendas">  <tr>
-    <th class = 'begin'> <%= sortable "placa" %></th>
-    <th><%= sortable "modelo" %> </th>
+    <th class = 'begin'> <%= sortable "Placa" %></th>
+    <th><%= sortable "modelo" %> </th> 
     <th><%= sortable "firstname", "comprador" %></th>
     <th><%= sortable "status_pagamento", "Status do Pagamento" %></th>
     <th><%= sortable "localizacao", "Localização Atual" %></th>
-    <th><%= sortable "Rota" %></th>
+    <th><%= sortable "Origem" %></th>
+    <th><%= sortable "Destino" %></th>
     <th></th>
     <th></th>
     <th></th>
@@ -30,15 +31,18 @@
     <td class = "<%= @row_class %>"><%= car.modelo %></td>
     <td class = "<%= @row_class %>"><%= car.comprador.firstname %> <%= car.comprador.lastname %></td>
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
-    <td class = "<%= @row_class %>"><%= car.localizacao %></td>
-    <td class = "<%= @row_class %>"><%= car.rota_id %></td>
+    <td class = "<%= @row_class %>"><%= car.localizacao %> <%= link_to image_tag("icon-edit.png", :alt => "Editar localização", :border=>0), :action => 'edit_location', :id => car.id %>
+</td>
+    <td class = "<%= @row_class %>"></td>
+    <td class = "<%= @row_class %>"></td>
     <td class = "<%= @row_class %>"><%= link_to 'Detalhes', car %></td>
     <td class = "<%= @row_class %>"><%= link_to 'Editar', edit_car_path(car) %></td>
     <td class = "<%= @row_class %>"><%= link_to 'Apagar', car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %></td>
   </tr>
 <% end %>
 </table>
-
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
 <%= will_paginate @cars %>
 
 <br />

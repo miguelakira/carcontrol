@@ -1,40 +1,70 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Placa:</b>
-  <%= @car.placa %>
-</p>
+<p><h5>Detalhes do Comprador</h5> </p>
+<table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
+  <tr>
+    <th style="width:180px">Nome do Comprador</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= @car.comprador.firstname %> <%= @car.comprador.middlename %> <%= @car.comprador.lastname %></td>
+  <tr>
+    <th>RG</th>
+    <td><%= @car.comprador.rg %></td>
+  </tr>
+  <tr>
+    <th>CPF</th>
+    <td><%= @car.comprador.cpf %></td>
+  </tr>
+  <tr>
+    <th>Status do Pagamento</th>
+    <td><%= @car.status_pagamento.status %></td>
+  </tr>
+  <tr>
+    <th>Telefone</th>
+    <td><%= @car.comprador.telefone %></td>
+  </tr>
+  <tr>  
+    <th>Celular</th>
+    <td><%= @car.comprador.celular %></td>
+  </tr>
+  <tr> 
+    <th>E-Mail</th>
+    <td><%= @car.comprador.email %></td>
+  </tr>
+  
+</table>
 
-<p>
-  <b>Modelo:</b>
-  <%= @car.modelo %>
-</p>
+<p><h5>Detalhes do Carro</h1></p>
+<table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
+  <tr>
+    <th style="width:180px" >Modelo do Carro</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= @car.modelo %></td>
+  </tr>
+  <tr>
+    <th>Placa</th>
+    <td><%= @car.placa %></td>
+  </tr>
+  <tr>
+    <th>Localização Atual</th>
+    <td><%= @car.localizacao %></td>
+  </tr>
+  <tr>
+    <th>Origem</th>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Destino</th>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Data da Compra</th>
+    <td><%= @car.data_compra %></td>
+  </tr>
+  </tr>
+  <tr>
+    
+    
+  </tr>
+</table>
 
-<p>
-  <b>Comprador:</b>
-  <%= @car.comprador.firstname %> <%= @car.comprador.lastname %>, <%= @car.comprador.email %>
-</p>
-
-<p>
-  <b>RG do Comprador:</b>
-  <%= @car.comprador.rg %> 
-</p>
-
-
-<p>
-  <b>Status do Pagamento:</b>
-  <%= @car.status_pagamento.status %>
-</p>
-
-<p>
-  <b>Rota:</b>
-  <%= @car.rota_id %>
-</p>
-
-<p>
-  <b>Localizacao:</b>
-  <%= @car.localizacao %>
-</p>
 
 
 <%= button('Editar', edit_car_path(@car)) %>

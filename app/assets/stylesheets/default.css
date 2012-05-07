@@ -1054,6 +1054,13 @@ td {
   color: #4f6b72;
   height: 100%;
 }
+td a:link {
+  text-decoration: underline;
+
+}
+td a:visited{
+  color:#2A5685;
+}
 
 td.total {
     font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
@@ -1120,9 +1127,16 @@ hr.small{
 
 td.nao-pago a {
   color: #ffffff;
-  text-decoration: none;
+  text-decoration: underline;
   display: block;
+
 }
+
+td.nao-pago a:hover {
+  text-decoration: underline;
+}
+
+
 
 td.nao-pago {
   background: #935555;
@@ -1137,6 +1151,8 @@ td.pendente {
 td.pendente a {
   background: #e7e377;
   color: black;
+  text-decoration: underline;
+
 }
 
 /*------------ Flecha do sortable -----------------_*/

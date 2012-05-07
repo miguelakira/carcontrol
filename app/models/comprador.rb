@@ -1,5 +1,5 @@
 class Comprador < ActiveRecord::Base
-  attr_accessible :celular, :email, :rg, :telefone, :firstname, :middlename, :lastname, :car_id
+  attr_accessible :celular, :email, :rg, :cpf, :telefone, :firstname, :middlename, :lastname, :car_id
   belongs_to :car
 
   validates :firstname,
@@ -11,7 +11,12 @@ class Comprador < ActiveRecord::Base
   validates :rg,
   			:presence => true
 
-  before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos
+  validates :cpf,
+        :presence => true
+
+  before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos,
+              :remove_pontuacoes
+
   after_find :capitaliza_nome
 
   def transforma_nome_em_minuscula
@@ -42,4 +47,9 @@ class Comprador < ActiveRecord::Base
   	end
   end
 
+  def remove_pontuacoes
+    self.rg.gsub(/[^[:alnum:]]/, '')
+    self.cpf.gsub(/[^[:alnum:]]/, '')
+  end
 end
+
