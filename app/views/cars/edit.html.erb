@@ -1,6 +1,10 @@
-<p><h1>Editando Venda</h1></p>
+<p><h1>Editando Dados</h1></p>
 
-<%= render 'form' %>
+<%if @editar_localizacao %>
+	<%= render 'editar_localizacao' %>
+<% else %>
+	<%= render 'form' %>
+<% end %>
 
 <%= link_to 'Detalhes', @car %> |
 <%= link_to 'Voltar', cars_path %>

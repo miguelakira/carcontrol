@@ -14,8 +14,7 @@ class Comprador < ActiveRecord::Base
   validates :cpf,
         :presence => true
 
-  before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos,
-              :remove_pontuacoes
+  before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos
 
   after_find :capitaliza_nome
 
@@ -36,6 +35,7 @@ class Comprador < ActiveRecord::Base
   #limpa pontuaçao de documentos
   # RG - 41.065.522-5 vira 410655225
   def sanitiza_documentos
+    self.cpf.gsub!(/[^[:alnum:]]/, '')
   	self.rg.gsub!(/[^[:alnum:]]/, '')
   end
 
@@ -47,9 +47,5 @@ class Comprador < ActiveRecord::Base
   	end
   end
 
-  def remove_pontuacoes
-    self.rg.gsub(/[^[:alnum:]]/, '')
-    self.cpf.gsub(/[^[:alnum:]]/, '')
-  end
 end
 

@@ -1,0 +1,67 @@
+<select onchange="UpdateOptions(this)">
+	<option value="_xx_"></option>
+	<option value="names">Names</option>
+	<option value="dates">Dates</option>
+	<option value="fishies">Fish</option>
+</select>
+<select id="target1"></select>
+
+<script type="text/javascript">
+	function ClearOptions(sel){
+		//while (sel.options.length>0) sel.options[0]=null;
+		sel.options.length=0;
+	}
+	function PopulateSelect(sel,optsArray){
+		for (var i=0,len=optsArray.length;i<len;i++) sel.options[i]=optsArray[i];
+	}
+	function UpdateOptions(sel){
+		var destSel = document.getElementById('target1');
+		ClearOptions(destSel);
+		if (sel.value=="_xx_") return;
+		var opts = [];
+		var srcObjs = availVals[sel.value];
+		for (var i=0,len=srcObjs.length;i<len;i++) opts[i]=new Option(srcObjs[i].text,srcObjs[i].value!=null?srcObjs[i].value:srcObjs[i].text);
+		PopulateSelect(destSel,opts);
+	}
+
+	var availVals = {
+		names:   [{value:1,text:'Jim'},{value:2,text:'Bob'},{value:3,text:'Jerome'}],
+		dates:   [{text:'12/24/2002'},{text:'1/2/2003'}],
+		fishies: [{value:'angel',text:'Angelfish'},{value:'snapper',text:'Red Snapper'},{value:'cuda',text:'Ooh, Barracuda'}]
+	};
+
+</script>
+
+
+ <% if flash[:notice] %>
+    <div id="notice">
+    	<%= flash[:notice] %>
+	</div>
+<% end -%>
+
+<%= form_for(@car) do |f| %>
+  <!-- dados da localizacao do veiculo -->
+<fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
+  
+<div class="field">
+  
+
+  <%= f.label :localizacao %><br />
+  <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }), :onchange => "this.form.submit()")  %>
+</div>
+
+  <div class="field">
+    
+  
+  </div>
+      
+  </div>
+</fieldset>
+  <!-- fim dos dados do veículo -->  
+  <br />
+  <div class="actions">
+    <%= f.submit "Salvar" %>
+    <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao' %>
+  </div>
+<% end %>
+

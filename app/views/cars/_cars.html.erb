@@ -1,0 +1,43 @@
+<table id="mytable" cellspacing="0" summary="Lista de Vendas">  <tr>
+    <th class = 'begin'> <%= sortable "Placa" %></th>
+    <th><%= sortable "modelo" %> </th> 
+    <th><%= sortable "firstname", "comprador" %></th>
+    <th><%= sortable "status_pagamento", "Status do Pagamento" %></th>
+    <th><%= sortable "localizacao", "Localização Atual" %></th>
+    <th><%= sortable "Origem" %></th>
+    <th><%= sortable "Destino" %></th>
+    <th> Entregue?</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% x = 0%>
+
+
+<% @cars.each do |car| %>
+
+<% if car.status_pagamento.value == 1  
+        @row_class = 'nao-pago' 
+    elsif car.status_pagamento.value == 2
+        @row_class = 'pendente' 
+    else
+        @row_class = ''; 
+    end %>
+
+  <tr>
+    <td class = "<%= @row_class %> begin"><%= car.placa %></td>
+    <td class = "<%= @row_class %>"><%= car.modelo %></td>
+    <td class = "<%= @row_class %>"><%= car.comprador.firstname %> <%= car.comprador.lastname %></td>
+    <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
+    <td class = "<%= @row_class %>"><%= car.localizacao %> <%= link_to image_tag("icon-edit.png", :alt => "Editar localização", :border=>0), :action => 'edit_location', :id => car.id %>
+</td>
+    <td class = "<%= @row_class %>"></td>
+    <td class = "<%= @row_class %>"></td>
+    <td class = "<%= @row_class %>"><%= car.ativo ? "Não" : "Sim" %></td>
+    <td class = "<%= @row_class %>"><%= link_to 'Detalhes', car %></td>
+    <td class = "<%= @row_class %>"><%= link_to 'Editar', edit_car_path(car) %></td>
+    <td class = "<%= @row_class %>"><%= link_to 'Apagar', car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %></td>
+  </tr>
+<% end %>
+</table>

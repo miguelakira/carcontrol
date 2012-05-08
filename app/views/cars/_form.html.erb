@@ -76,15 +76,17 @@
     
   <div class="field">
     <%= f.label :status_pagamento_id %><br />
-    <%= f.collection_select :status_pagamento_id, @status_pagamentos, :id, :status %>
+    <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
   
   </div>
       
   </div>
 </fieldset>
   <!-- fim dos dados do veículo -->  
+  <br />
   <div class="actions">
-    <%= f.submit "Finalizar" %>
+    <%= f.submit "Salvar" %>
+    <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao' %>
   </div>
 <% end %>
 

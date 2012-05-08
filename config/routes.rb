@@ -1,7 +1,7 @@
 Carcontrol::Application.routes.draw do
  
   get "search/index"
-  
+  get "cars/inativos"
   resources :compradores
 
   resources :cars

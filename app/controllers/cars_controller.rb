@@ -10,7 +10,23 @@ class CarsController < ApplicationController
       @cars = sort_by_status_pagamento
     else
       
-      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page])
+      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => true)
+    end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @cars }
+    end
+  end
+
+  def inativos
+    if params[:sort] == "firstname"
+      @cars = sort_by_comprador
+    elsif params[:sort] == 'status_pagamento'
+      @cars = sort_by_status_pagamento
+    else
+      
+      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => false)
+
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -38,6 +54,10 @@ class CarsController < ApplicationController
     @estado = Estado.find(params[:search][:estado])
     render :layout => false
   end 
+
+  def editar_localizacao
+    @car = params[:car]
+  end
 
 
   # GET /cars/1
@@ -67,9 +87,15 @@ class CarsController < ApplicationController
 
   # GET /cars/1/edit
   def edit
+    @editar_localizacao = params[:editar_localizacao]
+    if @editar_localizacao == true
+      @cidades = Cidade.all
+      @estados = Estado.all
+      @estado = params[:estado]
+    end  
     @car = Car.find(params[:id])
     @status_pagamentos = StatusPagamento.all
-
+    
 
   end
 
@@ -80,10 +106,10 @@ class CarsController < ApplicationController
     @car = Car.new(params[:car])
     @status_pagamentos = StatusPagamento.all
     @cidades = Cidade.all
-    raise @cidades.inspect
+    
     respond_to do |format|
       if @car.save
-        format.html { redirect_to @car, notice: 'Car was successfully created.' }
+        format.html { redirect_to @car, notice: 'Compra gerada com sucesso' }
         format.json { render json: @car, status: :created, location: @car }
       else
         format.html { render action: "new" }
@@ -97,10 +123,16 @@ class CarsController < ApplicationController
   def update
     @car = Car.find(params[:id])
 
+    
     respond_to do |format|
       if @car.update_attributes(params[:car])
-        format.html { redirect_to @car, notice: 'Car was successfully updated.' }
-        format.json { head :no_content }
+        if params[:editar_localizacao]
+          flash[:notice] = 'Dados atualizados com sucesso!'
+          redirect_to :action => :edit, :car => @car, :editar_localizacao => true  and return
+        else
+          format.html { redirect_to @car, notice: 'Dados atualizados com sucesso.' }
+          format.json { head :no_content }
+        end
       else
         format.html { render action: "edit" }
         format.json { render json: @car.errors, status: :unprocessable_entity }
