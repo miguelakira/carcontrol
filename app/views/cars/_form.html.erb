@@ -1,3 +1,83 @@
+<% cidades = Cidade.all %>
+<% estado1 = cidades.select{|c| c[:estado_id] == 1} %>
+<% estado2 = cidades.select{|c| c[:estado_id] == 2} %>
+<% estado3 = cidades.select{|c| c[:estado_id] == 3} %>
+<% estado4 = cidades.select{|c| c[:estado_id] == 4} %>
+<% estado5 = cidades.select{|c| c[:estado_id] == 5} %>
+<% estado6 = cidades.select{|c| c[:estado_id] == 6} %>
+<% estado7 = cidades.select{|c| c[:estado_id] == 7} %>
+<% estado8 = cidades.select{|c| c[:estado_id] == 8} %>
+<% estado9 = cidades.select{|c| c[:estado_id] == 9} %>
+<% estado10 = cidades.select{|c| c[:estado_id] == 10} %>
+<% estado11 = cidades.select{|c| c[:estado_id] == 11} %>
+<% estado12 = cidades.select{|c| c[:estado_id] == 12} %>
+<% estado13 = cidades.select{|c| c[:estado_id] == 13} %>
+<% estado14 = cidades.select{|c| c[:estado_id] == 14} %>
+<% estado15 = cidades.select{|c| c[:estado_id] == 15} %>
+<% estado16 = cidades.select{|c| c[:estado_id] == 16} %>
+<% estado17 = cidades.select{|c| c[:estado_id] == 17} %>
+<% estado18 = cidades.select{|c| c[:estado_id] == 18} %>
+<% estado19 = cidades.select{|c| c[:estado_id] == 19} %>
+<% estado20 = cidades.select{|c| c[:estado_id] == 20} %>
+<% estado21 = cidades.select{|c| c[:estado_id] == 21} %>
+<% estado22 = cidades.select{|c| c[:estado_id] == 22} %>
+<% estado23 = cidades.select{|c| c[:estado_id] == 23} %>
+<% estado24 = cidades.select{|c| c[:estado_id] == 24} %>
+<% estado25 = cidades.select{|c| c[:estado_id] == 25} %>
+<% estado26 = cidades.select{|c| c[:estado_id] == 26} %>
+<% estado27 = cidades.select{|c| c[:estado_id] == 27} %>
+
+<script type="text/javascript">
+  function ClearOptions(sel){
+    //while (sel.options.length>0) sel.options[0]=null;
+    sel.options.length=0;
+  }
+  function PopulateSelect(sel,optsArray){
+    for (var i=0,len=optsArray.length;i<len;i++) sel.options[i]=optsArray[i];
+  }
+  function UpdateOptions(sel){
+    var destSel = document.getElementById('cidade_id');
+    ClearOptions(destSel);
+    if (sel.value=="_xx_") return;
+    var opts = [];
+    var srcObjs = availVals[sel.value];
+    for (var i=0,len=srcObjs.length;i<len;i++) opts[i]=new Option(srcObjs[i].text,srcObjs[i].value!=null?srcObjs[i].value:srcObjs[i].text);
+    PopulateSelect(destSel,opts);
+  }
+
+  var availVals = {
+    1:   <%= estado1.to_json.html_safe %>,
+    2:   <%= estado2.to_json.html_safe %>,
+    3:   <%= estado3.to_json.html_safe %>,
+    4:   <%= estado4.to_json.html_safe %>,
+    5:   <%= estado5.to_json.html_safe %>,
+    6:   <%= estado6.to_json.html_safe %>,
+    7:   <%= estado7.to_json.html_safe %>,
+    8:   <%= estado8.to_json.html_safe %>,
+    9:   <%= estado9.to_json.html_safe %>,
+    10:   <%= estado10.to_json.html_safe %>,
+    11:   <%= estado11.to_json.html_safe %>,
+    12:   <%= estado12.to_json.html_safe %>,
+    13:   <%= estado13.to_json.html_safe %>,
+    14:   <%= estado14.to_json.html_safe %>,
+    15:   <%= estado15.to_json.html_safe %>,
+    16:   <%= estado16.to_json.html_safe %>,
+    17:   <%= estado17.to_json.html_safe %>,
+    18:   <%= estado18.to_json.html_safe %>,
+    19:   <%= estado19.to_json.html_safe %>,
+    20:   <%= estado20.to_json.html_safe %>,
+    21:   <%= estado21.to_json.html_safe %>,
+    22:   <%= estado22.to_json.html_safe %>,
+    23:   <%= estado23.to_json.html_safe %>,
+    24:   <%= estado24.to_json.html_safe %>,
+    25:   <%= estado25.to_json.html_safe %>,
+    26:   <%= estado26.to_json.html_safe %>,
+    27:   <%= estado27.to_json.html_safe %>,
+    28: [{value:'angel',text:'Angelfish'},{value:'snapper',text:'Red Snapper'},{value:'cuda',text:'Ooh, Barracuda'}]
+  };
+
+</script>
+
 <%= javascript_include_tag :defaults %>
 
 
@@ -80,7 +160,16 @@
   
   </div>
       
+
+  <div class="field">
+    <%= f.label :localizacao %><br />
+    <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }), :include_blank => true, :onchange => "UpdateOptions(this)")  %>
+    <%= select_tag(:cidade_id)  %>
   </div>
+
+  
+    
+  
 </fieldset>
   <!-- fim dos dados do veículo -->  
   <br />

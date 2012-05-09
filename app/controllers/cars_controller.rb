@@ -55,10 +55,6 @@ class CarsController < ApplicationController
     render :layout => false
   end 
 
-  def editar_localizacao
-    @car = params[:car]
-  end
-
 
   # GET /cars/1
   # GET /cars/1.json
@@ -88,11 +84,6 @@ class CarsController < ApplicationController
   # GET /cars/1/edit
   def edit
     @editar_localizacao = params[:editar_localizacao]
-    if @editar_localizacao == true
-      @cidades = Cidade.all
-      @estados = Estado.all
-      @estado = params[:estado]
-    end  
     @car = Car.find(params[:id])
     @status_pagamentos = StatusPagamento.all
     
@@ -122,7 +113,8 @@ class CarsController < ApplicationController
   # PUT /cars/1.json
   def update
     @car = Car.find(params[:id])
-
+    
+    @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
     
     respond_to do |format|
       if @car.update_attributes(params[:car])
