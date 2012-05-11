@@ -114,7 +114,8 @@ class CarsController < ApplicationController
   def update
     @car = Car.find(params[:id])
     @car.estado_id = params[:estado_id]
-
+    cidade = Cidade.find_by_text(params[:cidade_id]).id
+    @car.cidade_id = cidade
     @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
     
     respond_to do |format|

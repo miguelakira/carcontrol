@@ -165,7 +165,11 @@
     
     <%= f.label :localizacao, "Localização Atual" %><br />
     <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this)")  %>
-    <%= select_tag(:cidade_id)  %>
+    <% if @car.cidade_id.nil? %>
+      <%= select_tag(:cidade_id) %>
+    <% else %>
+      <%= select_tag(:cidade_id, options_for_select([Cidade.find(@car.cidade_id).text])) %>
+    <% end -%>
   </div>
 <div class="field">
   <%= f.label :ativo, "Carro Entregue ao Cliente?" %> <br />
