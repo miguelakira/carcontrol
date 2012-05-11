@@ -90,8 +90,8 @@ class CarsController < ApplicationController
 
   end
 
-  # POST /cars
-  # POST /cars.json
+  # POST /POST
+  # cars /cars.json
   def create
     
     @car = Car.new(params[:car])
@@ -113,7 +113,8 @@ class CarsController < ApplicationController
   # PUT /cars/1.json
   def update
     @car = Car.find(params[:id])
-    
+    @car.estado_id = params[:estado_id]
+
     @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
     
     respond_to do |format|

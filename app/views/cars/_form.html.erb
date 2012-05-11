@@ -162,12 +162,17 @@
       
 
   <div class="field">
-    <%= f.label :localizacao %><br />
-    <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }), :include_blank => true, :onchange => "UpdateOptions(this)")  %>
+    
+    <%= f.label :localizacao, "Localização Atual" %><br />
+    <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this)")  %>
     <%= select_tag(:cidade_id)  %>
   </div>
+<div class="field">
+  <%= f.label :ativo, "Carro Entregue ao Cliente?" %> <br />
+  <%= f.radio_button(:ativo, false) %> Sim
+  <%= f.radio_button(:ativo, true) %> Não
 
-  
+</div>  
     
   
 </fieldset>
