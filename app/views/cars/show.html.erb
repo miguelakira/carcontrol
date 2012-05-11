@@ -48,11 +48,11 @@
   </tr>
   <tr>
     <th>Origem</th>
-    <td></td>
+    <td><%= Cidade.find(@car.cidade_origem).text %>, <%= Estado.find(@car.estado_origem).sigla %></td>
   </tr>
   <tr>
     <th>Destino</th>
-    <td></td>
+    <td><%= Cidade.find(@car.cidade_destino).text %>, <%= Estado.find(@car.estado_destino).sigla %></td>
   </tr>
   <tr>
     <th>Data da Compra</th>

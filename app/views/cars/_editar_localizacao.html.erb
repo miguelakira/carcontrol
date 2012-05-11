@@ -107,12 +107,12 @@
 
   <div class="field">
     
-    <%= f.label :origem, "Origem do Carro" %><br />
-    <%= select_tag(:estado_origem, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_origem')")  %>
-    <% if @car.origem.nil? %>
+    <%= f.label :cidade_origem, "Origem do Carro" %><br />
+    <%= select_tag(:estado_origem, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_origem), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_origem')")  %>
+    <% if @car.cidade_origem.nil? %>
       <%= select_tag(:cidade_origem) %>
     <% else %>
-      <%= select_tag(:cidade_origem, options_for_select([Cidade.find(@car.origem).text])) %>
+      <%= select_tag(:cidade_origem, options_for_select([Cidade.find(@car.cidade_origem).text])) %>
     <% end -%>
   </div>
 
@@ -120,12 +120,12 @@
 
   <div class="field">
     
-    <%= f.label :destino, "Destino do Carro" %><br />
-    <%= select_tag(:estado_destino, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_destino')")  %>
-    <% if @car.destino.nil? %>
+    <%= f.label :cidade_destino, "Destino do Carro" %><br />
+    <%= select_tag(:estado_destino, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_destino), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_destino')")  %>
+    <% if @car.cidade_destino.nil? %>
       <%= select_tag(:cidade_destino) %>
     <% else %>
-      <%= select_tag(:cidade_destino, options_for_select([Cidade.find(@car.destino).text])) %>
+      <%= select_tag(:cidade_destino, options_for_select([Cidade.find(@car.cidade_destino).text])) %>
     <% end -%>
   </div>
 

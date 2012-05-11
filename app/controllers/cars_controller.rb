@@ -122,8 +122,8 @@ class CarsController < ApplicationController
     
     if params[:salvar_localizacao]
       @car.estado_id = params[:estado_id]
-      @car_estado_origem = params[:estado_origem]
-      @car_estado_destino = params[:estado_destino]
+      @car.estado_origem = params[:estado_origem]
+      @car.estado_destino = params[:estado_destino]
       
       # atençao! Ele vai pegar a cidade pelo nome, e nao separa por estado - pode ser
       # que se futuramente queira-se comprar a cidade pelo ID, pode dar erro (pegar cidade com mesmo nome mas
@@ -133,8 +133,8 @@ class CarsController < ApplicationController
       cidade_destino = Cidade.find_by_text(params[:cidade_destino]).id
       
       @car.cidade_id = cidade_atual
-      @car.origem = cidade_origem
-      @car.destino = cidade_destino
+      @car.cidade_origem = cidade_origem
+      @car.cidade_destino = cidade_destino
       @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"  
     end
 

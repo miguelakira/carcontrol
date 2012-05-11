@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120511203357) do
+ActiveRecord::Schema.define(:version => 20120511212108) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -25,8 +25,10 @@ ActiveRecord::Schema.define(:version => 20120511203357) do
     t.integer  "estado_id"
     t.boolean  "ativo"
     t.integer  "cidade_id"
-    t.integer  "origem"
-    t.integer  "destino"
+    t.integer  "cidade_origem"
+    t.integer  "cidade_destino"
+    t.integer  "estado_origem"
+    t.integer  "estado_destino"
   end
 
   create_table "cidades", :force => true do |t|
