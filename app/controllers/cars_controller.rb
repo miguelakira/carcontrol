@@ -55,7 +55,6 @@ class CarsController < ApplicationController
     render :layout => false
   end 
 
-
   # GET /cars/1
   # GET /cars/1.json
   def show
@@ -96,7 +95,9 @@ class CarsController < ApplicationController
     
     @car = Car.new(params[:car])
     @status_pagamentos = StatusPagamento.all
-    #@cidades = Cidade.all
+    
+
+    @cidades = Cidade.all
     @car.estado_id = params[:estado_id]
     cidade = Cidade.find_by_text(params[:cidade_id]).id
     @car.cidade_id = cidade
@@ -117,10 +118,27 @@ class CarsController < ApplicationController
   # PUT /cars/1.json
   def update
     @car = Car.find(params[:id])
-    @car.estado_id = params[:estado_id]
-    cidade = Cidade.find_by_text(params[:cidade_id]).id
-    @car.cidade_id = cidade
-    @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
+    
+    
+    if params[:salvar_localizacao]
+      @car.estado_id = params[:estado_id]
+      @car_estado_origem = params[:estado_origem]
+      @car_estado_destino = params[:estado_destino]
+      
+      # atençao! Ele vai pegar a cidade pelo nome, e nao separa por estado - pode ser
+      # que se futuramente queira-se comprar a cidade pelo ID, pode dar erro (pegar cidade com mesmo nome mas
+      # de estados diferentes )
+      cidade_atual = Cidade.find_by_text(params[:cidade_id]).id
+      cidade_origem = Cidade.find_by_text(params[:cidade_origem]).id
+      cidade_destino = Cidade.find_by_text(params[:cidade_destino]).id
+      
+      @car.cidade_id = cidade_atual
+      @car.origem = cidade_origem
+      @car.destino = cidade_destino
+      @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"  
+    end
+
+    
     
     respond_to do |format|
       if @car.update_attributes(params[:car])

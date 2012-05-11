@@ -1,10 +1,4 @@
-<!---<select onchange="UpdateOptions(this)">
-	<option value="_xx_"></option>
-	<% for i in 1..27 do %>
-    <option value=<%=i.to_s%>> <%= Estado.find(i).nome %> </option>
-  <% end -%>
-</select>
-<select id="target1"></select> -->
+<% @car = Car.find(params[:car]) %>
 <% cidades = Cidade.all %>
 <% estado1 = cidades.select{|c| c[:estado_id] == 1} %>
 <% estado2 = cidades.select{|c| c[:estado_id] == 2} %>
@@ -35,26 +29,26 @@
 <% estado27 = cidades.select{|c| c[:estado_id] == 27} %>
 
 <script type="text/javascript">
-	function ClearOptions(sel){
-		//while (sel.options.length>0) sel.options[0]=null;
-		sel.options.length=0;
-	}
-	function PopulateSelect(sel,optsArray){
-		for (var i=0,len=optsArray.length;i<len;i++) sel.options[i]=optsArray[i];
-	}
-	function UpdateOptions(sel){
-		var destSel = document.getElementById('cidade_id');
-		ClearOptions(destSel);
-		if (sel.value=="_xx_") return;
-		var opts = [];
-		var srcObjs = availVals[sel.value];
-		for (var i=0,len=srcObjs.length;i<len;i++) opts[i]=new Option(srcObjs[i].text,srcObjs[i].value!=null?srcObjs[i].value:srcObjs[i].text);
-		PopulateSelect(destSel,opts);
-	}
+  function ClearOptions(sel){
+    //while (sel.options.length>0) sel.options[0]=null;
+    sel.options.length=0;
+  }
+  function PopulateSelect(sel,optsArray){
+    for (var i=0,len=optsArray.length;i<len;i++) sel.options[i]=optsArray[i];
+  }
+  function UpdateOptions(sel, elem_id){
+    var destSel = document.getElementById(elem_id);
+    ClearOptions(destSel);
+    if (sel.value=="_xx_") return;
+    var opts = [];
+    var srcObjs = availVals[sel.value];
+    for (var i=0,len=srcObjs.length;i<len;i++) opts[i]=new Option(srcObjs[i].text,srcObjs[i].value!=null?srcObjs[i].value:srcObjs[i].text);
+    PopulateSelect(destSel,opts);
+  }
 
-	var availVals = {
-		1:   <%= estado1.to_json.html_safe %>,
-		2:   <%= estado2.to_json.html_safe %>,
+  var availVals = {
+    1:   <%= estado1.to_json.html_safe %>,
+    2:   <%= estado2.to_json.html_safe %>,
     3:   <%= estado3.to_json.html_safe %>,
     4:   <%= estado4.to_json.html_safe %>,
     5:   <%= estado5.to_json.html_safe %>,
@@ -80,8 +74,8 @@
     25:   <%= estado25.to_json.html_safe %>,
     26:   <%= estado26.to_json.html_safe %>,
     27:   <%= estado27.to_json.html_safe %>,
-		28: [{value:'angel',text:'Angelfish'},{value:'snapper',text:'Red Snapper'},{value:'cuda',text:'Ooh, Barracuda'}]
-	};
+    28: [{value:'angel',text:'Angelfish'},{value:'snapper',text:'Red Snapper'},{value:'cuda',text:'Ooh, Barracuda'}]
+  };
 
 </script>
 
@@ -96,27 +90,51 @@
   <!-- dados da localizacao do veiculo -->
 <fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
   
-<div class="field">
-   
 
-  <%= f.label :localizacao %><br />
-  <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }), :include_blank => true, :onchange => "UpdateOptions(this)")  %>
-  <%= select_tag(:cidade_id)  %>
-
-</div>
 
   <div class="field">
     
-  
+    <%= f.label :localizacao, "Localização Atual" %><br />
+    <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_id')")  %>
+    <% if @car.cidade_id.nil? %>
+      <%= select_tag(:cidade_id) %>
+    <% else %>
+      <%= select_tag(:cidade_id, options_for_select([Cidade.find(@car.cidade_id).text])) %>
+    <% end -%>
   </div>
-      
+
+
+
+  <div class="field">
+    
+    <%= f.label :origem, "Origem do Carro" %><br />
+    <%= select_tag(:estado_origem, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_origem')")  %>
+    <% if @car.origem.nil? %>
+      <%= select_tag(:cidade_origem) %>
+    <% else %>
+      <%= select_tag(:cidade_origem, options_for_select([Cidade.find(@car.origem).text])) %>
+    <% end -%>
   </div>
+
+
+
+  <div class="field">
+    
+    <%= f.label :destino, "Destino do Carro" %><br />
+    <%= select_tag(:estado_destino, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_destino')")  %>
+    <% if @car.destino.nil? %>
+      <%= select_tag(:cidade_destino) %>
+    <% else %>
+      <%= select_tag(:cidade_destino, options_for_select([Cidade.find(@car.destino).text])) %>
+    <% end -%>
+  </div>
+
+
 </fieldset>
   <!-- fim dos dados do veículo -->  
   <br />
   <div class="actions">
-    <%= f.submit "Salvar" %>
-    <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao' %>
+    <%= f.submit "Salvar", :name => 'salvar_localizacao' %>
   </div>
 <% end %>
 

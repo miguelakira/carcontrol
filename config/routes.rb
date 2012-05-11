@@ -2,6 +2,7 @@ Carcontrol::Application.routes.draw do
  
   get "search/index"
   get "cars/inativos"
+  get "cars/editar_localizacao"
   resources :compradores
 
   resources :cars

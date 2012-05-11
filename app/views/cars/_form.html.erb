@@ -1,3 +1,8 @@
+<% if @editar_localizacao %> 
+  <% render 'editar_localizacao' %>
+<%else%>
+
+
 <% cidades = Cidade.all %>
 <% estado1 = cidades.select{|c| c[:estado_id] == 1} %>
 <% estado2 = cidades.select{|c| c[:estado_id] == 2} %>
@@ -161,16 +166,6 @@
   </div>
       
 
-  <div class="field">
-    
-    <%= f.label :localizacao, "Localização Atual" %><br />
-    <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this)")  %>
-    <% if @car.cidade_id.nil? %>
-      <%= select_tag(:cidade_id) %>
-    <% else %>
-      <%= select_tag(:cidade_id, options_for_select([Cidade.find(@car.cidade_id).text])) %>
-    <% end -%>
-  </div>
 <div class="field">
   <%= f.label :ativo, "Carro Entregue ao Cliente?" %> <br />
   <%= f.radio_button(:ativo, false) %> Sim
@@ -184,7 +179,8 @@
   <br />
   <div class="actions">
     <%= f.submit "Salvar" %>
-    <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao' %>
+    <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
   </div>
 <% end %>
 
+<%end%>
