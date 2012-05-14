@@ -4,6 +4,7 @@ class CarsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+    
     if params[:sort] == "firstname"
       @cars = sort_by_comprador
     elsif params[:sort] == 'status_pagamento'

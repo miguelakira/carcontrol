@@ -1,0 +1,39 @@
+<% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h1><%= pluralize(@user.errors.count, "error") %> impediram que a compra fosse salva:</h1>
+      
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      
+      </ul>
+    </div>
+<% end %>  
+
+
+<fieldset><legend><h5 style="font-size: 1.3em">Dados do Usuário</h5></legend>
+ 
+<%= form_for(@user) do |f| %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email %> 
+  </div>
+
+  <div class="field">
+    <%= f.label :admin, "Usuário é Administrador?" %><br />
+    <%= f.check_box :admin %> 
+  </div>
+
+
+   <div class="actions">
+    <%= f.submit "Salvar" %>
+  </div>
+  <% end -%>
+</div>  

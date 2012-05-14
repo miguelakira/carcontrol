@@ -1,3 +1,5 @@
+
+
 <table id="mytable" cellspacing="0" summary="Lista de Vendas">  <tr>
     <th class = 'begin'> <%= sortable "Placa" %></th>
     <th><%= sortable "modelo" %> </th> 
@@ -7,9 +9,11 @@
     <th><%= sortable "Origem" %></th>
     <th><%= sortable "Destino" %></th>
     <th> Entregue?</th>
+    <% if current_user.admin? %>
     <th></th>
     <th></th>
     <th></th>
+    <% end -%>
   </tr>
 
 <% x = 0%>
@@ -34,9 +38,11 @@
     <td class = "<%= @row_class %>"></td>
     <td class = "<%= @row_class %>"></td>
     <td class = "<%= @row_class %>"><%= car.ativo ? "Não" : "Sim" %></td>
+    <% if current_user.admin? %>
     <td class = "<%= @row_class %>"><%= link_to 'Detalhes', car %></td>
     <td class = "<%= @row_class %>"><%= link_to 'Editar', edit_car_path(car) %></td>
     <td class = "<%= @row_class %>"><%= link_to 'Apagar', car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %></td>
+    <% end -%>
   </tr>
 <% end %>
 </table>

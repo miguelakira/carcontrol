@@ -15,6 +15,11 @@
   <div><%= f.label :current_password, "Senha Atual" %> <i>(digite sua senha atual para confirmar suas mudanças)</i><br />
   <%= f.password_field :current_password %></div>
 
+  <% if current_user.admin? %>
+    <div><%= f.label :admin, 'Usuário É Administrador?' %><br />
+    <%= f.check_box :admin %></div>
+  <% end -%>
+
   <div><%= f.submit "Atualizar" %></div>
 <% end %>
 

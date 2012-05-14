@@ -1,3 +1,8 @@
+<% if !current_user.admin? %>
+  Desculpe, você precisa ter direitos administrativos para visualizar esta página!
+
+<% else %>
+
 <% if @editar_localizacao %> 
   <% render 'editar_localizacao' %>
 <%else%>
@@ -184,3 +189,4 @@
 <% end %>
 
 <%end%>
+<% end -%>

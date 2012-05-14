@@ -4,10 +4,10 @@ Carcontrol::Application.routes.draw do
   get "cars/inativos"
   get "cars/editar_localizacao"
   resources :compradores
-
   resources :cars
 
-  devise_for :users
+  devise_for :users, :path_prefix => 'd'
+  resources :users
 
 
 

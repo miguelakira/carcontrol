@@ -8,4 +8,6 @@
 
 <br />
 
-<%= button('Nova Venda', new_car_path)%>
+<% if current_user.admin? %>
+  <%= button('Nova Venda', new_car_path)%>
+<% end -%>

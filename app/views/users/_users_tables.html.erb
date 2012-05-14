@@ -1,0 +1,17 @@
+<table id="mytable" cellspacing="0" summary="Lista de Vendas">  
+  <tr>
+    <th class = 'begin'> Nome do Usuário</th>
+    <th>E-Mail</th>
+    <th>Ações</th>
+    <th>Última login na data:</th>
+  </tr>
+
+  <% users.each do |user| %>
+    <tr>
+      <td class = 'begin'><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= link_to 'Editar', edit_user_path(user) %></td>
+      <td><%= user.last_sign_in_at.strftime("%d/%M/%Y") %></td>
+    </tr>
+    <% end -%>
+</table>
