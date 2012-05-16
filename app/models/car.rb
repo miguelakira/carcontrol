@@ -11,6 +11,9 @@ class Car < ActiveRecord::Base
   validates :modelo,
   			:presence => true
 
+  validates :ativo,
+        :presence => true
+
   
   before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula
   after_find :capitaliza_modelo

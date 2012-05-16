@@ -72,9 +72,8 @@ class CarsController < ApplicationController
   def new
     @car = Car.new
     @car.build_comprador
-    @cidades = Cidade.all
     @status_pagamentos = StatusPagamento.all
-
+    @editar_localizacao = params[:editar_localizacao]
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @car }
@@ -86,8 +85,6 @@ class CarsController < ApplicationController
     @editar_localizacao = params[:editar_localizacao]
     @car = Car.find(params[:id])
     @status_pagamentos = StatusPagamento.all
-    
-
   end
 
   # POST /POST
@@ -98,14 +95,17 @@ class CarsController < ApplicationController
     @status_pagamentos = StatusPagamento.all
     
 
-    @cidades = Cidade.all
-    @car.estado_id = params[:estado_id]
-    cidade = Cidade.find_by_text(params[:cidade_id]).id
-    @car.cidade_id = cidade
-    @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
+    #@cidades = Cidade.all
+    #@car.estado_id = params[:estado_id]
+    #cidade = Cidade.find_by_text(params[:cidade_id]).id unless params[:cidade_id].nil?
+    #@car.cidade_id = cidade
+    #@car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
 
     respond_to do |format|
       if @car.save
+        if params[:editar_localizacao]
+          redirect_to edit_car_path(@car, :editar_localizacao => true, :car => @car)   and return
+        end
         format.html { redirect_to @car, notice: 'Compra gerada com sucesso' }
         format.json { render json: @car, status: :created, location: @car }
       else

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120514134242) do
+ActiveRecord::Schema.define(:version => 20120514215146) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -23,21 +23,21 @@ ActiveRecord::Schema.define(:version => 20120514134242) do
     t.datetime "updated_at",          :null => false
     t.datetime "data_compra"
     t.integer  "estado_id"
-    t.boolean  "ativo"
     t.integer  "cidade_id"
     t.integer  "cidade_origem"
     t.integer  "cidade_destino"
     t.integer  "estado_origem"
     t.integer  "estado_destino"
+    t.boolean  "ativo"
   end
 
   create_table "cidades", :force => true do |t|
-    t.string  "text",      :limit => 40, :null => false
-    t.integer "estado_id",               :null => false
-    t.boolean "capital",                 :null => false
+    t.string   "text"
+    t.integer  "estado_id"
+    t.boolean  "capital"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
-
-  add_index "cidades", ["estado_id"], :name => "uf"
 
   create_table "compradores", :force => true do |t|
     t.string   "nome"
@@ -55,10 +55,10 @@ ActiveRecord::Schema.define(:version => 20120514134242) do
   end
 
   create_table "estados", :force => true do |t|
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-    t.string   "nome",       :limit => 256, :null => false
-    t.string   "sigla",      :limit => 256, :null => false
+    t.string   "nome"
+    t.string   "sigla"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "status_pagamentos", :force => true do |t|

@@ -8,6 +8,7 @@ gem 'rails', '3.2.3'
 gem 'pg'
 gem 'devise'
 gem 'heroku'
+
 gem 'will_paginate', '3.0.3'
 gem 'thin'
 gem 'pjax_rails'

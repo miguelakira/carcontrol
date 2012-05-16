@@ -46,14 +46,18 @@
     <th>Localização Atual</th>
     <td><%= @car.localizacao %></td>
   </tr>
+  <% unless @car.cidade_origem.nil? && @car.estado_origem.nil? %>
   <tr>
     <th>Origem</th>
     <td><%= Cidade.find(@car.cidade_origem).text %>, <%= Estado.find(@car.estado_origem).sigla %></td>
   </tr>
+  <% end -%>
+  <% unless @car.cidade_origem.nil? && @car.estado_origem.nil? %>
   <tr>
     <th>Destino</th>
     <td><%= Cidade.find(@car.cidade_destino).text %>, <%= Estado.find(@car.estado_destino).sigla %></td>
   </tr>
+  <% end -%>
   <tr>
     <th>Data da Compra</th>
     <td><%= @car.data_compra %></td>
