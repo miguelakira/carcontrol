@@ -11,7 +11,7 @@
       <td class = 'begin'><%= user.name %></td>
       <td><%= user.email %></td>
       <td><%= link_to 'Editar', edit_user_path(user) %></td>
-      <td><%= user.last_sign_in_at.strftime("%d/%M/%Y") %></td>
+      <td><%= user.last_sign_in_at.strftime("%d/%m/%Y") %></td>
     </tr>
     <% end -%>
 </table>
