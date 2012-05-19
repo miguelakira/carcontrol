@@ -1169,3 +1169,10 @@ td.pendente a {
 .pretty th .desc {   
   background-image: url(images/down_arrow.gif);   
 }  
+
+/*-------- texto ---------) */
+.right {
+  float: right;
+}
+
+}

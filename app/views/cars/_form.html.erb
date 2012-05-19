@@ -147,6 +147,9 @@
       <%= builder.label :celular %><br />
       <%= builder.text_field :celular %> (Por exemplo: 43-9151-1893)
     </div>
+
+
+
   <% end %>
   </fieldset>
   <!-- fim dos dados do comprador -->
@@ -164,18 +167,22 @@
     <%= f.text_field :modelo %> (Por exemplo: Ford Ka)
   </div>
     
+
+  <div class="field">
+    <%= f.label :data_compra, "Data da Compra" %><br />
+    <%= f.date_select :data_compra, :order => [:day, :month, :year]  %> 
+  </div>
+      
   <div class="field">
     <%= f.label :status_pagamento_id %><br />
     <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
   
   </div>
       
-
 <div class="field">
   <%= f.label :ativo, "Carro Entregue ao Cliente?" %> <br />
   <%= f.radio_button(:ativo, false) %> Sim
   <%= f.radio_button(:ativo, true) %> Não
-
 </div>  
     
   
@@ -183,8 +190,12 @@
   <!-- fim dos dados do veículo -->  
   <br />
   <div class="actions">
-    <%= f.submit "Salvar" %>
-    <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
+    <% if @car.id.nil? %>
+      <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
+    <% else -%>
+      <%= f.submit "Salvar" %>
+      <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
+    <% end -%>
   </div>
 <% end %>
 

@@ -4,7 +4,7 @@
     <th class = 'begin'> <%= sortable "Placa" %></th>
     <th><%= sortable "modelo" %> </th> 
     <th><%= sortable "firstname", "comprador" %></th>
-    <th><%= sortable "status_pagamento", "Status do Pagamento" %></th>
+    <th width = "40px"><%= sortable "status_pagamento", "Status do Pagamento" %></th>
     <th><%= sortable "localizacao", "Localização Atual" %></th>
     <th><%= sortable "Origem" %></th>
     <th><%= sortable "Destino" %></th>
@@ -34,7 +34,7 @@
     <td class = "<%= @row_class %>"><%= car.modelo %></td>
     <td class = "<%= @row_class %>"><%= car.comprador.firstname %> <%= car.comprador.lastname %></td>
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
-    <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <% end -%></td>
+    <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <%= link_to image_tag("edit.png", :border=>0), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %> <% end -%></td>
     <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
     <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
     <td class = "<%= @row_class %>"><%= car.ativo ? "Não" : "Sim" %></td>

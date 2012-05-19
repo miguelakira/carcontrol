@@ -60,7 +60,7 @@
   <% end -%>
   <tr>
     <th>Data da Compra</th>
-    <td><%= @car.data_compra %></td>
+    <td><%= @car.data_compra.strftime("%d/%m/%Y") %></td>
   </tr>
   </tr>
   <tr>
