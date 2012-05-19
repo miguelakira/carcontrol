@@ -1,7 +1,7 @@
 class ChangeAtivoToInteger < ActiveRecord::Migration
   def up
-    change_column :cars, :ativo, :integer
-
+    remove_column :cars, :ativo
+    add_column :cars, :ativo, :integer
   end
 
   def down
