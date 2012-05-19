@@ -109,7 +109,7 @@
 <fieldset> <legend><h5 style="font-size: 1.3em">Dados do Comprador</h5></legend>
   <%= f.fields_for :comprador do |builder| %>
     <div class="field">
-      <%= builder.label :firstname, "Primeiro Nome" %><br />
+      <%= builder.label :firstname, "Primeiro Nome*" %><br />
       <%= builder.text_field :firstname %>
     </div>
 
@@ -119,7 +119,7 @@
     </div>
 
     <div class="field">
-      <%= builder.label :lastname, "Sobrenome" %><br />
+      <%= builder.label :lastname, "Sobrenome*" %><br />
       <%= builder.text_field :lastname %>
     </div>
 
@@ -129,23 +129,23 @@
     </div>
 
     <div class="field">
-      <%= builder.label :rg, "RG" %><br />
-      <%= builder.text_field :rg %> (Sem pontuação - por exemplo: 41063411X)
+      <%= builder.label :rg, "RG*" %><br />
+      <%= builder.text_field :rg %>
     </div>
 
     <div class="field">
-      <%= builder.label :cpf, "CPF" %><br />
-      <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '25' %> (Sem pontuação - por exemplo: 33164431858)
+      <%= builder.label :cpf, "CPF*" %><br />
+      <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30' %> 
     </div>
 
     <div class="field">
-      <%= builder.label :telefone %><br />
-      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '25'%> 
+      <%= builder.label :telefone %>*<br />
+      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30'%> 
     </div>
 
     <div class="field">
       <%= builder.label :celular %><br />
-      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"13", :size => '25' %> 
+      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' %> 
     </div>
 
  
@@ -157,12 +157,12 @@
 <fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
   
   <div class="field">
-    <%= f.label :placa %><br />
+    <%= f.label :placa %>*<br />
     <%= f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15' %> 
   </div>
 
   <div class="field">
-    <%= f.label :modelo %><br />
+    <%= f.label :modelo %>*<br />
     <%= f.text_field :modelo %> (Por exemplo: Ford Ka)
   </div>
     
