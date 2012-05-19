@@ -60,16 +60,16 @@
   <% end -%>
   <tr>
     <th>Data da Compra</th>
-    <td><%= @car.data_compra.strftime("%d/%m/%Y") %></td>
-  </tr>
+    <td><%= @car.data_compra.strftime("%d/%m/%Y") unless @car.data_compra.nil? %></td>
   </tr>
   <tr>
-    
-    
+    <th>Entregue?</th>
+    <td><%= @car.ativo ? "Não" : "Sim" %></td>
+</td>
   </tr>
 </table>
 
-
+<br />
 
 <%= button('Editar', edit_car_path(@car)) %>
 <%= button('Voltar', cars_path) %>
