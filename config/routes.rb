@@ -21,6 +21,7 @@ Carcontrol::Application.routes.draw do
   get "cars/editar_localizacao"
   resources :compradores
   resources :cars
+  resources :cegonhas
 
   devise_for :users, :path_prefix => 'd'
   resources :users

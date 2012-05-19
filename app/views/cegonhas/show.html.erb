@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Placa:</b>
+  <%= @cegonha.placa %>
+</p>
+
+<p>
+  <b>Localizacao:</b>
+  <%= @cegonha.localizacao %>
+</p>
+
+<p>
+  <b>Origem:</b>
+  <%= @cegonha.origem %>
+</p>
+
+<p>
+  <b>Destino:</b>
+  <%= @cegonha.destino %>
+</p>
+
+<p>
+  <b>Carros:</b>
+  <%= @cegonha.carros %>
+</p>
+
+<p>
+  <b>Comentario:</b>
+  <%= @cegonha.comentario %>
+</p>
+
+
+<%= link_to 'Edit', edit_cegonha_path(@cegonha) %> |
+<%= link_to 'Back', cegonhas_path %>

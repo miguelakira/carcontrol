@@ -9,9 +9,7 @@
     <th><%= sortable "Origem" %></th>
     <th><%= sortable "Destino" %></th>
     <% if current_user.admin? %>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th width = '180px'>Ações</th>
     <% end -%>
   </tr>
 
@@ -38,9 +36,9 @@
     <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
     
     <% if current_user.admin? %>
-    <td class = "<%= @row_class %>"><%= link_to 'Detalhes', car %></td>
-    <td class = "<%= @row_class %>"><%= link_to 'Editar', edit_car_path(car) %></td>
-    <td class = "<%= @row_class %>"><%= link_to 'Apagar', car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %></td>
+     <td class = "<%= @row_class %>"><%= link_to 'Detalhes', car %> | 
+        <%= link_to 'Editar', edit_car_path(car) %> |
+        <%= link_to 'Apagar', car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
     <% end -%>
   </tr>
 <% end %>

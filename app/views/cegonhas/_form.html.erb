@@ -1,0 +1,44 @@
+<%= javascript_include_tag :defaults %>
+
+
+<%= form_for(@cegonha) do |f| %>
+  <% if @cegonha.errors.any? %>
+    <div id="error_explanation">
+      <h1><%= pluralize(@cegonha.errors.count, "error") %> impediram que a compra fosse salva:</h1>
+      
+      <ul>
+      <% @cegonha.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      
+      </ul>
+    </div>
+  <% end %>
+  <!-- dados do veículo -->
+  <fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
+  
+    <div class="field">
+      <%= f.label :placa %><br />
+      <%= f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15' %> 
+    </div>
+
+    <div class="field">
+        <%= @cegonha.carros %> <%= f.label :carros, "Carros na Cegonha:" %> <br />
+        <% @cegonha.cars.each do |car| %>
+          <%= car.placa %>, 
+        <% end -%>
+    </div>
+
+</fieldset>
+  <!-- fim dos dados do veículo -->  
+  <br />
+  <div class="actions">
+    <% if @cegonha.id.nil? %>
+      <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :cegonha => @cegonha %>
+    <% else -%>
+      <%= f.submit "Salvar" %>
+      <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :cegonha => @cegonha %>
+    <% end -%>
+  </div>
+<% end %>
+

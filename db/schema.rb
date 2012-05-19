@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120519041935) do
+ActiveRecord::Schema.define(:version => 20120519051106) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -39,8 +39,14 @@ ActiveRecord::Schema.define(:version => 20120519041935) do
     t.string   "destino"
     t.integer  "carros"
     t.string   "comentario"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "cidade_origem"
+    t.integer  "estado_origem"
+    t.integer  "cidade_destino"
+    t.integer  "estado_destino"
+    t.integer  "cidade_id"
+    t.integer  "estado_id"
   end
 
   create_table "cidades", :force => true do |t|

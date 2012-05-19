@@ -175,8 +175,14 @@
   <div class="field">
     <%= f.label :status_pagamento_id %><br />
     <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
-  
   </div>
+
+  <div class="field">
+    <%= f.label :cegonha_id, "Cegonha" %><br />
+    <%= f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }  %> 
+
+  </div>
+
       
 <div class="field">
   <%= f.label :ativo, "Carro Entregue ao Cliente?" %> <br />
