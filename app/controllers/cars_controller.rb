@@ -6,9 +6,11 @@ class CarsController < ApplicationController
   def index
     
     if params[:sort] == "firstname"
-      @cars = sort_by_comprador
+      ativo = true
+      @cars = sort_by_comprador(ativo)
     elsif params[:sort] == 'status_pagamento'
-      @cars = sort_by_status_pagamento
+      ativo = true
+      @cars = sort_by_status_pagamento(ativo)
     else
       
       @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => true)
@@ -21,9 +23,11 @@ class CarsController < ApplicationController
 
   def inativos
     if params[:sort] == "firstname"
-      @cars = sort_by_comprador
+      ativo = false
+      @cars = sort_by_comprador(ativo)
     elsif params[:sort] == 'status_pagamento'
-      @cars = sort_by_status_pagamento
+      ativo = false
+      @cars = sort_by_status_pagamento(ativo)
     else
       
       @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => false)
@@ -35,20 +39,23 @@ class CarsController < ApplicationController
     end
   end
 
-  def sort_by_comprador
+  def sort_by_comprador(ativo)
+    
     Car.paginate(
       :per_page => 5, 
       :page => params[:page], 
       :joins => :comprador, 
-      :order => "firstname #{sort_direction}")
+      :order => "firstname #{sort_direction}",
+      :conditions => {:ativo => ativo})
   end
 
-  def sort_by_status_pagamento
+  def sort_by_status_pagamento(ativo)
     Car.paginate(
       :per_page => 5, 
       :page => params[:page], 
       :joins => :status_pagamento, 
-      :order => "value #{sort_direction}")
+      :order => "value #{sort_direction}",
+      :conditions => {:ativo => ativo})
   end
 
   def update_city_menu
@@ -93,7 +100,7 @@ class CarsController < ApplicationController
     
     @car = Car.new(params[:car])
     @status_pagamentos = StatusPagamento.all
-    
+    raise params.inspect
 
     #@cidades = Cidade.all
     #@car.estado_id = params[:estado_id]

@@ -7,7 +7,7 @@ development:
   adapter: mysql2
   database: carcontrol_development
   username: root
-  password:
+  password: 
   pool: 5
   timeout: 5000
   encoding: utf8
