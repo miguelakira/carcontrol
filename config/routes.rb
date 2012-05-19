@@ -1,5 +1,21 @@
 Carcontrol::Application.routes.draw do
  
+  resources :cegonhas
+
+  get "cegonhas/index"
+
+  get "cegonhas/new"
+
+  get "cegonhas/create"
+
+  get "cegonhas/edit"
+
+  get "cegonhas/update"
+
+  get "cegonhas/delete"
+
+  get "cegonhas/destroy"
+
   get "search/index"
   get "cars/inativos"
   get "cars/editar_localizacao"
