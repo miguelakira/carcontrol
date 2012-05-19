@@ -42,7 +42,7 @@ class CegonhasController < ApplicationController
   # POST /cegonhas.json
   def create
     @cegonha = Cegonha.new(params[:cegonha])
-    @cegonha.carros = @cegonha.cars.count
+    @cegonha.carros = 0
 
     respond_to do |format|
       if @cegonha.save
