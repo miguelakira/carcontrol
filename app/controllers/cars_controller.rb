@@ -100,7 +100,6 @@ class CarsController < ApplicationController
     
     @car = Car.new(params[:car])
     @status_pagamentos = StatusPagamento.all
-    raise params.inspect
 
     #@cidades = Cidade.all
     #@car.estado_id = params[:estado_id]
