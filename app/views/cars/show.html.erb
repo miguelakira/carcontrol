@@ -1,5 +1,17 @@
 <p id="notice"><%= notice %></p>
 
+<% case @car.ativo 
+       when 0
+        status = 'Entregue para o Cliente'
+       when 1
+       status = 'Em Trânsito'
+       when 2
+        status = 'Descarregado no Pátio'
+       when 3
+        status = 'Aguardando Retirada'
+    end -%>
+
+
 <p><h5>Detalhes do Comprador</h5> </p>
 <table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
   <tr>
@@ -63,9 +75,9 @@
     <td><%= @car.data_compra.strftime("%d/%m/%Y") unless @car.data_compra.nil? %></td>
   </tr>
   <tr>
-    <th>Entregue?</th>
-    <td><%= @car.ativo ? "Não" : "Sim" %></td>
-</td>
+    <th>Status do Carro</th>
+    <td><%= status %></td>
+
   </tr>
 </table>
 

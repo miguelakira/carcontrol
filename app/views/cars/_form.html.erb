@@ -185,12 +185,10 @@
 
       
 <div class="field">
-  <%= f.label :ativo, "Carro Entregue ao Cliente?" %> <br />
-  <%= f.radio_button(:ativo, false) %> Sim
-  <%= f.radio_button(:ativo, true) %> Não
-</div>  
-    
-  
+  <%= f.label :ativo, "Status do Carro" %><br />
+  <% @status = {'Em Trânsito' => 1, 'Descarregado no Pátio' => 2, 'Aguardando Retirada' => 3, 'Entregue ao Cliente' => 0} %>
+  <%= select_tag :ativo, options_for_select(@status, @car.ativo)   %>
+  </div>  
 </fieldset>
   <!-- fim dos dados do veículo -->  
   <br />

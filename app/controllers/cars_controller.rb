@@ -13,7 +13,7 @@ class CarsController < ApplicationController
       @cars = sort_by_status_pagamento(ativo)
     else
       
-      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => true)
+      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => [1,2,3])
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -30,7 +30,7 @@ class CarsController < ApplicationController
       @cars = sort_by_status_pagamento(ativo)
     else
       
-      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => false)
+      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => 0)
 
     end
     respond_to do |format|
@@ -102,7 +102,7 @@ class CarsController < ApplicationController
     
     @car = Car.new(params[:car])
     @status_pagamentos = StatusPagamento.all
-
+    @car.ativo = params[:ativo]
     #@cidades = Cidade.all
     #@car.estado_id = params[:estado_id]
     #cidade = Cidade.find_by_text(params[:cidade_id]).id unless params[:cidade_id].nil?
@@ -127,7 +127,7 @@ class CarsController < ApplicationController
   # PUT /cars/1.json
   def update
     @car = Car.find(params[:id])
-    
+    @car.ativo = params[:ativo]
     
     if params[:salvar_localizacao]
       @car.estado_id = params[:estado_id]
