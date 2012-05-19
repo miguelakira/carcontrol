@@ -8,7 +8,6 @@
     <th><%= sortable "localizacao", "Localização Atual" %></th>
     <th><%= sortable "Origem" %></th>
     <th><%= sortable "Destino" %></th>
-    <th> Entregue?</th>
     <% if current_user.admin? %>
     <th></th>
     <th></th>
@@ -37,7 +36,7 @@
     <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <%= link_to image_tag("edit.png", :border=>0), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %> <% end -%></td>
     <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
     <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
-    <td class = "<%= @row_class %>"><%= car.ativo ? "Não" : "Sim" %></td>
+    
     <% if current_user.admin? %>
     <td class = "<%= @row_class %>"><%= link_to 'Detalhes', car %></td>
     <td class = "<%= @row_class %>"><%= link_to 'Editar', edit_car_path(car) %></td>
