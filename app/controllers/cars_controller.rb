@@ -81,6 +81,7 @@ class CarsController < ApplicationController
     @car.build_comprador
     @status_pagamentos = StatusPagamento.all
     @editar_localizacao = params[:editar_localizacao]
+    @cegonhas = Cegonha.all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @car }
@@ -92,6 +93,7 @@ class CarsController < ApplicationController
     @editar_localizacao = params[:editar_localizacao]
     @car = Car.find(params[:id])
     @status_pagamentos = StatusPagamento.all
+    @cegonhas = Cegonha.all
   end
 
   # POST /POST

@@ -1,0 +1,13 @@
+<p><h1>Listando Cegonhas</h1></p>
+
+<%= render 'cegonhas' %>
+
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<%= will_paginate @cegonhas %>
+
+<br />
+
+<% if current_user.admin? %>
+  <%= button('Adicionar Cegonha', new_cegonha_path)%>
+<% end -%>
