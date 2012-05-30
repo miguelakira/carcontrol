@@ -102,7 +102,7 @@ class CarsController < ApplicationController
     
     @car = Car.new(params[:car])
     @status_pagamentos = StatusPagamento.all
-    @car.ativo = params[:ativo]
+    @car.ativo = params[:ativo] unless params[:ativo].nil?
     #@cidades = Cidade.all
     #@car.estado_id = params[:estado_id]
     #cidade = Cidade.find_by_text(params[:cidade_id]).id unless params[:cidade_id].nil?
@@ -127,8 +127,7 @@ class CarsController < ApplicationController
   # PUT /cars/1.json
   def update
     @car = Car.find(params[:id])
-    @car.ativo = params[:ativo]
-    
+    @car.ativo = params[:ativo] unless params[:ativo].nil?
     if params[:salvar_localizacao]
       @car.estado_id = params[:estado_id]
       @car.estado_origem = params[:estado_origem]
