@@ -111,6 +111,15 @@ class CarsController < ApplicationController
 
     respond_to do |format|
       if @car.save
+        # faz update da contagem de carros da cegonha
+        cegonhas = Cegonha.all
+        cegonhas.each do |cegonha|
+          cegonha.carros = cegonha.cars.count
+          cegonha.save
+        end
+
+        
+
         if params[:editar_localizacao]
           redirect_to edit_car_path(@car, :editar_localizacao => true, :car => @car)   and return
         end
@@ -150,6 +159,12 @@ class CarsController < ApplicationController
     
     respond_to do |format|
       if @car.update_attributes(params[:car])
+        # faz update da contagem de carros da cegonha
+        cegonhas = Cegonha.all
+        cegonhas.each do |cegonha|
+          cegonha.carros = cegonha.cars.count
+          cegonha.save
+        end
         if params[:editar_localizacao]
           flash[:notice] = 'Dados atualizados com sucesso!'
           redirect_to :action => :edit, :car => @car, :editar_localizacao => true  and return
