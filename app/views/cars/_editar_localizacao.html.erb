@@ -89,8 +89,6 @@
 <%= form_for(@car) do |f| %>
   <!-- dados da localizacao do veiculo -->
 <fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
-  
-
 
   <div class="field">
     
@@ -99,7 +97,7 @@
     <% if @car.cidade_id.nil? %>
       <%= select_tag(:cidade_id) %>
     <% else %>
-      <%= select_tag(:cidade_id, options_for_select([Cidade.find(@car.cidade_id).text])) %>
+      <%= select_tag(:cidade_id, options_from_collection_for_select(@locais_atual, :text, :text, @cidade_atual)) %>
     <% end -%>
   </div>
 
@@ -112,7 +110,7 @@
     <% if @car.cidade_origem.nil? %>
       <%= select_tag(:cidade_origem) %>
     <% else %>
-      <%= select_tag(:cidade_origem, options_for_select([Cidade.find(@car.cidade_origem).text])) %>
+      <%= select_tag(:cidade_origem, options_from_collection_for_select(@origens_atual, :text, :text, @cidade_origem)) %>
     <% end -%>
   </div>
 
@@ -125,7 +123,7 @@
     <% if @car.cidade_destino.nil? %>
       <%= select_tag(:cidade_destino) %>
     <% else %>
-      <%= select_tag(:cidade_destino, options_for_select([Cidade.find(@car.cidade_destino).text])) %>
+      <%= select_tag(:cidade_destino, options_from_collection_for_select(@destinos_atual, :text, :text, @cidade_destino)) %>
     <% end -%>
   </div>
 

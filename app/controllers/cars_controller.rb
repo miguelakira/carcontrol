@@ -98,6 +98,15 @@ class CarsController < ApplicationController
     @car = Car.find(params[:id])
     @status_pagamentos = StatusPagamento.all
     @cegonhas = Cegonha.all
+    # pega um array com todas as cidades dos estados atualmente no banco, pra encher os forms.
+    @locais_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_id})
+    @destinos_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_destino})
+    @origens_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_origem})
+    # pega o nome das cidades atualmente no banco (origem, destino e atual)
+    @cidade_atual = Cidade.find(@car.cidade_id).text
+    @cidade_origem = Cidade.find(@car.cidade_origem).text
+    @cidade_destino = Cidade.find(@car.cidade_destino).text
+
   end
 
   # POST /POST
