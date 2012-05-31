@@ -67,7 +67,8 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
 #admin-menu a.info { background-image: url(/assets/help.png); }
 #admin-menu a.server_authentication { background-image: url(/assets/server_key.png); }
 
-#main {background-color:#EEEEEE;}
+#main {background-color:#FFFFFF;}
+/* #main {background-color:#EEEEEE;} */
 
 #sidebar{ float: right; width: 22%; position: relative; z-index: 9; padding: 0; margin: 0;}
 * html #sidebar{ width: 22%; }
@@ -76,7 +77,7 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
 * html #sidebar hr{ width: 95%; position: relative; left: -6px; color: #ccc; }
 #sidebar .contextual { margin-right: 1em; }
 
-#content { width: 75%; background-color: #fff; margin: 0px; border-right: 1px solid #ddd; padding: 6px 10px 10px 10px; z-index: 10; }
+#content { width: 75%; background-color: #fff; margin: 0px; border-right: 0px solid #ddd; padding: 6px 10px 10px 10px; z-index: 10; }
 * html #content{ width: 75%; padding-left: 0; margin-top: 0px; padding: 6px 10px 10px 10px;}
 html>body #content { min-height: 600px; } 
 * html body #content { height: 600px; } /* IE */

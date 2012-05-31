@@ -11,12 +11,12 @@
         status = 'Aguardando Retirada'
     end -%>
 
-
+<% if @car.comprador %>
 <p><h5>Detalhes do Comprador</h5> </p>
 <table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
   <tr>
     <th style="width:180px">Nome do Comprador</th>
-    <td style='border-top: 1px solid #C1DAD7;'><%= @car.comprador.firstname %> <%= @car.comprador.middlename %> <%= @car.comprador.lastname %></td>
+    <td style='border-top: 1px solid #C1DAD7;'><%= @car.comprador.nome %> </td>
   <tr>
     <th>RG</th>
     <td><%= @car.comprador.rg %></td>
@@ -43,6 +43,39 @@
   </tr>
   
 </table>
+
+<% elsif @car.empresa %>
+<p><h5>Detalhes da Empresa</h5> </p>
+<table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
+  <tr>
+    <th style="width:180px">Nome da Empresa</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= @car.empresa.nome %> </td>
+  <tr>
+    <th>Nome do Contato</th>
+    <td><%= @car.empresa.contato %></td>
+  </tr>
+  <tr>
+    <th>CNPJ</th>
+    <td><%= @car.empresa.cnpj %></td>
+  </tr>
+  <tr>
+    <th>Status do Pagamento</th>
+    <td><%= @car.status_pagamento.status %></td>
+  </tr>
+  <tr>
+    <th>Telefone</th>
+    <td><%= @car.empresa.telefone %></td>
+  </tr>
+  <tr>  
+    <th>Celular</th>
+    <td><%= @car.empresa.celular %></td>
+  </tr>
+  <tr> 
+    <th>E-Mail</th>
+    <td><%= @car.empresa.email %></td>
+  </tr>
+</table>
+<% end -%>
 
 <p><h5>Detalhes do Carro</h1></p>
 <table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  

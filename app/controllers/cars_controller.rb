@@ -78,7 +78,11 @@ class CarsController < ApplicationController
   # GET /cars/new.json
   def new
     @car = Car.new
-    @car.build_comprador
+    if params[:pessoa_juridica]
+      @car.build_empresa
+    else
+      @car.build_comprador
+    end
     @status_pagamentos = StatusPagamento.all
     @editar_localizacao = params[:editar_localizacao]
     @cegonhas = Cegonha.all

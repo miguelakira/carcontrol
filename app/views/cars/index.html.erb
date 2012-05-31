@@ -9,5 +9,6 @@
 <br />
 
 <% if current_user.admin? %>
-  <%= button('Nova Venda', new_car_path)%>
+  <%= button('Nova Venda (Pessoa Física)', new_car_path)%>
+  <%= button('Nova Venda (Pessoa Jurídica)', :action => :new, :pessoa_juridica => true)%>
 <% end -%>

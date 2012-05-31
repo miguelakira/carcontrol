@@ -1,23 +1,23 @@
 
 
-<table id="mytable" cellspacing="0" summary="Lista de Vendas">  <tr>
-    <th class = 'begin'> <%= sortable "Placa" %></th>
-    <th><%= sortable "modelo" %> </th> 
-    <th><%= sortable "firstname", "comprador" %></th>
-    <th width = "40px"><%= sortable "status_pagamento", "Status do Pagamento" %></th>
-    <th><%= sortable "localizacao", "Localização Atual" %></th>
-    <th><%= sortable "Origem" %></th>
-    <th><%= sortable "Destino" %></th>
-    <% if current_user.admin? %>
-    <th width = '180px'>Ações</th>
-    <% end -%>
+<table style = "width:1100px" id="mytable" cellspacing="0" summary="Lista de Vendas" >  
+    <tr>
+        <th class = 'begin'> <%= sortable "Placa" %></th>
+        <th><%= sortable "modelo" %> </th> 
+        <th ><%= sortable "nome", "comprador" %></th>
+        <th width = "40px"><%= sortable "status_pagamento", "Status do Pagamento" %></th>
+        <th ><%= sortable "localizacao", "Localização Atual" %></th>
+        <th ><%= sortable "Origem" %></th>
+        <th ><%= sortable "Destino" %></th>
+        <% if current_user.admin? %>
+            <th width = '200px'>Ações</th>
+        <% end -%>
   </tr>
 
 <% x = 0%>
 
 
 <% @cars.each do |car| %>
-
 <% if car.status_pagamento.value == 1  
         @row_class = 'nao-pago' 
     elsif car.status_pagamento.value == 2
@@ -29,7 +29,11 @@
   <tr>
     <td class = "<%= @row_class %> begin"><%= car.placa %></td>
     <td class = "<%= @row_class %>"><%= car.modelo %></td>
-    <td class = "<%= @row_class %>"><%= car.comprador.firstname %> <%= car.comprador.lastname %></td>
+    <% if car.comprador %>
+        <td class = "<%= @row_class %>"><%= car.comprador.nome %> </td>
+    <% elsif car.empresa %>
+        <td class = "<%= @row_class %>"><%= car.empresa.nome %> - <%= car.empresa.contato %> </td>
+    <% end -%>
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
     <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <%= link_to image_tag("edit.png", :border=>0), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %> <% end -%></td>
     <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>

@@ -1,14 +1,11 @@
-class Comprador < ActiveRecord::Base
-  attr_accessible :celular, :email, :rg, :cpf, :telefone, :nome, :car_id
+class Empresa < ActiveRecord::Base
+  attr_accessible :car_id, :celular, :cnpj, :contato, :created_at, :email, :nome, :telefone, :updated_at
   belongs_to :car
 
   validates :nome,
-  			:presence => true
+        :presence => true
 
-  validates :rg,
-  			:presence => true
-
-  validates :cpf,
+  validates :cnpj,
         :presence => true
 
   before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos
@@ -16,25 +13,24 @@ class Comprador < ActiveRecord::Base
   after_find :capitaliza_nome
 
   def transforma_nome_em_minuscula
-  	self.nome.downcase!
+    self.nome.downcase!
   end
 
   def transforma_email_em_minuscula
-  	if self.email
-  		self.email.downcase!
-  	end
+    if self.email
+      self.email.downcase!
+    end
   end
 
   #limpa pontuaçao de documentos
   # RG - 41.065.522-5 vira 410655225
   def sanitiza_documentos
-    self.cpf.gsub!(/[^[:alnum:]]/, '')
-  	self.rg.gsub!(/[^[:alnum:]]/, '')
+    self.cnpj.gsub!(/[^[:alnum:]]/, '')
   end
 
   def capitaliza_nome
-    self.nome = self.nome.titleize unless self.nome.nil?
+    self.nome = self.nome.titleize
+    self.contato = self.contato.titleize
   end
 
 end
-

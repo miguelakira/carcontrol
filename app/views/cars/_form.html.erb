@@ -109,18 +109,8 @@
 <fieldset> <legend><h5 style="font-size: 1.3em">Dados do Comprador</h5></legend>
   <%= f.fields_for :comprador do |builder| %>
     <div class="field">
-      <%= builder.label :firstname, "Primeiro Nome*" %><br />
-      <%= builder.text_field :firstname %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :middlename, "Nome(s) do meio" %><br />
-      <%= builder.text_field :middlename %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :lastname, "Sobrenome*" %><br />
-      <%= builder.text_field :lastname %>
+      <%= builder.label :nome, "Nome Completo*" %><br />
+      <%= builder.text_field :nome %>
     </div>
 
     <div class="field">

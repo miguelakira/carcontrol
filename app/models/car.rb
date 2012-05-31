@@ -1,10 +1,13 @@
 class Car < ActiveRecord::Base
-  attr_accessible :localizacao, :modelo, :placa, :rota_id, :status_pagamento_id, :comprador_attributes, :ativo, :estado_id, :data_compra,
-        :cegonha_id
+  attr_accessible :localizacao, :modelo, :placa, :rota_id, :status_pagamento_id, :ativo, :estado_id, :data_compra,
+        :cegonha_id, :comprador_attributes, :empresa_attributes
   belongs_to :status_pagamento
   belongs_to :cegonha
   has_one :comprador
-  accepts_nested_attributes_for :comprador
+  has_one :empresa
+  accepts_nested_attributes_for :comprador, :empresa
+  
+
 
   validates	:placa, 
   			:presence => true, 
@@ -23,7 +26,7 @@ class Car < ActiveRecord::Base
         where{{placa.like => "%#{search}%"}}
       elsif search_by == 'comprador'
         search = search.split(" ")
-        joins(:comprador).where{(comprador.firstname.like_any search) | (comprador.middlename.like_any search) | (comprador.lastname.like_any search)}
+        joins(:comprador).where{(comprador.nome.like_any search)} # | (comprador.middlename.like_any search) | (comprador.lastname.like_any search)}
       end
     else
       scoped

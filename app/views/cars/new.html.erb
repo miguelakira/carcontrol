@@ -1,5 +1,10 @@
 <p><h1>Nova Venda</h1></p>
 
-<%= render 'form' %>
 
+  
+<% if params[:pessoa_juridica] %>
+  <%= render 'form_juridico' %>
+<% else %>
+  <%= render 'form' %>
+<% end -%>
 <%= link_to 'Voltar', cars_path %>
