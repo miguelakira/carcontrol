@@ -35,14 +35,14 @@
         <td class = "<%= @row_class %>"><%= car.empresa.nome %> - <%= car.empresa.contato %> </td>
     <% end -%>
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
-    <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <%= link_to image_tag("edit.png", :border=>0), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %> <% end -%></td>
+    <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <%= link_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %> <% end -%></td>
     <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
     <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
     
     <% if current_user.admin? %>
-     <td class = "<%= @row_class %>"><%= link_to 'Detalhes', car %> | 
-        <%= link_to 'Editar', edit_car_path(car) %> |
-        <%= link_to 'Apagar', car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
+     <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), car %> &nbsp;
+        <%= link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_car_path(car) %> &nbsp;
+        <%= link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
     <% end -%>
   </tr>
 <% end %>
