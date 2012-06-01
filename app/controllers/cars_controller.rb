@@ -13,7 +13,7 @@ class CarsController < ApplicationController
       @cars = sort_by_status_pagamento(ativo)
     else
       
-      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => [1,2,3])
+      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3])
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -30,7 +30,7 @@ class CarsController < ApplicationController
       @cars = sort_by_status_pagamento(ativo)
     else
       
-      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => 0)
+      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => 0)
 
     end
     respond_to do |format|
@@ -42,7 +42,7 @@ class CarsController < ApplicationController
   def sort_by_comprador(ativo)
     
     Car.paginate(
-      :per_page => 5, 
+      :per_page => 30, 
       :page => params[:page], 
       :joins => :comprador, 
       :order => "firstname #{sort_direction}",
@@ -51,7 +51,7 @@ class CarsController < ApplicationController
 
   def sort_by_status_pagamento(ativo)
     Car.paginate(
-      :per_page => 5, 
+      :per_page => 30, 
       :page => params[:page], 
       :joins => :status_pagamento, 
       :order => "value #{sort_direction}",
@@ -103,9 +103,11 @@ class CarsController < ApplicationController
     @destinos_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_destino})
     @origens_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_origem})
     # pega o nome das cidades atualmente no banco (origem, destino e atual)
-    @cidade_atual = Cidade.find(@car.cidade_id).text
-    @cidade_origem = Cidade.find(@car.cidade_origem).text
-    @cidade_destino = Cidade.find(@car.cidade_destino).text
+    unless @car.cidade_id.nil?
+      @cidade_atual = Cidade.find(@car.cidade_id).text 
+      @cidade_origem = Cidade.find(@car.cidade_origem).text
+      @cidade_destino = Cidade.find(@car.cidade_destino).text
+    end
 
   end
 

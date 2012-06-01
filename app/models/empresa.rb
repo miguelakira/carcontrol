@@ -1,6 +1,8 @@
 class Empresa < ActiveRecord::Base
   attr_accessible :car_id, :celular, :cnpj, :contato, :created_at, :email, :nome, :telefone, :updated_at
-  belongs_to :car
+  has_many :cars
+  accepts_nested_attributes_for :cars
+
 
   validates :nome,
         :presence => true

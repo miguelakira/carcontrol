@@ -3,8 +3,8 @@ class Car < ActiveRecord::Base
         :cegonha_id, :comprador_attributes, :empresa_attributes
   belongs_to :status_pagamento
   belongs_to :cegonha
-  has_one :comprador
-  has_one :empresa
+  belongs_to :comprador
+  belongs_to :empresa
   accepts_nested_attributes_for :comprador, :empresa
   
 

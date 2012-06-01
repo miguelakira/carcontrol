@@ -1,6 +1,8 @@
 class Comprador < ActiveRecord::Base
   attr_accessible :celular, :email, :rg, :cpf, :telefone, :nome, :car_id
-  belongs_to :car
+  has_many :cars
+  accepts_nested_attributes_for :cars
+
 
   validates :nome,
   			:presence => true

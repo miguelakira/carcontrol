@@ -2,7 +2,7 @@
 
 <table style = "width:1100px" id="mytable" cellspacing="0" summary="Lista de Vendas" >  
     <tr>
-        <th class = 'begin'> <%= sortable "Placa" %></th>
+        <th class = 'begin'>Placa</th>
         <th><%= sortable "modelo" %> </th> 
         <th ><%= sortable "nome", "comprador" %></th>
         <th width = "40px"><%= sortable "status_pagamento", "Status do Pagamento" %></th>
@@ -10,7 +10,7 @@
         <th ><%= sortable "Origem" %></th>
         <th ><%= sortable "Destino" %></th>
         <% if current_user.admin? %>
-            <th width = '200px'>Ações</th>
+            <th width = '130px'>Ações</th>
         <% end -%>
   </tr>
 

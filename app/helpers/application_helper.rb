@@ -4,7 +4,7 @@ def sortable(column, title = nil)
     title ||= column.titleize  
     css_class = column == sort_column ? "current #{sort_direction}" : nil  
     
-    if column == 'firstname'
+    if column == 'nome'
       if sort_direction == 'asc'
         direction = 'desc'
       end
