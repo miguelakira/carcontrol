@@ -1,5 +1,8 @@
 <p><h1>Editando Cegonha</h1></p>
-<%= render 'form' %>
-
-<%= link_to 'Show', @cegonha %> |
-<%= link_to 'Back', cegonhas_path %>
+<%if @editar_localizacao %>
+  <%= render 'editar_localizacao' %>
+<% else %>
+  <%= render 'form' %>
+<% end %>
+<%= link_to 'Detalhes', @cegonha %> |
+<%= link_to 'Voltar', cegonhas_path %>

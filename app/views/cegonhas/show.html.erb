@@ -1,35 +1,38 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Placa:</b>
-  <%= @cegonha.placa %>
-</p>
+<p><h5>Detalhes da Cegonha</h5> </p>
+<table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
+  <tr>
+    <th style="width:150px">Placa da Cegonha</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= @cegonha.placa %> </td>
+  <tr>
+    <th>Motorista</th>
+    <td><%= @cegonha.motorista %></td>
+  </tr>
+  <tr>
+    <th>Carros na Cegonha</th>
+    <td> <%= carros_na_cegonha(@cegonha) %></td>
+  </tr>
+  <tr>
+    <th>Localização Atual</th>
+    <td><%= @cegonha.localizacao %></td>
+  </tr>
+  <% unless @cegonha.cidade_origem.nil? && @cegonha.estado_origem.nil? %>
+  <tr>
+    <th>Origem</th>
+    <td><%= Cidade.find(@cegonha.cidade_origem).text %>, <%= Estado.find(@cegonha.estado_origem).sigla %></td>
+  </tr>
+  <% end -%>
+  <% unless @cegonha.cidade_origem.nil? && @cegonha.estado_origem.nil? %>
+  <tr>
+    <th>Destino</th>
+    <td><%= Cidade.find(@cegonha.cidade_destino).text %>, <%= Estado.find(@cegonha.estado_destino).sigla %></td>
+  </tr>
+  <% end -%>
+  <tr>  
+</table>
 
-<p>
-  <b>Localizacao:</b>
-  <%= @cegonha.localizacao %>
-</p>
+<br />
 
-<p>
-  <b>Origem:</b>
-  <%= @cegonha.origem %>
-</p>
-
-<p>
-  <b>Destino:</b>
-  <%= @cegonha.destino %>
-</p>
-
-<p>
-  <b>Carros:</b>
-  <%= @cegonha.carros %>
-</p>
-
-<p>
-  <b>Comentario:</b>
-  <%= @cegonha.comentario %>
-</p>
-
-
-<%= link_to 'Edit', edit_cegonha_path(@cegonha) %> |
-<%= link_to 'Back', cegonhas_path %>
+<%= button('Editar', edit_car_path(@car)) %>
+<%= button('Voltar', cars_path) %>

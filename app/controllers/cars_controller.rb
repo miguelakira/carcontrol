@@ -133,8 +133,6 @@ class CarsController < ApplicationController
           cegonha.save
         end
 
-        
-
         if params[:editar_localizacao]
           redirect_to edit_car_path(@car, :editar_localizacao => true, :car => @car)   and return
         end

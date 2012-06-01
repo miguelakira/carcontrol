@@ -8,7 +8,7 @@
     <th><%= sortable "Destino" %></th>
     <th><%= sortable "Carros" %></th>
     <% if current_user.admin? %>
-    <th>Ações</th>
+        <th>Ações</th>
     <% end -%>
   </tr>
 
@@ -19,20 +19,15 @@
 
   <tr>
     <td class = "<%= @row_class %> begin"><%= cegonha.placa %></td>
-    <td class = "<%= @row_class %>"><%#= cegonha.motorista.firstname %> <%#= cegonha.motorista.lastname %></td>
-    <td class = "<%= @row_class %>"><% unless cegonha.localizacao.nil? %><%= cegonha.localizacao %> <%= link_to image_tag("edit.png", :border=>0), edit_cegonha_path(cegonha, :editar_localizacao => true, :cegonha => cegonha.id), :class => 'right'  %> <% end -%></td>
+    <td class = "<%= @row_class %>"><%= cegonha.motorista %></td>
+    <td class = "<%= @row_class %>"><% unless cegonha.localizacao.nil? %><%= cegonha.localizacao %> <%= link_to image_tag("edit_local.png", :border=>0), edit_cegonha_path(cegonha, :editar_localizacao => true, :cegonha => cegonha.id), :class => 'right'  %> <% end -%></td>
     <td class = "<%= @row_class %>"><% unless cegonha.cidade_origem.nil? %><%= Cidade.find(cegonha.cidade_origem).text %>, <%= Estado.find(cegonha.estado_origem).sigla %><% end -%> </td>
     <td class = "<%= @row_class %>"><% unless cegonha.cidade_destino.nil? %><%= Cidade.find(cegonha.cidade_destino).text %>, <%= Estado.find(cegonha.estado_destino).sigla %><% end -%></td>
-    <td> <%= cegonha.carros %> carros: <br />
-      <% cegonha.cars.each do |car| %>
-        <%= car.placa %>, 
-      <% end %>
-    </td>
+    <td> <%= carros_na_cegonha(cegonha) %> </td>
     <% if current_user.admin? %>
-    <td class = "<%= @row_class %>"><%= link_to 'Detalhes', cegonha %> | 
-        <%= link_to 'Editar', edit_cegonha_path(cegonha) %> |
-        <%= link_to 'Apagar', cegonha, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
-    </td>
+     <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), cegonha %> &nbsp;
+        <%= link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_cegonha_path(cegonha) %> &nbsp;
+        <%= link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), cegonha, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
     <% end -%>
   </tr>
 <% end %>

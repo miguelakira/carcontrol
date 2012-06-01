@@ -2,7 +2,7 @@ class CegonhasController < ApplicationController
   # GET /cegonhas
   # GET /cegonhas.json
   def index
-    @cegonhas = Cegonha.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page])
+    @cegonhas = Cegonha.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page])
     @cars = Car.all
 
     respond_to do |format|
@@ -26,7 +26,7 @@ class CegonhasController < ApplicationController
   # GET /cegonhas/new.json
   def new
     @cegonha = Cegonha.new
-
+    @editar_localizacao = params[:editar_localizacao]
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @cegonha }
@@ -35,7 +35,19 @@ class CegonhasController < ApplicationController
 
   # GET /cegonhas/1/edit
   def edit
+    @editar_localizacao = params[:editar_localizacao]
     @cegonha = Cegonha.find(params[:id])
+
+    # pega um array com todas as cidades dos estados atualmente no banco, pra encher os forms.
+    @locais_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_id})
+    @destinos_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_destino})
+    @origens_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_origem})
+    # pega o nome das cidades atualmente no banco (origem, destino e atual)
+    unless @cegonha.cidade_id.nil?
+      @cidade_atual = Cidade.find(@cegonha.cidade_id).text 
+      @cidade_origem = Cidade.find(@cegonha.cidade_origem).text
+      @cidade_destino = Cidade.find(@cegonha.cidade_destino).text
+    end
   end
 
   # POST /cegonhas
@@ -46,6 +58,9 @@ class CegonhasController < ApplicationController
 
     respond_to do |format|
       if @cegonha.save
+        if params[:editar_localizacao]
+          redirect_to edit_cegonha_path(@cegonha, :editar_localizacao => true, :cegonha => @cegonha)   and return
+        end
         format.html { redirect_to @cegonha, notice: 'Cegonha was successfully created.' }
         format.json { render json: @cegonha, status: :created, location: @cegonha }
       else
@@ -60,10 +75,34 @@ class CegonhasController < ApplicationController
   def update
     @cegonha = Cegonha.find(params[:id])
     @cegonha.carros = @cegonha.cars.count
+    
+    if params[:salvar_localizacao]
+      @cegonha.estado_id = params[:estado_id]
+      @cegonha.estado_origem = params[:estado_origem]
+      @cegonha.estado_destino = params[:estado_destino]
+      
+      # atençao! Ele vai pegar a cidade pelo nome, e nao separa por estado - pode ser
+      # que se futuramente queira-se comprar a cidade pelo ID, pode dar erro (pegar cidade com mesmo nome mas
+      # de estados diferentes )
+      cidade_atual = Cidade.find_by_text(params[:cidade_id]).id
+      cidade_origem = Cidade.find_by_text(params[:cidade_origem]).id
+      cidade_destino = Cidade.find_by_text(params[:cidade_destino]).id
+      
+      @cegonha.cidade_id = cidade_atual
+      @cegonha.cidade_origem = cidade_origem
+      @cegonha.cidade_destino = cidade_destino
+      @cegonha.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"  
+    end
+
     respond_to do |format|
       if @cegonha.update_attributes(params[:cegonha])
-        format.html { redirect_to @cegonha, notice: 'Cegonha was successfully updated.' }
-        format.json { head :no_content }
+        if params[:editar_localizacao]
+          flash[:notice] = 'Dados atualizados com sucesso!'
+          redirect_to :action => :edit, :cegonha => @cegonha, :editar_localizacao => true  and return
+        else
+          format.html { redirect_to @cegonha, notice: 'Cegonha was successfully updated.' }
+          format.json { head :no_content }
+        end
       else
         format.html { render action: "edit" }
         format.json { render json: @cegonha.errors, status: :unprocessable_entity }
@@ -90,7 +129,7 @@ private
   end  
 
   def sort_column  
-    Car.column_names.include?(params[:sort]) ? params[:sort] : "placa"  
+    Cegonha.column_names.include?(params[:sort]) ? params[:sort] : "placa"  
   end  
 
   def for_sectionid
