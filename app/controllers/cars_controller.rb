@@ -118,11 +118,6 @@ class CarsController < ApplicationController
     @car = Car.new(params[:car])
     @status_pagamentos = StatusPagamento.all
     @car.ativo = params[:ativo] unless params[:ativo].nil?
-    #@cidades = Cidade.all
-    #@car.estado_id = params[:estado_id]
-    #cidade = Cidade.find_by_text(params[:cidade_id]).id unless params[:cidade_id].nil?
-    #@car.cidade_id = cidade
-    #@car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
 
     respond_to do |format|
       if @car.save
