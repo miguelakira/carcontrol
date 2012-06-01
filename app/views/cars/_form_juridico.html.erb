@@ -33,7 +33,7 @@
     </div>
 
     <div class="field">
-      <%= builder.label :contato, "Nome do Contato na Empresa*" %><br />
+      <%= builder.label :contato, "Nome do Contato na Empresa" %><br />
       <%= builder.text_field :contato %>
     </div>
 
@@ -44,17 +44,17 @@
     </div>
 
     <div class="field">
-      <%= builder.label :cnpj, "CNPJ*" %><br />
-      <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30' %> 
+      <%= builder.label :cnpj, "CNPJ* (Digite apenas números)" %><br />
+      <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj)",:maxlength=>"18", :size => '30' %> 
     </div>
 
     <div class="field">
-      <%= builder.label :telefone %>*<br />
+      <%= builder.label :telefone, "Telefone (Digite apenas números, incluindo DDD)" %>*<br />
       <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30'%> 
     </div>
 
     <div class="field">
-      <%= builder.label :celular %><br />
+      <%= builder.label :celular, "Celular: (Digite apenas números, incluindo DDD)" %><br />
       <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' %> 
     </div>
 
@@ -96,7 +96,7 @@
       
 <div class="field">
   <%= f.label :ativo, "Status do Carro" %><br />
-  <% @status = {'Em Trânsito' => 1, 'Descarregado no Pátio' => 2, 'Aguardando Retirada' => 3, 'Entregue ao Cliente' => 0} %>
+  <% @status = {'Em Trânsito' => 1, 'Descarregado no Pátio' => 2, 'Aguardando Retirada' => 3, 'Com Transportadora Contratada' => 4, 'Entregue ao Cliente' => 0} %>
   <%= select_tag :ativo, options_for_select(@status, @car.ativo)   %>
   </div>  
 </fieldset>

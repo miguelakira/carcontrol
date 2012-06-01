@@ -1,14 +1,28 @@
 
 
-<table style = "width:1100px" id="mytable" cellspacing="0" summary="Lista de Vendas" >  
+<table style = "width:1200px" id="mytable" cellspacing="0" summary="Lista de Vendas" >  
     <tr>
-        <th class = 'begin'>Placa</th>
-        <th><%= sortable "modelo" %> </th> 
-        <th ><%= sortable "nome", "comprador" %></th>
-        <th width = "40px"><%= sortable "status_pagamento", "Status do Pagamento" %></th>
-        <th ><%= sortable "localizacao", "Localização Atual" %></th>
-        <th ><%= sortable "Origem" %></th>
-        <th ><%= sortable "Destino" %></th>
+        <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
+        <th width = '10' class = 'none'>Nº</th>
+        <th width = '30'class = 'begin'> Data</th>
+        <th width = '150'> Localização Atual</th>
+        <th width = '150'> Origem </th>
+        <th width = '150'> Destino </th>
+        <th width = '150'> Cliente </th>
+        <th > Modelo </th> 
+        <th width = '70'> Placa </th> 
+        <th width = '50'> Coleta </th>
+        <th width = '50'> Frete </th>
+        <th width = '50'> Pago? </th>
+        <th width = '100'> Telefone </th>
+        <th width = '50'> Acerto </th>
+        
+        <!-- <th><%#= sortable "nome", "comprador" %> Nome</th>
+        <th width = "40px"><%#= sortable "status_pagamento", "Status do Pagamento" %></th>
+        
+        <th ><%#= sortable "localizacao", "Localização Atual" %></th>
+        <th ><%#= sortable "Origem" %></th>
+        <th ><%#= sortable "Destino" %></th> -->
         <% if current_user.admin? %>
             <th width = '130px'>Ações</th>
         <% end -%>
@@ -17,7 +31,7 @@
 <% x = 0%>
 
 
-<% @cars.each do |car| %>
+<% @cars.each_with_index do |car, index| %>
 <% if car.status_pagamento.value == 1  
         @row_class = 'nao-pago' 
     elsif car.status_pagamento.value == 2
@@ -27,21 +41,25 @@
     end %>
 
   <tr>
-    <td class = "<%= @row_class %> begin"><%= car.placa %></td>
-    <td class = "<%= @row_class %>"><%= car.modelo %></td>
-    <% if car.comprador %>
-        <td class = "<%= @row_class %>"><%= car.comprador.nome %> </td>
-    <% elsif car.empresa %>
-        <td class = "<%= @row_class %>"><%= car.empresa.nome %> - <%= car.empresa.contato %> </td>
-    <% end -%>
-    <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
+    
+    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
+    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
+
     <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <%= link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %> <% end -%></td>
     <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
     <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
+    <td class = "<%= @row_class %>"> <%= car.comprador ? car.comprador.nome : "#{car.empresa.nome} - #{car.empresa.contato}" %></td>
+    <td class = "<%= @row_class %>"><%= car.modelo %></td>
+    <td class = "<%= @row_class %>"><%= car.placa %></td>
+    <td class = "<%= @row_class %>"> </td>
+    <td class = "<%= @row_class %>"> </td>
+    <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
+    <td class = "<%= @row_class %>"><%= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td>
+    <td class = "<%= @row_class %>"></td>
     
     <% if current_user.admin? %>
-     <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), car %> &nbsp;
-        <%= link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_car_path(car) %> &nbsp;
+     <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), car %> 
+        <%= link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_car_path(car) %> 
         <%= link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
     <% end -%>
   </tr>
