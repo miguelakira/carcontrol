@@ -1139,17 +1139,17 @@ td.nao-pago a:hover {
 
 
 td.nao-pago {
-  background: #935555;
+  background: #893737;
   color: #ffffff;
 }
 
 td.pendente {
-  background: #e7e377;
+  background: #fbf9be;
   color: black;
 }
 
 td.pendente a {
-  background: #e7e377;
+  background: #fbf9be;
   color: black;
   text-decoration: underline;
 
