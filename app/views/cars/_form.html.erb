@@ -1,8 +1,9 @@
+<% empresas = Empresa.all %>
 <% compradores = Comprador.all %>
 
 <script type = "text/javascript">
 
-function fillFields(oSel)
+function fillFieldsComprador(oSel)
 {
   var oForm = oSel.form;
   
@@ -27,6 +28,35 @@ function fillFields(oSel)
       oForm.comprador_cpf.value='';
       oForm.comprador_telefone.value='';
       oForm.comprador_celular.value='';
+      break;
+  }
+}
+
+function fillFieldsEmpresa(oSel)
+{
+  var oForm = oSel.form;
+  
+  switch (oSel.value)
+  { 
+    <% empresas.each do |empresa| %>
+    case '<%= empresa.cnpj %>':
+      oForm.empresa_nome.value='<%= empresa.nome%>';
+      oForm.empresa_email.value='<%= empresa.email%>';
+      oForm.empresa_contato.value='<%= empresa.contato%>';
+      oForm.empresa_cnpj.value='<%= empresa.cnpj%>';
+      oForm.empresa_telefone.value='<%= empresa.telefone%>';
+      oForm.empresa_celular.value='<%= empresa.celular%>';
+
+    break;
+    
+    <%end%>
+    case '':
+      oForm.empresa_nome.value='';
+      oForm.empresa_email.value='';
+      oForm.empresa_contato.value='';
+      oForm.empresa_cnpj.value='';
+      oForm.empresa_telefone.value='';
+      oForm.empresa_celular.value='';
       break;
   }
 }
@@ -65,33 +95,34 @@ function fillFields(oSel)
 <fieldset> <legend><h5 style="font-size: 1.3em">Dados da Empresa</h5></legend>
   <%= f.fields_for :empresa do |builder| %>
     <div class="field">
+      <%= builder.label :cnpj, "CNPJ*" %><br />
+      <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30', :id => 'empresa_cnpj', :onfocusout => "fillFieldsEmpresa(this)" %> 
+    </div>
+
+    <div class="field">
       <%= builder.label :nome, "Nome da Empresa*" %><br />
-      <%= builder.text_field :nome %>
+      <%= builder.text_field :nome, :id => 'empresa_nome' %>
     </div>
 
     <div class="field">
       <%= builder.label :contato, "Nome do Contato" %><br />
-      <%= builder.text_field :contato %>
+      <%= builder.text_field :contato, :id => 'empresa_contato'  %>
     </div>
 
     <div class="field">
       <%= builder.label :email, "E-Mail" %><br />
-      <%= builder.text_field :email %>
+      <%= builder.text_field :email, :id => 'empresa_email'  %>
     </div>
 
-    <div class="field">
-      <%= builder.label :cnpj, "CNPJ*" %><br />
-      <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30' %> 
-    </div>
 
     <div class="field">
       <%= builder.label :telefone %>*<br />
-      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30'%> 
+      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone' %> 
     </div>
 
     <div class="field">
       <%= builder.label :celular %><br />
-      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' %> 
+      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular' %> 
     </div>
   </fieldset>
  <% end -%>
@@ -101,16 +132,11 @@ function fillFields(oSel)
 <fieldset> <legend><h5 style="font-size: 1.3em">Dados do Comprador</h5></legend>
   <%= f.fields_for :comprador do |builder| %>
   <br />
-  <div class="field">
-    
-    <label>Selecione um Comprador Já Existente ou Preencha os Dados Abaixo</label><br />
-    <%= select_tag "Comprador", options_from_collection_for_select(compradores, "cpf", "nome"), :onchange => "fillFields(this)", :include_blank => true %>
-  </div>
-
-
-<label>Selecione um Comprador Já Existente ou Preencha os Dados Abaixo</label><br />
-    <%= text_field_tag "Comprador", nil, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30' , :onfocusout => "fillFields(this)", :name => "escolha" %>
-  </div>
+  
+    <div class="field">
+      <%= builder.label :cpf, "Digite o CPF cliente*" %><br />
+      <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf', :onfocusout => "fillFieldsComprador(this)" %>
+    </div>
 
     <div class="field">
       <%= builder.label :nome, "Nome Completo*" %><br />
@@ -125,11 +151,6 @@ function fillFields(oSel)
     <div class="field">
       <%= builder.label :rg, "RG*" %><br />
       <%= builder.text_field :rg , :id => 'comprador_rg' %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :cpf, "CPF*" %><br />
-      <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf' %>
     </div>
 
     <div class="field">

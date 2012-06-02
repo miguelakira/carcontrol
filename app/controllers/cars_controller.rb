@@ -13,7 +13,7 @@ class CarsController < ApplicationController
       @cars = sort_by_status_pagamento(ativo)
     else
       
-      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4])
+      @cars = Car.search(params[:search], params[:search_by]).order(:data_compra).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4])
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -119,6 +119,26 @@ class CarsController < ApplicationController
     @status_pagamentos = StatusPagamento.all
     @car.ativo = params[:ativo] unless params[:ativo].nil?
 
+    if @car.comprador
+      compradores = Comprador.all
+      comprador_existente = compradores.collect{|comprador| if comprador.cpf == @car.comprador.cpf; comprador; end}
+      comprador_existente.delete(nil)
+      
+      if !comprador_existente.nil?
+        @car.comprador = Comprador.find(comprador_existente[0][:id])
+      end  
+
+  elsif @car.empresa
+    empresas = Empresa.all
+    empresa_existente = empresas.collect{|empresa| if empresa.cnpj == @car.empresa.cnpj; empresa; end}
+    empresa_existente.delete(nil)
+      
+    if !empresa_existente.nil?
+      @car.empresa = Empresa.find(empresa_existente[0][:id])
+    end  
+  end
+    
+    
     respond_to do |format|
       if @car.save
         # faz update da contagem de carros da cegonha
