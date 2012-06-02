@@ -1,3 +1,38 @@
+<% compradores = Comprador.all %>
+
+<script type = "text/javascript">
+
+function fillFields(oSel)
+{
+  var oForm = oSel.form;
+  
+  switch (oSel.value)
+  { 
+    <% compradores.each do |comprador| %>
+    case '<%= comprador.cpf %>':
+      oForm.comprador_nome.value='<%= comprador.nome%>';
+      oForm.comprador_email.value='<%= comprador.email%>';
+      oForm.comprador_rg.value='<%= comprador.rg%>';
+      oForm.comprador_cpf.value='<%= comprador.cpf%>';
+      oForm.comprador_telefone.value='<%= comprador.telefone%>';
+      oForm.comprador_celular.value='<%= comprador.celular%>';
+
+    break;
+    
+    <%end%>
+    case '':
+      oForm.comprador_nome.value='';
+      oForm.comprador_email.value='';
+      oForm.comprador_rg.value='';
+      oForm.comprador_cpf.value='';
+      oForm.comprador_telefone.value='';
+      oForm.comprador_celular.value='';
+      break;
+  }
+}
+</script>
+
+
 <% if !current_user.admin? %>
   Desculpe, você precisa ter direitos administrativos para visualizar esta página!
 
@@ -9,10 +44,9 @@
 
 
 
-<%= javascript_include_tag :defaults %>
-
 
 <%= form_for(@car) do |f| %>
+
   <% if @car.errors.any? %>
     <div id="error_explanation">
       <h1><%= pluralize(@car.errors.count, "error") %> impediram que a compra fosse salva:</h1>
@@ -66,34 +100,46 @@
 <!-- Dados do comprador -->
 <fieldset> <legend><h5 style="font-size: 1.3em">Dados do Comprador</h5></legend>
   <%= f.fields_for :comprador do |builder| %>
+  <br />
+  <div class="field">
+    
+    <label>Selecione um Comprador Já Existente ou Preencha os Dados Abaixo</label><br />
+    <%= select_tag "Comprador", options_from_collection_for_select(compradores, "cpf", "nome"), :onchange => "fillFields(this)", :include_blank => true %>
+  </div>
+
+
+<label>Selecione um Comprador Já Existente ou Preencha os Dados Abaixo</label><br />
+    <%= text_field_tag "Comprador", nil, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30' , :onfocusout => "fillFields(this)", :name => "escolha" %>
+  </div>
+
     <div class="field">
       <%= builder.label :nome, "Nome Completo*" %><br />
-      <%= builder.text_field :nome %>
+      <%= builder.text_field :nome, :id => 'comprador_nome' %>
     </div>
 
     <div class="field">
       <%= builder.label :email, "E-Mail" %><br />
-      <%= builder.text_field :email %>
+      <%= builder.text_field :email, :id => 'comprador_email' %>
     </div>
 
     <div class="field">
       <%= builder.label :rg, "RG*" %><br />
-      <%= builder.text_field :rg %>
+      <%= builder.text_field :rg , :id => 'comprador_rg' %>
     </div>
 
     <div class="field">
       <%= builder.label :cpf, "CPF*" %><br />
-      <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30' %> 
+      <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf' %>
     </div>
 
     <div class="field">
       <%= builder.label :telefone %>*<br />
-      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30'%> 
+      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_telefone' %>
     </div>
 
     <div class="field">
       <%= builder.label :celular %><br />
-      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' %> 
+      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_celular' %>
     </div>
 
  
@@ -135,8 +181,7 @@
       
 <div class="field">
   <%= f.label :ativo, "Status do Carro" %><br />
-  <% @status = {'Em Trânsito' => 1, 'Descarregado no Pátio' => 2, 'Aguardando Retirada' => 3, 'Entregue ao Cliente' => 0} %>
-  <%= select_tag :ativo, options_for_select(@status, @car.ativo)   %>
+  <%= select_tag :ativo, options_for_select(StatusVeiculo::estados.collect {|p| [p[1], p[0]]}, @car.ativo)   %>
   </div>  
 </fieldset>
   <!-- fim dos dados do veículo -->  
@@ -149,7 +194,8 @@
       <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
     <% end -%>
   </div>
-<% end %>
-
-<%end%>
 <% end -%>
+<% end -%>
+<% end -%>
+
+<%= javascript_include_tag :defaults %>

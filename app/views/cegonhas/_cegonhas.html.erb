@@ -1,6 +1,7 @@
 
 
 <table id="mytable" cellspacing="0" summary="Lista de Vendas">  <tr>
+    <th width = '10' class = 'none'>Nº</th>
     <th class = 'begin'> <%= sortable "placa" %></th>
     <th><%= sortable "firstname", "motorista" %></th>
     <th><%= sortable "localizacao", "Localização Atual" %></th>
@@ -15,9 +16,10 @@
 <% x = 0%>
 
 
-<% @cegonhas.each do |cegonha| %>
+<% @cegonhas.each_with_index do |cegonha, index| %>
 
   <tr>
+    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %> begin"><%= cegonha.placa %></td>
     <td class = "<%= @row_class %>"><%= cegonha.motorista %></td>
     <td class = "<%= @row_class %>"><% unless cegonha.localizacao.nil? %><%= cegonha.localizacao %> <%= link_to image_tag("edit_local.png", :border=>0), edit_cegonha_path(cegonha, :editar_localizacao => true, :cegonha => cegonha.id), :class => 'right'  %> <% end -%></td>

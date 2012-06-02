@@ -17,8 +17,14 @@ class Car < ActiveRecord::Base
   			:presence => true
 
   
-  before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula
+  before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula, :ver_se_pertence_a_cegonha
   after_find :capitaliza_modelo
+
+  def ver_se_pertence_a_cegonha
+    if self.ativo == 0
+      self.cegonha = nil
+    end
+  end
 
   def self.search(search, search_by)
     if search

@@ -13,7 +13,7 @@ class CarsController < ApplicationController
       @cars = sort_by_status_pagamento(ativo)
     else
       
-      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3])
+      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4])
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -122,11 +122,7 @@ class CarsController < ApplicationController
     respond_to do |format|
       if @car.save
         # faz update da contagem de carros da cegonha
-        cegonhas = Cegonha.all
-        cegonhas.each do |cegonha|
-          cegonha.carros = cegonha.cars.count
-          cegonha.save
-        end
+       contagem_carros_cegonha()
 
         if params[:editar_localizacao]
           redirect_to edit_car_path(@car, :editar_localizacao => true, :car => @car)   and return

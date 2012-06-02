@@ -11,7 +11,8 @@ class Comprador < ActiveRecord::Base
   			:presence => true
 
   validates :cpf,
-        :presence => true
+        :presence => true,
+        :uniqueness => true
 
   before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos
 
@@ -30,7 +31,6 @@ class Comprador < ActiveRecord::Base
   #limpa pontuaçao de documentos
   # RG - 41.065.522-5 vira 410655225
   def sanitiza_documentos
-    self.cpf.gsub!(/[^[:alnum:]]/, '')
   	self.rg.gsub!(/[^[:alnum:]]/, '')
   end
 

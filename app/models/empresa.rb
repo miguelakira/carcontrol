@@ -10,7 +10,7 @@ class Empresa < ActiveRecord::Base
   validates :cnpj,
         :presence => true
 
-  before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos
+  before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula
 
   after_find :capitaliza_nome
 
