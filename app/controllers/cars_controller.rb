@@ -124,7 +124,7 @@ class CarsController < ApplicationController
       comprador_existente = compradores.collect{|comprador| if comprador.cpf == @car.comprador.cpf; comprador; end}
       comprador_existente.delete(nil)
       
-      if !comprador_existente.nil?
+      if !comprador_existente.empty?
         @car.comprador = Comprador.find(comprador_existente[0][:id])
       end  
 
@@ -132,8 +132,7 @@ class CarsController < ApplicationController
     empresas = Empresa.all
     empresa_existente = empresas.collect{|empresa| if empresa.cnpj == @car.empresa.cnpj; empresa; end}
     empresa_existente.delete(nil)
-      
-    if !empresa_existente.nil?
+    if !empresa_existente.empty?
       @car.empresa = Empresa.find(empresa_existente[0][:id])
     end  
   end
