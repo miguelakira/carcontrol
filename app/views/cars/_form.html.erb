@@ -96,7 +96,7 @@ function fillFieldsEmpresa(oSel)
   <%= f.fields_for :empresa do |builder| %>
     <div class="field">
       <%= builder.label :cnpj, "CNPJ*" %><br />
-      <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30', :id => 'empresa_cnpj', :onfocusout => "fillFieldsEmpresa(this)" %> 
+      <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj' %> 
     </div>
 
     <div class="field">
@@ -135,7 +135,7 @@ function fillFieldsEmpresa(oSel)
   
     <div class="field">
       <%= builder.label :cpf, "Digite o CPF cliente*" %><br />
-      <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf', :onfocusout => "fillFieldsComprador(this)" %>
+      <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsComprador(this)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf' %>
     </div>
 
     <div class="field">
