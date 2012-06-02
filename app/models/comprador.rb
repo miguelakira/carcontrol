@@ -14,7 +14,7 @@ class Comprador < ActiveRecord::Base
         :presence => true,
         :uniqueness => true
 
-  before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos
+  before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos, :split_nomes
 
   after_find :capitaliza_nome
 
@@ -26,6 +26,15 @@ class Comprador < ActiveRecord::Base
   	if self.email
   		self.email.downcase!
   	end
+  end
+
+  def split_nomes
+    self.firstname, self.middlename, self.lastname = nil
+    nome_array = nome.split
+    self.firstname = nome_array.first
+    self.lastname = nome_array.last
+    nome_array.pop; nome_array.shift
+    self. middlename = nome_array.join(" ") unless nome_array.empty?
   end
 
   #limpa pontuaçao de documentos
