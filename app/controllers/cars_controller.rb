@@ -13,7 +13,7 @@ class CarsController < ApplicationController
       @cars = sort_by_status_pagamento(ativo)
     else
       
-      @cars = Car.search(params[:search], params[:search_by]).order(:data_compra).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4])
+      @cars = Car.search(params[:search], params[:search_by]).order(:data_compra, :created_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4])
     end
     respond_to do |format|
       format.html # index.html.erb
