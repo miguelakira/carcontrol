@@ -124,7 +124,8 @@
   
   <tr>
     <th>Valor a Pagar</th>
-    <td><%= number_to_currency(@car.pagamento.valor_total - @car.pagamento.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$") unless @car.pagamento.valor_pago.nil?%></td>
+    
+    <td><%= number_to_currency(@car.pagamento.valor_total - (@car.pagamento.valor_pago.nil? ? 0 : @car.pagamento.valor_pago) , :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$") %></td>
   </tr>
   
   <tr>
