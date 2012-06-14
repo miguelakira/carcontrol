@@ -182,6 +182,7 @@ class CarsController < ApplicationController
       @car.cidade_origem = cidade_origem
       @car.cidade_destino = cidade_destino
       @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"  
+      @car.cegonha_id = nil
     end
 
     

@@ -141,12 +141,20 @@
     <% end -%>
   </div>
 
-
+<%= ("hello<br />hi").html_safe %>
 </fieldset>
   <!-- fim dos dados do veículo -->  
   <br />
   <div class="actions">
-    <%= f.submit "Salvar", :name => 'salvar_localizacao' %>
+    <% if @car.cegonha %>
+      <%= f.submit "Salvar", :name => 'salvar_localizacao', confirm: "Ao alterar a localização individual do veículo, ele irá automaticamente ser removido da Cegonha #{@car.cegonha.placa}. Para alterar sua localização sem removê-lo da cegonha, atualize a localização diretamente pela cegonha. Deseja alterar a localização e remover o veículo da cegonha mesmo assim?" %>
+      
+
+    <% else %>
+      <%= f.submit "Salvar", :name => 'salvar_localizacao' %>
+      
+    <% end -%>
+    <%= button('Voltar sem Alterar', cars_path) %>
   </div>
 <% end %>
 
