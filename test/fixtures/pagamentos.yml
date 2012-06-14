@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  car_id: 1
+  valor_total: 1.5
+  valor_pago: 1.5
+  data_pagamento: 2012-06-02 20:10:40
+  forma_pagamento: MyString
+  parcelas: 1
+  valor_entrada: 1.5
+
+two:
+  car_id: 1
+  valor_total: 1.5
+  valor_pago: 1.5
+  data_pagamento: 2012-06-02 20:10:40
+  forma_pagamento: MyString
+  parcelas: 1
+  valor_entrada: 1.5

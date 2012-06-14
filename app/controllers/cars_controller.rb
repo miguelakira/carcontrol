@@ -83,6 +83,7 @@ class CarsController < ApplicationController
     else
       @car.build_comprador
     end
+    @car.build_pagamento
     @status_pagamentos = StatusPagamento.all
     @editar_localizacao = params[:editar_localizacao]
     @cegonhas = Cegonha.all
@@ -114,11 +115,11 @@ class CarsController < ApplicationController
   # POST /POST
   # cars /cars.json
   def create
-    
     @car = Car.new(params[:car])
     @status_pagamentos = StatusPagamento.all
     @car.ativo = params[:ativo] unless params[:ativo].nil?
-
+    # vai ajustar o formato para converter pra BigDecimal
+    converter_string_to_bigdecimal(@car, params[:car][:pagamento_attributes])
     if @car.comprador
       compradores = Comprador.all
       comprador_existente = compradores.collect{|comprador| if comprador.cpf == @car.comprador.cpf; comprador; end}
@@ -160,6 +161,11 @@ class CarsController < ApplicationController
   def update
     @car = Car.find(params[:id])
     @car.ativo = params[:ativo] unless params[:ativo].nil?
+    # vai ajustar o formato para converter pra BigDecimal
+    
+    if defined?(params[:car][:pagamento_attributes])
+      converter_string_to_bigdecimal(@car, params[:car][:pagamento_attributes])
+    end
     if params[:salvar_localizacao]
       @car.estado_id = params[:estado_id]
       @car.estado_origem = params[:estado_origem]
@@ -229,4 +235,23 @@ class CarsController < ApplicationController
         format.json  { render :json => @subsections }      
       end
   end
+
+  def converter_string_to_bigdecimal(car, valores)
+      valores[:valor_total].gsub!('.', '')
+      valores[:valor_total].gsub!(',','.')
+      car.pagamento.valor_total = BigDecimal(valores[:valor_total])
+
+      unless valores[:valor_pago].empty?
+        valores[:valor_pago].gsub!('.', '')
+        valores[:valor_pago].gsub!(',','.')
+        car.pagamento.valor_pago = BigDecimal(valores[:valor_pago])
+      end
+
+      unless valores[:valor_entrada].empty?
+        valores[:valor_entrada].gsub!('.', '')
+        valores[:valor_entrada].gsub!(',','.')
+        car.pagamento.valor_entrada = BigDecimal(valores[:valor_entrada])
+      end
+  end
+
 end

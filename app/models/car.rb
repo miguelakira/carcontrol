@@ -1,11 +1,12 @@
 class Car < ActiveRecord::Base
   attr_accessible :localizacao, :modelo, :placa, :rota_id, :status_pagamento_id, :ativo, :estado_id, :data_compra,
-        :cegonha_id, :comprador_attributes, :empresa_attributes
+        :cegonha_id, :comprador_attributes, :empresa_attributes, :pagamento_attributes
   belongs_to :status_pagamento
   belongs_to :cegonha
   belongs_to :comprador
   belongs_to :empresa
-  accepts_nested_attributes_for :comprador, :empresa
+  has_one :pagamento
+  accepts_nested_attributes_for :comprador, :empresa, :pagamento
   
 
 

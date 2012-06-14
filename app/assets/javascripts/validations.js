@@ -86,3 +86,22 @@ function site(v){
     v="http://"+dominio+caminho
     return v
 }
+
+  /*Função que padroniza valor monétario*/
+    function valor(v){
+        v=v.replace(/\D/g,"") //Remove tudo o que não é dígito
+        v=v.replace(/^([0-9]{3}\.?){3}-[0-9]{2}$/,"$1.$2");
+        //v=v.replace(/(\d{3})(\d)/g,"$1,$2")
+        v=v.replace(/(\d)(\d{2})$/,"$1,$2") //Coloca ponto antes dos 2 últimos digitos
+        return v
+    }
+/*Função que padroniza valor monétario MELHOR*/
+function moeda(z){  
+                v = z.value;
+                v=v.replace(/\D/g,"")  //permite digitar apenas números
+        v=v.replace(/[0-9]{12}/,"inválido")   //limita pra máximo 999.999.999,99
+        v=v.replace(/(\d{1})(\d{8})$/,"$1.$2")  //coloca ponto antes dos últimos 8 digitos
+        v=v.replace(/(\d{1})(\d{5})$/,"$1.$2")  //coloca ponto antes dos últimos 5 digitos
+        v=v.replace(/(\d{1})(\d{1,2})$/,"$1,$2")        //coloca virgula antes dos últimos 2 digitos
+                z.value = v;
+        }

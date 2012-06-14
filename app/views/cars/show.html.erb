@@ -96,37 +96,53 @@
     <th>Data da Compra</th>
     <td><%= @car.data_compra.strftime("%d/%m/%Y") unless @car.data_compra.nil? %></td>
   </tr>
-  <tr>
-    <th>Frete</th>
-    <td></td>
-  </tr>
-  <tr>
-    <th>Status do Pagamento</th>
-    <td><%= @car.status_pagamento.status %> </td>
-  </tr>
-  <tr>
-    <th>Forma de Pagamento</th>
-    <td></td>
-  </tr>
-  <tr>
-    <th>Parcelas Pagas</th>
-    <td></td>
-  </tr>
-  <tr>
-    <th>Parcelas a Pagar</th>
-    <td></td>
-  </tr>
-  <tr>
-    <th>Acerto</th>
-    <td></td>
-  </tr>
-
+  
   <tr>
     <th>Status do Carro</th>
     <td><%= StatusVeiculo::estados[@car.ativo] %></td>
   </tr>
 </table>
 
+
+<p><h5>Detalhes do Frete</h1></p>
+
+<table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
+
+<tr>
+    <th style="width:180px">Valor Total do Frete</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= number_to_currency(@car.pagamento.valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$") %></td>
+  </tr>
+  <tr>
+    <th>Status do Pagamento</th>
+    <td><%= @car.status_pagamento.status %> </td>
+  </tr>
+
+  <tr>
+    <th>Valor Pago</th>
+    <td><%= number_to_currency(@car.pagamento.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$") %></td>
+  </tr>
+  
+  <tr>
+    <th>Valor da Entrada</th>
+    <td><%= number_to_currency(@car.pagamento.valor_entrada, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$") %></td>
+    </tr> 
+
+  <tr>
+    <th>Forma de Pagamento</th>
+    <td><%= @car.pagamento.forma_pagamento %></td>
+  </tr>
+
+  <tr>
+    <th>Parcelas Pagas</th>
+    <td></td>
+  </tr>
+
+  <tr>
+    <th>Parcelas a Pagar</th>
+    <td></td>
+  </tr>
+
+</table>
 <br />
 
 <%= button('Editar', edit_car_path(@car)) %>
