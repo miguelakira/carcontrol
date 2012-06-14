@@ -1,6 +1,9 @@
 class Cegonha < ActiveRecord::Base
-  attr_accessible :carros, :comentario, :destino, :localizacao, :origem, :placa, :motorista
+  attr_accessible :carros, :comentario, :destino, :localizacao, :origem, :placa, :motorista_attributes, :empresa_attributes
+  has_one :motorista
   has_many :cars
+  belongs_to :empresa
+  accepts_nested_attributes_for :empresa, :motorista
 
   validates	:placa, 
   			:presence => true, 

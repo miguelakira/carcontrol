@@ -13,7 +13,7 @@
         <th width = '70'> Placa </th> 
         <th width = '140'> Status </th>
         <th width = '50'> Pago? </th>
-        <th width = '100'> Telefone </th>
+        <th width = '80'> Cegonha </th>
         
         <!-- <th><%#= sortable "nome", "comprador" %> Nome</th>
         <th width = "40px"><%#= sortable "status_pagamento", "Status do Pagamento" %></th>
@@ -51,7 +51,8 @@
     <td class = "<%= @row_class %>"><%= car.placa %></td>
     <td class = "<%= @row_class %>"><%= StatusVeiculo::estados[car.ativo] %></td>
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
-    <td class = "<%= @row_class %>"><%= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td>
+    <td class = "<%= @row_class %>"><%= car.cegonha ? car.cegonha.placa : "" %></td>
+    <!--<td class = "<%#= @row_class %>"><%#= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td> -->
     
     <% if current_user.admin? %>
      <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), car %> 

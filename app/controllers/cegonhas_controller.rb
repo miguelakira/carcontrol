@@ -27,6 +27,11 @@ class CegonhasController < ApplicationController
   def new
     @cegonha = Cegonha.new
     @editar_localizacao = params[:editar_localizacao]
+    @cegonha.build_motorista
+    if params[:cegonha_contratada]
+      @cegonha.build_empresa
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @cegonha }

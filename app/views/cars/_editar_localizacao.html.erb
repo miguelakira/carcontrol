@@ -106,11 +106,18 @@
   <div class="field">
     
     <%= f.label :cidade_origem, "Origem do Carro" %><br />
-    <%= select_tag(:estado_origem, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_origem), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_origem')")  %>
+    <% if @car.estado_origem.nil? %>
+      <%= select_tag(:estado_origem, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_origem), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_origem')")  %>
+    <% else %>
+      <%= hidden_field_tag 'estado_origem', @car.estado_origem %>
+      <b><%= Estado.find(@car.estado_origem).nome %> -</b>
+    <% end -%>
     <% if @car.cidade_origem.nil? %>
       <%= select_tag(:cidade_origem) %>
     <% else %>
-      <%= select_tag(:cidade_origem, options_from_collection_for_select(@origens_atual, :text, :text, @cidade_origem)) %>
+      <%= hidden_field_tag 'cidade_origem', @cidade_origem %>
+      <b><%= @cidade_origem %></b>
+      <%#= select_tag(:cidade_origem, options_from_collection_for_select(@origens_atual, :text, :text, @cidade_origem)) %>
     <% end -%>
   </div>
 
@@ -119,11 +126,18 @@
   <div class="field">
     
     <%= f.label :cidade_destino, "Destino do Carro" %><br />
-    <%= select_tag(:estado_destino, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_destino), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_destino')")  %>
+    <% if @car.estado_destino.nil? %>
+      <%= select_tag(:estado_destino, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_destino), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_destino')")  %>
+    <% else %>
+      <%= hidden_field_tag 'estado_destino', @car.estado_destino %>
+      <b><%= Estado.find(@car.estado_destino).nome %> -</b>
+    <% end -%>
     <% if @car.cidade_destino.nil? %>
       <%= select_tag(:cidade_destino) %>
     <% else %>
-      <%= select_tag(:cidade_destino, options_from_collection_for_select(@destinos_atual, :text, :text, @cidade_destino)) %>
+      <%= hidden_field_tag 'cidade_destino', @cidade_destino %>
+      <b><%= @cidade_destino %></b>
+      <%#= select_tag(:cidade_destino, options_from_collection_for_select(@destinos_atual, :text, :text, @cidade_destino)) %>
     <% end -%>
   </div>
 

@@ -24,6 +24,45 @@
     </div>
   <% end %>
   <!-- dados do veículo -->
+
+<% if @cegonha.empresa %>
+<!-- Dados da empresa -->
+<fieldset> <legend><h5 style="font-size: 1.3em">Dados da Empresa</h5></legend>
+  <%= f.fields_for :empresa do |builder| %>
+    <div class="field">
+      <%= builder.label :cnpj, "CNPJ*" %><br />
+      <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj' %> 
+    </div>
+
+    <div class="field">
+      <%= builder.label :nome, "Nome da Empresa*" %><br />
+      <%= builder.text_field :nome, :id => 'empresa_nome' %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :contato, "Nome do Contato" %><br />
+      <%= builder.text_field :contato, :id => 'empresa_contato'  %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :email, "E-Mail" %><br />
+      <%= builder.text_field :email, :id => 'empresa_email'  %>
+    </div>
+
+
+    <div class="field">
+      <%= builder.label :telefone %>*<br />
+      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone' %> 
+    </div>
+
+    <div class="field">
+      <%= builder.label :celular %><br />
+      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular' %> 
+    </div>
+  <% end -%>
+  </fieldset>
+ <% end -%>
+
   <fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
   
     <div class="field">
@@ -31,10 +70,33 @@
       <%= f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15' %> 
     </div>
 
-  <div class="field">
-      <%= f.label :motorista %><br />
-      <%= f.text_field :motorista %> 
+    <%= f.fields_for :motorista do |builder| %>
+    <div class="field">
+      <%= builder.label :cpf, "CPF*" %><br />
+      <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsMotorista(this)",:maxlength=>"14", :size => '30', :id => 'motorista_cpf' %> 
     </div>
+
+    <div class="field">
+      <%= builder.label :nome, "Nome do Motorista*" %><br />
+      <%= builder.text_field :nome, :id => 'motorista_nome' %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :email, "E-Mail" %><br />
+      <%= builder.text_field :email, :id => 'motorista_email'  %>
+    </div>
+
+
+    <div class="field">
+      <%= builder.label :telefone %>*<br />
+      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'motorista_telefone' %> 
+    </div>
+
+    <div class="field">
+      <%= builder.label :celular %><br />
+      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'motorista_celular' %> 
+    </div>
+  <% end -%>
 
     <div class="field">
         <%= carros_na_cegonha(@cegonha) %>

@@ -5,10 +5,7 @@
   <tr>
     <th style="width:150px">Placa da Cegonha</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @cegonha.placa %> </td>
-  <tr>
-    <th>Motorista</th>
-    <td><%= @cegonha.motorista %></td>
-  </tr>
+  
   <tr>
     <th>Carros na Cegonha</th>
     <td> <%= carros_na_cegonha(@cegonha) %></td>
@@ -32,7 +29,37 @@
   <tr>  
 </table>
 
-<br />
 
+<p><h5>Detalhes do Motorista</h5> </p>
+<table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
+  <tr>
+    <th style="width:150px">Nome</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= @cegonha.motorista.nome %> </td>
+  
+  <tr>
+    <th>RG</th>
+    <td> <%= @cegonha.motorista.rg %></td>
+  </tr>
+  <tr>
+    <th>CPF</th>
+    <td><%= @cegonha.motorista.cpf %></td>
+  </tr>
+  <tr>
+    <th>Telefone</th>
+    <td><%= @cegonha.motorista.telefone %></td>
+  </tr>
+  <tr>
+    <th>Celular</th>
+    <td><%= @cegonha.motorista.celular %></td>
+  </tr>
+  <tr>
+    <th>E-Mail</th>
+    <td><%= @cegonha.motorista.email %></td>
+  </tr>
+  
+  
+</table>
+
+<br />
 <%= button('Editar', edit_car_path(@car)) %>
 <%= button('Voltar', cars_path) %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120602234257) do
+ActiveRecord::Schema.define(:version => 20120614172754) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(:version => 20120602234257) do
     t.integer  "cidade_destino"
     t.integer  "estado_origem"
     t.integer  "estado_destino"
-    t.integer  "ativo"
     t.integer  "cegonha_id"
+    t.integer  "ativo"
     t.integer  "comprador_id"
     t.integer  "empresa_id"
   end
@@ -53,12 +53,12 @@ ActiveRecord::Schema.define(:version => 20120602234257) do
   end
 
   create_table "cidades", :force => true do |t|
-    t.string   "text"
-    t.integer  "estado_id"
-    t.boolean  "capital"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string  "text",      :limit => 40, :null => false
+    t.integer "estado_id",               :null => false
+    t.boolean "capital",                 :null => false
   end
+
+  add_index "cidades", ["estado_id"], :name => "uf"
 
   create_table "compradores", :force => true do |t|
     t.string   "nome"
@@ -86,8 +86,20 @@ ActiveRecord::Schema.define(:version => 20120602234257) do
   end
 
   create_table "estados", :force => true do |t|
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.string   "nome",       :limit => 256, :null => false
+    t.string   "sigla",      :limit => 256, :null => false
+  end
+
+  create_table "motorista", :force => true do |t|
     t.string   "nome"
-    t.string   "sigla"
+    t.integer  "cegonha_id"
+    t.string   "telefone"
+    t.string   "celular"
+    t.string   "rg"
+    t.string   "cpf"
+    t.string   "email"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

@@ -21,7 +21,7 @@
   <tr>
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %> begin"><%= cegonha.placa %></td>
-    <td class = "<%= @row_class %>"><%= cegonha.motorista %></td>
+    <td class = "<%= @row_class %>"><%= cegonha.motorista.nome %></td>
     <td class = "<%= @row_class %>"><% unless cegonha.localizacao.nil? %><%= cegonha.localizacao %> <%= link_to image_tag("edit_local.png", :border=>0), edit_cegonha_path(cegonha, :editar_localizacao => true, :cegonha => cegonha.id), :class => 'right'  %> <% end -%></td>
     <td class = "<%= @row_class %>"><% unless cegonha.cidade_origem.nil? %><%= Cidade.find(cegonha.cidade_origem).text %>, <%= Estado.find(cegonha.estado_origem).sigla %><% end -%> </td>
     <td class = "<%= @row_class %>"><% unless cegonha.cidade_destino.nil? %><%= Cidade.find(cegonha.cidade_destino).text %>, <%= Estado.find(cegonha.estado_destino).sigla %><% end -%></td>
