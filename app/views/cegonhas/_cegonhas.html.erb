@@ -2,11 +2,11 @@
 
 <table id="mytable" cellspacing="0" summary="Lista de Vendas" style = "width:1200px">  <tr>
     <th width = '10' class = 'none'>Nº</th>
-    <th class = 'begin'> <%= sortable "placa" %></th>
-    <th ><%= sortable "firstname", "motorista" %></th>
-    <th  width = '180'><%= sortable "localizacao", "Localização Atual" %></th>
-    <th  width = '180'><%= sortable "Origem" %></th>
-    <th  width = '180'><%= sortable "Destino" %></th>
+    <th width = '70' class = 'begin'> <%= sortable "placa" %></th>
+    <th width = '150'><%= sortable "firstname", "motorista" %></th>
+    <th width = '180'><%= sortable "localizacao", "Localização Atual" %></th>
+    <th width = '180'><%= sortable "Origem" %></th>
+    <th width = '180'><%= sortable "Destino" %></th>
     <th ><%= sortable "Carros" %></th>
     <% if current_user.admin? %>
         <th width = '140'>Ações</th>
