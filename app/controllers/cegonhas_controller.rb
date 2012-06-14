@@ -96,6 +96,17 @@ class CegonhasController < ApplicationController
       @cegonha.cidade_id = cidade_atual
       @cegonha.cidade_origem = cidade_origem
       @cegonha.cidade_destino = cidade_destino
+      
+      # altera a localizacao de todos os carros que estao na cegonha
+      unless @cegonha.cars.nil?
+        @cegonha.cars.each do |car|
+          car.estado_id = @cegonha.estado_id
+          car.cidade_id = @cegonha.cidade_id
+          car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"  
+          car.save
+        end
+      end
+      
       @cegonha.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"  
     end
 
