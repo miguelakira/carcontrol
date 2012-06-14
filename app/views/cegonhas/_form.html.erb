@@ -30,7 +30,7 @@
 <fieldset> <legend><h5 style="font-size: 1.3em">Dados da Empresa</h5></legend>
   <%= f.fields_for :empresa do |builder| %>
     <div class="field">
-      <%= builder.label :cnpj, "CNPJ*" %><br />
+      <%= builder.label :cnpj, "CNPJ* da Empresa" %><br />
       <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj' %> 
     </div>
 
@@ -72,7 +72,7 @@
 
     <%= f.fields_for :motorista do |builder| %>
     <div class="field">
-      <%= builder.label :cpf, "CPF*" %><br />
+      <%= builder.label :cpf, "CPF do Motorista*" %><br />
       <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsMotorista(this)",:maxlength=>"14", :size => '30', :id => 'motorista_cpf' %> 
     </div>
 
