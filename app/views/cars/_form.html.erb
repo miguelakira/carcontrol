@@ -1,8 +1,6 @@
 <% empresas = Empresa.all %>
 <% compradores = Comprador.all %>
 
-
-
 <% if !current_user.admin? %>
   Desculpe, você precisa ter direitos administrativos para visualizar esta página!
 
@@ -61,6 +59,11 @@
       <%= builder.label :celular %><br />
       <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular' %> 
     </div>
+
+    <div class="field">
+      <%= builder.label :observacao, "Observação" %><br />
+      <%= builder.text_area :observacao, :cols => 40, :rows => 7 %> 
+    </div>
   </fieldset>
  <% end -%>
 <% elsif @car.comprador %>
@@ -100,6 +103,11 @@
       <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_celular' %>
     </div>
 
+    <div class="field">
+      <%= builder.label :observacao, "Observação" %><br />
+      <%= builder.text_area :observacao, :cols => 40, :rows => 7 %> 
+    </div>
+
  
   <% end %>
   </fieldset>
@@ -125,6 +133,11 @@
     <%= f.label :data_compra, "Data da Compra" %><br />
     <%= f.date_select :data_compra, :order => [:day, :month, :year]  %> 
   </div>
+
+  <div class="field">
+    <%= f.label :data_prevista, "Data Prevista de Entrega" %><br />
+    <%= f.date_select :data_prevista, :order => [:day, :month, :year]  %> 
+  </div>
       
   <div class="field">
     <%= f.label :status_pagamento_id %><br />
@@ -140,6 +153,11 @@
     <%= f.label :ativo, "Status do Carro" %><br />
     <%= select_tag :ativo, options_for_select(StatusVeiculo::estados.collect {|p| [p[1], p[0]]}, @car.ativo)   %>
   </div>  
+
+  <div class="field">
+      <%= f.label :observacao, "Observação" %><br />
+      <%= f.text_area :observacao, :cols => 40, :rows => 7 %> 
+    </div>
 </fieldset>
   <!-- fim dos dados do veículo -->  
 
@@ -153,14 +171,29 @@
       &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
     </div>
 
-    <div class="field">
-      <%= builder.label :parcelas, "Parcelas" %><br />
-      &nbsp;&nbsp;&nbsp;<%= builder.text_field :parcelas, :size => 5%>
-    </div>
+    <!--<div class="field">
+      <%#= builder.label :parcelas, "Parcelas" %><br />
+      &nbsp;&nbsp;&nbsp;<%#= builder.text_field :parcelas, :size => 5%>
+    </div>-->
     
     <div class="field">
       <%= builder.label :valor_total, "Valor Total" %><br />
       R$<%= builder.text_field :valor_total, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :taxa_plataforma, "Taxa de Plataforma" %><br />
+      R$<%= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :taxa_despacho, "Taxa de Redespacho" %><br />
+      R$<%= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :desconto, "Desconto" %><br />
+      R$<%= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">
@@ -169,9 +202,11 @@
     </div>
 
     <div class="field">
-      <%= builder.label :valor_entrada, "Valor da Entrada" %><br />
-      R$<%= builder.text_field :valor_entrada, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.valor_entrada, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      <%= builder.label :observacao, "Observação" %><br />
+      <%= builder.text_area :observacao, :cols => 40, :rows => 7 %> 
     </div>
+
+    
 
   <% end -%>
 

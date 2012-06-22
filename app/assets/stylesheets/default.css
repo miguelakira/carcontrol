@@ -1102,6 +1102,45 @@ td.alt {
 }
 
 
+td.nao-pago a {
+  color: #F00;
+  text-decoration: underline;
+
+}
+
+td.nao-pago a:hover {
+  text-decoration: underline;
+}
+
+
+
+td.nao-pago {
+ 
+  color: #F00;
+}
+
+td.pendente {
+  background: #fbf9be;
+  color: black;
+}
+
+td.none {
+  background: #fff;
+  color: black;
+  border: none;
+  padding:2px 2px 2px 4px;
+
+}
+
+
+
+td.pendente a {
+  background: #fbf9be;
+  color: black;
+  text-decoration: underline;
+
+}
+
 
 th.spec {
   border-left: 1px solid #C1DAD7;
@@ -1134,44 +1173,7 @@ hr.small{
     text-style: left;
 }
 
-td.nao-pago a {
-  color: #ffffff;
-  text-decoration: underline;
 
-}
-
-td.nao-pago a:hover {
-  text-decoration: underline;
-}
-
-
-
-td.nao-pago {
-  background: #893737;
-  color: #ffffff;
-}
-
-td.pendente {
-  background: #fbf9be;
-  color: black;
-}
-
-td.none {
-  background: #fff;
-  color: black;
-  border: none;
-  padding:2px 2px 2px 4px;
-
-}
-
-
-
-td.pendente a {
-  background: #fbf9be;
-  color: black;
-  text-decoration: underline;
-
-}
 
 /*------------ Flecha do sortable -----------------_*/
 

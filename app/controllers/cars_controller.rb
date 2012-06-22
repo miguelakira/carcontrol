@@ -249,11 +249,25 @@ class CarsController < ApplicationController
         car.pagamento.valor_pago = BigDecimal(valores[:valor_pago])
       end
 
-      unless valores[:valor_entrada].empty?
-        valores[:valor_entrada].gsub!('.', '')
-        valores[:valor_entrada].gsub!(',','.')
-        car.pagamento.valor_entrada = BigDecimal(valores[:valor_entrada])
+      unless valores[:taxa_despacho].empty?
+        valores[:taxa_despacho].gsub!('.', '')
+        valores[:taxa_despacho].gsub!(',','.')
+        car.pagamento.taxa_despacho = BigDecimal(valores[:taxa_despacho])
       end
+
+      unless valores[:taxa_plataforma].empty?
+        valores[:taxa_plataforma].gsub!('.', '')
+        valores[:taxa_plataforma].gsub!(',','.')
+        car.pagamento.taxa_plataforma = BigDecimal(valores[:taxa_plataforma])
+      end
+
+      unless valores[:desconto].empty?
+        valores[:desconto].gsub!('.', '')
+        valores[:desconto].gsub!(',','.')
+        car.pagamento.desconto = BigDecimal(valores[:desconto])
+      end
+
+
   end
 
 end

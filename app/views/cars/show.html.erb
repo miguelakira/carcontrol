@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <% if @car.comprador %>
-<p><h5>Detalhes do Comprador</h5> </p>
-<table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
+<p><h5>Detalhes do Cliente</h5> </p>
+<table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:600px">  
   <tr>
-    <th style="width:180px">Nome do Comprador</th>
+    <th style="width:180px">Nome do Cliente</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @car.comprador.nome %> </td>
   <tr>
     <th>RG</th>
@@ -30,12 +30,16 @@
     <th>E-Mail</th>
     <td><%= @car.comprador.email %></td>
   </tr>
+  <tr> 
+    <th style = "height:50px">Observação</th>
+    <td><%= @car.comprador.observacao %></td>
+  </tr>
   
 </table>
 
 <% elsif @car.empresa %>
 <p><h5>Detalhes da Empresa</h5> </p>
-<table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:600px">  
   <tr>
     <th style="width:180px">Nome da Empresa</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @car.empresa.nome %> </td>
@@ -63,11 +67,15 @@
     <th>E-Mail</th>
     <td><%= @car.empresa.email %></td>
   </tr>
+  <tr> 
+    <th style = "height:50px">Observação</th>
+    <td><%= @car.empresa.observacao %></td>
+  </tr>
 </table>
 <% end -%>
 
 <p><h5>Detalhes do Carro</h1></p>
-<table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:600px">  
   <tr>
     <th style="width:180px" >Modelo do Carro</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @car.modelo %></td>
@@ -101,55 +109,74 @@
     <th>Status do Carro</th>
     <td><%= StatusVeiculo::estados[@car.ativo] %></td>
   </tr>
+
+  <tr> 
+    <th style = "height:50px">Observação</th>
+    <td><%= @car.observacao %></td>
+  </tr>
 </table>
+
 
 
 <p><h5>Detalhes do Frete</h1></p>
 
-<table id="mytable" cellspacing="0" summary="Detalhes do Comprador" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:600px">  
 
 <tr>
-    <th style="width:180px">Valor Total do Frete</th>
-    <td style='border-top: 1px solid #C1DAD7;'><%= number_to_currency(@car.pagamento.valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$") %></td>
-  </tr>
-  <tr>
-    <th>Status do Pagamento</th>
-    <td><%= @car.status_pagamento.status %> </td>
+    <th style="width:180px">Status do Pagamento</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= @car.status_pagamento.status %></td>
   </tr>
 
-  <tr>
-    <th>Valor Pago</th>
-    <td><%= number_to_currency(@car.pagamento.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$") %></td>
+<tr>
+    <th>Valor do Frete</th>
+    <td> <%= retorna_valor_monetario(@car.pagamento.valor_total) %></td>
   </tr>
-  
-  <tr>
-    <th>Valor a Pagar</th>
+
+<tr>
+    <th>Taxa de Redespacho</th>
+    <td><%= retorna_valor_monetario(@car.pagamento.taxa_despacho) %></td>
+</tr>
+
+<tr>
+    <th>Taxa de Plataforma</th>
+    <td><%= retorna_valor_monetario(@car.pagamento.taxa_plataforma) %></td>
+</tr>
+
+<tr>
+    <th>Desconto</th>
     
-    <td><%= number_to_currency(@car.pagamento.valor_total - (@car.pagamento.valor_pago.nil? ? 0 : @car.pagamento.valor_pago) , :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$") %></td>
-  </tr>
+    <td>-<%= retorna_valor_monetario(@car.pagamento.desconto) %></td>
+</tr>
+
+<tr>
+    <th>Valor Pago</th>
+    <td>-<%= retorna_valor_monetario(@car.pagamento.valor_pago) %></td>
+</tr>
   
+<tr>
+    <th>Valor Total</th>
+    <td><%= retorna_total_do_frete(@car) %></td>
+</tr> 
+
   <tr>
-    <th>Valor da Entrada</th>
-    <td><%= number_to_currency(@car.pagamento.valor_entrada, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$") %></td>
-    </tr> 
+    <th>Saldo Devedor</th>
+    <td><%= retorna_saldo_devedor(@car) %></td>
+  </tr>
 
   <tr>
     <th>Forma de Pagamento</th>
     <td><%= @car.pagamento.forma_pagamento %></td>
   </tr>
 
-  <tr>
-    <th>Parcelas Pagas</th>
-    <td></td>
+  <tr> 
+    <th style = "height:50px">Observação</th>
+    <td><%= @car.pagamento.observacao %></td>
   </tr>
 
-  <tr>
-    <th>Parcelas a Pagar</th>
-    <td></td>
-  </tr>
+
 
 </table>
 <br />
 
-<%= button('Editar', edit_car_path(@car)) %>
+<% if @car.ativo? %><%= button('Editar', edit_car_path(@car)) %><% end -%>
 <%= button('Voltar', cars_path) %>

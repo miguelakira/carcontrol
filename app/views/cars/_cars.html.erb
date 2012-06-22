@@ -13,6 +13,7 @@
         <th width = '70'> Placa </th> 
         <th width = '140'> Status </th>
         <th width = '50'> Pago? </th>
+        <th width = '100'> Saldo<br/>Total </th>
         <th width = '80'> Cegonha </th>
         
         <!-- <th><%#= sortable "nome", "comprador" %> Nome</th>
@@ -43,7 +44,7 @@
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
 
-    <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <%= link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %> <% end -%></td>
+    <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <% if car.ativo? %><%= link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %><% end -%> <% end -%></td>
     <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
     <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
     <td class = "<%= @row_class %>"> <%= car.comprador ? car.comprador.nome : car.empresa.nome %></td>
@@ -51,13 +52,17 @@
     <td class = "<%= @row_class %>"><%= car.placa %></td>
     <td class = "<%= @row_class %>"><%= StatusVeiculo::estados[car.ativo] %></td>
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
-    <td class = "<%= @row_class %>"><%= car.cegonha ? car.cegonha.placa : "" %></td>
+    <td class = "<%= @row_class %>"><%= retorna_total_do_frete(car) %> 
+    </td>
+    <td class = "<%= @row_class %>"><%= car.cegonha ? link_to(car.cegonha.placa, car.cegonha) : "" %></td>
     <!--<td class = "<%#= @row_class %>"><%#= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td> -->
     
     <% if current_user.admin? %>
      <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), car %> 
-        <%= link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_car_path(car) %> 
-        <%= link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
+        <% if car.ativo? %>
+            <%= link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_car_path(car) %> 
+            <%= link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
+        <% end -%>
     <% end -%>
   </tr>
 <% end %>

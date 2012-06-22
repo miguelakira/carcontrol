@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614172754) do
+ActiveRecord::Schema.define(:version => 20120622203907) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20120614172754) do
     t.integer  "ativo"
     t.integer  "comprador_id"
     t.integer  "empresa_id"
+    t.string   "observacao"
+    t.datetime "data_prevista"
   end
 
   create_table "cegonhas", :force => true do |t|
@@ -50,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20120614172754) do
     t.integer  "cidade_id"
     t.integer  "estado_id"
     t.string   "motorista"
+    t.string   "observacao"
+    t.integer  "empresa_id"
   end
 
   create_table "cidades", :force => true do |t|
@@ -72,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20120614172754) do
     t.string   "middlename"
     t.string   "lastname"
     t.string   "cpf"
+    t.string   "observacao"
   end
 
   create_table "empresas", :force => true do |t|
@@ -83,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20120614172754) do
     t.string   "contato"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "observacao"
   end
 
   create_table "estados", :force => true do |t|
@@ -108,12 +114,15 @@ ActiveRecord::Schema.define(:version => 20120614172754) do
     t.integer  "car_id"
     t.datetime "data_pagamento"
     t.string   "forma_pagamento"
-    t.integer  "parcelas"
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
     t.decimal  "valor_total",     :precision => 8, :scale => 2
     t.decimal  "valor_pago",      :precision => 8, :scale => 2
-    t.decimal  "valor_entrada",   :precision => 8, :scale => 2
+    t.string   "observacao"
+    t.decimal  "taxa_despacho",   :precision => 8, :scale => 2
+    t.decimal  "taxa_plataforma", :precision => 8, :scale => 2
+    t.decimal  "desconto",        :precision => 8, :scale => 2
+    t.decimal  "saldo_devedor",   :precision => 8, :scale => 2
   end
 
   create_table "status_pagamentos", :force => true do |t|

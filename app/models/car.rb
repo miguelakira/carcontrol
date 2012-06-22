@@ -1,6 +1,6 @@
 class Car < ActiveRecord::Base
   attr_accessible :localizacao, :modelo, :placa, :rota_id, :status_pagamento_id, :ativo, :estado_id, :data_compra,
-        :cegonha_id, :comprador_attributes, :empresa_attributes, :pagamento_attributes
+        :data_prevista, :cegonha_id, :comprador_attributes, :empresa_attributes, :pagamento_attributes, :observacao
   belongs_to :status_pagamento
   belongs_to :cegonha
   belongs_to :comprador

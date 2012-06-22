@@ -7,9 +7,19 @@ module CegonhasHelper
       frase = "#{cegonha.carros} carros:"
     end 
     cegonha.cars.each do |car|
-    frase = frase + " #{car.placa}"
+    frase = frase + link_to(car.placa, car)
     cegonha.cars.last == car ? frase = frase + '.' :frase = frase + ','
     end
     return frase
   end
+
+  def retorna_valor_dos_fretes(cegonha)
+    valor_total = 0
+    cegonha.cars.each do |car|
+      valor_total += car.pagamento.valor_total + car.pagamento.taxa_despacho + car.pagamento.taxa_plataforma - car.pagamento.desconto
+    end
+  return number_to_currency(valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")  
+  end
+
+  
 end
