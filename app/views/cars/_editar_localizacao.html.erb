@@ -94,8 +94,7 @@
     
     <%= f.label :localizacao, "Localização Atual" %><br />
     <% if @car.estado_id.nil? %>
-      <%= select_tag(:estado_id) %>
-      
+      <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_id')")  %>
     <%else %>
       <% if @car.cidade_origem.nil? %>
         <%= hidden_field_tag 'estado_id', @car.estado_id %>

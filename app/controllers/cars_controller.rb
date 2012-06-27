@@ -210,18 +210,37 @@ class CarsController < ApplicationController
     end
     
     
-    # se alterar a cegonha, a localizaçao atual vai receber os valores da cegonha
-    if !@car.cegonha_id and !params[:car][:cegonha_id].nil?
-      unless (params[:car][:cegonha_id]).empty?
+    
+    # se o carro ja esta na cegonha e a cegonha foi mudada
+    if @car.cegonha
+      if params[:car]
+        if @car.cegonha.id != params[:car][:cegonha_id]
+          @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id) unless params[:car][:cegonha_id].empty?
+        end
+      end
+    end
+    #se o carro nao estava na cegonha e foi colocado em uma
+    if !@car.cegonha
+      if params[:car]
+        @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id) unless params[:car][:cegonha_id].empty?
+      end
+    end
+
+
+    
+=begin    if !@car.cegonha_id.nil? and !params[:car].nil?
+      unless (params[:car][:cegonha_id]).nil?
         @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id)
       end
-    elsif @car.cegonha_id
+    
+    elsif @car.cegonha_id and params[:car]
       if @car.cegonha_id != params[:car][:cegonha_id]
         unless (params[:car][:cegonha_id]).empty?
           @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id)
         end
       end
     end
+=end
     respond_to do |format|
       if @car.update_attributes(params[:car])
         # faz update da contagem de carros da cegonha
