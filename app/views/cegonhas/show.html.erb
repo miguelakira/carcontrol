@@ -5,10 +5,18 @@
   <tr>
     <th style="width:150px">Placa da Cegonha</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @cegonha.placa %> </td>
-  
+  </tr>  
+
+  <% if @cegonha.empresa %>
+    <tr>
+      <th>Pertencente à Empresa</th>
+      <td> <%= @cegonha.empresa.nome %></td>
+    </tr>
+  <% end %>
+
   <tr>
     <th>Carros na Cegonha</th>
-    <td> <%= carros_na_cegonha(@cegonha) %></td>
+    <td> <%= raw(carros_na_cegonha(@cegonha)).html_safe %></td>
   </tr>
   <tr>
     <th>Localização Atual</th>
@@ -68,7 +76,7 @@
 </table>
 <%if @cegonha.empresa %>
 <br />
-  <p><h5>Detalhes do Frete</h1></p>
+  <p><h5>Detalhes do Frete da Empresa Contratada</h1></p>
 
 
 <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:600px">  

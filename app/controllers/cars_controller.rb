@@ -119,11 +119,11 @@ class CarsController < ApplicationController
     @destinos_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_destino})
     @origens_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_origem})
     # pega o nome das cidades atualmente no banco (origem, destino e atual)
-    unless @car.cidade_id.nil?
-      @cidade_atual = Cidade.find(@car.cidade_id).text 
-      @cidade_origem = Cidade.find(@car.cidade_origem).text
-      @cidade_destino = Cidade.find(@car.cidade_destino).text
-    end
+    
+    @cidade_atual = Cidade.find(@car.cidade_id).text unless @car.cidade_id.nil?
+    @cidade_origem = Cidade.find(@car.cidade_origem).text unless @car.cidade_origem.nil?
+    @cidade_destino = Cidade.find(@car.cidade_destino).text unless @car.cidade_destino.nil?
+    
 
   end
 
@@ -162,6 +162,10 @@ class CarsController < ApplicationController
        contagem_carros_cegonha()
 
         if params[:editar_localizacao]
+          # se ao criar o carro, ele foi inserido na cegonha, pega a localizacao atual dela
+          if @car.cegonha
+            @car.update_attributes(:localizacao => @car.cegonha.localizacao, :cidade_id => @car.cegonha.cidade_id, :estado_id => @car.cegonha.estado_id)
+          end
           redirect_to edit_car_path(@car, :editar_localizacao => true, :car => @car)   and return
         end
         format.html { redirect_to @car, notice: 'Compra gerada com sucesso' }
@@ -184,6 +188,9 @@ class CarsController < ApplicationController
       converter_string_to_bigdecimal(@car, params[:car][:pagamento_attributes])
     end
     if params[:salvar_localizacao]
+      if !@car.estado_origem.nil?
+        @car.cegonha_id = nil
+      end
       @car.estado_id = params[:estado_id]
       @car.estado_origem = params[:estado_origem]
       @car.estado_destino = params[:estado_destino]
@@ -199,11 +206,22 @@ class CarsController < ApplicationController
       @car.cidade_origem = cidade_origem
       @car.cidade_destino = cidade_destino
       @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"  
-      @car.cegonha_id = nil
+      
     end
-
     
     
+    # se alterar a cegonha, a localizaçao atual vai receber os valores da cegonha
+    if !@car.cegonha_id and !params[:car][:cegonha_id].nil?
+      unless (params[:car][:cegonha_id]).empty?
+        @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id)
+      end
+    elsif @car.cegonha_id
+      if @car.cegonha_id != params[:car][:cegonha_id]
+        unless (params[:car][:cegonha_id]).empty?
+          @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id)
+        end
+      end
+    end
     respond_to do |format|
       if @car.update_attributes(params[:car])
         # faz update da contagem de carros da cegonha

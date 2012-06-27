@@ -93,11 +93,27 @@
   <div class="field">
     
     <%= f.label :localizacao, "Localização Atual" %><br />
-    <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_id')")  %>
+    <% if @car.estado_id.nil? %>
+      <%= select_tag(:estado_id) %>
+      
+    <%else %>
+      <% if @car.cidade_origem.nil? %>
+        <%= hidden_field_tag 'estado_id', @car.estado_id %>
+        <b><%= Estado.find(@car.estado_id).nome %> -</b>
+      <% else %>
+        <%= select_tag(:estado_id, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @car.estado_id), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_id')")  %>
+      <% end -%>
+    <% end %>
+
     <% if @car.cidade_id.nil? %>
       <%= select_tag(:cidade_id) %>
     <% else %>
-      <%= select_tag(:cidade_id, options_from_collection_for_select(@locais_atual, :text, :text, @cidade_atual)) %>
+      <%if @car.cidade_destino.nil? %>
+        <%= hidden_field_tag 'cidade_id', @cidade_atual %>
+        <b><%= @cidade_atual %></b>
+      <% else %>
+        <%= select_tag(:cidade_id, options_from_collection_for_select(@locais_atual, :text, :text, @cidade_atual)) %>
+      <% end -%>
     <% end -%>
   </div>
 
@@ -145,7 +161,8 @@
   <!-- fim dos dados do veículo -->  
   <br />
   <div class="actions">
-    <% if @car.cegonha %>
+    
+    <% if @car.cegonha and !@car.cidade_origem.nil? %>
       <%= f.submit "Salvar", :name => 'salvar_localizacao', confirm: "Ao alterar a localização individual do veículo, ele irá automaticamente ser removido da Cegonha #{@car.cegonha.placa}. Para alterar sua localização sem removê-lo da cegonha, atualize a localização diretamente pela cegonha. Deseja alterar a localização e remover o veículo da cegonha mesmo assim?" %>
       
 
