@@ -1,5 +1,7 @@
+<% if @cars.empty? %>
+    <h1> Nenhum resultado para a busca </h1>
+<% else %>
 <p><h1>Clientes Ativos</h1></p>
-
 <%= render 'cars' %>
 
 <%= hidden_field_tag :direction, params[:direction] %>
@@ -11,4 +13,5 @@
 <% if current_user.admin? %>
   <%= button('Novo Cliente (Pessoa Física)', new_car_path)%>
   <%= button('Novo Cliente (Pessoa Jurídica)', :action => :new, :pessoa_juridica => true)%>
+<% end -%>
 <% end -%>

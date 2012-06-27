@@ -5,15 +5,29 @@ class CarsController < ApplicationController
 
   def index
     
-    if params[:sort] == "firstname"
-      ativo = true
-      @cars = sort_by_comprador(ativo)
-    elsif params[:sort] == 'status_pagamento'
-      ativo = true
+    #if params[:sort] == "nome"
+     # ativo = true
+     # @cars = sort_by_comprador(ativo)
+    if params[:sort] == 'status_pagamento'
+      ativo = [1,2,3,4]
       @cars = sort_by_status_pagamento(ativo)
+    elsif params[:sort] == 'saldo_total'
+      ativo = [1,2,3,4]
+      @cars = sort_by_saldo_total(ativo)
     else
       
-      @cars = Car.search(params[:search], params[:search_by]).order(:data_compra, :created_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4])
+      #@cars = Car.search(params[:search], params[:search_by]).order(:data_compra, :created_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4])
+      @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4])
+      @cars.each do |car|
+        if car.nome.nil?
+          if car.comprador
+            car.nome = car.comprador.nome
+          elsif car.empresa
+            car.nome = car.empresa.nome
+          end
+        end
+        car.save
+      end
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -22,16 +36,16 @@ class CarsController < ApplicationController
   end
 
   def inativos
-    if params[:sort] == "firstname"
+    if params[:sort] == "saldo_total"
       ativo = false
-      @cars = sort_by_comprador(ativo)
+      @cars = sort_by_saldo_total(ativo)
     elsif params[:sort] == 'status_pagamento'
       ativo = false
       @cars = sort_by_status_pagamento(ativo)
     else
       
-    #@cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => 0)
-    @cars = Car.search(params[:search], params[:search_by]).order(:updated_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => 0)
+    @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => 0)
+    #@cars = Car.search(params[:search], params[:search_by]).order(:updated_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => 0)
 
     end
     respond_to do |format|
@@ -40,13 +54,13 @@ class CarsController < ApplicationController
     end
   end
 
-  def sort_by_comprador(ativo)
+  def sort_by_saldo_total(ativo)
     
     Car.paginate(
       :per_page => 30, 
       :page => params[:page], 
-      :joins => :comprador, 
-      :order => "firstname #{sort_direction}",
+      :joins => :pagamento,
+      :order => "valor_total #{sort_direction}",
       :conditions => {:ativo => ativo})
   end
 
@@ -128,6 +142,7 @@ class CarsController < ApplicationController
       
       if !comprador_existente.empty?
         @car.comprador = Comprador.find(comprador_existente[0][:id])
+        @car.comprador.update_attributes(params[:car][:comprador_attributes])
       end  
 
   elsif @car.empresa
@@ -136,6 +151,7 @@ class CarsController < ApplicationController
     empresa_existente.delete(nil)
     if !empresa_existente.empty?
       @car.empresa = Empresa.find(empresa_existente[0][:id])
+      @car.empresa.update_attributes(params[:car][:empresa_attributes])
     end  
   end
     
@@ -228,7 +244,7 @@ class CarsController < ApplicationController
   end  
 
   def sort_column  
-    Car.column_names.include?(params[:sort]) ? params[:sort] : "placa"  
+    Car.column_names.include?(params[:sort]) ? params[:sort] : "data_compra"  
   end  
 
   def for_sectionid

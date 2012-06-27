@@ -12,6 +12,18 @@ def sortable(column, title = nil)
       if sort_direction == 'asc'
         direction = 'desc'
       end
+    elsif column == 'origem'
+      if sort_direction == 'asc'
+        direction = 'desc'
+      end
+    elsif column == 'destino'
+      if sort_direction == 'asc'
+        direction = 'desc'
+      end
+    elsif column == 'saldo_total'
+      if sort_direction == 'asc'
+        direction = 'desc'
+      end
     else
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"  
     
@@ -43,5 +55,16 @@ def sortable(column, title = nil)
     Car.column_names.include?(params[:sort]) ? params[:sort] : "placa"  
   end  
   
+  def retorna_valor_monetario(valor)
+    number_to_currency(valor, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")
+  end
+
+  def retorna_total_do_frete(veiculo)
+    number_to_currency(veiculo.pagamento.valor_total + veiculo.pagamento.taxa_despacho + veiculo.pagamento.taxa_plataforma - veiculo.pagamento.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")
+  end
+
+  def retorna_saldo_devedor(veiculo)
+    number_to_currency(veiculo.pagamento.valor_total + veiculo.pagamento.taxa_despacho + veiculo.pagamento.taxa_plataforma - veiculo.pagamento.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")
+  end
 
 end

@@ -3,11 +3,11 @@
 <table id="mytable" cellspacing="0" summary="Lista de Vendas" style = "width:1200px">  <tr>
     <th width = '10' class = 'none'>Nº</th>
     <th width = '70' class = 'begin'> <%= sortable "placa" %></th>
-    <th width = '150'><%= sortable "firstname", "motorista" %></th>
+    <th width = '150'><%= sortable "nome", "motorista" %></th>
     <th width = '180'><%= sortable "localizacao", "Localização Atual" %></th>
-    <th width = '180'><%= sortable "Origem" %></th>
-    <th width = '180'><%= sortable "Destino" %></th>
-    <th ><%= sortable "Carros" %></th>
+    <th width = '180'><%= sortable "cidade_origem", "Origem" %></th>
+    <th width = '180'><%= sortable "cidade_destino", "Destino" %></th>
+    <th ><%= sortable "carros" %></th>
     <th width = '100'>Frete Total<br />dos Veículos</th>
     <% if current_user.admin? %>
         <th width = '140'>Ações</th>
@@ -22,11 +22,8 @@
 
   <tr>
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
-    
-    <td class = "<%= @row_class %> begin"><%= cegonha.placa %></td>
-    
+    <td class = "<%= @row_class %> begin"><%= link_to(cegonha.placa, cegonha) %></td>
     <td class = "<%= @row_class %>"><%= cegonha.motorista.nome %></td>
-    
     <td class = "<%= @row_class %>"><% unless cegonha.localizacao.nil? %><%= cegonha.localizacao %> <%= link_to image_tag("edit_local.png", :border=>0), edit_cegonha_path(cegonha, :editar_localizacao => true, :cegonha => cegonha.id), :class => 'right'  %> <% end -%></td>
     
     <td class = "<%= @row_class %>"><% unless cegonha.cidade_origem.nil? %><%= Cidade.find(cegonha.cidade_origem).text %>, <%= Estado.find(cegonha.estado_origem).sigla %><% end -%> </td>

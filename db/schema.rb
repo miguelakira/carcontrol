@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120622203907) do
+ActiveRecord::Schema.define(:version => 20120626221615) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -28,12 +28,13 @@ ActiveRecord::Schema.define(:version => 20120622203907) do
     t.integer  "cidade_destino"
     t.integer  "estado_origem"
     t.integer  "estado_destino"
-    t.integer  "cegonha_id"
     t.integer  "ativo"
+    t.integer  "cegonha_id"
     t.integer  "comprador_id"
     t.integer  "empresa_id"
     t.string   "observacao"
     t.datetime "data_prevista"
+    t.string   "nome"
   end
 
   create_table "cegonhas", :force => true do |t|
@@ -51,18 +52,18 @@ ActiveRecord::Schema.define(:version => 20120622203907) do
     t.integer  "estado_destino"
     t.integer  "cidade_id"
     t.integer  "estado_id"
-    t.string   "motorista"
     t.string   "observacao"
     t.integer  "empresa_id"
+    t.string   "nome"
   end
 
   create_table "cidades", :force => true do |t|
-    t.string  "text",      :limit => 40, :null => false
-    t.integer "estado_id",               :null => false
-    t.boolean "capital",                 :null => false
+    t.string   "text"
+    t.integer  "estado_id"
+    t.boolean  "capital"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
-
-  add_index "cidades", ["estado_id"], :name => "uf"
 
   create_table "compradores", :force => true do |t|
     t.string   "nome"
@@ -92,10 +93,10 @@ ActiveRecord::Schema.define(:version => 20120622203907) do
   end
 
   create_table "estados", :force => true do |t|
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-    t.string   "nome",       :limit => 256, :null => false
-    t.string   "sigla",      :limit => 256, :null => false
+    t.string   "nome"
+    t.string   "sigla"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "motorista", :force => true do |t|
@@ -108,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20120622203907) do
     t.string   "email"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "observacao"
   end
 
   create_table "pagamentos", :force => true do |t|
@@ -123,6 +125,7 @@ ActiveRecord::Schema.define(:version => 20120622203907) do
     t.decimal  "taxa_plataforma", :precision => 8, :scale => 2
     t.decimal  "desconto",        :precision => 8, :scale => 2
     t.decimal  "saldo_devedor",   :precision => 8, :scale => 2
+    t.integer  "cegonha_id"
   end
 
   create_table "status_pagamentos", :force => true do |t|

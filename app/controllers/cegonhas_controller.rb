@@ -5,6 +5,14 @@ class CegonhasController < ApplicationController
     @cegonhas = Cegonha.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page])
     @cars = Car.all
 
+    @cegonhas.each do |ceg|
+      if ceg.nome.nil?
+        ceg.nome = ceg.motorista.nome
+        ceg.save
+      end
+
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @cegonhas }
@@ -28,8 +36,11 @@ class CegonhasController < ApplicationController
     @cegonha = Cegonha.new
     @editar_localizacao = params[:editar_localizacao]
     @cegonha.build_motorista
+
+
     if params[:cegonha_contratada]
       @cegonha.build_empresa
+      @cegonha.build_pagamento
     end
 
     respond_to do |format|

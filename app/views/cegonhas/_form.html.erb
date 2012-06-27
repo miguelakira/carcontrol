@@ -113,6 +113,58 @@
     </div>
 
 </fieldset>
+
+<%  if @cegonha.empresa %>
+<fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
+  <%= f.fields_for :pagamento do |builder| %>
+    
+    <div class="field">
+      <%= builder.label :forma_pagamento, "Forma de Pagamento" %><br />
+      &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
+    </div>
+
+    <!--<div class="field">
+      <%#= builder.label :parcelas, "Parcelas" %><br />
+      &nbsp;&nbsp;&nbsp;<%#= builder.text_field :parcelas, :size => 5%>
+    </div>-->
+    
+    <div class="field">
+      <%= builder.label :valor_total, "Valor Total" %><br />
+      R$<%= builder.text_field :valor_total, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :taxa_plataforma, "Taxa de Plataforma" %><br />
+      R$<%= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :taxa_despacho, "Taxa de Redespacho" %><br />
+      R$<%= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :desconto, "Desconto" %><br />
+      R$<%= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :valor_pago, "Valor Pago" %><br />
+      R$<%= builder.text_field :valor_pago, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')%>
+    </div>
+
+    <div class="field">
+      <%= builder.label :observacao, "Observação" %><br />
+      <%= builder.text_area :observacao, :cols => 40, :rows => 7 %> 
+    </div>
+
+    
+
+  <% end -%>
+  <% end %>
+
+
+</fieldset>
   <!-- fim dos dados do veículo -->  
   <br />
   <div class="actions">
