@@ -5,6 +5,8 @@ gem 'rails', '3.2.3'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem 'exception_notification'
+
 gem 'pg'
 gem 'devise'
 gem 'heroku'

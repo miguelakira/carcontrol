@@ -36,6 +36,6 @@ Carcontrol::Application.configure do
   config.assets.debug = true
 
   #devise
-  config.action_mailer.default_ulr_options = { :host => 'localhost:3000'}
+  config.action_mailer.default_url_options = { :host => 'localhost:3000'}
   
 end

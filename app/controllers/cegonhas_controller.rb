@@ -118,8 +118,10 @@ class CegonhasController < ApplicationController
     @cegonha = Cegonha.find(params[:id])
     @cegonha.carros = @cegonha.cars.count
     
-    if !(params[:cegonha][:pagamento_attributes]).nil?
-      converter_string_to_bigdecimal(@cegonha, params[:cegonha][:pagamento_attributes])
+    if defined?(params[:cegonha][:pagamento_attributes])
+      if !(params[:cegonha][:pagamento_attributes]).nil?
+        converter_string_to_bigdecimal(@cegonha, params[:cegonha][:pagamento_attributes])
+      end
     end
     if params[:salvar_localizacao]
       @cegonha.estado_id = params[:estado_id]
