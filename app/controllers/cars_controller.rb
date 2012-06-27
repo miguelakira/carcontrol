@@ -254,36 +254,6 @@ class CarsController < ApplicationController
       end
   end
 
-  def converter_string_to_bigdecimal(car, valores)
-      valores[:valor_total].gsub!('.', '')
-      valores[:valor_total].gsub!(',','.')
-      car.pagamento.valor_total = BigDecimal(valores[:valor_total])
-
-      unless valores[:valor_pago].empty?
-        valores[:valor_pago].gsub!('.', '')
-        valores[:valor_pago].gsub!(',','.')
-        car.pagamento.valor_pago = BigDecimal(valores[:valor_pago])
-      end
-
-      unless valores[:taxa_despacho].empty?
-        valores[:taxa_despacho].gsub!('.', '')
-        valores[:taxa_despacho].gsub!(',','.')
-        car.pagamento.taxa_despacho = BigDecimal(valores[:taxa_despacho])
-      end
-
-      unless valores[:taxa_plataforma].empty?
-        valores[:taxa_plataforma].gsub!('.', '')
-        valores[:taxa_plataforma].gsub!(',','.')
-        car.pagamento.taxa_plataforma = BigDecimal(valores[:taxa_plataforma])
-      end
-
-      unless valores[:desconto].empty?
-        valores[:desconto].gsub!('.', '')
-        valores[:desconto].gsub!(',','.')
-        car.pagamento.desconto = BigDecimal(valores[:desconto])
-      end
-
-
-  end
+ 
 
 end

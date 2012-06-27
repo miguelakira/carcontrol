@@ -66,15 +66,26 @@
   </fieldset>
  <% end -%>
 
-  <fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
+  <fieldset><legend><h5 style="font-size: 1.3em">Dados da Cegonha</h5></legend>
   
     <div class="field">
       <%= f.label :placa %><br />
       <%= f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15' %> 
     </div>
 
+    <div class="field">
+        <%= carros_na_cegonha(@cegonha) %>
+    </div>
 
 
+    <div class="field">
+      <%= f.label :observacao, "Observação" %><br />
+      <%= f.text_area :observacao, :cols => 40, :rows => 7%> 
+    </div>
+
+
+</fieldset>
+  <fieldset><legend><h5 style="font-size: 1.3em">Dados do Motorista</h5></legend>
     <%= f.fields_for :motorista do |builder| %>
     <div class="field">
       <%= builder.label :cpf, "CPF do Motorista*" %><br />
@@ -101,16 +112,14 @@
       <%= builder.label :celular %><br />
       <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'motorista_celular' %> 
     </div>
+
+    <div class="field">
+      <%= builder.label :observacao, "Observação" %><br />
+      <%= builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'motorista_observacao'%> 
+    </div>
   <% end -%>
 
-    <div class="field">
-        <%= carros_na_cegonha(@cegonha) %>
-    </div>
 
-    <div class="field">
-      <%= f.label :observacao, "Observação" %><br />
-      <%= f.text_area :observacao, :cols => 40, :rows => 7 %> 
-    </div>
 
 </fieldset>
 
@@ -123,10 +132,6 @@
       &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
     </div>
 
-    <!--<div class="field">
-      <%#= builder.label :parcelas, "Parcelas" %><br />
-      &nbsp;&nbsp;&nbsp;<%#= builder.text_field :parcelas, :size => 5%>
-    </div>-->
     
     <div class="field">
       <%= builder.label :valor_total, "Valor Total" %><br />
@@ -194,21 +199,18 @@ function fillFieldsMotorista(oSel)
     case '<%= motorista.cpf %>':
       oForm.motorista_nome.value='<%= motorista.nome%>';
       oForm.motorista_email.value='<%= motorista.email%>';
-      oForm.motorista_rg.value='<%= motorista.rg%>';
-      oForm.motorista_cpf.value='<%= motorista.cpf%>';
       oForm.motorista_telefone.value='<%= motorista.telefone%>';
       oForm.motorista_celular.value='<%= motorista.celular%>';
-
+      oForm.motorista_observacao.value='<%= motorista.observacao%>';
     break;
     
     <%end%>
     case '':
       oForm.motorista_nome.value='';
       oForm.motorista_email.value='';
-      oForm.motorista_rg.value='';
-      oForm.motorista_cpf.value='';
       oForm.motorista_telefone.value='';
       oForm.motorista_celular.value='';
+      oForm.motorista_observacao.value='';
       break;
   }
 }

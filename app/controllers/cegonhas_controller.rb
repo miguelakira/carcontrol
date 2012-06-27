@@ -41,6 +41,7 @@ class CegonhasController < ApplicationController
     if params[:cegonha_contratada]
       @cegonha.build_empresa
       @cegonha.build_pagamento
+      raise params[:cegonha_contratada].inspect
     end
 
     respond_to do |format|
@@ -72,6 +73,31 @@ class CegonhasController < ApplicationController
     @cegonha = Cegonha.new(params[:cegonha])
     @cegonha.carros = 0
 
+    if !(params[:cegonha][:pagamento_attributes]).nil?
+      raise (params[:cegonha][:pagamento_attributes]).nil?.inspect
+      converter_string_to_bigdecimal(@cegonha, params[:cegonha][:pagamento_attributes])
+    end
+
+  if @cegonha.motorista
+      motoristas = Motorista.all
+      motorista_existente = motoristas.collect{|motorista| if motorista.cpf == @cegonha.motorista.cpf; motorista; end}
+      motorista_existente.delete(nil)
+      
+      if !motorista_existente.empty?
+        @cegonha.motorista = Motorista.find(motorista_existente[0][:id])
+        @cegonha.motorista.update_attributes(params[:cegonha][:motorista_attributes])
+      end  
+
+  elsif @cegonha.empresa
+    empresas = Empresa.all
+    empresa_existente = empresas.collect{|empresa| if empresa.cnpj == @cegonha.empresa.cnpj; empresa; end}
+    empresa_existente.delete(nil)
+    if !empresa_existente.empty?
+      @cegonha.empresa = Empresa.find(empresa_existente[0][:id])
+      @cegonha.empresa.update_attributes(params[:cegonha][:empresa_attributes])
+    end  
+  end
+
     respond_to do |format|
       if @cegonha.save
         if params[:editar_localizacao]
@@ -92,7 +118,7 @@ class CegonhasController < ApplicationController
     @cegonha = Cegonha.find(params[:id])
     @cegonha.carros = @cegonha.cars.count
     
-    if defined?(params[:cegonha][:pagamento_attributes])
+    if !(params[:cegonha][:pagamento_attributes]).nil?
       converter_string_to_bigdecimal(@cegonha, params[:cegonha][:pagamento_attributes])
     end
     if params[:salvar_localizacao]
