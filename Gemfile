@@ -7,12 +7,12 @@ gem 'rails', '3.2.3'
 
 gem 'exception_notification'
 
-gem 'pg'
-gem 'devise'
+gem 'pg', '0.13.2'
+gem 'devise', '2.0.4'
 gem 'heroku'
 
 gem 'will_paginate', '3.0.3'
-gem 'thin'
+gem 'thin', '1.3.1'
 gem 'pjax_rails'
 
 gem 'squeel'
@@ -34,7 +34,7 @@ group :development, :test do
 end
 
 group :production do
-	gem 'pg'
+	gem 'pg', '0.13.2'
 end
 
 gem 'jquery-rails'
