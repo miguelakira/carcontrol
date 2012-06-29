@@ -74,7 +74,7 @@ class CegonhasController < ApplicationController
     @cegonha.carros = 0
 
     if !(params[:cegonha][:pagamento_attributes]).nil?
-      raise (params[:cegonha][:pagamento_attributes]).nil?.inspect
+      
       converter_string_to_bigdecimal(@cegonha, params[:cegonha][:pagamento_attributes])
     end
 
