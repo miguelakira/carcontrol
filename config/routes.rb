@@ -6,13 +6,15 @@ Carcontrol::Application.routes.draw do
   get "search/index"
   get "cars/inativos"
   get "cars/editar_localizacao"
+  
   resources :compradores
-  resources :cars
+  resources :cars do
+    get :limited_edit
+  end
   resources :cegonhas
-
   devise_for :users, :path_prefix => 'd'
   resources :users
-
+  match ':controller(/:action(/:id))(.:format)'
 
 
   # The priority is based upon order of creation:

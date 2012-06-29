@@ -133,8 +133,24 @@ class CarsController < ApplicationController
     @cidade_atual = Cidade.find(@car.cidade_id).text unless @car.cidade_id.nil?
     @cidade_origem = Cidade.find(@car.cidade_origem).text unless @car.cidade_origem.nil?
     @cidade_destino = Cidade.find(@car.cidade_destino).text unless @car.cidade_destino.nil?
-    
+  end
 
+  def limited_edit
+    @car = Car.find(params[:id])
+    @status_pagamentos = StatusPagamento.all
+    if defined?(params[:car][:pagamento_attributes])
+      converter_string_to_bigdecimal(@car, params[:car][:pagamento_attributes])
+    end
+    respond_to do |format|
+      if @car.update_attributes(params[:car])
+        # faz update da contagem de carros da cegonha
+          format.html { redirect_to @car, notice: 'Dados atualizados com sucesso.' }
+          format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @car.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /POST
@@ -237,20 +253,7 @@ class CarsController < ApplicationController
     end
 
 
-    
-=begin    if !@car.cegonha_id.nil? and !params[:car].nil?
-      unless (params[:car][:cegonha_id]).nil?
-        @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id)
-      end
-    
-    elsif @car.cegonha_id and params[:car]
-      if @car.cegonha_id != params[:car][:cegonha_id]
-        unless (params[:car][:cegonha_id]).empty?
-          @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id)
-        end
-      end
-    end
-=end
+ 
     respond_to do |format|
       if @car.update_attributes(params[:car])
         # faz update da contagem de carros da cegonha
