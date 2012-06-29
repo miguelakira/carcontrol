@@ -26,7 +26,6 @@ class Pagamento < ActiveRecord::Base
   		self.valor_pago = 0
   	end
 
-
     self.saldo_devedor = self.valor_frete + self.taxa_despacho + self.taxa_plataforma - self.desconto - self.valor_pago
   end
 

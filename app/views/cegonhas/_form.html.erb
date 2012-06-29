@@ -1,3 +1,5 @@
+
+
 <% empresas = Empresa.all %>
 <% motoristas = Motorista.all %>
 
@@ -124,6 +126,29 @@
 </fieldset>
 
 <%  if @cegonha.empresa %>
+
+<% if @cegonha.pagamento.valor_frete == 0 
+  @cegonha.pagamento.valor_frete = nil
+  end 
+%>
+<% if @cegonha.pagamento.taxa_plataforma == 0 
+  @cegonha.pagamento.taxa_plataforma = nil
+  end 
+%>
+<% if @cegonha.pagamento.taxa_despacho == 0 
+  @cegonha.pagamento.taxa_despacho = nil
+  end 
+%>
+<% if @cegonha.pagamento.desconto == 0 
+  @cegonha.pagamento.desconto = nil
+  end 
+%>
+<% if @cegonha.pagamento.valor_pago == 0 
+  @cegonha.pagamento.valor_pago = nil
+  end 
+%>
+
+
 <fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
   <%= f.fields_for :pagamento do |builder| %>
     

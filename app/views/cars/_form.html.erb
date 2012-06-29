@@ -1,3 +1,24 @@
+<% if @car.pagamento.valor_frete == 0 
+  @car.pagamento.valor_frete = nil
+  end 
+%>
+<% if @car.pagamento.taxa_plataforma == 0 
+  @car.pagamento.taxa_plataforma = nil
+  end 
+%>
+<% if @car.pagamento.taxa_despacho == 0 
+  @car.pagamento.taxa_despacho = nil
+  end 
+%>
+<% if @car.pagamento.desconto == 0 
+  @car.pagamento.desconto = nil
+  end 
+%>
+<% if @car.pagamento.valor_pago == 0 
+  @car.pagamento.valor_pago = nil
+  end 
+%>
+
 <% empresas = Empresa.all %>
 <% compradores = Comprador.all %>
 
