@@ -41,7 +41,7 @@ class CegonhasController < ApplicationController
     if params[:cegonha_contratada]
       @cegonha.build_empresa
       @cegonha.build_pagamento
-      raise params[:cegonha_contratada].inspect
+      
     end
 
     respond_to do |format|
