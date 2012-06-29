@@ -1,10 +1,10 @@
 class Pagamento < ActiveRecord::Base
   attr_accessible :car_id, :data_pagamento, :forma_pagamento, :observacao, :valor_pago, :valor_total, 
-  		:taxa_despacho, :taxa_plataforma, :desconto
+  		:taxa_despacho, :taxa_plataforma, :desconto, :valor_frete
   belongs_to :car
   belongs_to :cegonha
 
-  before_save :calcula_saldo_devedor
+  before_save :calcula_saldo_devedor, :calcula_valor_total
 
   def calcula_saldo_devedor
     if self.valor_total.nil?
@@ -23,7 +23,11 @@ class Pagamento < ActiveRecord::Base
   		self.valor_pago = 0
   	end
 
-  	self.saldo_devedor = self.valor_total + self.taxa_despacho + self.taxa_plataforma - self.desconto
+  	self.saldo_devedor = self.valor_frete + self.taxa_despacho + self.taxa_plataforma - self.desconto - self.valor_pago
+  end
+
+  def calcula_valor_total
+    self.valor_total = self.valor_frete + self.taxa_despacho + self.taxa_plataforma
   end
 
 

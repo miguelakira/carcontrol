@@ -56,6 +56,8 @@ class Car < ActiveRecord::Base
   	self.modelo = self.modelo.titleize
   end
 
+
+
 =begin
   define_index do 
   	indexes placa

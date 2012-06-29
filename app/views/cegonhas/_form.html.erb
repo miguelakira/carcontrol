@@ -134,8 +134,8 @@
 
     
     <div class="field">
-      <%= builder.label :valor_total, "Valor Total" %><br />
-      R$<%= builder.text_field :valor_total, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      <%= builder.label :valor_frete, "Valor do Frete" %><br />
+      R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">

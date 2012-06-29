@@ -84,7 +84,7 @@
 
 <tr>
     <th style="width:180px">Valor do Frete</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@cegonha.pagamento.valor_total) %></td>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@cegonha.pagamento.valor_frete) %></td>
   </tr>
 
 <tr>
@@ -110,12 +110,12 @@
   
 <tr>
     <th>Valor Total</th>
-    <td><%= retorna_total_do_frete(@cegonha) %></td>
+    <td><%= retorna_valor_monetario(@cegonha.pagamento.valor_total) %></td>
 </tr> 
 
   <tr>
     <th>Saldo Devedor</th>
-    <td><%= retorna_saldo_devedor(@cegonha) %></td>
+    <td><%= retorna_valor_monetario(@cegonha.pagamento.saldo_devedor) %></td>
   </tr>
 
   <tr>

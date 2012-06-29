@@ -16,7 +16,7 @@ module CegonhasHelper
   def retorna_valor_dos_fretes(cegonha)
     valor_total = 0
     cegonha.cars.each do |car|
-      valor_total += car.pagamento.valor_total + car.pagamento.taxa_despacho + car.pagamento.taxa_plataforma - car.pagamento.desconto
+      valor_total += car.pagamento.valor_total
     end
   return number_to_currency(valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")  
   end
