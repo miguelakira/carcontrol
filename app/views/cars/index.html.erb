@@ -1,7 +1,6 @@
-<% if @cars.empty? %>
-    <h1> Nenhum resultado para a busca </h1>
-<% else %>
-<p><h1>Clientes Ativos</h1></p>
+<p><h1><%= @mensagem %> </h1></p>
+<% if !@cars.empty? %>
+
 <%= render 'cars' %>
 
 <%= hidden_field_tag :direction, params[:direction] %>
