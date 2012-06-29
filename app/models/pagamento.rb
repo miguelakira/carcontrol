@@ -10,6 +10,9 @@ class Pagamento < ActiveRecord::Base
     if self.valor_total.nil?
       self.valor_total = 0
     end
+    if self.valor_frete.nil?
+      self.valor_frete = 0
+    end
     if self.taxa_despacho.nil?
  		  self.taxa_despacho = 0
   	end
@@ -23,7 +26,8 @@ class Pagamento < ActiveRecord::Base
   		self.valor_pago = 0
   	end
 
-  	self.saldo_devedor = self.valor_frete + self.taxa_despacho + self.taxa_plataforma - self.desconto - self.valor_pago
+
+    self.saldo_devedor = self.valor_frete + self.taxa_despacho + self.taxa_plataforma - self.desconto - self.valor_pago
   end
 
   def calcula_valor_total
