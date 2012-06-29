@@ -139,10 +139,6 @@
     <td> <%= retorna_valor_monetario(@car.pagamento.valor_total) %></td>
   </tr>
 
-<tr>
-    <th>Taxa de Redespacho</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_despacho) %></td>
-</tr>
 
 <tr>
     <th>Taxa de Plataforma</th>
@@ -150,18 +146,22 @@
 </tr>
 
 <tr>
+    <th>Taxa de Redespacho</th>
+    <td><%= retorna_valor_monetario(@car.pagamento.taxa_despacho) %></td>
+</tr>
+<tr>
     <th>Desconto</th>
     
     <td>-<%= retorna_valor_monetario(@car.pagamento.desconto) %></td>
 </tr>
 
 <tr>
-    <th>Valor Pago</th>
+    <th>Valor Pago pelo Cliente</th>
     <td>-<%= retorna_valor_monetario(@car.pagamento.valor_pago) %></td>
 </tr>
   
 <tr>
-    <th>Valor Total</th>
+    <th>Total do Frete</th>
     <td><%= retorna_total_do_frete(@car) %></td>
 </tr> 
 

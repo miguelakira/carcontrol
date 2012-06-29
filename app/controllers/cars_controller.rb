@@ -145,15 +145,15 @@ class CarsController < ApplicationController
         @car.comprador.update_attributes(params[:car][:comprador_attributes])
       end  
 
-  elsif @car.empresa
-    empresas = Empresa.all
-    empresa_existente = empresas.collect{|empresa| if empresa.cnpj == @car.empresa.cnpj; empresa; end}
-    empresa_existente.delete(nil)
-    if !empresa_existente.empty?
-      @car.empresa = Empresa.find(empresa_existente[0][:id])
-      @car.empresa.update_attributes(params[:car][:empresa_attributes])
-    end  
-  end
+    elsif @car.empresa
+      empresas = Empresa.all
+      empresa_existente = empresas.collect{|empresa| if empresa.cnpj == @car.empresa.cnpj; empresa; end}
+      empresa_existente.delete(nil)
+      if !empresa_existente.empty?
+        @car.empresa = Empresa.find(empresa_existente[0][:id])
+        @car.empresa.update_attributes(params[:car][:empresa_attributes])
+      end  
+    end
     
     
     respond_to do |format|

@@ -79,16 +79,16 @@ class CegonhasController < ApplicationController
     end
 
   if @cegonha.motorista
-      motoristas = Motorista.all
-      motorista_existente = motoristas.collect{|motorista| if motorista.cpf == @cegonha.motorista.cpf; motorista; end}
-      motorista_existente.delete(nil)
-      
-      if !motorista_existente.empty?
-        @cegonha.motorista = Motorista.find(motorista_existente[0][:id])
-        @cegonha.motorista.update_attributes(params[:cegonha][:motorista_attributes])
-      end  
-
-  elsif @cegonha.empresa
+    motoristas = Motorista.all
+    motorista_existente = motoristas.collect{|motorista| if motorista.cpf == @cegonha.motorista.cpf; motorista; end}
+    motorista_existente.delete(nil)
+    
+    if !motorista_existente.empty?
+      @cegonha.motorista = Motorista.find(motorista_existente[0][:id])
+      @cegonha.motorista.update_attributes(params[:cegonha][:motorista_attributes])
+    end  
+  end
+  if @cegonha.empresa
     empresas = Empresa.all
     empresa_existente = empresas.collect{|empresa| if empresa.cnpj == @cegonha.empresa.cnpj; empresa; end}
     empresa_existente.delete(nil)
