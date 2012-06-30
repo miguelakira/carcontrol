@@ -1,6 +1,6 @@
 Carcontrol::Application.routes.draw do
  
-  resources :cegonhas
+  # resources :cegonhas
 
   get "cars/new"
   get "search/index"
@@ -10,11 +10,11 @@ Carcontrol::Application.routes.draw do
   resources :compradores
   resources :cars do
   #  get :limited_edit
-  #end
+  # end
   resources :cegonhas
   devise_for :users, :path_prefix => 'd'
   resources :users
-  #match ':controller(/:action(/:id))(.:format)'
+  # match ':controller(/:action(/:id))(.:format)'
 
 
   # The priority is based upon order of creation:
