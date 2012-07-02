@@ -18,10 +18,19 @@ class Car < ActiveRecord::Base
   			:presence => true
 
   
-  before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula, :ver_se_pertence_a_cegonha
+  before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula, :ver_se_pertence_a_cegonha, :ajusta_nome
   after_find :capitaliza_modelo
 
 
+  def ajusta_nome
+    if self.nome.nil?
+      if self.comprador
+        self.nome = self.comprador.nome
+      elsif self.empresa
+        self.nome = self.empresa.nome
+      end
+    end
+  end
 
   def ver_se_pertence_a_cegonha
     if self.ativo == 0
@@ -35,9 +44,14 @@ class Car < ActiveRecord::Base
         search.gsub!(/[^[:alnum:]]/, '')
         search.insert(3, '-')
         where{{placa.like => "%#{search}%"}}
-      elsif search_by == 'comprador'
+      elsif search_by == 'cliente'
         search = search.split(" ")
         joins(:comprador).where{(comprador.firstname.like_any search) | (comprador.middlename.like_any search) | (comprador.lastname.like_any search)}
+      elsif search_by == 'empresa'
+        search = search.split(" ")
+        search.collect! {|s| s + "%"}
+        joins(:empresa).where{(empresa.nome.like_any search)}
+        
       end
     else
       scoped

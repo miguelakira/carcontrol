@@ -163,7 +163,7 @@
 
   <div class="field">
     <%= f.label :data_prevista, "Data Prevista de Entrega" %><br />
-    <%= f.date_select :data_prevista, :order => [:day, :month, :year]  %> 
+    <%= f.date_select :data_prevista, :order => [:day, :month, :year], :include_blank => true  %> 
   </div>
       
   <div class="field">

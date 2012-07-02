@@ -26,17 +26,6 @@ class CarsController < ApplicationController
         @cars.empty? ? @mensagem = "Nenhum Resultado Encontrado na Busca" : @mensagem = "Resultado da Busca"
       end 
     
-      
-      @cars.each do |car|
-        if car.nome.nil?
-          if car.comprador
-            car.nome = car.comprador.nome
-          elsif car.empresa
-            car.nome = car.empresa.nome
-          end
-        end
-        car.save
-      end
     end
     respond_to do |format|
       format.html # index.html.erb
