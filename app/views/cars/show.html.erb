@@ -117,6 +117,11 @@
     <td><%= StatusVeiculo::estados[@car.ativo] %></td>
   </tr>
 
+<tr>
+    <th>Data Prevista da Entrega</th>
+    <td><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></td>
+  </tr>
+  
   <tr> 
     <th style = "height:50px">Observação</th>
     <td><%= @car.observacao %></td>
