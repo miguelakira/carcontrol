@@ -1,7 +1,6 @@
 Carcontrol::Application.routes.draw do
  
   # resources :cegonhas
-
   get "cars/new"
   get "search/index"
   get "cars/inativos"
@@ -9,8 +8,8 @@ Carcontrol::Application.routes.draw do
   
   resources :compradores
   resources :cars do
-  #  get :limited_edit
-  # end
+    get :limited_edit
+  end
   resources :cegonhas
   devise_for :users, :path_prefix => 'd'
   resources :users
