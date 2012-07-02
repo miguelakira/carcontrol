@@ -49,7 +49,7 @@ class Car < ActiveRecord::Base
         joins(:comprador).where{(comprador.firstname.like_any search) | (comprador.middlename.like_any search) | (comprador.lastname.like_any search)}
       elsif search_by == 'empresa'
         search = search.split(" ")
-        search.collect! {|s| s + "%"}
+        search.collect! {|s| s + "%"} # coloca '%' no final pra procurar por nomes incompletos - 'jul' acha 'juliano' e 'julio'
         joins(:empresa).where{(empresa.nome.like_any search)}
         
       end

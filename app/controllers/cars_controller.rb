@@ -18,6 +18,7 @@ class CarsController < ApplicationController
       
       #@cars = Car.search(params[:search], params[:search_by]).order(:data_compra, :created_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5])
       if params[:search].nil?
+        
         @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5])    
         @cars.empty? ? @mensagem = "Nenhum Carro Cadastrado" : @mensagem = "Clientes Ativos"
       else
@@ -282,7 +283,7 @@ class CarsController < ApplicationController
   end  
 
   def sort_column  
-    Car.column_names.include?(params[:sort]) ? params[:sort] : "data_compra"  
+    Car.column_names.include?(params[:sort]) ? params[:sort] : "data_compra, id"  
   end  
 
   def for_sectionid
