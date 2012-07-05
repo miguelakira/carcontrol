@@ -7,9 +7,6 @@ class Comprador < ActiveRecord::Base
   validates :nome,
   			:presence => true
 
-  validates :rg,
-  			:presence => true
-
   validates :cpf,
         :presence => true,
         :uniqueness => true
