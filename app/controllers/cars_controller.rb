@@ -20,7 +20,7 @@ class CarsController < ApplicationController
       if params[:search].nil?
         
         @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5])    
-        @cars.empty? ? @mensagem = "Nenhum Carro Cadastrado" : @mensagem = "Clientes Ativos"
+        @cars.empty? ? @mensagem = "Nenhum Cliente Cadastrado" : @mensagem = "Clientes Ativos"
       else
         
         @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5,0])  
@@ -35,7 +35,8 @@ class CarsController < ApplicationController
   end
 
   def inativos
-    @mensagem = "Clientes Finalizados"
+    
+
     if params[:sort] == "saldo_total"
       ativo = false
       @cars = sort_by_saldo_total(ativo)
@@ -45,6 +46,7 @@ class CarsController < ApplicationController
     else
       
     @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => 0)
+    @cars.empty? ? @mensagem = "Nenhum Cliente Finalizado" : @mensagem = "Clientes Finalizados"
     #@cars = Car.search(params[:search], params[:search_by]).order(:updated_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => 0)
 
     end

@@ -3,6 +3,7 @@ class CegonhasController < ApplicationController
   # GET /cegonhas.json
   def index
     @cegonhas = Cegonha.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page])
+    @cegonhas.empty? ? @mensagem = "Nenhuma Cegonha Cadastrada" : @mensagem = "Cegonhas Cadastradas"
     @cars = Car.all
 
     @cegonhas.each do |ceg|

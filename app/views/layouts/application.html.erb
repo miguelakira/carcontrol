@@ -25,17 +25,17 @@
 			  </ul>
 			</div>
 		</div>
-		<!-- depois colocar o search do thinking sphynx ou searchlogic -->
+		
 		<div id='header'>
 			<div id='quick-search'>
 				<%= form_tag cars_path, :method => 'get' do %>
 					<%= text_field_tag :search, params[:search] %>
 					<%= select_tag(:search_by, options_for_select([:placa, :cliente, :empresa]))%> 
 					<%= submit_tag "Buscar", :name => nil %> <br />
-					<%= link_to "Busca Avançada", :controller => :search, :action => :index %>
+					<%#= link_to "Busca Avançada", :controller => :search, :action => :index %>
 				<% end -%>
 			</div>
-			<%= image_tag("logo.png") %>
+			<%#= image_tag("logo.png") %>
 			<div id='main-menu'>
 				<ul>
 					<li><a href="/cars">Ativos</a></li>

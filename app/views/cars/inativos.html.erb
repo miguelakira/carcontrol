@@ -1,4 +1,5 @@
-<p><h1><%= @mensagem %></h1></p>
+<p><h1><%= @mensagem %> </h1></p>
+<% if !@cars.empty? %>
 
 <%= render 'cars' %>
 
@@ -7,4 +8,5 @@
 <%= will_paginate @cars %>
 
 <br />
+<% end -%>
 
