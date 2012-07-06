@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Empresa < ActiveRecord::Base
   attr_accessible :car_id, :celular, :cnpj, :contato, :created_at, :email, :nome, :telefone, :updated_at,
       :observacao
@@ -8,10 +9,10 @@ class Empresa < ActiveRecord::Base
 
 
   validates :nome,
-        :presence => true
+        :presence => { :message => "- O nome da empresa não pode ser deixada em branco!)" }
 
   validates :cnpj,
-        :presence => true
+        :presence => { :message => "- O CNPJ da empresa não pode ser deixada em branco!)" }
 
   before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula
 

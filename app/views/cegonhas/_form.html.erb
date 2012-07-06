@@ -18,7 +18,7 @@
 <%= form_for(@cegonha) do |f| %>
   <% if @cegonha.errors.any? %>
     <div id="error_explanation">
-      <h1><%= pluralize(@cegonha.errors.count, "error") %> impediram que a compra fosse salva:</h1>
+      <h1><%= pluralize(@cegonha.errors.count, "erro") %> impediram que a compra fosse salva:</h1>
       
       <ul>
       <% @cegonha.errors.full_messages.each do |msg| %>

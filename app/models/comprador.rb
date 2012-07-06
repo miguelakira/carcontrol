@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Comprador < ActiveRecord::Base
   attr_accessible :celular, :email, :rg, :cpf, :telefone, :nome, :car_id, :observacao
   has_many :cars
@@ -5,11 +6,11 @@ class Comprador < ActiveRecord::Base
 
 
   validates :nome,
-  			:presence => true
+  			:presence => { :message => "- O nome do comprador não pode ser deixado em branco." }
 
   validates :cpf,
-        :presence => true,
-        :uniqueness => true
+        :presence => { :message => "- O CPF do comprador não pode ser deixaod em branco." },
+        :uniqueness => { :message => "- CPF já existente." }
 
   before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos, :split_nomes
 
@@ -43,6 +44,5 @@ class Comprador < ActiveRecord::Base
   def capitaliza_nome
     self.nome = self.nome.titleize unless self.nome.nil?
   end
-
 end
 
