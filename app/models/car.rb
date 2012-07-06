@@ -12,8 +12,8 @@ class Car < ActiveRecord::Base
 
 
   validates	:placa, 
-  			:presence => { :message => "- A placa não pode ser deixada em branco!)" },
-  			:uniqueness => { :message => "- A placa já existe no banco (é necessário que ela seja única)" }
+  			:presence => { :message => "- A placa não pode ser deixada em branco!" },
+  			:uniqueness => { :message => "- A placa já existe no banco de dados. É necessário que ela seja única" }
   
   validates :modelo,
   			:presence => { :message => "- O modelo do carro não pode ser deixado em branco!" }

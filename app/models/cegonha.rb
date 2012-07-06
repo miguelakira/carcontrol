@@ -9,8 +9,8 @@ class Cegonha < ActiveRecord::Base
   accepts_nested_attributes_for :empresa, :motorista, :pagamento
 
   validates	:placa, 
-  			:presence => { :message => "- A placa não pode ser deixada em branco!)" },
-  			:uniqueness => { :message => "- A placa já existe no banco de dados. É preciso que seja única.)" }
+  			:presence => { :message => "- A placa não pode ser deixada em branco!" },
+  			:uniqueness => { :message => "- A placa já existe no banco de dados. É preciso que seja única." }
 
 
   def self.search(search, search_by)

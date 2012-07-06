@@ -9,10 +9,10 @@ class Empresa < ActiveRecord::Base
 
 
   validates :nome,
-        :presence => { :message => "- O nome da empresa não pode ser deixada em branco!)" }
+        :presence => { :message => "- O nome da empresa não pode ser deixada em branco!" }
 
   validates :cnpj,
-        :presence => { :message => "- O CNPJ da empresa não pode ser deixada em branco!)" }
+        :presence => { :message => "- O CNPJ da empresa não pode ser deixada em branco!" }
 
   before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula
 
