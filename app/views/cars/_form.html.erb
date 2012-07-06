@@ -41,7 +41,7 @@
 
   <% if @car.errors.any? %>
     <div id="error_explanation">
-      <h1><%= pluralize(@car.errors.count, "error") %> impediram que a compra fosse salva:</h1>
+      <h1><%= pluralize(@car.errors.count, "erro") %> impediram que o cliente fosse cadastrado:</h1>
       
       <ul>
       <% @car.errors.full_messages.each do |msg| %>
@@ -171,6 +171,7 @@
     <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
   </div>
 
+  <% @cegonhas.nil? ? @cegonhas = Cegonha.all : %>
   <div class="field">
     <%= f.label :cegonha_id, "Cegonha" %><br />
     <%= f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }  %> 

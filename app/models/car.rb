@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Car < ActiveRecord::Base
   attr_accessible :localizacao, :modelo, :placa, :rota_id, :status_pagamento_id, :ativo, :estado_id, :cidade_id, :data_compra,
         :data_prevista, :cegonha_id, :comprador_attributes, :empresa_attributes, :pagamento_attributes, :observacao
@@ -11,11 +12,11 @@ class Car < ActiveRecord::Base
 
 
   validates	:placa, 
-  			:presence => true, 
-  			:uniqueness => true
+  			:presence => { :message => "- A placa não pode ser deixada em branco!)" },
+  			:uniqueness => { :message => "- A placa já existe no banco (é necessário que ela seja única)" }
   
   validates :modelo,
-  			:presence => true
+  			:presence => { :message => "- O modelo do carro não pode ser deixado em branco!" }
 
   
   before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula, :ver_se_pertence_a_cegonha, :ajusta_nome
