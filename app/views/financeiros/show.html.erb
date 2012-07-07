@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<% if @cars_cpf %>
+<p><h5>Transações Financeiras do Cliente</h5> </p>
+
+<fieldset>
+Nome: <%= @cliente.nome %>  <br />
+CPF: <%= @cliente.cpf %>
+</fieldset>
+
+<br /> 
+<table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:600px">  
+  <tr>
+    <th style="width:180px">Carros Ativos do Cliente</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
+  </tr>
+  
+  <tr>
+    <th>Carros Finalizados</th>
+    <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
+  </tr>
+
+  <tr>
+    <th>Carros Finalizados</th>
+    <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
+  </tr>
+</table>
+<% end -%>
+
+

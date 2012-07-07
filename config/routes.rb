@@ -1,8 +1,7 @@
 Carcontrol::Application.routes.draw do
  
   get "financeiros/index"
-
-  get "financeiros/edit"
+  get "financeiros/show"
 
   # resources :cegonhas
   get "cars/new"
