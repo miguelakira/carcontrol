@@ -167,7 +167,7 @@
 
 <tr>
     <th>Valor Pago pelo Cliente</th>
-    <td>-<%= retorna_valor_monetario(@car.pagamento.valor_pago) %></td>
+    <td>-<%= retorna_valor_monetario(@car.pagamento.valor_pago) %> <%= "em #{@car.pagamento.data_pagamento.strftime('%d/%m/%Y')}" unless @car.pagamento.data_pagamento.nil? %></td>
 </tr>
   
 <tr>
