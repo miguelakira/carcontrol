@@ -104,7 +104,7 @@ class CegonhasController < ApplicationController
         if params[:editar_localizacao]
           redirect_to edit_cegonha_path(@cegonha, :editar_localizacao => true, :cegonha => @cegonha)   and return
         end
-        format.html { redirect_to @cegonha, notice: 'Cegonha was successfully created.' }
+        format.html { redirect_to @cegonha, notice: 'Cegonha foi criada com sucesso.' }
         format.json { render json: @cegonha, status: :created, location: @cegonha }
       else
         format.html { render action: "new" }
@@ -155,11 +155,16 @@ class CegonhasController < ApplicationController
 
     respond_to do |format|
       if @cegonha.update_attributes(params[:cegonha])
+        # se chegou no destino, todos os carros saem da cegonha e o status deles muda para descarregados.
+        chegou_no_destino?(@cegonha)
+        contagem_carros_cegonha()
+        status_de_carro_na_cegonha(@cegonha) 
+
         if params[:editar_localizacao]
           flash[:notice] = 'Dados atualizados com sucesso!'
           redirect_to :action => :edit, :cegonha => @cegonha, :editar_localizacao => true  and return
         else
-          format.html { redirect_to @cegonha, notice: 'Cegonha was successfully updated.' }
+          format.html { redirect_to @cegonha, notice: 'Dados da cegonha atualizados com sucesso.' }
           format.json { head :no_content }
         end
       else
@@ -197,4 +202,15 @@ private
         format.json  { render :json => @subsections }      
       end
   end
+
+ def chegou_no_destino?(cegonha)
+    if cegonha.cidade_destino == cegonha.cidade_id && cegonha.estado_destino == cegonha.estado_id
+      cegonha.cars.each do |car|
+        car.ativo = 2
+        car.cegonha = nil
+        car.save
+      end
+    end
+  end
+  
 end

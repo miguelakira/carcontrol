@@ -10,6 +10,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def status_de_carro_na_cegonha(cegonha)
+    unless cegonha.cars.nil?
+      cegonha.cars.each do |car|
+        car.ativo = 1
+        car.save
+      end
+    end
+  end
+
   def converter_string_to_bigdecimal(veiculo, valores)
     unless valores[:valor_frete].empty?
       valores[:valor_frete].gsub!('.', '')

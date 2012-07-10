@@ -18,6 +18,7 @@ class Car < ActiveRecord::Base
   validates :modelo,
   			:presence => { :message => "- O modelo do carro não pode ser deixado em branco!" }
 
+  validates :status_pagamento_id, :car_not_paid => true  
   
   before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula, :ver_se_pertence_a_cegonha, :ajusta_nome
   after_find :capitaliza_modelo
@@ -70,8 +71,6 @@ class Car < ActiveRecord::Base
   def capitaliza_modelo
   	self.modelo = self.modelo.titleize
   end
-
-
 
 =begin
   define_index do 

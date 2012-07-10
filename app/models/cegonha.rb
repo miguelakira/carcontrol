@@ -25,4 +25,6 @@ class Cegonha < ActiveRecord::Base
       scoped
     end
   end
+
+
 end

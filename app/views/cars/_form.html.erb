@@ -41,7 +41,7 @@
 
   <% if @car.errors.any? %>
     <div id="error_explanation">
-      <h1><%= pluralize(@car.errors.count, "erro") %> impediram que o cliente fosse cadastrado:</h1>
+      <h1><%= pluralize(@car.errors.count, "erro") %> impediram que o cliente fosse atualizado:</h1>
       
       <ul>
       <% @car.errors.full_messages.each do |msg| %>
@@ -167,7 +167,7 @@
   </div>
       
   <div class="field">
-    <%= f.label :status_pagamento_id %><br />
+    <%= f.label :status_pagamento_id, "Status do Pagamento" %><br />
     <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
   </div>
 
@@ -332,6 +332,7 @@ function fillFieldsEmpresa(oSel)
 
 
 <% else %>
+
 <%= form_for(@car, :url => {:id => @car.id, :action => "limited_edit"},:method => :put) do |f| %>
 <%#= form_for(:project, :url => {:action => 'destroy', :id => @project.id }, :method => :delete) do |f| %>
 
