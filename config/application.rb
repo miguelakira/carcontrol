@@ -60,6 +60,7 @@ module Carcontrol
     # PDFKIT
     PDFKit.configure do |config|
     config.wkhtmltopdf = `which wkhtmltopdf`.to_s.strip
+    config.wkhtmltopdf = Rails.root.join('bin', 'wkhtmltopdf-amd64').to_s if Rails.env.production? 
     config.default_options = {
         :encoding=>"UTF-8",
         :page_size=>"A4",
