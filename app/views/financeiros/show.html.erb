@@ -3,7 +3,7 @@
 <% if @cars_cpf %>
 
 <p><h5>Transações Financeiras do Cliente</h5> </p>
-<%= link_to 'Create PDF document', show_pdf_path(:format => :pdf) %>
+<%= link_to 'Gerar Documento PDF', :action => 'generate_pdf', :comprador_cpf => @cliente %>
 <fieldset>
 Nome: <%= @cliente.nome %>  <br />
 CPF: <%= @cliente.cpf %> <br>
@@ -63,6 +63,14 @@ CPF: <%= @cliente.cpf %> <br>
 <% else %>
   <%= render 'cars', :carros => @cars_nao_pagos %>
 <% end -%>
+
+<p><b>CARROS PAGOS</b></p>
+<% if @cars_pagos.empty? %>
+  <p>Este cliente não possui carros pagos.</p>
+<% else %>
+  <%= render 'cars_pagos', :carros => @cars_pagos %>
+<% end -%>
+
 
 <% end -%>
 
