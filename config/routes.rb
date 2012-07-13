@@ -18,7 +18,7 @@ Carcontrol::Application.routes.draw do
   devise_for :users, :path_prefix => 'd'
   resources :users
   match ':controller(/:action(/:id))(.:format)'
-
+  match "/download_pdf(.:format)" => "financeiros#show_pdf", :method => :get, :as=>:show_pdf
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

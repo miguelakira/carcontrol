@@ -17,6 +17,8 @@ gem 'pjax_rails'
 
 gem 'squeel'
 
+gem 'wicked_pdf'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
