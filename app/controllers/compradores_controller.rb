@@ -1,6 +1,8 @@
 class CompradoresController < ApplicationController
   # GET /compradores
   # GET /compradores.json
+  before_filter :authenticate_user!
+
   def index
     @compradores = Comprador.all
 
