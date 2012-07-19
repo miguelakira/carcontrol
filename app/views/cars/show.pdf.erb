@@ -14,10 +14,10 @@
 
   <p id="notice"><%= notice %></p>
 <% if @car.comprador %>
-<p><h5>Detalhes do Cliente</h5> </p>
+<p><b>DETALHES DO CLIENTE</b> </p>
 
 
-<table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="DETALHES do Cliente" style="width:600px">  
   <tr>
     <th style="width:180px">Nome do Cliente</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @car.comprador.nome %> </td>
@@ -54,7 +54,7 @@
 </table>
 
 <% elsif @car.empresa %>
-<p><h5>Detalhes da Empresa</h5> </p>
+<p><b>DETALHES DA EMPRESA</b> </p>
 <table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:600px">  
   <tr>
     <th style="width:180px">Nome da Empresa</th>
@@ -90,7 +90,7 @@
 </table>
 <% end -%>
 
-<p><h5>Detalhes do Carro</h5></p>
+<p><b>DETALHES DO CARRO</b></p>
 <table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:600px">  
   <tr>
     <th style="width:180px" >Modelo do Carro</th>
@@ -146,7 +146,7 @@
 
 
 
-<p><h5>Detalhes do Frete</h5></p>
+<p><b>DETALHES DO FRETE</b></p>
 
 <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:600px">  
 

@@ -1,3 +1,5 @@
+.page-break { display:block; clear:both; page-break-after:always; }
+
 #mytable th.none {
   background: #fff;
   color: black;
@@ -146,8 +148,13 @@ h5 {
 
 p.margin_left {
   margin-left: 2px;
+  font-size:10px;
 }
 
+p {
+
+   font-size:10px;
+}
 hr.small{
     width:980px;
     float: left;
