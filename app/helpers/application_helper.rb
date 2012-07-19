@@ -59,4 +59,10 @@ def sortable(column, title = nil)
     number_to_currency(valor, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")
   end
 
+  def pdf_image_tag(image, options = {})
+    options[:src] = File.expand_path(Rails.root) + '' + image
+    tag(:img, options)
+  end
+
+
 end

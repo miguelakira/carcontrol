@@ -1,9 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <title>Controle de Transporte</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  
+<div id='wrapper'>
+  <%= pdf_image_tag('/app/assets/images/logo.png', :style=>"margin:0px;padding:0px")%>
+
 <p id="notice"><%= notice %></p>
 
-<p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @cegonha.id %> </b></p>
-
 <p><h5>Detalhes da Cegonha</h5> </p>
-
 <table id="mytable" cellspacing="0" summary="Detalhes da Cegonha" style="width:600px">  
   <tr>
     <th style="width:150px">Placa da Cegonha</th>
@@ -136,5 +147,12 @@
 </table>
 <% end -%>
 <br />
-<%= button('Editar', edit_cegonha_path(@cegonha)) %>
-<%= button('Voltar', cegonhas_path) %>
+
+</div>
+
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'default' %>
+<%= stylesheet_link_tag 'devise' %>
+</body>
+</html>
+

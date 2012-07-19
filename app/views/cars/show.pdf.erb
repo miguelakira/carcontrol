@@ -1,6 +1,18 @@
-<p id="notice"><%= notice %></p>
-<p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @car.id %> </b></p>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <title>Controle de Transporte</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  
+<div id='wrapper'>
+  <%= pdf_image_tag('/app/assets/images/logo.png', :style=>"margin:0px;padding:0px")%>
 
+  <p id="notice"><%= notice %></p>
 <% if @car.comprador %>
 <p><h5>Detalhes do Cliente</h5> </p>
 
@@ -38,6 +50,7 @@
     <th style = "height:50px">Observação</th>
     <td><%= @car.comprador.observacao %></td>
   </tr>
+
 </table>
 
 <% elsif @car.empresa %>
@@ -188,10 +201,14 @@
     <td><%= @car.pagamento.observacao %></td>
   </tr>
 
-
-
 </table>
 <br />
 
-<% if @car.ativo? %><%= button('Editar', edit_car_path(@car)) %><% end -%>
-<%= button('Voltar', cars_path) %>
+</div>
+
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'default' %>
+<%= stylesheet_link_tag 'devise' %>
+</body>
+</html>
+

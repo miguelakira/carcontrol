@@ -279,6 +279,21 @@ class CarsController < ApplicationController
     end
   end
 
+  def generate_pdf
+    @car = Car.find(params[:id])
+
+    flash[:notice] = "PDF gerado na data #{Time.now.strftime('%d/%m/%Y')}"
+    
+    filename = "#{Rails.root}/public/Relatorio_#{@car.placa}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
+    html = render_to_string(:template => "/cars/show.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
+    kit = PDFKit.new(html, :disable_javascript => true )
+    kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/to_pdf.css"
+    pdf = kit.to_pdf
+    file = kit.to_file(filename)
+    send_file filename, :type => 'application/pdf'
+    File.delete(filename)
+  end
+
   private 
   def sort_direction  
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"  
@@ -294,6 +309,7 @@ class CarsController < ApplicationController
         format.json  { render :json => @subsections }      
       end
   end
+
 
  
 

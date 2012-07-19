@@ -1,9 +1,20 @@
-  <p id="notice"><%= notice %></p>
+<p id="notice"><%= notice %></p>
+  
+
+<% if defined? @cliente and @cliente.nil? %>
+  <p>Nenhuma transação encontrada para este CPF! </p>
+
+<% elsif defined? @empresa and @empresa.nil? %>
+  <p>Nenhuma transação encontrada para este CNPJ! </p>
+<% else -%> 
+
+<p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :comprador_cpf => @cliente %></b></p>
 
 <% if @cars_cpf %>
 
+
 <p><h5>Transações Financeiras do Cliente</h5> </p>
-<%= link_to 'Gerar Documento PDF', :action => 'generate_pdf', :comprador_cpf => @cliente %>
+
 <fieldset>
 Nome: <%= @cliente.nome %>  <br />
 CPF: <%= @cliente.cpf %> <br>
@@ -72,7 +83,9 @@ CPF: <%= @cliente.cpf %> <br>
 <% end -%>
 
 
+<% elsif @cars_cnpj %>
+  Whateva
 <% end -%>
-
+<% end -%>
 
 
