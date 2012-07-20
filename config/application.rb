@@ -59,6 +59,7 @@ module Carcontrol
 
     # para resolver problema com precompile no heroku
     config.assets.initialize_on_precompile = false
+    config.assets.precompile += %w( default.css )
 
 
 
