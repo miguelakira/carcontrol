@@ -22,7 +22,7 @@
   <tr>
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
-    <td class = "<%= @row_class %>"><%= "#{car.modelo} - #{car.placa}" %></td>
+    <td class = "<%= @row_class %>"><%= link_to "#{car.modelo} - #{car.placa}",  edit_car_path(car) %></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_total)%></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_pago) %></td>
     <td class = "<%= @row_class %>"><%= car.pagamento.data_pagamento.strftime("%d/%m/%Y") unless car.pagamento.data_pagamento.nil? %></td>
