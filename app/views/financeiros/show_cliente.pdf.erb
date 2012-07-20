@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <title>Controle de Transporte</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id='wrapper'>
+<%= pdf_image_tag('/app/assets/images/logo.png', :style=>"margin:0px;padding:0px")%>
+
+  <p id="notice"><%= notice %></p>
+
+<% if @cars_cpf %>
+
+<p><h5>Transações Financeiras do Cliente</h5> </p>
+
+<fieldset>
+Nome: <%= @cliente.nome %>  <br />
+CPF: <%= @cliente.cpf %> <br>
+<%= "Telefone: #{@cliente.telefone}" unless @cliente.telefone.empty? %> 
+
+</fieldset>
+
+<br /> 
+<table id="mytable" cellspacing="0" summary="Carros" style="width:600px">  
+  <tr>
+    <th style="width:180px; border: 1px solid #C1DAD7;">Carros Ativos</th>
+    <td style='border: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
+  </tr>
+  
+  <tr>
+    <th>Carros Finalizados</th>
+    <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
+  </tr>
+
+</table>
+<br />
+
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:600px">  
+  <tr>
+    <th style="width:180px">Valor Total dos Fretes</th>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
+  </tr>
+  
+  <tr>
+    <th>Valor Total Pago</th>
+    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
+  </tr>
+
+  <tr>
+    <th>Saldo Devedor Total</th>
+    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
+  </tr>
+
+</table>
+
+<br>
+
+<p><b>CARROS ATIVOS</b></p>
+  <table style = "width:1000px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
+  <tr>
+    <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
+    <th width = '1' class = 'none'>Nº</th>
+    <th width = '30'class = 'begin'><%= sortable 'data_compra' %></th>
+    <th width = '140'>Modelo e Placa</th>
+    <th width = '60'>Frete</th>
+    <th width = '60'>Taxa de<br/>Plataforma </th>
+    <th width = '60'>Taxa de<br/>Redespacho</th>
+    <th width = '60'>Desconto</th>
+    <th width = '60'>Valor Pago</th>
+    <th width = '60'>Saldo Devedor</th>
+    <th width = '60'>Data de<br/>Pagamento</th>
+  </tr>
+
+  <% @cars_ativos.each_with_index do |car, index| %>
+  <% if car.status_pagamento.value == 1  
+        @row_class = 'nao-pago' 
+    elsif car.status_pagamento.value == 2
+        @row_class = 'pendente' 
+    else
+        @row_class = ''; 
+    end %>
+
+  <tr>
+    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
+    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
+    <td class = "<%= @row_class %>"><%= "#{car.modelo} - #{car.placa}" %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_frete)%></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.taxa_plataforma) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.taxa_despacho) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.desconto) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_pago) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.saldo_devedor) %></td>
+    <td class = "<%= @row_class %>"><%= car.pagamento.data_pagamento.strftime("%d/%m/%Y") unless car.pagamento.data_pagamento.nil? %></td>
+  </tr>
+<% end -%>
+</table>
+
+<br />
+
+<p><b>CARROS FINALIZADOS</b></p>
+<% if @cars_inativos.empty? %>
+  <p>Não há carros finalizados para este cliente</p>
+<% else %>
+<table style = "width:1000px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
+  <tr>
+    <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
+    <th width = '1' class = 'none'>Nº</th>
+    <th width = '30'class = 'begin'><%= sortable 'data_compra' %></th>
+    <th width = '140'>Modelo e Placa</th>
+    <th width = '60'>Frete</th>
+    <th width = '60'>Taxa de<br/>Plataforma </th>
+    <th width = '60'>Taxa de<br/>Redespacho</th>
+    <th width = '60'>Desconto</th>
+    <th width = '60'>Valor Pago</th>
+    <th width = '60'>Saldo Devedor</th>
+    <th width = '60'>Data de<br/>Pagamento</th>
+  </tr>
+
+  <% @cars_inativos.each_with_index do |car, index| %>
+  <% if car.status_pagamento.value == 1  
+        @row_class = 'nao-pago' 
+    elsif car.status_pagamento.value == 2
+        @row_class = 'pendente' 
+    else
+        @row_class = ''; 
+    end %>
+
+  <tr>
+    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
+    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
+    <td class = "<%= @row_class %>"><%= "#{car.modelo} - #{car.placa}" %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_frete)%></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.taxa_plataforma) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.taxa_despacho) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.desconto) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_pago) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.saldo_devedor) %></td>
+    <td class = "<%= @row_class %>"><%= car.pagamento.data_pagamento.strftime("%d/%m/%Y") unless car.pagamento.data_pagamento.nil? %></td>
+  </tr>
+<% end -%>
+</table>
+<% end -%>
+
+<p><b>CARROS NÃO PAGOS</b></p>
+<% if @cars_nao_pagos.empty? %>
+  <p>Este cliente pagou todos os carros</p>
+<% else %>
+<table style = "width:1000px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
+  <tr>
+    <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
+    <th width = '1' class = 'none'>Nº</th>
+    <th width = '30'class = 'begin'><%= sortable 'data_compra' %></th>
+    <th width = '140'>Modelo e Placa</th>
+    <th width = '60'>Frete</th>
+    <th width = '60'>Taxa de<br/>Plataforma </th>
+    <th width = '60'>Taxa de<br/>Redespacho</th>
+    <th width = '60'>Desconto</th>
+    <th width = '60'>Valor Pago</th>
+    <th width = '60'>Saldo Devedor</th>
+    <th width = '60'>Data de<br/>Pagamento</th>
+  </tr>
+
+  <% @cars_nao_pagos.each_with_index do |car, index| %>
+  <% if car.status_pagamento.value == 1  
+        @row_class = 'nao-pago' 
+    elsif car.status_pagamento.value == 2
+        @row_class = 'pendente' 
+    else
+        @row_class = ''; 
+    end %>
+
+  <tr>
+    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
+    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
+    <td class = "<%= @row_class %>"><%= "#{car.modelo} - #{car.placa}" %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_frete)%></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.taxa_plataforma) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.taxa_despacho) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.desconto) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_pago) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.saldo_devedor) %></td>
+    <td class = "<%= @row_class %>"><%= car.pagamento.data_pagamento.strftime("%d/%m/%Y") unless car.pagamento.data_pagamento.nil? %></td>
+  </tr>
+<% end -%>
+</table>
+<% end -%>
+
+<p><b>CARROS PAGOS</b></p>
+<% if @cars_pagos.empty? %>
+  <p>Este cliente não possui carros pagos.</p>
+<% else %>
+<table style = "width:1000px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
+  <tr>
+    <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
+    <th width = '1' class = 'none'>Nº</th>
+    <th width = '30'class = 'begin'><%= sortable 'data_compra' %></th>
+    <th width = '140'>Modelo e Placa</th>
+    <th width = '60'>Total do Frete</th>
+    <th width = '60'>Valor Pago</th>
+    <th width = '60'>Data de<br/>Pagamento</th>
+    <th width = '200'>Observações</th>
+  </tr>
+
+  <% @cars_pagos.each_with_index do |car, index| %>
+  <% if car.status_pagamento.value == 1  
+        @row_class = 'nao-pago' 
+    elsif car.status_pagamento.value == 2
+        @row_class = 'pendente' 
+    else
+        @row_class = ''; 
+    end %>
+
+  <tr>
+    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
+    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
+    <td class = "<%= @row_class %>"><%= "#{car.modelo} - #{car.placa}" %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_total)%></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_pago) %></td>
+    <td class = "<%= @row_class %>"><%= car.pagamento.data_pagamento.strftime("%d/%m/%Y") unless car.pagamento.data_pagamento.nil? %></td>
+    <td class = "<%= @row_class %>"><%= car.comprador.observacao %></td>
+
+  </tr>
+<% end -%>
+</table>
+<% end -%>
+
+</div>
+
+<% end -%>
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'default' %>
+<%= stylesheet_link_tag 'devise' %>
+</body>
+</html>
+
