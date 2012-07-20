@@ -178,7 +178,7 @@ class CarsController < ApplicationController
       if @car.save
         # faz update da contagem de carros da cegonha
        contagem_carros_cegonha()
-       status_de_carro_na_cegonha(car.cegonha) unless car.cegonha.nil?
+       status_de_carro_na_cegonha(@car.cegonha) unless @car.cegonha.nil?
         if params[:editar_localizacao]
           # se ao criar o carro, ele foi inserido na cegonha, pega a localizacao atual dela
           if @car.cegonha

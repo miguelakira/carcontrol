@@ -82,8 +82,16 @@ class FinanceirosController < ApplicationController
     end
     flash[:notice] = "PDF gerado na data #{Time.now.strftime('%d/%m/%Y')}"
     
-    filename = "#{Rails.root}/public/Relatorio_#{@cliente.firstname}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
-    html = render_to_string(:template => "/financeiros/show.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
+    if @cliente
+      filename = "#{Rails.root}/public/Relatorio_#{@cliente.firstname}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
+    elsif @empresa
+      filename = "#{Rails.root}/public/Relatorio_#{@empresa.nome}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
+    end
+    if @cliente
+      html = render_to_string(:template => "/financeiros/show_cliente.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
+    elsif @empresa
+      html = render_to_string(:template => "/financeiros/show_empresa.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
+    end
     kit = PDFKit.new(html, :disable_javascript => true )
     kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/to_pdf.css"
     pdf = kit.to_pdf
