@@ -57,6 +57,11 @@ module Carcontrol
     config.assets.version = '1.0'
     config.autoload_paths += Dir["#{config.root}/lib/**/"]  
 
+    # para resolver problema com precompile no heroku
+    config.assets.initialize_on_precompile = false
+
+
+
     # PDFKIT
     PDFKit.configure do |config|
     config.wkhtmltopdf = `which wkhtmltopdf`.to_s.strip
