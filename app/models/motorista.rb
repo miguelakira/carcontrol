@@ -3,4 +3,15 @@ class Motorista < ActiveRecord::Base
   has_many :cegonhas
   accepts_nested_attributes_for :cegonhas
 
+  before_save :transforma_nome_em_minuscula
+  after_find :capitaliza_nome
+
+  def transforma_nome_em_minuscula
+    self.nome.downcase!
+  end
+
+  def capitaliza_nome
+    self.nome = self.nome.titleize unless self.nome.nil?
+  end
+
 end
