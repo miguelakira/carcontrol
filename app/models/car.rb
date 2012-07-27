@@ -8,8 +8,6 @@ class Car < ActiveRecord::Base
   belongs_to :empresa
   has_one :pagamento
   accepts_nested_attributes_for :comprador, :empresa, :pagamento
-  
-
 
   validates	:placa, 
   			:presence => { :message => "- A placa não pode ser deixada em branco!" },

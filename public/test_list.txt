@@ -1,0 +1,19 @@
+#car
+  salvando sem placa?
+  salvando sem modelo?
+  criando carro sem comprador?
+  criando carro sem empresa?
+
+  removendo da cegonha caso mude a localizaçao atual?
+  mudando o status_pagamento caso o saldo_devedor == 0?
+
+
+#comprador
+  salvando sem cpf?
+  salvado sem nome?
+
+#cegonha 
+  alterando a contagem de carros ao remover carros da cegonha? 
+  alterando a contagem de carros ao adicionar carros da cegonha? 
+
+

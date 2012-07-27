@@ -16,7 +16,6 @@ gem 'thin', '1.3.1'
 gem 'pjax_rails'
 
 gem 'squeel'
-
 gem 'pdfkit'
 
 # Gems used only for assets and not requiredg
@@ -33,6 +32,9 @@ end
 
 group :development, :test do
 	gem 'mysql2'
+  gem 'rspec-rails', '~> 2.0'
+  gem 'factory_girl_rails', '~> 3.2.0'
+  gem 'guard-rspec', '~> 0.7.0'
 end
 
 group :production do
@@ -40,7 +42,10 @@ group :production do
 end
 
 group :test do
-  gem 'sqlite3'
+  gem 'faker', '~> 1.0.1'
+  gem 'capybara', '~> 1.1.2'
+  gem 'database_cleaner', '~> 0.7.2'
+  gem 'launchy', '~> 2.1.0'
 end
 
 gem 'jquery-rails'
