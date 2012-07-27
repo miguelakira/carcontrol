@@ -174,7 +174,7 @@ class CarsController < ApplicationController
     end
     
     
-    respond_to do |format|
+      respond_to do |format|
       if @car.save
         # faz update da contagem de carros da cegonha
        contagem_carros_cegonha()
@@ -216,17 +216,21 @@ class CarsController < ApplicationController
       # atençao! Ele vai pegar a cidade pelo nome, e nao separa por estado - pode ser
       # que se futuramente queira-se comprar a cidade pelo ID, pode dar erro (pegar cidade com mesmo nome mas
       # de estados diferentes )
-      cidade_atual = Cidade.find_by_text(params[:cidade_id]).id
-      cidade_origem = Cidade.find_by_text(params[:cidade_origem]).id
-      cidade_destino = Cidade.find_by_text(params[:cidade_destino]).id
+      cidade_atual = Cidade.find_by_text(params[:cidade_id]).id unless !params[:cidade_id].present?
+      cidade_origem = Cidade.find_by_text(params[:cidade_origem]).id unless !params[:cidade_origem].present?
+      cidade_destino = Cidade.find_by_text(params[:cidade_destino]).id unless !params[:cidade_destino].present?
       
       @car.cidade_id = cidade_atual
       @car.cidade_origem = cidade_origem
       @car.cidade_destino = cidade_destino
-      @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"  
+      if params[:cidade_id].present? and params[:estado_id].present?
+        @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}" 
+      else
+        @car.localizacao = nil
+      end
       
     end
-    
+       
     
     
     # se o carro ja esta na cegonha e a cegonha foi mudada

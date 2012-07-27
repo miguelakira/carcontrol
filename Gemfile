@@ -39,6 +39,10 @@ group :production do
 	gem 'pg', '0.13.2'
 end
 
+group :test do
+  gem 'sqlite3'
+end
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
