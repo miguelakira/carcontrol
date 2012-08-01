@@ -61,12 +61,14 @@ CNPJ: <%= @empresa.cnpj %> <br>
 <br>
 
 <p><b>CARROS ATIVOS</b></p>
-  <table style = "width:1000px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
+  <table style = "width:1200px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
   <tr>
     <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
     <th width = '1' class = 'none'>Nº</th>
     <th width = '30'class = 'begin'><%= sortable 'data_compra' %></th>
     <th width = '140'>Modelo e Placa</th>
+    <th width = '180'>Origem </th>
+    <th width = '180'>Destino</th>
     <th width = '60'>Frete</th>
     <th width = '60'>Taxa de<br/>Plataforma </th>
     <th width = '60'>Taxa de<br/>Redespacho</th>
@@ -89,6 +91,8 @@ CNPJ: <%= @empresa.cnpj %> <br>
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
     <td class = "<%= @row_class %>"><%= "#{car.modelo} - #{car.placa}" %></td>
+    <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
+    <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_frete)%></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.taxa_plataforma) %></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.taxa_despacho) %></td>
@@ -106,7 +110,7 @@ CNPJ: <%= @empresa.cnpj %> <br>
 <% if @cars_inativos.empty? %>
   <p>Não há carros finalizados para esta empresa</p>
 <% else %>
-<table style = "width:1000px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
+<table style = "width:1200px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
   <tr>
     <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
     <th width = '1' class = 'none'>Nº</th>
@@ -150,7 +154,7 @@ CNPJ: <%= @empresa.cnpj %> <br>
 <% if @cars_nao_pagos.empty? %>
   <p>Esta empresa pagou todos os carros</p>
 <% else %>
-<table style = "width:1000px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
+<table style = "width:1200px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
   <tr>
     <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
     <th width = '1' class = 'none'>Nº</th>
@@ -194,7 +198,7 @@ CNPJ: <%= @empresa.cnpj %> <br>
 <% if @cars_pagos.empty? %>
   <p>Esta empresa não possui carros pagos.</p>
 <% else %>
-<table style = "width:1000px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
+<table style = "width:1200px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
   <tr>
     <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
     <th width = '1' class = 'none'>Nº</th>
