@@ -18,7 +18,7 @@ class Car < ActiveRecord::Base
 
   validates :status_pagamento_id, :car_not_paid => true  
   
-  before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula, :ver_se_pertence_a_cegonha, :ajusta_nome
+  before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula, :eliminar_da_cegonha_caso_inativo, :ajusta_nome
   after_find :capitaliza_modelo
 
 
@@ -32,7 +32,7 @@ class Car < ActiveRecord::Base
     end
   end
 
-  def ver_se_pertence_a_cegonha
+  def eliminar_da_cegonha_caso_inativo
     if self.ativo == 0
       self.cegonha = nil
     end
@@ -51,7 +51,6 @@ class Car < ActiveRecord::Base
         search = search.split(" ")
         search.collect! {|s| s + "%"} # coloca '%' no final pra procurar por nomes incompletos - 'jul' acha 'juliano' e 'julio'
         joins(:empresa).where{(empresa.nome.like_any search)}
-        
       end
     else
       scoped
