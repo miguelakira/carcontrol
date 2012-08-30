@@ -93,7 +93,7 @@ class FinanceirosController < ApplicationController
       html = render_to_string(:template => "/financeiros/show_empresa.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
     end
     kit = PDFKit.new(html, :disable_javascript => true )
-    kit.stylesheets << "/public/assets/stylesheets/to_pdf.css"
+    kit.stylesheets << "#{Rails.root}/../public/assets/stylesheets/to_pdf.css" #root/../ -> arrumar isso
     pdf = kit.to_pdf
     file = kit.to_file(filename)
     send_file filename, :type => 'application/pdf'
