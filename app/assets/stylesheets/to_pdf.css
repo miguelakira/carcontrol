@@ -16,7 +16,7 @@
   padding: 3px 3px 3px 6px;
   background: #CAE8EA  no-repeat;
   cursor: default;
-  font-size: 12px;
+  font-size: 14px;
 
 }
 
@@ -36,7 +36,7 @@ th.nobg {
 
 tr {
   height: 15px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 td {
@@ -45,7 +45,7 @@ td {
   padding: 6px 6px 6px 12px;
   color: #4f6b72;
   height: 100%;
-  font-size: 12px;
+  font-size: 14px;
 }
 td a:link {
   text-decoration: none;
