@@ -83,9 +83,9 @@ class FinanceirosController < ApplicationController
     flash[:notice] = "PDF gerado na data #{Time.now.strftime('%d/%m/%Y')}"
     
     if @cliente
-      filename = "#{Rails.root}/public/Relatorio_#{@cliente.firstname}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
+      filename = "#{Rails.root}/public/Relatorio_#{@cliente.firstname.gsub(/[^\w\s]/, '')}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
     elsif @empresa
-      filename = "#{Rails.root}/public/Relatorio_#{@empresa.nome}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
+      filename = "#{Rails.root}/public/Relatorio_#{@empresa.nome.gsub(/[^\w\s]/, '')}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
     end
     if @cliente
       html = render_to_string(:template => "/financeiros/show_cliente.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
