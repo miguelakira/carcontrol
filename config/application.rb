@@ -70,6 +70,7 @@ module Carcontrol
     config.default_options = {
         :encoding=>"UTF-8",
         :page_size=>"A4",
+        :orientation=>"landscape",
         :margin_top=>"0.25in",
         :margin_right=>"1in",
         :margin_bottom=>"0.25in",
