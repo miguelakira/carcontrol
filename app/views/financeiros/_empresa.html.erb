@@ -1,46 +1,47 @@
 <p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :comprador_cnpj => @empresa %></b></p>
 <p><h5>Transações Financeiras da Empresa</h5> </p>
 
-<fieldset>
-Nome da Empresa: <%= @empresa.nome %>  <br />
-Contato na Empresa: <%= @empresa.contato unless @empresa.contato.empty? %>  <br /> 
-CNPJ: <%= @empresa.cnpj %> <br>
-<%= "Telefone: #{@empresa.telefone}" unless @empresa.telefone.empty? %> 
 
+
+<div class 'floating_box'>
+<fieldset style = "width:300px; float:left; margin-top: 20px;" >
+  <b>Nome da Empresa: <%= @empresa.nome %> </b> <br />
+  <b>Contato na Empresa: <%= @empresa.contato unless @empresa.contato.empty? %> </b> <br /> 
+  <b>CNPJ: <%= @empresa.cnpj %> </b><br>
+  <%= "Telefone: #{@empresa.telefone}" unless @empresa.telefone.empty? %> 
 </fieldset>
-
-<br /> 
-<table id="mytable" cellspacing="0" summary="Carros" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Carros" style="width:300px">  
   <tr>
-    <th style="width:180px">Carros Ativos da Empresa</th>
+    <th style="width:180px" class = 'begin'>Carros Ativos da Empresa</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
   </tr>
   
   <tr>
-    <th>Carros Finalizados</th>
+    <th class = 'begin' >Carros Finalizados</th>
     <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
   </tr>
 
 </table>
-<br />
 
-<table id="mytable" cellspacing="0" summary="Fretes" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">  
   <tr>
-    <th style="width:180px">Valor Total dos Fretes</th>
+    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
     <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
   </tr>
   
   <tr>
-    <th>Valor Total Pago</th>
+    <th class = 'begin'>Valor Total Pago</th>
     <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
   </tr>
 
   <tr>
-    <th>Saldo Devedor Total</th>
+    <th class = 'begin'>Saldo Devedor Total</th>
     <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
   </tr>
 
 </table>
+</div>
+<div style="clear: both;"></div>
 
 <br>
 

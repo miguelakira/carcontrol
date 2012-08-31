@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,15 +17,15 @@
 
 <p><h5>Transações Financeiras do Cliente</h5> </p>
 
-<fieldset>
+
+<div class 'floating_box' style = "width:1200px;">
+<fieldset style = "width:300px; float:left; margin-top: 20px;" >
 Nome: <%= @cliente.nome %>  <br />
 CPF: <%= @cliente.cpf %> <br>
 <%= "Telefone: #{@cliente.telefone}" unless @cliente.telefone.empty? %> 
-
 </fieldset>
 
-<br /> 
-<table id="mytable" cellspacing="0" summary="Carros" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Carros" style="width:300px">  
   <tr>
     <th style="width:180px; border: 1px solid #C1DAD7;">Carros Ativos</th>
     <td style='border: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
@@ -37,11 +35,9 @@ CPF: <%= @cliente.cpf %> <br>
     <th>Carros Finalizados</th>
     <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
   </tr>
-
 </table>
-<br />
 
-<table id="mytable" cellspacing="0" summary="Fretes" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">  
   <tr>
     <th style="width:180px">Valor Total dos Fretes</th>
     <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
@@ -58,6 +54,8 @@ CPF: <%= @cliente.cpf %> <br>
   </tr>
 
 </table>
+</div>
+<div style="clear: both;"></div>
 
 <br>
 
