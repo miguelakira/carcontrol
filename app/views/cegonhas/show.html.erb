@@ -2,9 +2,11 @@
 
 <p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @cegonha.id %> </b></p>
 
-<p><h5>Detalhes da Cegonha</h5> </p>
 
-<table id="mytable" cellspacing="0" summary="Detalhes da Cegonha" style="width:600px">  
+<div class = 'floating_box'>
+
+<table id="mytable" cellspacing="0" summary="Detalhes da Cegonha" style="width:450px">  
+  <caption><h5>Detalhes da Cegonha</h5></caption>
   <tr>
     <th style="width:150px">Placa da Cegonha</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @cegonha.placa %> </td>
@@ -45,8 +47,9 @@
 </table>
 
 
-<p><h5>Detalhes do Motorista</h5> </p>
-<table id="mytable" cellspacing="0" summary="Detalhes do Motorista" style="width:600px">  
+
+<table id="mytable" cellspacing="0" summary="Detalhes do Motorista" style="width:450px">  
+  <caption><h5>Detalhes do Motorista</h5> </caption>
   <tr>
     <th style="width:150px">Nome</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @cegonha.motorista.nome %> </td>
@@ -134,7 +137,11 @@
 
 
 </table>
+
 <% end -%>
+</div>
+<div style="clear: both;"></div>
+
 <br />
 <%= button('Editar', edit_cegonha_path(@cegonha)) %>
 <%= button('Voltar', cegonhas_path) %>

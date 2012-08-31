@@ -61,7 +61,8 @@ module Carcontrol
     config.assets.initialize_on_precompile = false
     #config.assets.precompile = true
 
-
+    # configura o sass por default no rails
+    config.generators.stylesheet_engine = :sass
 
     # PDFKIT
     PDFKit.configure do |config|

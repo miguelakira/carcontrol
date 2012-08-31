@@ -1000,13 +1000,15 @@ a {
   width: 980px;
   padding: 0;
   margin: 0;
+  float:left;
+  margin: 20px 15px 10px 10px;
 }
 
 caption {
   padding: 0 0 5px 0;
-  width: 980px;  
+  width: 450px;  
   font: italic 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-  text-align: right;
+  text-align: left;
 }
 
 caption_date {
@@ -1021,6 +1023,7 @@ caption_date {
   color: black;
   border: none;
   padding:2px 2px 2px 4px;
+
 }
 
 #mytable th {

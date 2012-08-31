@@ -9,7 +9,7 @@ CPF: <%= @cliente.cpf %> <br>
 </fieldset>
 
 <br /> 
-<table id="mytable" cellspacing="0" summary="Carros" style="width:600px">  
+<table class="table_financeiros" cellspacing="0" summary="Carros" style="width:600px; float:none;">  
   <tr>
     <th style="width:180px">Carros Ativos do Cliente</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
@@ -23,7 +23,7 @@ CPF: <%= @cliente.cpf %> <br>
 </table>
 <br />
 
-<table id="mytable" cellspacing="0" summary="Fretes" style="width:600px">  
+<table class="table_financeiros" cellspacing="0" summary="Fretes" style="width:600px float:none;">  
   <tr>
     <th style="width:180px">Valor Total dos Fretes</th>
     <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
