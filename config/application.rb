@@ -64,6 +64,7 @@ module Carcontrol
     # configura o sass por default no rails
     config.generators.stylesheet_engine = :sass
 
+
     # PDFKIT
     PDFKit.configure do |config|
     config.wkhtmltopdf = `which wkhtmltopdf`.to_s.strip
@@ -78,7 +79,18 @@ module Carcontrol
         :margin_left=>"1in",
         :disable_smart_shrinking=>false
     }
-end
+    end
+    #rspec
+    config.generators do |g|
+        g.test_framework :rspec,
+            fixtures: true,
+            view_specs: false,
+            helper_specs: false,
+            routing_specs: false,
+            controller_specs: true,
+            request_specs: true
+        g.fixture_replacement :factory_girl, dir: "spec/factories"
 
+    end
   end
 end

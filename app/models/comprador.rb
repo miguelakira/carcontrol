@@ -26,6 +26,11 @@ class Comprador < ActiveRecord::Base
   	end
   end
 
+  def devedor?
+    devedor = cars.select { |c| c.pagamento.saldo_devedor > 0}
+    devedor.empty? ? false : true
+  end
+
   def split_nomes
     self.firstname, self.middlename, self.lastname = nil
     nome_array = nome.split
