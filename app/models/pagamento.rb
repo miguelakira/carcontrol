@@ -25,12 +25,23 @@ class Pagamento < ActiveRecord::Base
   	if self.valor_pago.nil?
   		self.valor_pago = 0
   	end
+    if self.taxa_plataforma_origem.nil?
+      self.valor_plataforma_origem = 0
+    end
+    if self.taxa_plataforma_destino.nil?
+      self.valor_plataforma_origem = 0
+    end
+    if self.taxa_balsa.nil?
+      self.valor_plataforma_origem = 0
+    end
 
-    self.saldo_devedor = self.valor_frete + self.taxa_despacho + self.taxa_plataforma - self.desconto - self.valor_pago
+    self.saldo_devedor = self.valor_frete + self.taxa_despacho + self.taxa_plataforma - self.desconto - self.valor_pago +self.taxa_plataforma_destino +self.taxa_plataforma_origem +self.taxa_balsa
+
   end
 
+  # valor total sem descontos ou pagamentos
   def calcula_valor_total
-    self.valor_total = self.valor_frete + self.taxa_despacho + self.taxa_plataforma
+    self.valor_total = self.valor_frete + self.taxa_despacho + self.taxa_plataforma + self.taxa_plataforma_origem + self.taxa_plataforma_destino + self.taxa_balsa
   end
 
 
