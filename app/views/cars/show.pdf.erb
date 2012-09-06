@@ -169,7 +169,19 @@
     <th>Taxa de Plataforma</th>
     <td><%= retorna_valor_monetario(@car.pagamento.taxa_plataforma) %></td>
 </tr>
+<tr>
+    <th>Taxa de Plataforma Origem</th>
+    <td><%= retorna_valor_monetario(@car.pagamento.taxa_plataforma_origem) %></td>
+</tr>
+<tr>
+    <th>Taxa de Plataforma Destino</th>
+    <td><%= retorna_valor_monetario(@car.pagamento.taxa_plataforma_destino) %></td>
+</tr>
 
+<tr>
+    <th>Taxa de Balsa</th>
+    <td><%= retorna_valor_monetario(@car.pagamento.taxa_balsa) %></td>
+</tr>
 <tr>
     <th>Taxa de Redespacho</th>
     <td><%= retorna_valor_monetario(@car.pagamento.taxa_despacho) %></td>
