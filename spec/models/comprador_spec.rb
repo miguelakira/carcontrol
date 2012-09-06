@@ -22,7 +22,15 @@ describe Comprador do
   end
   it 'returns false if has saldo_devedor == 0' do
     pagamento = FactoryGirl.create(:pagamento, 
-      valor_pago: 0, taxa_despacho: 0, taxa_plataforma: 0, valor_frete: 0, desconto: 0
+      valor_total: nil,
+      valor_frete: nil,
+      taxa_despacho: nil,
+      taxa_plataforma: nil,
+      desconto: nil,
+      taxa_plataforma_origem: nil,
+      taxa_plataforma_destino: nil,
+      taxa_balsa: nil,
+      valor_pago: nil
       )
     cars = Array.new.push(FactoryGirl.create(:car, pagamento: pagamento), FactoryGirl.create(:car, pagamento: pagamento))
     FactoryGirl.build(:comprador, cars: cars).devedor?.should == false

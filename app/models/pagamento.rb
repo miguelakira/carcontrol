@@ -1,6 +1,8 @@
 class Pagamento < ActiveRecord::Base
   attr_accessible :car_id, :data_pagamento, :forma_pagamento, :observacao, :valor_pago, :valor_total, 
-  		:taxa_despacho, :taxa_plataforma, :desconto, :valor_frete
+  		:taxa_despacho, :taxa_plataforma, :desconto, :valor_frete, :taxa_plataforma_origem, :taxa_plataforma_destino,
+      :taxa_balsa
+
   belongs_to :car
   belongs_to :cegonha
 
@@ -26,16 +28,16 @@ class Pagamento < ActiveRecord::Base
   		self.valor_pago = 0
   	end
     if self.taxa_plataforma_origem.nil?
-      self.valor_plataforma_origem = 0
+      self.taxa_plataforma_origem = 0
     end
     if self.taxa_plataforma_destino.nil?
-      self.valor_plataforma_origem = 0
+      self.taxa_plataforma_destino = 0
     end
     if self.taxa_balsa.nil?
-      self.valor_plataforma_origem = 0
+      self.taxa_balsa= 0
     end
 
-    self.saldo_devedor = self.valor_frete + self.taxa_despacho + self.taxa_plataforma - self.desconto - self.valor_pago +self.taxa_plataforma_destino +self.taxa_plataforma_origem +self.taxa_balsa
+    self.saldo_devedor = self.valor_frete + self.taxa_despacho + self.taxa_plataforma - self.desconto - self.valor_pago + self.taxa_plataforma_destino + self.taxa_plataforma_origem + self.taxa_balsa
 
   end
 

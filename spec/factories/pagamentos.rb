@@ -1,9 +1,12 @@
 FactoryGirl.define do
   factory :pagamento do
-    valor_pago 100.50
-    taxa_despacho 10.5
-    taxa_plataforma 5.5
-    desconto 5.5
-    valor_frete 300.50
+    valor_pago 100.0
+    desconto 50
+    taxa_despacho 50
+    taxa_plataforma 50
+    valor_frete 50
+    taxa_plataforma_origem 50
+    taxa_plataforma_destino 50
+    taxa_balsa 50
   end
 end
