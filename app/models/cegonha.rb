@@ -4,6 +4,7 @@ class Cegonha < ActiveRecord::Base
     :empresa_attributes, :observacao, :empresa_id, :motorista_id
   has_one :pagamento
   has_many :cars
+  has_many :historicos
   belongs_to :empresa
   belongs_to :motorista
   accepts_nested_attributes_for :empresa, :motorista, :pagamento

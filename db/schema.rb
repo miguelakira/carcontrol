@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120906151311) do
+ActiveRecord::Schema.define(:version => 20120911012630) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -100,6 +100,19 @@ ActiveRecord::Schema.define(:version => 20120906151311) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "historicos", :force => true do |t|
+    t.string   "rota"
+    t.datetime "data_entrada"
+    t.datetime "data_saida"
+    t.boolean  "ativo"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "car_id"
+    t.integer  "cegonha_id"
+    t.string   "localizacao_entrada"
+    t.string   "localizacao_saida"
+  end
+
   create_table "motorista", :force => true do |t|
     t.string   "nome"
     t.string   "telefone"
@@ -130,6 +143,24 @@ ActiveRecord::Schema.define(:version => 20120906151311) do
     t.decimal  "taxa_plataforma_origem",  :precision => 8, :scale => 2
     t.decimal  "taxa_plataforma_destino", :precision => 8, :scale => 2
     t.decimal  "taxa_balsa",              :precision => 8, :scale => 2
+  end
+
+  create_table "parceiros", :force => true do |t|
+    t.integer  "carros"
+    t.string   "contato"
+    t.string   "nome"
+    t.string   "telefone"
+    t.string   "celular"
+    t.string   "localizacao"
+    t.integer  "cidade_origem"
+    t.integer  "cidade_destino"
+    t.integer  "estado_origem"
+    t.integer  "estado_destino"
+    t.integer  "cidade_id"
+    t.integer  "estado_id"
+    t.string   "comentario"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "status_pagamentos", :force => true do |t|

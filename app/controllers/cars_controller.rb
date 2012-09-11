@@ -177,6 +177,7 @@ class CarsController < ApplicationController
       if @car.save
         # faz update da contagem de carros da cegonha
        contagem_carros_cegonha()
+       @car.verifica_localizacao_historico
        status_de_carro_na_cegonha(@car.cegonha) unless @car.cegonha.nil?
         if params[:editar_localizacao]
           # se ao criar o carro, ele foi inserido na cegonha, pega a localizacao atual dela
@@ -223,28 +224,29 @@ class CarsController < ApplicationController
       @car.cidade_origem = cidade_origem
       @car.cidade_destino = cidade_destino
       if params[:cidade_id].present? and params[:estado_id].present?
-        @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}" 
+        @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
       else
         @car.localizacao = nil
       end
       
     end
        
-    
-    
     # se o carro ja esta na cegonha e a cegonha foi mudada
     if @car.cegonha
       if params[:car]
         if @car.cegonha.id != params[:car][:cegonha_id]
           @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id) unless params[:car][:cegonha_id].empty?
+          @car.verifica_localizacao_historico
         end
       end
     end
+
     #se o carro nao estava na cegonha e foi colocado em uma
     if !@car.cegonha
       if params[:car]
         
         @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id, :ativo => 1) unless params[:car][:cegonha_id].empty?
+        @car.verifica_localizacao_historico
       end
     end
 

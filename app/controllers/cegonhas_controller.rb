@@ -41,6 +41,7 @@ class CegonhasController < ApplicationController
     @cegonha.build_motorista
 
 
+
     if params[:cegonha_contratada]
       @cegonha.build_empresa
       @cegonha.build_pagamento
@@ -100,6 +101,7 @@ class CegonhasController < ApplicationController
       @cegonha.empresa.update_attributes(params[:cegonha][:empresa_attributes])
     end  
   end
+
 
     respond_to do |format|
       if @cegonha.save
@@ -219,6 +221,7 @@ private
       end
   end
 
+ # se chegou no destino, tira os carros da cegonha e fecha o historico
  def chegou_no_destino?(cegonha)
     if cegonha.cidade_destino == cegonha.cidade_id && cegonha.estado_destino == cegonha.estado_id
       cegonha.cars.each do |car|
@@ -228,5 +231,5 @@ private
       end
     end
   end
-  
+
 end

@@ -80,6 +80,34 @@
   </tr>
   
 </table>
+
+
+
+<table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">  
+  <caption><h5>Histórico da Cegonha</h5> </caption>
+
+  <tr>
+    <th width = '1' class = 'none'>Nº</th>
+    <th class = 'begin' >Placa</th>
+    <th>Data de Entrada</th>
+    <th>Data de Saída</th>
+    <th>Entrada</th>
+    <th>Saída</th>
+  </tr>
+  <% @cegonha.historicos.each_with_index do |historico, index| %>
+  <tr>
+    <td class = "none"> <%= index + 1 %>. </td>
+    <td class='begin'><%= historico.car.placa %> </td>
+    <td><%= historico.data_entrada %> </td>
+    <td><%= historico.data_saida %> </td>
+    <td><%= historico.localizacao_entrada %> </td>
+    <td><%= historico.localizacao_saida %> </td>
+    </tr>
+  <%end%>
+  
+  
+</table>
+
 <%if @cegonha.empresa %>
 <br />
   <p><h5>Detalhes do Frete da Empresa Contratada</h5></p>

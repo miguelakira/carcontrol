@@ -1,0 +1,16 @@
+<p><h1><%= @mensagem %> </h1></p>
+<% if !@parceiros.empty? %>
+
+<%= render 'parceiros' %>
+
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<%= will_paginate @parceiros %>
+
+<br />
+
+<% end -%>
+<% if current_user.admin? %>
+  <%= button('Adicionar Parceiro', new_parceiro_path)%>
+
+<% end -%>

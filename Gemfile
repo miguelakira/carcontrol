@@ -18,6 +18,7 @@ gem 'pjax_rails'
 gem 'squeel'
 gem 'pdfkit'
 
+gem 'taps'
 # Gems used only for assets and not requiredg
 # in production environments by default.
 group :assets do

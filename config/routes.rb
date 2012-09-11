@@ -1,5 +1,9 @@
 Carcontrol::Application.routes.draw do
  
+  get "parceiros/index"
+
+  get "parceiros/show"
+
   get "financeiros/index"
   get "financeiros/show"
 
