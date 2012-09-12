@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120912164314) do
+ActiveRecord::Schema.define(:version => 20120912192027) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(:version => 20120912164314) do
     t.string   "cnpj"
     t.string   "email"
     t.string   "observacao"
+    t.string   "cpf"
   end
 
   create_table "status_pagamentos", :force => true do |t|

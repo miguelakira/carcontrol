@@ -1,0 +1,75 @@
+<p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :comprador_cpf => @parceiro %></b></p>
+<p><h5>Transações Financeiras do Cliente</h5> </p>
+
+
+<br /> 
+<div class = "floating_box">
+<fieldset style = "width:320px; float:left; margin-top: 20px;" >
+  <b>Nome: <%= @parceiro.nome %> </b> <br />
+  <% if !@parceiro.cpf.nil? %>
+    <b>CPF: <%= @parceiro.cpf %> </b><br>
+  <% else %>
+    <b>CNPJ: <%= @parceiro.cnpj %> </b><br>
+  <% end -%>
+  <%= "Telefone: #{@parceiro.telefone}" unless @parceiro.telefone.empty? %> 
+</fieldset>
+
+<table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">  
+  <tr>
+    <th style="width:180px" class = 'begin'>Carros Ativos do Parceiro</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
+  </tr>
+  
+  <tr>
+    <th class = 'begin'>Carros Finalizados</th>
+    <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
+  </tr>
+
+</table>
+
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">  
+  <tr>
+    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
+  </tr>
+  
+  <tr>
+    <th class = 'begin'>Valor Total Pago</th>
+    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Saldo Devedor Total</th>
+    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
+  </tr>
+
+</table>
+</div>
+<div style="clear: both;"></div>
+
+<br>
+
+<p><b>CARROS ATIVOS</b></p>
+  <%= render 'cars', :carros => @cars_ativos %>
+<br />
+
+<p><b>CARROS FINALIZADOS</b></p>
+<% if @cars_inativos.empty? %>
+  <p>Não há carros finalizados para este Parceiro</p>
+<% else %>
+  <%= render 'cars', :carros => @cars_inativos %>
+<% end -%>
+
+<p><b>CARROS NÃO PAGOS</b></p>
+<% if @cars_nao_pagos.empty? %>
+  <p>Este parceiro pagou todos os carros</p>
+<% else %>
+  <%= render 'cars', :carros => @cars_nao_pagos %>
+<% end -%>
+
+<p><b>CARROS PAGOS</b></p>
+<% if @cars_pagos.empty? %>
+  <p>Este parceiro não possui carros pagos.</p>
+<% else %>
+  <%= render 'cars_pagos', :carros => @cars_pagos %>
+<% end -%>

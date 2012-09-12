@@ -7,6 +7,9 @@
 <% elsif defined? @empresa and @empresa.nil? %>
   <p><h1>Nenhuma transação encontrada para este CNPJ! </h1></p>
 
+<% elsif defined? @parceiro and @parceiro.nil? %>
+  <p><h1>Nenhuma transação encontrada para este parceiro! </h1></p>
+
 <% else -%> 
   
 
@@ -14,6 +17,8 @@
     <%= render 'cliente' %>
   <% elsif @cars_cnpj %>
     <%= render 'empresa' %>
+  <% elsif @cars_parceiro %>
+    <%= render 'parceiro' %>
   <% end -%>
 
 <% end -%>
