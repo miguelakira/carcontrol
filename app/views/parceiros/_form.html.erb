@@ -24,28 +24,29 @@
 
   <fieldset><legend><h5 style="font-size: 1.3em">Dados do Parceiro</h5></legend>
   
+    <p>Escolha apenas entre CPF ou CNPJ, porém não ambos!</p>
+    <div class="field" style = "float:left; padding-right:10px;">
+      <%= f.label :cpf, "CPF* " %><br />
+      <%= f.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsParceiro(this)",:maxlength=>"14", :size => '30', :id => 'parceiro_cpf' %> 
+    </div>
+
     <div class="field">
       <%= f.label :cnpj, "CNPJ*" %><br />
       <%= f.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsParceiro(this)",:maxlength=>"18", :size => '30', :id => 'parceiro_cnpj' %> 
     </div>
 
-    <div class="field">
+    <div class="field" style = "float:left; padding-right:10px;">
       <%= f.label :nome %><br />
       <%= f.text_field :nome, :id => 'parceiro_nome' %> 
     </div>
 
-    <div class="field">
-        <%#=# raw(carros_com_parceiro(parceiro)) %>
-    </div>
-
-    
     <div class="field">
       <%= f.label :email, "E-Mail" %><br />
       <%= f.text_field :email, :id => 'parceiro_email'  %>
     </div>
 
 
-    <div class="field">
+    <div class="field" style = "float:left; padding-right:10px;">
       <%= f.label :telefone %>*<br />
       <%= f.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'parceiro_telefone' %> 
     </div>
