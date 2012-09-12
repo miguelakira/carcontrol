@@ -1,0 +1,41 @@
+
+
+<table id="mytable" cellspacing="0" summary="Lista de Vendas" style = "width:1200px">  <tr>
+    <th width = '10' class = 'none'>Nº</th>
+    <th width = '150' class = 'begin'> <%= sortable "cnpj" %></th>
+    <th width = '150'><%= sortable "nome" %></th>
+    <th width = '180'><%= sortable "contato" %></th>
+    <th width = '180'><%= sortable "telefone", "telefone" %></th>
+    <th ><%= sortable "carros" %></th>
+    <th width = '100'>Frete Total<br />dos Veículos</th>
+    <% if current_user.admin? %>
+        <th width = '140'>Ações</th>
+    <% end -%>
+
+  </tr>
+
+<% x = 0%>
+
+<% @parceiros.each_with_index do |parceiro, index| %>
+
+  <tr>
+    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
+    <td class = "<%= @row_class %> begin"><%= link_to(parceiro.cnpj, parceiro) %></td>
+    <td class = "<%= @row_class %>"><%= parceiro.nome %> </td>
+    <td class = "<%= @row_class %>"><%= parceiro.contato %> </td>
+    <td class = "<%= @row_class %>"><%= parceiro.telefone %> </td>
+    
+    
+    <td> <%#= (carros_na_parceiro(parceiro)).html_safe %> </td>
+    
+    <td><%#= retorna_valor_dos_fretes(parceiro) %></td>
+    <% if current_user.admin? %>
+    
+    <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), parceiro %> &nbsp;
+        <%= link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_parceiro_path(parceiro) %> &nbsp;
+        <%= link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), parceiro, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
+    <% end -%>
+
+  </tr>
+<% end %>
+</table>

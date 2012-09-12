@@ -1,2 +1,54 @@
-<h1>Parceiros#show</h1>
-<p>Find me in app/views/parceiros/show.html.erb</p>
+<p id="notice"><%= notice %></p>
+
+<% unless @parceiro.nil? %>
+<p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @parceiro.id %> </b></p>
+<% end -%>
+
+<div class = 'floating_box'>
+
+<table id="mytable" cellspacing="0" summary="Detalhes da parceiro" style="width:450px">  
+  <caption><h5>Detalhes da parceiro</h5></caption>
+  <tr>
+    <th style="width:150px">CNPJ do Parceiro</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= @parceiro.cnpj %> </td>
+  </tr>  
+
+  <tr>
+  	<th>Nome do Parceiro</th>
+  	<td><%= @parceiro.nome %></td>
+  </tr>
+
+  <tr>
+    <th>Carros na parceiro</th>
+    <td> <%#= raw(carros_na_parceiro(@parceiro)).html_safe %></td>
+  </tr>
+  <tr>
+    <th>Localização Atual</th>
+    <td><%= @parceiro.localizacao %></td>
+  </tr>
+  <% unless @parceiro.cidade_origem.nil? && @parceiro.estado_origem.nil? %>
+  <tr>
+    <th>Origem</th>
+    <td><%= Cidade.find(@parceiro.cidade_origem).text %>, <%= Estado.find(@parceiro.estado_origem).sigla %></td>
+  </tr>
+  <% end -%>
+  <% unless @parceiro.cidade_origem.nil? && @parceiro.estado_origem.nil? %>
+  <tr>
+    <th>Destino</th>
+    <td><%= Cidade.find(@parceiro.cidade_destino).text %>, <%= Estado.find(@parceiro.estado_destino).sigla %></td>
+  </tr>
+  <% end -%>
+  <tr> 
+    <th style = "height:50px">Observação</th>
+    <td><%= @parceiro.observacao %></td>
+  </tr>
+  <tr>  
+</table>
+
+
+</div>
+<div style="clear: both;"></div>
+
+<br />
+<%= button('Editar', edit_parceiro_path(@parceiro)) %>
+<%= button('Voltar', parceiros_path) %>

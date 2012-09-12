@@ -1,11 +1,5 @@
 Carcontrol::Application.routes.draw do
  
-  get "parceiros/index"
-
-  get "parceiros/show"
-
-  get "financeiros/index"
-  get "financeiros/show"
 
   # resources :cegonhas
   get "cars/new"
@@ -19,6 +13,7 @@ Carcontrol::Application.routes.draw do
   end
 
   resources :cegonhas
+  resources :parceiros
   devise_for :users, :path_prefix => 'd'
   resources :users
   match ':controller(/:action(/:id))(.:format)'

@@ -14,6 +14,8 @@ class Cegonha < ActiveRecord::Base
   			:uniqueness => { :message => "- A placa já existe no banco de dados. É preciso que seja única." }
 
 
+  
+
   def self.search(search, search_by)
     if search
       if search_by == 'placa'

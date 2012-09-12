@@ -177,7 +177,6 @@ class CarsController < ApplicationController
       if @car.save
         # faz update da contagem de carros da cegonha
        contagem_carros_cegonha()
-       @car.verifica_localizacao_historico
        status_de_carro_na_cegonha(@car.cegonha) unless @car.cegonha.nil?
         if params[:editar_localizacao]
           # se ao criar o carro, ele foi inserido na cegonha, pega a localizacao atual dela
@@ -232,11 +231,14 @@ class CarsController < ApplicationController
     end
        
     # se o carro ja esta na cegonha e a cegonha foi mudada
+    
+    atualiza_historico()
     if @car.cegonha
       if params[:car]
+        
+
         if @car.cegonha.id != params[:car][:cegonha_id]
           @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id) unless params[:car][:cegonha_id].empty?
-          @car.verifica_localizacao_historico
         end
       end
     end
@@ -246,7 +248,6 @@ class CarsController < ApplicationController
       if params[:car]
         
         @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id, :ativo => 1) unless params[:car][:cegonha_id].empty?
-        @car.verifica_localizacao_historico
       end
     end
 
@@ -313,6 +314,49 @@ class CarsController < ApplicationController
       respond_to do |format|
         format.json  { render :json => @subsections }      
       end
+  end
+
+  def atualiza_historico
+    
+    # protege contra codigo legado antes do historico
+    if @car.cegonha
+      if @car.historicos.empty?
+        @car.historicos.create(:cegonha_id => @car.cegonha.id)
+      end
+    end
+
+
+    # nenhuma cegonha para cegonha
+    if !@car.cegonha
+      if params[:car]
+        if !params[:car][:cegonha_id].empty?
+          cegonha = Cegonha.find(params[:car][:cegonha_id])
+          cegonha.historicos.new(:car_id => @car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao)
+          cegonha.save
+        end
+      end
+    end
+
+    #mudou de cegonha
+    if @car.cegonha
+      if params[:car]
+        if !params[:car][:cegonha_id].empty?
+          if params[:car][:cegonha_id] != @car.cegonha.id
+            @car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => @car.cegonha.localizacao)
+            cegonha = Cegonha.find(params[:car][:cegonha_id])
+            cegonha.historicos.new(:car_id => @car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao)
+            cegonha.save
+          end
+        end
+      end
+    end
+
+    #saiu de cegonha
+    if @car.cegonha
+      if params[:car][:cegonha_id].empty?
+        @car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => @car.cegonha.localizacao)
+      end
+    end
   end
 
 
