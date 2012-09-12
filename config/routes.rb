@@ -1,6 +1,8 @@
 Carcontrol::Application.routes.draw do
  
 
+  get "clientes/index"
+
   # resources :cegonhas
   get "cars/new"
   get "search/index"
@@ -20,6 +22,7 @@ Carcontrol::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
+  
   root :to => 'cars#index'
 
   # See how all your routes lay out with "rake routes"

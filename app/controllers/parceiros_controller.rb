@@ -1,4 +1,6 @@
 class ParceirosController < ApplicationController
+    before_filter :authenticate_user!
+
   def index
 	@parceiros = Parceiro.all
     @parceiros.empty? ? @mensagem = "Nenhum Parceiro Cadastrado" : @mensagem = "Parceiros Cadastrados"
