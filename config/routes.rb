@@ -18,6 +18,7 @@ Carcontrol::Application.routes.draw do
   resources :parceiros
   devise_for :users, :path_prefix => 'd'
   resources :users
+  resources :clientes
   match ':controller(/:action(/:id))(.:format)'
 
   # You can have the root of your site routed with "root"

@@ -1,12 +1,11 @@
-<p><h1><%= @mensagem %> </h1></p>
-<% if !@cars.empty? %>
+<%= raw(@mensagem).html_safe %>
+<% if !@cars.nil? %>
+    <%= render 'cars' %>
 
-<%= render 'cars' %>
-
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
-
-
-<br />
+    <%= hidden_field_tag :direction, params[:direction] %>
+    <%= hidden_field_tag :sort, params[:sort] %>
+    <br />
+<% else %>
+    <%= button('Voltar', clientes_path) %>
 <% end -%>
 <br />
