@@ -27,7 +27,22 @@ class FinanceirosController < ApplicationController
         @cars_nao_pagos = @cars_cpf.reject {|c| c.status_pagamento_id == 3 }
         @cars_pagos = @cars_cpf.reject {|c| c.status_pagamento_id != 3 }
       end
-  	end
+  	else 
+      if params[:parceiro_cpf]
+        @parceiro = Parceiro.find_by_cpf(params[:parceiro_cpf])
+      elsif params[:parceiro_cnpj]
+        @parceiro = Parceiro.find_by_cnpj(params[:parceiro_cnpj])
+      end
+      
+      unless @parceiro.nil?
+        @cars_cpf = @parceiro.cars
+        
+        @cars_ativos = @cars_cpf.reject {|c| c.ativo == 0}
+        @cars_inativos = @cars_cpf.reject {|c| c.ativo != 0}
+        @cars_nao_pagos = @cars_cpf.reject {|c| c.status_pagamento_id == 3 }
+        @cars_pagos = @cars_cpf.reject {|c| c.status_pagamento_id != 3 }
+
+    end
 
   	unless @cars_ativos.nil?
   		@valor_total = 0

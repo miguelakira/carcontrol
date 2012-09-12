@@ -115,6 +115,7 @@ class CarsController < ApplicationController
     @car = Car.find(params[:id])
     @status_pagamentos = StatusPagamento.all
     @cegonhas = Cegonha.all
+    @parceiros = Parceiro.all
     # pega um array com todas as cidades dos estados atualmente no banco, pra encher os forms.
     @locais_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_id})
     @destinos_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_destino})
@@ -341,7 +342,7 @@ class CarsController < ApplicationController
     if @car.cegonha
       if params[:car]
         if !params[:car][:cegonha_id].empty?
-          if params[:car][:cegonha_id] != @car.cegonha.id
+          if params[:car][:cegonha_id].to_i != @car.cegonha.id
             @car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => @car.cegonha.localizacao)
             cegonha = Cegonha.find(params[:car][:cegonha_id])
             cegonha.historicos.new(:car_id => @car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao)

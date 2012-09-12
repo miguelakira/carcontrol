@@ -95,6 +95,11 @@
     <th>Cegonha</th>
     <td><%= link_to(@car.cegonha.placa, @car.cegonha)%></td>
   </tr>
+  <% elsif @car.parceiro %>
+  <tr>
+    <th>Parceiro</th>
+    <td><%= link_to(@car.parceiro.nome, @car.parceiro)%></td>
+  </tr>
   <% end -%>
   <tr>
     <th>Localização Atual</th>

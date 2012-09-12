@@ -28,7 +28,7 @@
     end %>
 
   <tr>
-    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
+    <td class = 'none'> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
     <td class = "<%= @row_class %>"><%= link_to "#{car.modelo} - #{car.placa}", car %></td>
     <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>

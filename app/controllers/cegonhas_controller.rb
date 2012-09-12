@@ -161,8 +161,8 @@ class CegonhasController < ApplicationController
       if @cegonha.update_attributes(params[:cegonha])
         # se chegou no destino, todos os carros saem da cegonha e o status deles muda para descarregados.
         chegou_no_destino?(@cegonha)
-        contagem_carros_cegonha()
-        status_de_carro_na_cegonha(@cegonha) 
+        contagem_carros(Cegonha.all)
+        ativar_status_de_carro_com_terceiros(@cegonha) 
 
         if params[:editar_localizacao]
           flash[:notice] = 'Dados atualizados com sucesso!'

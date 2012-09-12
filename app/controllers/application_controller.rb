@@ -1,18 +1,18 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  def contagem_carros_cegonha
-    # faz update da contagem de carros da cegonha
-    cegonhas = Cegonha.all
-    cegonhas.each do |cegonha|
-      cegonha.carros = cegonha.cars.count
-      cegonha.save
+  def contagem_carros(terceiros)
+    # faz update da contagem de carros da cegonha ou dos parceiros
+    
+    terceiros.each do |terceiro|
+      terceiro.carros = terceiro.cars.count
+      terceiro.save
     end
   end
 
-  def status_de_carro_na_cegonha(cegonha)
-    unless cegonha.cars.nil?
-      cegonha.cars.each do |car|
+  def ativar_status_de_carro_com_terceiros(terceiro)
+    unless terceiro.cars.nil?
+      terceiro.cars.each do |car|
         car.ativo = 1
         car.save
       end

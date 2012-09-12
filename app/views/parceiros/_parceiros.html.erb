@@ -26,9 +26,9 @@
     <td class = "<%= @row_class %>"><%= parceiro.telefone %> </td>
     
     
-    <td> <%#= (carros_na_parceiro(parceiro)).html_safe %> </td>
+    <td> <%= (carros_com_parceiro(parceiro)).html_safe %> </td>
     
-    <td><%#= retorna_valor_dos_fretes(parceiro) %></td>
+    <td><%= retorna_valor_dos_fretes(parceiro) %></td>
     <% if current_user.admin? %>
     
     <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), parceiro %> &nbsp;

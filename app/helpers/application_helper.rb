@@ -64,5 +64,13 @@ def sortable(column, title = nil)
     tag(:img, options)
   end
 
+  def retorna_valor_dos_fretes(terceiro)
+    valor_total = 0
+    terceiro.cars.each do |car|
+      valor_total += car.pagamento.valor_total
+    end
+  return number_to_currency(valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")  
+  end
+
 
 end

@@ -170,11 +170,17 @@
     <%= f.label :status_pagamento_id, "Status do Pagamento" %><br />
     <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
   </div>
-
   <% @cegonhas.nil? ? @cegonhas = Cegonha.all : %>
   <div class="field">
     <%= f.label :cegonha_id, "Cegonha" %><br />
-    <%= f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }  %> 
+    <%= f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }, :onchange => "parceiroOrCegonhaNotBoth(this,'parceiro');", :id => 'cegonha' %> 
+
+  </div>
+
+  <% @parceiros.nil? ? @parceiros = Parceiro.all : %>
+<div class="field">
+    <%= f.label :parceiro_id, "Parceiro" %><br />
+    <%= f.select :parceiro_id, @parceiros.collect {|p| [ p.nome, p.id ] }, { :include_blank => true}, :onchange => "parceiroOrCegonhaNotBoth(this,'cegonha');", :id => :parceiro   %> 
   </div>
 
   <div class="field">
@@ -344,6 +350,25 @@ function fillFieldsEmpresa(oSel)
       break;
   }
 }
+
+function parceiroOrCegonhaNotBoth(changedSelect, selectId) {
+    
+  //alert(changedSelect.options[changedSelect.selectedIndex].value);
+   var otherSelect = document.getElementById(selectId);
+    if(changedSelect.options[changedSelect.selectedIndex].value != ''){
+      if(otherSelect.selectedIndex != 0) {
+      var answer = confirm("Só é possível escolher Cegonha ou Parceiro, mas não ambos. Ao selecionar esta opção, vocẽ irá remover o carro do outro");
+          if(answer) { 
+            otherSelect.selectedIndex = 0;
+          }
+          else {
+            changedSelect.selectedIndex = 0;
+          }
+      }
+    }
+    
+}
+
 </script>
 
 

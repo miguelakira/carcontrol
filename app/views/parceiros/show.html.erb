@@ -19,8 +19,8 @@
   </tr>
 
   <tr>
-    <th>Carros na parceiro</th>
-    <td> <%#= raw(carros_na_parceiro(@parceiro)).html_safe %></td>
+    <th>Carros com Parceiro</th>
+    <td> <%= raw(carros_com_parceiro(@parceiro)).html_safe %></td>
   </tr>
   <tr>
     <th>Localização Atual</th>
@@ -47,7 +47,41 @@
 
 
 </div>
+
+
 <div style="clear: both;"></div>
+<div style="floating_box">
+<p><h5>Transações Financeiras do Cliente</h5> </p>
+
+
+<br /> 
+
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">  
+  <tr>
+    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
+  </tr>
+  
+  <tr>
+    <th class = 'begin'>Valor Total Pago</th>
+    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Saldo Devedor Total</th>
+    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
+  </tr>
+
+</table>
+</div>
+<div style="clear: both;"></div>
+
+<br>
+
+<p><b>CARROS ATIVOS</b></p>
+  <%= render 'cars', :carros => @cars_ativos %>
+<br />
+
 
 <br />
 <%= button('Editar', edit_parceiro_path(@parceiro)) %>

@@ -98,8 +98,8 @@
   <tr>
     <td class = "none"> <%= index + 1 %>. </td>
     <td class='begin'><%= historico.car.placa %> </td>
-    <td><%= historico.data_entrada %> </td>
-    <td><%= historico.data_saida %> </td>
+    <td><%= historico.data_entrada.strftime("%d/%m/%Y") unless historico.data_entrada.nil? %> </td>
+    <td><%= historico.data_saida.strftime("%d/%m/%Y") unless historico.data_saida.nil? %> </td>
     <td><%= historico.localizacao_entrada %> </td>
     <td><%= historico.localizacao_saida %> </td>
     </tr>
