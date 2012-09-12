@@ -77,11 +77,13 @@
 <div style="clear: both;"></div>
 
 <br>
-
+<% if !@cars_ativos.empty? %>
 <p><b>CARROS ATIVOS</b></p>
   <%= render 'cars', :carros => @cars_ativos %>
 <br />
-
+<% else %>
+<p><b>Este parceiro não possui carros ativos no momento. </b></p>
+<% end -%>
 
 <br />
 <%= button('Editar', edit_parceiro_path(@parceiro)) %>

@@ -1,4 +1,4 @@
-<table style = "width:1200px" id="table_financeiros" cellspacing="0" summary="Carros Ativos" >  
+<table style = "width:1200px" class="table_financeiros" cellspacing="0" summary="Carros Ativos" >  
   <tr>
     <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
     <th width = '1' class = 'none'>Nº</th>
@@ -20,7 +20,7 @@
     end %>
 
   <tr>
-    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
+    <td class = "none"> <%= index + 1 %>.</td>
     <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
     <td class = "<%= @row_class %>"><%= link_to "#{car.modelo} - #{car.placa}",  edit_car_path(car) %></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_total)%></td>
