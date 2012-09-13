@@ -73,8 +73,8 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
 #admin-menu a.info { background-image: url(/assets/help.png); }
 #admin-menu a.server_authentication { background-image: url(/assets/server_key.png); }
 
-/*#main {background-color:#FFFFFF;} */
-#main {background-color:#EEEEEE;}
+/*#main {background-color:#EEE;} */
+#main {background-color:#FFF;}
 
 #sidebar{ float: right; 
   width: 20%; 
