@@ -8,6 +8,7 @@ class CarsController < ApplicationController
     #if params[:sort] == "nome"
      # ativo = true
      # @cars = sort_by_comprador(ativo)
+     @car = Car.find(params[:car_id]) if params[:car_id]
     if params[:sort] == 'status_pagamento'
       ativo = [1,2,3,4,5]
       @cars = sort_by_status_pagamento(ativo)

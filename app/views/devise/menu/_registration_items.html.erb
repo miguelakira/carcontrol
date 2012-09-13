@@ -1,9 +1,8 @@
 <% if user_signed_in? %>
   <li>
-  <%= link_to('Editar Registro', edit_user_registration_path, :class => "my-account") %>
+  <%= link_to('Editar Registro |', edit_user_registration_path, :class => "my-account") %>
   </li>
-<% else %>
   <li>
-  <%= link_to('Registrar', new_user_registration_path, :class => 'my-account')  %>
+  <%= link_to('Registrar Novo Usuário |', new_user_registration_path, :class => 'my-account')  %>
   </li>
 <% end %>

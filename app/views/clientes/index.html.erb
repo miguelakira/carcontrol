@@ -1,11 +1,8 @@
-<% if !user_signed_in? %>
 <%= form_tag :action => :show do %>
-    <p><h1>Buscar Cliente por CPF</h1></p>
+    <p><h1>Bem-vindo, cliente.</h1> </p>
+    <p><b>Para verificar seu(s) carro(s), digite seu CPF abaixo:</b></p>
     <%= text_field_tag :comprador_cpf,nil, :onkeyup =>"mascara(this,cpf);",:maxlength=>"14", :size => '30' %> 
     <%= submit_tag "Buscar por CPF" %>
 <% end -%>
 <br> <br>
-<p><b>Se você for administrador, por favor, efetue o <%= link_to('LOGIN NO SISTEMA.', new_user_session_path)  %>  </b> </p>
-<% else %>
-  <%= redirect_to :controller => :cars, :action => :index %>  
-<% end %>
+<p>Se você for administrador, por favor, efetue o <%= link_to('LOGIN NO SISTEMA.', new_user_session_path)  %>  </p>

@@ -1,27 +1,51 @@
 
+<div data-pjax-container>
+    <div id = "sidebar">
+    <% if @car %>
+         
+         <dl>
+            <h3><%= @car.placa %></h3>
 
-<table style = "width:1420px" id="mytable" cellspacing="0" summary="Lista de Vendas" >  
+            <dt>Cidade de Origem:</dt>
+            <dd><% unless @car.cidade_origem.nil? %><%= Cidade.find(@car.cidade_origem).text %>, <%= Estado.find(@car.estado_origem).sigla %><% end -%> 
+            </dd>
+            <dt>Cidade de Destino:</dt>
+            <dd><% unless @car.cidade_destino.nil? %><%= Cidade.find(@car.cidade_destino).text %>, <%= Estado.find(@car.estado_destino).sigla %><% end -%></dd>
+
+            <dt>Previsão de Entrega:</dt>
+            <dd><%= @car.data_prevista.strftime("%d/%m") unless @car.data_prevista.nil? %></dd>
+
+            <p class="actions">
+                <%= link_to "Detalhes", @car %> |
+                <%= link_to "Editar", edit_car_path(@car) %> |
+                <%= link_to "Deletar", @car, method: :delete, confirm: "Are you sure?" %>
+            </p>
+        </dl>
+    <% end -%>
+</div>
+</div>
+
+
+
+<table style = "width:950px" id="mytable" cellspacing="0" summary="Lista de Vendas">  
     <tr>
         <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
         <th width = '10' class = 'none'>Nº</th>
         <th width = '30'class = 'begin'><%= sortable 'data_compra' %></th>
         <th width = '180'><%= sortable 'localizacao', "Localização Atual" %></th>
-        <th width = '180'><%= sortable 'cidade_origem', 'Origem' %> </th>
-        <th width = '180'> <%= sortable 'cidade_destino', 'destino' %> </th>
+        
         <th width = '150'> <%= sortable 'nome', 'Cliente' %> </th>
         <th width = '100'> <%= sortable 'modelo' %> </th> 
         <th width = '70'> <%= sortable 'placa' %> </th> 
         <th width = '100'> <%= sortable 'ativo', 'Status' %> </th>
         <th width = "40px"><%= sortable "status_pagamento", "Status do Pagamento" %></th>
-        <th width = '30'><%= sortable 'data_prevista' %></th>
+        
         <th width = '100'> <%= sortable 'saldo_total' %> </th>
         <th width = '100'> <%= sortable 'saldo_devedor' %> </th>
         <th width = '80'> <%= sortable "cegonha" %> </th>
         <th width = '80'> <%= sortable "parceiro" %> </th>
         
-        <% if current_user.admin? %>
-            <th width = '130px'>Ações</th>
-        <% end -%>
+        
   </tr>
 
 <% x = 0%>
@@ -37,20 +61,18 @@
     end %>
 
   <tr>
-    
+
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
 
     <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <% if car.ativo? %><%= link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %><% end -%> <% end -%></td>
-    <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
-    <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
     <td class = "<%= @row_class %>"> <%= car.comprador ? car.comprador.nome : car.empresa.nome %></td>
     <td class = "<%= @row_class %>"><%= car.modelo.titleize %></td>
-    <td class = "<%= @row_class %>"><%= car.placa %></td>
+    <td class = "<%= @row_class %>"><%= link_to car.placa, :car_id => car.id %></td>
     <td class = "<%= @row_class %>"><%= StatusVeiculo::estados[car.ativo] %></td>
     
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
-    <td class = "<%= @row_class %>"><%= car.data_prevista.strftime("%d/%m") unless car.data_prevista.nil? %></td>
+    
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_total) %> 
     </td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.saldo_devedor) %></td>
@@ -58,17 +80,8 @@
     <td class = "<%= @row_class %>"><%= car.parceiro ? link_to(car.parceiro.nome, car.parceiro) : "" %></td>
     <!--<td class = "<%#= @row_class %>"><%#= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td> -->
     
-    <% if current_user.admin? %>
-     <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), car %> 
-        <%= link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_car_path(car) %> 
-        
-        <% if car.ativo? %>
-        
-            <%= link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), car, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
-        <% else %>
-
-        <% end -%>
-    <% end -%>
+    
   </tr>
 <% end %>
 </table>
+

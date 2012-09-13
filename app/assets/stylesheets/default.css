@@ -1,5 +1,6 @@
+
 html {overflow-y:scroll;}
-body { font-family: Verdana, sans-serif; font-size: 11px; color:#484848; margin: 0; padding: 0; min-width: 900px; }
+body { font-family: Verdana, sans-serif; font-size: 11px; color:#484848; margin: 0; padding: 0; min-width: 1000px; }
 
 h1, h2, h3, h4 { font-family: "Trebuchet MS", Verdana, sans-serif;}
 h1 {margin:0; padding:0; font-size: 24px;}
@@ -9,6 +10,11 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
 
 /***** Layout *****/
 #wrapper {background: white;}
+
+.actions {
+  margin: 18px 0;
+  font-size:15px;
+}
 
 #top-menu {background: #2C4056; color: #fff; height:1.8em; font-size: 0.8em; padding: 2px 2px 0px 6px;}
 #top-menu ul {margin: 0;  padding: 0;}
@@ -67,18 +73,48 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
 #admin-menu a.info { background-image: url(/assets/help.png); }
 #admin-menu a.server_authentication { background-image: url(/assets/server_key.png); }
 
-#main {background-color:#FFFFFF;}
-/* #main {background-color:#EEEEEE;} */
+/*#main {background-color:#FFFFFF;} */
+#main {background-color:#EEEEEE;}
 
-#sidebar{ float: right; width: 22%; position: relative; z-index: 9; padding: 0; margin: 0;}
+#sidebar{ float: right; 
+  width: 20%; 
+  position: relative; 
+  z-index: 9; 
+  padding: 10px; 
+  margin: 10px 5px 0 10px; 
+  min-height: 300px;
+  background-color: #e9e9e9;
+  border: solid 1px #333;
+  border-radius: 8px;
+  webkit-border-radius: 8px;
+  mozilla-border-radius: 8px;
+  }
+#sidebar dt, dd {
+    margin: 0;
+    padding: 0;
+  }
+#sidebar dt {
+    margin-top: 15px;
+    margin-bottom: 4px;
+  }
+#sidebar dd {
+    font-weight: bold;
+  }
+#sidebar h3 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-color: black;
+  }
+}
+
+
 * html #sidebar{ width: 22%; }
-#sidebar h3{ font-size: 14px; margin-top:14px; color: #666;  }
 #sidebar hr{ width: 100%; margin: 0 auto; height: 1px; background: #ccc; border: 0; }
 * html #sidebar hr{ width: 95%; position: relative; left: -6px; color: #ccc; }
 #sidebar .contextual { margin-right: 1em; }
 
-#content { width: 75%; background-color: #fff; margin: 0px; border-right: 0px solid #ddd; padding: 6px 10px 10px 10px; z-index: 10; }
-* html #content{ width: 75%; padding-left: 0; margin-top: 0px; padding: 6px 10px 10px 10px;}
+#content {   width:1300px; background-color: #fff; margin: 0px; border-right: 0px solid #ddd; padding: 0px 10px 10px 10px; z-index: 10; height: 100%;}
+* html #content{ width: 100%; padding-left: 0; margin-top: 0px; padding: 6px 10px 10px 10px;}
 html>body #content { min-height: 600px; } 
 * html body #content { height: 600px; } /* IE */
 
