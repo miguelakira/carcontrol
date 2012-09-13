@@ -61,7 +61,6 @@ class CegonhasController < ApplicationController
 
     # pega um array com todas as cidades dos estados atualmente no banco, pra encher os forms.
     @locais_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_id})
-
     @destinos_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_destino})
     @origens_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_origem})
     # pega o nome das cidades atualmente no banco (origem, destino e atual)

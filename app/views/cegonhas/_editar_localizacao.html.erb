@@ -47,13 +47,7 @@
   }
 
   function endOfRoute(cidade_destino_nome, elem_id) {
-    var estado_destino_id = document.getElementById(elem_id).value;
-    
-    <% unless @cegonha.cidade_destino.nil? %>
-    if (cidade_destino_nome.value == <%= Cidade.find(@cegonha.cidade_destino).text.to_json.html_safe %>) {
-      alert("Mesmo destino. Avisar usuáro sobre localizações (todo)");
-    }
-    <% end %>
+   
     
     
   }
@@ -139,7 +133,7 @@
     
     <%= f.label :cidade_destino, "Destino da Cegonha" %><br />
     <% if @cegonha.estado_destino.nil? %>
-      <%= select_tag(:estado_destino, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @cegonha.estado_destino), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_destino'),")  %>
+      <%= select_tag(:estado_destino, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @cegonha.estado_destino), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_destino')")  %>
     <% else %>
       <%= hidden_field_tag 'estado_destino', @cegonha.estado_destino %>
       <b><%= Estado.find(@cegonha.estado_destino).nome %> -</b>
