@@ -1,32 +1,32 @@
 <% @cegonha = Cegonha.find(params[:cegonha]) %>
 <% cidades = Cidade.all %>
-<% estado1 = cidades.select{|c| c[:estado_id] == 1} %>
-<% estado2 = cidades.select{|c| c[:estado_id] == 2} %>
-<% estado3 = cidades.select{|c| c[:estado_id] == 3} %>
-<% estado4 = cidades.select{|c| c[:estado_id] == 4} %>
-<% estado5 = cidades.select{|c| c[:estado_id] == 5} %>
-<% estado6 = cidades.select{|c| c[:estado_id] == 6} %>
-<% estado7 = cidades.select{|c| c[:estado_id] == 7} %>
-<% estado8 = cidades.select{|c| c[:estado_id] == 8} %>
-<% estado9 = cidades.select{|c| c[:estado_id] == 9} %>
-<% estado10 = cidades.select{|c| c[:estado_id] == 10} %>
-<% estado11 = cidades.select{|c| c[:estado_id] == 11} %>
-<% estado12 = cidades.select{|c| c[:estado_id] == 12} %>
-<% estado13 = cidades.select{|c| c[:estado_id] == 13} %>
-<% estado14 = cidades.select{|c| c[:estado_id] == 14} %>
-<% estado15 = cidades.select{|c| c[:estado_id] == 15} %>
-<% estado16 = cidades.select{|c| c[:estado_id] == 16} %>
-<% estado17 = cidades.select{|c| c[:estado_id] == 17} %>
-<% estado18 = cidades.select{|c| c[:estado_id] == 18} %>
-<% estado19 = cidades.select{|c| c[:estado_id] == 19} %>
-<% estado20 = cidades.select{|c| c[:estado_id] == 20} %>
-<% estado21 = cidades.select{|c| c[:estado_id] == 21} %>
-<% estado22 = cidades.select{|c| c[:estado_id] == 22} %>
-<% estado23 = cidades.select{|c| c[:estado_id] == 23} %>
-<% estado24 = cidades.select{|c| c[:estado_id] == 24} %>
-<% estado25 = cidades.select{|c| c[:estado_id] == 25} %>
-<% estado26 = cidades.select{|c| c[:estado_id] == 26} %>
-<% estado27 = cidades.select{|c| c[:estado_id] == 27} %>
+<% estado1 = cidades.select{|c| c[:estado_id] == 1}.insert(0, Cidade.new(:text => '')) %>
+<% estado2 = cidades.select{|c| c[:estado_id] == 2}.insert(0, Cidade.new(:text => '')) %>
+<% estado3 = cidades.select{|c| c[:estado_id] == 3}.insert(0, Cidade.new(:text => '')) %>
+<% estado4 = cidades.select{|c| c[:estado_id] == 4}.insert(0, Cidade.new(:text => '')) %>
+<% estado5 = cidades.select{|c| c[:estado_id] == 5}.insert(0, Cidade.new(:text => '')) %>
+<% estado6 = cidades.select{|c| c[:estado_id] == 6}.insert(0, Cidade.new(:text => '')) %>
+<% estado7 = cidades.select{|c| c[:estado_id] == 7}.insert(0, Cidade.new(:text => '')) %>
+<% estado8 = cidades.select{|c| c[:estado_id] == 8}.insert(0, Cidade.new(:text => '')) %>
+<% estado9 = cidades.select{|c| c[:estado_id] == 9}.insert(0, Cidade.new(:text => '')) %>
+<% estado10 = cidades.select{|c| c[:estado_id] == 10}.insert(0, Cidade.new(:text => '')) %>
+<% estado11 = cidades.select{|c| c[:estado_id] == 11}.insert(0, Cidade.new(:text => '')) %>
+<% estado12 = cidades.select{|c| c[:estado_id] == 12}.insert(0, Cidade.new(:text => '')) %>
+<% estado13 = cidades.select{|c| c[:estado_id] == 13}.insert(0, Cidade.new(:text => '')) %>
+<% estado14 = cidades.select{|c| c[:estado_id] == 14}.insert(0, Cidade.new(:text => '')) %>
+<% estado15 = cidades.select{|c| c[:estado_id] == 15}.insert(0, Cidade.new(:text => '')) %>
+<% estado16 = cidades.select{|c| c[:estado_id] == 16}.insert(0, Cidade.new(:text => '')) %>
+<% estado17 = cidades.select{|c| c[:estado_id] == 17}.insert(0, Cidade.new(:text => '')) %>
+<% estado18 = cidades.select{|c| c[:estado_id] == 18}.insert(0, Cidade.new(:text => '')) %>
+<% estado19 = cidades.select{|c| c[:estado_id] == 19}.insert(0, Cidade.new(:text => '')) %>
+<% estado20 = cidades.select{|c| c[:estado_id] == 20}.insert(0, Cidade.new(:text => '')) %>
+<% estado21 = cidades.select{|c| c[:estado_id] == 21}.insert(0, Cidade.new(:text => '')) %>
+<% estado22 = cidades.select{|c| c[:estado_id] == 22}.insert(0, Cidade.new(:text => '')) %>
+<% estado23 = cidades.select{|c| c[:estado_id] == 23}.insert(0, Cidade.new(:text => '')) %>
+<% estado24 = cidades.select{|c| c[:estado_id] == 24}.insert(0, Cidade.new(:text => '')) %>
+<% estado25 = cidades.select{|c| c[:estado_id] == 25}.insert(0, Cidade.new(:text => '')) %>
+<% estado26 = cidades.select{|c| c[:estado_id] == 26}.insert(0, Cidade.new(:text => '')) %>
+<% estado27 = cidades.select{|c| c[:estado_id] == 27}.insert(0, Cidade.new(:text => '')) %>
 
 <script type="text/javascript">
   function ClearOptions(sel){
@@ -44,6 +44,15 @@
     var srcObjs = availVals[sel.value];
     for (var i=0,len=srcObjs.length;i<len;i++) opts[i]=new Option(srcObjs[i].text,srcObjs[i].value!=null?srcObjs[i].value:srcObjs[i].text);
     PopulateSelect(destSel,opts);
+  }
+
+  function endOfRoute(cidade_destino_nome, elem_id) {
+    var estado_destino_id = document.getElementById(elem_id).value;
+    
+    if (cidade_destino_nome.value == <%= Cidade.find(@cegonha.cidade_destino).text.to_json.html_safe %>) {
+      alert("Mesmo destino. Avisar usuáro sobre localizações (todo)");
+    }
+    
   }
 
   var availVals = {
@@ -97,7 +106,7 @@
     <% if @cegonha.cidade_id.nil? %>
       <%= select_tag(:cidade_id) %>
     <% else %>
-      <%= select_tag(:cidade_id, options_from_collection_for_select(@locais_atual, :text, :text, @cidade_atual)) %>
+      <%= select_tag(:cidade_id, options_from_collection_for_select(@locais_atual, :text, :text, @cidade_atual),  :onchange => "endOfRoute(this, 'estado_id')") %>
     <% end -%>
   </div>
 
@@ -127,7 +136,7 @@
     
     <%= f.label :cidade_destino, "Destino da Cegonha" %><br />
     <% if @cegonha.estado_destino.nil? %>
-      <%= select_tag(:estado_destino, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @cegonha.estado_destino), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_destino')")  %>
+      <%= select_tag(:estado_destino, options_for_select(Estado.all.collect {|p| [ p.nome, p.id ] }, :selected => @cegonha.estado_destino), :include_blank => true, :onchange => "UpdateOptions(this, 'cidade_destino'),")  %>
     <% else %>
       <%= hidden_field_tag 'estado_destino', @cegonha.estado_destino %>
       <b><%= Estado.find(@cegonha.estado_destino).nome %> -</b>
