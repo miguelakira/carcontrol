@@ -1,3 +1,39 @@
+<div class = "floating_box" style = "min-height:100px">
+
+<table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">  
+  <tr>
+    <th style="width:180px" class = 'begin'>Carros Ativos do Cliente</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
+  </tr>
+  
+  <tr>
+    <th class = 'begin'>Carros Finalizados</th>
+    <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
+  </tr>
+
+</table>
+
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">  
+  <tr>
+    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
+  </tr>
+  
+  <tr>
+    <th class = 'begin'>Valor Total Pago</th>
+    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Saldo Devedor Total</th>
+    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
+  </tr>
+
+</table>
+</div>
+<div style="clear: both;"></div>
+
+
 <table style = "width:1420px" id="mytable" cellspacing="0" summary="Lista de Vendas" >  
     <tr>
         <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
@@ -14,7 +50,6 @@
         <th width = '30'><%= sortable 'data_prevista' %></th>
         <th width = '100'> <%= sortable 'saldo_total' %> </th>
         <th width = '100'> <%= sortable 'saldo_devedor' %> </th>
-        <th width = '80'> <%= sortable "cegonha" %> </th>
         
   </tr>
 
@@ -48,7 +83,6 @@
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_total) %> 
     </td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.saldo_devedor) %></td>
-    <td class = "<%= @row_class %>"><%= car.cegonha.placa unless car.cegonha.nil? %></td>
     <!--<td class = "<%#= @row_class %>"><%#= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td> -->
     
   
