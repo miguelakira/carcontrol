@@ -1,9 +1,9 @@
 <p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :comprador_cpf => @parceiro %></b></p>
-<p><h5>Transações Financeiras do Cliente</h5> </p>
+<p><h5>Transações Financeiras do Parceiro</h5> </p>
 
 
 <br /> 
-<div class = "floating_box">
+<div class = "floating_box" style = "min-height:100px">
 <fieldset style = "width:320px; float:left; margin-top: 20px;" >
   <b>Nome: <%= @parceiro.nome %> </b> <br />
   <% if !@parceiro.cpf.nil? %>

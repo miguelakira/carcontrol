@@ -13,7 +13,7 @@
             <dd><% unless @car.cidade_destino.nil? %><%= Cidade.find(@car.cidade_destino).text %>, <%= Estado.find(@car.estado_destino).sigla %><% end -%></dd>
 
             <dt>Previsão de Entrega:</dt>
-            <dd><%= @car.data_prevista.strftime("%d/%m") unless @car.data_prevista.nil? %></dd>
+            <dd><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></dd>
 
             <p class="acoes">
                 <%= link_to "Detalhes", @car %> |
