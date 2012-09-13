@@ -49,9 +49,12 @@
   function endOfRoute(cidade_destino_nome, elem_id) {
     var estado_destino_id = document.getElementById(elem_id).value;
     
+    <% unless @cegonha.cidade_destino.nil? %>
     if (cidade_destino_nome.value == <%= Cidade.find(@cegonha.cidade_destino).text.to_json.html_safe %>) {
       alert("Mesmo destino. Avisar usuáro sobre localizações (todo)");
     }
+    <% end %>
+    
     
   }
 
