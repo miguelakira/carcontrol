@@ -352,7 +352,6 @@ class CarsController < ApplicationController
     if @car.cegonha
       #saiu da cegonha
       if params[:car]
-        raise "inside"
         if params[:car][:cegonha_id].empty?
           @car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => @car.cegonha.localizacao)
         end
