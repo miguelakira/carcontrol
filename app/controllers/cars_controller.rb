@@ -323,7 +323,7 @@ class CarsController < ApplicationController
         @car.historicos.create(:cegonha_id => @car.cegonha.id)
       end
     end
-    # nenhuma cegonha para cegonha
+    # entrou na cegonha
     if !@car.cegonha
       if params[:car]
         if !params[:car][:cegonha_id].empty?
@@ -348,12 +348,16 @@ class CarsController < ApplicationController
       end
     end
 
-    #saiu de cegonha
+    #saiu de cegonha ou foi criado direto na cegonha
     if @car.cegonha
+      #saiu da cegonha
       if params[:car]
+        raise "inside"
         if params[:car][:cegonha_id].empty?
           @car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => @car.cegonha.localizacao)
         end
+      else
+        @car.historicos.last.update_attributes(:data_entrada => Time.now, :localizacao_entrada => @car.cegonha.localizacao)
       end
     end
   end
