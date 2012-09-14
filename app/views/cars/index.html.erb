@@ -10,8 +10,10 @@
 <br />
 <% end -%>
 <br />
-
+<div style="clear: both;"></div>
+<div class = 'floating_box'>
 <% if current_user.admin? %>
   <%= button('Novo Cliente (Pessoa Física)', new_car_path)%>
   <%= button('Novo Cliente (Pessoa Jurídica)', :action => :new, :pessoa_juridica => true)%>
 <% end -%>
+</div>

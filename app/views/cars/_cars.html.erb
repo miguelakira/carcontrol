@@ -6,6 +6,10 @@
          <dl>
             <h3><%= @car.placa %></h3>
 
+            <dt>Localização Atual:</dt>
+            <dd><% unless @car.localizacao.nil? %><%= @car.localizacao %><% end -%> 
+            </dd>
+
             <dt>Cidade de Origem:</dt>
             <dd><% unless @car.cidade_origem.nil? %><%= Cidade.find(@car.cidade_origem).text %>, <%= Estado.find(@car.estado_origem).sigla %><% end -%> 
             </dd>
@@ -14,6 +18,8 @@
 
             <dt>Previsão de Entrega:</dt>
             <dd><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></dd>
+
+            <dt>Taxas</dt>
 
             <p class="acoes">
                 <%= link_to "Detalhes", @car %> |
@@ -27,7 +33,7 @@
 
 
 
-<table style = "width:950px" id="mytable" cellspacing="0" summary="Lista de Vendas">  
+<table style = "width:1030px" id="mytable" cellspacing="0" summary="Lista de Vendas">  
     <tr>
         <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
         <th width = '10' class = 'none'>Nº</th>

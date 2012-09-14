@@ -81,8 +81,8 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
   width: 20%; 
   position: relative; 
   z-index: 9; 
-  padding: 10px; 
-  margin: 10px 5px 0 10px; 
+  padding: 6px; 
+  margin: 10px 5px 0 5px; 
   min-height: 300px;
   background-color: #e9e9e9;
   border: solid 1px #333;
@@ -115,7 +115,7 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
 * html #sidebar hr{ width: 95%; position: relative; left: -6px; color: #ccc; }
 #sidebar .contextual { margin-right: 1em; }
 
-#content {   width:1300px; background-color: #fff; margin: 0px; border-right: 0px solid #ddd; padding: 0px 10px 10px 10px; z-index: 10; height: 100%;}
+#content {   width:1350px; background-color: #fff; margin: 0px; border-right: 0px solid #ddd; padding: 0px 10px 10px 10px; z-index: 10; height: 100%;}
 * html #content{ width: 100%; padding-left: 0; margin-top: 0px; padding: 6px 10px 10px 10px;}
 html>body #content { min-height: 600px; } 
 * html body #content { height: 600px; } /* IE */
