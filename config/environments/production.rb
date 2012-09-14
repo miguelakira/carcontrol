@@ -69,8 +69,8 @@ Carcontrol::Application.configure do
     :address              => "smtp.gmail.com",
     :port                 => 587,
     :domain               => 'baci.lindsaar.net',
-    :user_name            => 'miguel.akira@gmail.com',
-    :password             => 'ar4nha$voce4verde',
+    :user_name            => 'errors.carcontrol@gmail.com',
+    :password             => 'voce4verde',
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
 
