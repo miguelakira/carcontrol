@@ -26,7 +26,6 @@ class CegonhasController < ApplicationController
   # GET /cegonhas/1.json
   def show
     @cegonha = Cegonha.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @cegonha }
@@ -225,11 +224,17 @@ private
  def chegou_no_destino?(cegonha)
     if cegonha.cidade_destino == cegonha.cidade_id && cegonha.estado_destino == cegonha.estado_id
       cegonha.cars.each do |car|
+        # protege contra codigo legado antes do historico
+        if car.historicos.empty?
+            car.historicos.create(:cegonha_id => car.cegonha.id)
+        end
+        #saiu da cegonha
+        car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
         car.ativo = 2
         car.cegonha = nil
         car.save
       end
+      
     end
   end
-
 end
