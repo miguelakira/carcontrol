@@ -35,7 +35,9 @@ class CarsController < ApplicationController
   end
 
   def inativos
-    
+   
+   # para o sidebar    
+   @car = Car.find(params[:car_id]) if params[:car_id]
 
     if params[:sort] == "saldo_total"
       ativo = false
