@@ -322,7 +322,8 @@ class CarsController < ApplicationController
     # protege contra codigo legado antes do historico
     if @car.cegonha
       if @car.historicos.empty?
-        @car.historicos.create(:cegonha_id => @car.cegonha.id)
+        rota = "#{Cidade.find(@car.cegonha.cidade_origem}, #{Estado.find(@car.cegonha.estado_origem)} -  #{Cidade.find(@car.cegonha.cidade_destino}, #{Estado.find(@car.cegonha.estado_destino)}"
+        @car.historicos.create(:cegonha_id => @car.cegonha.id, :nome_rota => rota, :rota => @car.cegonha.)
       end
     end
     # entrou na cegonha
