@@ -19,6 +19,54 @@ class ApplicationController < ActionController::Base
     end
   end
 
+
+ def atualiza_historico(car, cegonha)
+    # protege contra codigo legado antes do historico
+    if car.cegonha
+      if car.historicos.empty?
+        car.historicos.create(:cegonha_id => car.cegonha.id, :nome_rota => car.cegonha.get_nome_rota, :rota => car.cegonha.rotas)
+      end
+    end
+    # entrou na cegonha
+    if !car.cegonha
+      if params[:car]
+        if !params[:car][:cegonha_id].empty?
+          cegonha = Cegonha.find(params[:car][:cegonha_id])
+          cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
+          cegonha.save
+        end
+      end
+    end
+
+    #mudou de cegonha
+    if car.cegonha
+      if params[:car]
+        if !params[:car][:cegonha_id].empty?
+          if params[:car][:cegonha_id].to_i != car.cegonha.id
+            car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
+            cegonha = Cegonha.find(params[:car][:cegonha_id])
+            cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
+            cegonha.save
+          end
+        end
+      end
+    end
+
+    #saiu de cegonha ou foi criado direto na cegonha
+    if car.cegonha
+      #saiu da cegonha
+      if params[:car]
+        if params[:car][:cegonha_id].empty?
+          car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
+        end
+      else
+        car.historicos.last.update_attributes(:data_entrada => Time.now, :localizacao_entrada => car.cegonha.localizacao, :rota => car.cegonha.rotas, :nome_rota => cegonha.get_nome_rotas)
+      end
+    end
+  end
+
+
+
   def converter_string_to_bigdecimal(veiculo, valores)
     unless valores[:valor_frete].empty?
       valores[:valor_frete].gsub!('.', '')
@@ -48,7 +96,5 @@ class ApplicationController < ActionController::Base
       valores[:desconto].gsub!(',','.')
       veiculo.pagamento.desconto = BigDecimal(valores[:desconto])
     end
-
-
   end
 end

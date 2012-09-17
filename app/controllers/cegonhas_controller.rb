@@ -234,7 +234,8 @@ private
         car.cegonha = nil
         car.save
       end
-      
+      cegonha.rotas += 1
+      cegonha.save
     end
   end
 end

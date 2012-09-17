@@ -235,7 +235,7 @@ class CarsController < ApplicationController
     end
        
     # se o carro ja esta na cegonha e a cegonha foi mudada
-    atualiza_historico()
+    atualiza_historico(@car, @car.cegonha)
     if @car.cegonha
       if params[:car]
         if @car.cegonha.id != params[:car][:cegonha_id]
@@ -317,53 +317,7 @@ class CarsController < ApplicationController
       end
   end
 
-  def atualiza_historico
-    
-    # protege contra codigo legado antes do historico
-    if @car.cegonha
-      if @car.historicos.empty?
-        rota = "#{Cidade.find(@car.cegonha.cidade_origem}, #{Estado.find(@car.cegonha.estado_origem)} -  #{Cidade.find(@car.cegonha.cidade_destino}, #{Estado.find(@car.cegonha.estado_destino)}"
-        @car.historicos.create(:cegonha_id => @car.cegonha.id, :nome_rota => rota, :rota => @car.cegonha.)
-      end
-    end
-    # entrou na cegonha
-    if !@car.cegonha
-      if params[:car]
-        if !params[:car][:cegonha_id].empty?
-          cegonha = Cegonha.find(params[:car][:cegonha_id])
-          cegonha.historicos.new(:car_id => @car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao)
-          cegonha.save
-        end
-      end
-    end
-
-    #mudou de cegonha
-    if @car.cegonha
-      if params[:car]
-        if !params[:car][:cegonha_id].empty?
-          if params[:car][:cegonha_id].to_i != @car.cegonha.id
-            @car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => @car.cegonha.localizacao)
-            cegonha = Cegonha.find(params[:car][:cegonha_id])
-            cegonha.historicos.new(:car_id => @car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao)
-            cegonha.save
-          end
-        end
-      end
-    end
-
-    #saiu de cegonha ou foi criado direto na cegonha
-    if @car.cegonha
-      #saiu da cegonha
-      if params[:car]
-        if params[:car][:cegonha_id].empty?
-          @car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => @car.cegonha.localizacao)
-        end
-      else
-        @car.historicos.last.update_attributes(:data_entrada => Time.now, :localizacao_entrada => @car.cegonha.localizacao)
-      end
-    end
-  end
-
+ 
 
  
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917142327) do
+ActiveRecord::Schema.define(:version => 20120917183309) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(:version => 20120917142327) do
     t.string   "destino"
     t.integer  "carros"
     t.string   "comentario"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "cidade_origem"
     t.integer  "estado_origem"
     t.integer  "cidade_destino"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20120917142327) do
     t.integer  "empresa_id"
     t.string   "nome"
     t.integer  "motorista_id"
+    t.integer  "rotas",          :default => 1
   end
 
   create_table "cidades", :force => true do |t|
