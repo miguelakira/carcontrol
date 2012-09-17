@@ -18,8 +18,6 @@
             <dt>Previsão de Entrega:</dt>
             <dd><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></dd>
 
-            <dt>Taxas</dt>
-
             <p class="acoes">
                 <%= link_to "Detalhes", @car %> |
                 <%= link_to "Editar", edit_car_path(@car) %> |
