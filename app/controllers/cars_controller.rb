@@ -180,7 +180,8 @@ class CarsController < ApplicationController
       respond_to do |format|
       if @car.save
         # faz update da contagem de carros da cegonha
-       contagem_carros(Cegonha.all)
+       contagem_carros(Cegonha.all) unless Cegonha.all.nil?
+       contagem_carros(Parceiro.all) unless Parceiro.all.nil?
        ativar_status_de_carro_com_terceiros(@car.cegonha)  unless @car.cegonha.nil?
         if params[:editar_localizacao]
           # se ao criar o carro, ele foi inserido na cegonha, pega a localizacao atual dela
@@ -255,11 +256,9 @@ class CarsController < ApplicationController
     respond_to do |format|
       if @car.update_attributes(params[:car])
         # faz update da contagem de carros da cegonha
-        cegonhas = Cegonha.all
-        cegonhas.each do |cegonha|
-          cegonha.carros = cegonha.cars.count
-          cegonha.save
-        end
+        contagem_carros(Parceiro.all) unless Parceiro.all.nil?
+        contagem_carros(Cegonha.all) unless Cegonha.all.nil?
+        
         if params[:editar_localizacao]
           flash[:notice] = 'Dados atualizados com sucesso!'
           redirect_to :action => :edit, :car => @car, :editar_localizacao => true  and return
