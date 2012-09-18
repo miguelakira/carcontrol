@@ -10,6 +10,8 @@
 <br />
 
 <% end -%>
+<div style="clear: both;"></div>
+
 <% if current_user.admin? %>
   <%= button('Adicionar Cegonha', new_cegonha_path)%>
   <%= button('Adicionar Cegonha de Outra Transportadora', :action => :new, :cegonha_contratada => true)%>
