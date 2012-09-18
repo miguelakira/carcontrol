@@ -236,7 +236,8 @@ class CarsController < ApplicationController
     end
        
     # se o carro ja esta na cegonha e a cegonha foi mudada
-    atualiza_historico(@car, @car.cegonha)
+    atualiza_historico_cegonha(@car)
+    atualiza_historico_parceiro(@car)
     if @car.cegonha
       if params[:car]
         if @car.cegonha.id != params[:car][:cegonha_id]

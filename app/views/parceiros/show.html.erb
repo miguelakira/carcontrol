@@ -67,14 +67,8 @@
 
 </div>
 
-
-
-<div style="floating_box">
-
-</div>
 <div style="clear: both;"></div>
 
-<br>
 <% if !@cars_ativos.empty? %>
 <p><b>CARROS ATIVOS</b></p>
   <%= render 'cars', :carros => @cars_ativos %>
@@ -82,7 +76,48 @@
 <% else %>
 <p><b>Este parceiro não possui carros ativos no momento. </b></p>
 <% end -%>
+<div style="clear: both;"></div>
+  <% frete_total = 0 
+     saldo_devedor = 0 
+     @parceiro.historicos.each do |hist| 
+        frete_total = hist.car.pagamento.valor_total + frete_total
+        saldo_devedor =  hist.car.pagamento.saldo_devedor + saldo_devedor
+    end%>
+  <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">  
+      <caption><p><b>HISTÓRICO</b></p>
 
-<br />
+        <p><%= "Frete Total: #{retorna_valor_monetario(frete_total)}, Saldo Devedor: #{retorna_valor_monetario(saldo_devedor)}" %> </p> </caption>
+  
+    <% if @parceiro.historicos.empty? %>
+      <th style = "text-align:left;">Nenhum carro no histórico</th>
+      </table>
+    <% else -%>
+
+    <tr>
+      <th width = '1' class = 'none'>Nº</th>
+      <th class = 'begin' >Placa</th>
+      <th>Data de Entrada</th>
+      <th>Cidade de Entrada</th>
+      <th>Data de Saída</th>
+      <th>Cidade de Saída</th>
+    </tr>
+    
+    <% @parceiro.historicos.each_with_index do |historico, index| %>
+    <tr>
+      <td class = "none"> <%= index + 1 %>. </td>
+      <td class='begin'><%= link_to(historico.car.placa, historico.car) unless historico.car.nil? %> </td>
+      <td><%= historico.data_entrada.strftime("%d/%m/%Y") unless historico.data_entrada.nil? %> </td>
+      <td><%= historico.localizacao_entrada %> </td>
+      <td><%= historico.data_saida.strftime("%d/%m/%Y") unless historico.data_saida.nil? %> </td>
+      <td><%= historico.localizacao_saida %> </td>
+      </tr>
+    <%end%>
+    
+    
+  </table>
+  <% end -%>
+
+<div style="clear: both;"></div>
+
 <%= button('Editar', edit_parceiro_path(@parceiro)) %>
 <%= button('Voltar', parceiros_path) %>

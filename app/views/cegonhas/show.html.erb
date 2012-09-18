@@ -142,14 +142,15 @@
 
 <% end -%>
 
-<% @cegonha.rotas.downto(1) do |i|%>
-  <% carros_na_rota = @cegonha.historicos.select{|hist| hist.rota == i} %>
-  <% frete_total = 0 %>
-  <% saldo_devedor = 0 %>
-  <% carros_na_rota.each do |hist| 
-        frete_total = hist.car.pagamento.valor_total + frete_total
-        saldo_devedor =  hist.car.pagamento.saldo_devedor + saldo_devedor
-    end %>
+<% @cegonha.rotas.downto(1) do |i|
+  carros_na_rota = @cegonha.historicos.select{|hist| hist.rota == i} 
+  frete_total = 0 
+  saldo_devedor = 0 
+  carros_na_rota.each do |hist| 
+    frete_total = hist.car.pagamento.valor_total + frete_total
+    saldo_devedor =  hist.car.pagamento.saldo_devedor + saldo_devedor
+end %>
+
   <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">  
     <% if i == @cegonha.rotas %>
       <caption><h5><%= "Rota Atual, #{@cegonha.get_nome_rota}." %></h5> </caption>
@@ -168,9 +169,9 @@
       <th width = '1' class = 'none'>Nº</th>
       <th class = 'begin' >Placa</th>
       <th>Data de Entrada</th>
+      <th>Cidade de Entrada</th>
       <th>Data de Saída</th>
-      <th>Entrada</th>
-      <th>Saída</th>
+      <th>Cidade de Saída</th>
     </tr>
     
     <% carros_na_rota.each_with_index do |historico, index| %>
@@ -178,8 +179,8 @@
       <td class = "none"> <%= index + 1 %>. </td>
       <td class='begin'><%= link_to(historico.car.placa, historico.car) unless historico.car.nil? %> </td>
       <td><%= historico.data_entrada.strftime("%d/%m/%Y") unless historico.data_entrada.nil? %> </td>
-      <td><%= historico.data_saida.strftime("%d/%m/%Y") unless historico.data_saida.nil? %> </td>
       <td><%= historico.localizacao_entrada %> </td>
+      <td><%= historico.data_saida.strftime("%d/%m/%Y") unless historico.data_saida.nil? %> </td>
       <td><%= historico.localizacao_saida %> </td>
       </tr>
     <%end%>

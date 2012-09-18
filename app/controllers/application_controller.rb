@@ -19,8 +19,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+# recipiente pode ser cegonha ou parceiro
+ def atualiza_historico_cegonha(car)
+  #caso seja carro de parceiro, nao faz nada
+  unless car.parceiro
 
- def atualiza_historico(car, cegonha)
     # protege contra codigo legado antes do historico
     if car.cegonha
       if car.historicos.empty?
@@ -30,6 +33,7 @@ class ApplicationController < ActionController::Base
     # entrou na cegonha
     if !car.cegonha
       if params[:car]
+        raise car.inspect
         if !params[:car][:cegonha_id].empty?
           cegonha = Cegonha.find(params[:car][:cegonha_id])
           cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
@@ -57,10 +61,67 @@ class ApplicationController < ActionController::Base
       #saiu da cegonha
       if params[:car]
         if params[:car][:cegonha_id].empty?
+          raise "car".inspect
           car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
         end
       else
+        raise "ddd".inspect
         car.historicos.last.update_attributes(:data_entrada => Time.now, :localizacao_entrada => car.cegonha.localizacao, :rota => car.cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
+      end
+    end
+  end
+  end
+
+
+def atualiza_historico_parceiro(car)
+  
+    # protege contra codigo legado antes do historico
+    if car.parceiro
+      if car.historicos.empty?
+        car.historicos.create(:parceiro_id => car.parceiro.id)
+      end
+    end
+    # entrou na cegonha
+    if !car.parceiro
+      if params[:car]
+        if !params[:car][:parceiro_id].empty?
+          parceiro = Parceiro.find(params[:car][:parceiro_id])
+          parceiro.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => car.localizacao)
+          parceiro.save
+        end
+      end
+    end
+
+    #mudou de parceiro
+    if car.parceiro
+      if params[:car]
+        if !params[:car][:parceiro_id].empty?
+          if params[:car][:parceiro_id].to_i != car.parceiro.id
+            car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.localizacao)
+            parceiro = Parceiro.find(params[:car][:parceiro_id])
+            parceiro.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => car.localizacao)
+            parceiro.save
+          end
+        end
+      end
+    end
+
+    #saiu de parceiro ou foi criado direto na parceiro
+    if car.parceiro
+      #saiu da parceiro
+      if params[:car]
+
+        if params[:car][:parceiro_id].empty? and params[:car][:cegonha_id].empty?
+          car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.localizacao)
+        # saiu do parceiro e entrou na cegonha
+        elsif params[:car][:parceiro_id].empty? and !params[:car][:cegonha_id].empty?
+          car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.localizacao)
+          cegonha = Cegonha.find(params[:car][:cegonha_id])
+          cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
+          cegonha.save
+        end
+      else
+        car.historicos.last.update_attributes(:data_entrada => Time.now, :localizacao_entrada => car.localizacao)
       end
     end
   end
