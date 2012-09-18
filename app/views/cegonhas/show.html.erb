@@ -27,13 +27,13 @@
     <th>Localização Atual</th>
     <td><%= @cegonha.localizacao %></td>
   </tr>
-  <% unless @cegonha.cidade_origem.nil? && @cegonha.estado_origem.nil? %>
+  <% unless @cegonha.cidade_origem.nil? or @cegonha.estado_origem.nil? %>
   <tr>
     <th>Origem</th>
     <td><%= Cidade.find(@cegonha.cidade_origem).text %>, <%= Estado.find(@cegonha.estado_origem).sigla %></td>
   </tr>
   <% end -%>
-  <% unless @cegonha.cidade_origem.nil? && @cegonha.estado_origem.nil? %>
+  <% unless @cegonha.cidade_destino.nil? or @cegonha.estado_destino.nil? %>
   <tr>
     <th>Destino</th>
     <td><%= Cidade.find(@cegonha.cidade_destino).text %>, <%= Estado.find(@cegonha.estado_destino).sigla %></td>

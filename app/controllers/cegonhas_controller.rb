@@ -65,8 +65,8 @@ class CegonhasController < ApplicationController
     # pega o nome das cidades atualmente no banco (origem, destino e atual)
     unless @cegonha.cidade_id.nil?
       @cidade_atual = Cidade.find(@cegonha.cidade_id).text 
-      @cidade_origem = Cidade.find(@cegonha.cidade_origem).text
-      @cidade_destino = Cidade.find(@cegonha.cidade_destino).text
+      @cidade_origem = Cidade.find(@cegonha.cidade_origem).text unless @cegonha.cidade_origem.nil?
+      @cidade_destino = Cidade.find(@cegonha.cidade_destino).text unless @cegonha.cidade_destino.nil?
     end
   end
 
@@ -235,6 +235,10 @@ private
         car.save
       end
       cegonha.rotas += 1
+      cegonha.cidade_origem = nil
+      cegonha.cidade_destino = nil
+      cegonha.estado_origem = nil
+      cegonha.estado_destino = nil
       cegonha.save
     end
   end
