@@ -22,8 +22,7 @@ class ApplicationController < ActionController::Base
 # recipiente pode ser cegonha ou parceiro
  def atualiza_historico_cegonha(car)
   #caso seja carro de parceiro, nao faz nada
-  unless car.parceiro
-
+  if car.parceiro.nil?
     # protege contra codigo legado antes do historico
     if car.cegonha
       if car.historicos.empty?
@@ -33,8 +32,7 @@ class ApplicationController < ActionController::Base
     # entrou na cegonha
     if !car.cegonha
       if params[:car]
-        raise car.inspect
-        if !params[:car][:cegonha_id].empty?
+        if !params[:car][:cegonha_id].empty? and !car.parceiro
           cegonha = Cegonha.find(params[:car][:cegonha_id])
           cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
           cegonha.save
@@ -61,11 +59,9 @@ class ApplicationController < ActionController::Base
       #saiu da cegonha
       if params[:car]
         if params[:car][:cegonha_id].empty?
-          raise "car".inspect
           car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
         end
       else
-        raise "ddd".inspect
         car.historicos.last.update_attributes(:data_entrada => Time.now, :localizacao_entrada => car.cegonha.localizacao, :rota => car.cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
       end
     end
@@ -110,7 +106,6 @@ def atualiza_historico_parceiro(car)
     if car.parceiro
       #saiu da parceiro
       if params[:car]
-
         if params[:car][:parceiro_id].empty? and params[:car][:cegonha_id].empty?
           car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.localizacao)
         # saiu do parceiro e entrou na cegonha
