@@ -3,6 +3,7 @@
   <%= link_to('Editar Registro |', edit_user_registration_path, :class => "my-account") %>
   </li>
   <li>
-  <%= link_to('Registrar Novo Usuário |', new_user_registration_path, :class => 'my-account')  %>
+  <%#= link_to('Registrar Novo Usuário |', new_user_registration_path, :class => 'my-account')  %>
+  <%= link_to('Registrar Novo Usuário |', :controller => :users, :action => :new, :class => 'my-account')  %>
   </li>
 <% end %>

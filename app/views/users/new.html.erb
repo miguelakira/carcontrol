@@ -1,0 +1,28 @@
+<h2>Registrar Usuário</h2>
+
+<%= form_for(@user) do |f| %>
+
+
+  <div><%= f.label :name, "Nome" %><br />
+  <%= f.text_field :name %></div>
+
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email %></div>
+
+  <div><%= f.label :password, 'Senha' %><br />
+  <%= f.password_field :password %></div>
+
+  <div><%= f.label :password_confirmation, 'Confirmação da Senha' %><br />
+  <%= f.password_field :password_confirmation %></div>
+
+  <% if !current_user.nil? %>
+  <% if current_user.admin? %>
+    <div><%= f.label :admin, 'Usuário Será Administrador?' %><br />
+    <%= f.check_box :admin %></div>
+  <% end -%>
+  <% end -%>
+
+
+  <div><%= f.submit "Registrar" %></div>
+<% end %>
+

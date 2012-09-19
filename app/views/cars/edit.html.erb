@@ -1,3 +1,6 @@
+<% if !current_user.admin? %>
+  Desculpe, você precisa ter direitos administrativos para visualizar esta página!
+<% else %>
 <p><h1>Editando Dados</h1></p>
 
 <%if @editar_localizacao %>
@@ -5,6 +8,6 @@
 <% else %>
 	<%= render 'form' %>
 <% end %>
-
+<% end -%>
 <%= link_to 'Detalhes', @car %> |
 <%= link_to 'Voltar', cars_path %>
