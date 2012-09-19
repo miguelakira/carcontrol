@@ -1,0 +1,22 @@
+<p> <h1>Logística</h1> </p>
+<p>Os carros a seguir chegaram ao destino.</p>
+<p>Selecione quais carros irão ficar em logística aguardando para embarcar em outra cegonha ou parceiro</p>
+
+<p>Cegonha Placa: <%= @cegonha.placa %></p>
+<p>Cidade Atual: <%= @cegonha.localizacao %></p>
+<%= form_tag(logistica_save_cegonha_path(@cegonha), :method => 'post') do %>
+    <% @cars.each do |car| %>
+        <p><%= car.placa %>
+        <%= check_box_tag 'finalizados[]', car.id %> Logística </p>
+        <%= hidden_field_tag 'cars[]', car.id %>
+    <% end %>
+
+    <%= submit_tag "Salvar" %>
+<% end -%>
+
+
+
+
+
+
+  

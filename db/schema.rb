@@ -103,13 +103,13 @@ ActiveRecord::Schema.define(:version => 20120917183309) do
   end
 
   create_table "historicos", :force => true do |t|
+    t.integer  "cegonha_id"
     t.datetime "data_entrada"
     t.datetime "data_saida"
     t.boolean  "ativo"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.integer  "car_id"
-    t.integer  "cegonha_id"
     t.string   "localizacao_entrada"
     t.string   "localizacao_saida"
     t.integer  "parceiro_id"

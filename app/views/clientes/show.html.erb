@@ -1,11 +1,22 @@
 <%= raw(@mensagem).html_safe %>
-<% if !@cars.nil? %>
-    <%= render 'cars' %>
+<% if defined? @cliente and @cliente.nil? %>
+  <p><h1>CPF não encontrado.</h1></p> 
+  <p><b>Por favor verifique se todos os dados estão corretos ou entre em contato com a Transroyal.</b></p>
 
+<% elsif defined? @empresa and @empresa.nil? %>
+  <p><h1>CNPJ não encontrado.</h1></p> 
+  <p><b>Por favor verifique se todos os dados estão corretos ou entre em contato com a Transroyal.</b></p>
+
+<%else %>
+
+  <% if @cars_cpf %>
+    <%= render 'cliente' %>
+  <% elsif @cars_cnpj %>
+    <%= render 'empresa' %>
+  <% end -%>
     <%= hidden_field_tag :direction, params[:direction] %>
     <%= hidden_field_tag :sort, params[:sort] %>
     <br />
-<% else %>
     <%= button('Voltar', clientes_path) %>
 <% end -%>
 <br />

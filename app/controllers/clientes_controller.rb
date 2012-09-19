@@ -8,31 +8,41 @@ class ClientesController < ApplicationController
   end
 
   def show
-    @cliente = Comprador.find_by_cpf(params[:comprador_cpf])
-
-    if @cliente.nil?
-        @mensagem = "<p><h1>CPF não encontrado.</h1></p> <p><b>Por favor verifique se todos os dados estão corretos ou entre em contato com a Transroyal.</b></p>"
-    else        
-      @cars = @cliente.cars
-      @mensagem = "<p><h1>Bem-vindo, #{@cliente.nome}.</h1></p>"
-
-      @cars_ativos = @cars.reject {|c| c.ativo == 0}
-      @cars_inativos = @cars.reject {|c| c.ativo != 0}
-      @cars_nao_pagos = @cars.reject {|c| c.status_pagamento_id == 3 }
-      @cars_pagos = @cars.reject {|c| c.status_pagamento_id != 3 }
-
-      unless @cars_ativos.nil?
-        @valor_total = 0
-        @valor_pago = 0
-
-        unless @cars.nil?
-          @cars.each do |car|
-            @valor_total += car.pagamento.valor_total unless car.pagamento.valor_total.nil?
-            @valor_pago += car.pagamento.valor_pago unless car.pagamento.valor_pago.nil?
-          end
-        end
-      @saldo_devedor = @valor_total - @valor_pago
+    if params[:comprador_cnpj] 
+      @empresa = Empresa.find_by_cnpj(params[:comprador_cnpj])
+      unless @empresa.nil?
+        @mensagem = "<p><h1>Dados do cliente #{@empresa.nome}</h1></p>"
+        @cars_cnpj = @empresa.cars
+        
+        @cars_ativos = @cars_cnpj.reject {|c| c.ativo == 0}
+        @cars_inativos = @cars_cnpj.reject {|c| c.ativo != 0}
+        @cars_nao_pagos = @cars_cnpj.reject {|c| c.status_pagamento_id == 3 }
+        @cars_pagos = @cars_cnpj.reject {|c| c.status_pagamento_id != 3 }
       end
+    elsif params[:comprador_cpf] 
+      @cliente = Comprador.find_by_cpf(params[:comprador_cpf])
+      unless @cliente.nil?        
+        @mensagem = "<p><h1>Dados do cliente #{@cliente.nome}</h1></p>"
+        @cars_cpf = @cliente.cars
+
+        @cars_ativos = @cars_cpf.reject {|c| c.ativo == 0}
+        @cars_inativos = @cars_cpf.reject {|c| c.ativo != 0}
+        @cars_nao_pagos = @cars_cpf.reject {|c| c.status_pagamento_id == 3 }
+        @cars_pagos = @cars_cpf.reject {|c| c.status_pagamento_id != 3 }
+      end
+    end
+    
+    unless @cars_ativos.nil?
+      @valor_total = 0
+      @valor_pago = 0
+
+      unless @cars.nil?
+        @cars.each do |car|
+          @valor_total += car.pagamento.valor_total unless car.pagamento.valor_total.nil?
+          @valor_pago += car.pagamento.valor_pago unless car.pagamento.valor_pago.nil?
+        end
+      end
+    @saldo_devedor = @valor_total - @valor_pago
     end
   end
 end

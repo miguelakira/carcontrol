@@ -10,20 +10,20 @@ class CarsController < ApplicationController
      # @cars = sort_by_comprador(ativo)
      @car = Car.find(params[:car_id]) if params[:car_id]
     if params[:sort] == 'status_pagamento'
-      ativo = [1,2,3,4,5]
+      ativo = [1,2,3,4,5,6]
       @cars = sort_by_status_pagamento(ativo)
     elsif params[:sort] == 'saldo_total'
-      ativo = [1,2,3,4,5]
+      ativo = [1,2,3,4,5,6]
       @cars = sort_by_saldo_total(ativo)
     else
       
       #@cars = Car.search(params[:search], params[:search_by]).order(:data_compra, :created_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5])
       if params[:search].nil?
-        @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5])    
+        @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5,6])    
         @cars.empty? ? @mensagem = "Nenhum Cliente Cadastrado" : @mensagem = "Clientes Ativos"
       else
         
-        @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5,0])  
+        @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5,6,0])  
         @cars.empty? ? @mensagem = "Nenhum Resultado Encontrado na Busca" : @mensagem = "Resultado da Busca"
       end 
     

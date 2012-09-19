@@ -14,7 +14,12 @@ Carcontrol::Application.routes.draw do
     get :limited_edit
   end
 
-  resources :cegonhas
+  resources :cegonhas do
+    member do
+      get :logistica
+      post :logistica_save
+    end
+  end
   resources :parceiros
   devise_for :users, :path_prefix => 'd'
   resources :users

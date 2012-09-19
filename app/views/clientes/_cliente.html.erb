@@ -1,0 +1,91 @@
+<div class = "floating_box" style = "min-height:100px">
+
+<table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">  
+  <tr>
+    <th style="width:180px" class = 'begin'>Carros Ativos do Cliente</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
+  </tr>
+  
+  <tr>
+    <th class = 'begin'>Carros Finalizados</th>
+    <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
+  </tr>
+
+</table>
+
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">  
+  <tr>
+    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
+  </tr>
+  
+  <tr>
+    <th class = 'begin'>Valor Total Pago</th>
+    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Saldo Devedor Total</th>
+    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
+  </tr>
+
+</table>
+</div>
+<div style="clear: both;"></div>
+
+
+<table style = "width:1420px" id="mytable" cellspacing="0" summary="Lista de Vendas" >  
+    <tr>
+        <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
+        <th width = '10' class = 'none'>Nº</th>
+        <th width = '30'class = 'begin'><%= sortable 'data_compra' %></th>
+        <th width = '180'><%= sortable 'localizacao', "Localização Atual" %></th>
+        <th width = '180'><%= sortable 'cidade_origem', 'Origem' %> </th>
+        <th width = '180'> <%= sortable 'cidade_destino', 'destino' %> </th>
+        <th width = '150'> <%= sortable 'nome', 'Cliente' %> </th>
+        <th width = '100'> <%= sortable 'modelo' %> </th> 
+        <th width = '70'> <%= sortable 'placa' %> </th> 
+        <th width = '100'> <%= sortable 'ativo', 'Status' %> </th>
+        <th width = "40px"><%= sortable "status_pagamento", "Status do Pagamento" %></th>
+        <th width = '30'><%= sortable 'data_prevista' %></th>
+        <th width = '100'> <%= sortable 'saldo_total' %> </th>
+        <th width = '100'> <%= sortable 'saldo_devedor' %> </th>
+        
+  </tr>
+
+<% x = 0%>
+
+
+<% @cars_cpf.each_with_index do |car, index| %>
+<% if car.status_pagamento.value == 1  
+        @row_class = 'nao-pago' 
+    elsif car.status_pagamento.value == 2
+        @row_class = 'pendente' 
+    else
+        @row_class = ''; 
+    end %>
+
+  <tr>
+    
+    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
+    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
+
+    <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %>  <% end -%></td>
+    <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
+    <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
+    <td class = "<%= @row_class %>"> <%= car.comprador ? car.comprador.nome : car.empresa.nome %></td>
+    <td class = "<%= @row_class %>"><%= car.modelo.titleize %></td>
+    <td class = "<%= @row_class %>"><%= car.placa %></td>
+    <td class = "<%= @row_class %>"><%= StatusVeiculo::estados[car.ativo] %></td>
+    
+    <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
+    <td class = "<%= @row_class %>"><%= car.data_prevista.strftime("%d/%m") unless car.data_prevista.nil? %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_total) %> 
+    </td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.saldo_devedor) %></td>
+    <!--<td class = "<%#= @row_class %>"><%#= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td> -->
+    
+  
+  </tr>
+<% end %>
+</table>

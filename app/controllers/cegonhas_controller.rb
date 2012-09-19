@@ -128,6 +128,7 @@ class CegonhasController < ApplicationController
       end
     end
     if params[:salvar_localizacao]
+
       @cegonha.estado_id = params[:estado_id]
       @cegonha.estado_origem = params[:estado_origem]
       @cegonha.estado_destino = params[:estado_destino]
@@ -142,6 +143,8 @@ class CegonhasController < ApplicationController
       @cegonha.cidade_id = cidade_atual
       @cegonha.cidade_origem = cidade_origem
       @cegonha.cidade_destino = cidade_destino
+
+
       
       # altera a localizacao de todos os carros que estao na cegonha
       unless @cegonha.cars.nil?
@@ -159,11 +162,19 @@ class CegonhasController < ApplicationController
     respond_to do |format|
       if @cegonha.update_attributes(params[:cegonha])
         # se chegou no destino, todos os carros saem da cegonha e o status deles muda para descarregados.
+        #if 
+        
+        #  redirect_to logistica_cegonha_path(@cegonha) and return
         chegou_no_destino?(@cegonha)
         contagem_carros(Cegonha.all)
         ativar_status_de_carro_com_terceiros(@cegonha) 
-
-        if params[:editar_localizacao]
+        if params[:salvar_localizacao]
+          if checar_logistica_carros(@cegonha)
+            redirect_to logistica_cegonha_path(@cegonha) and return
+          else
+            format.html { redirect_to @cegonha, notice: 'Dados da cegonha atualizados com sucesso.' }
+          end
+        elsif params[:editar_localizacao]
           flash[:notice] = 'Dados atualizados com sucesso!'
           redirect_to :action => :edit, :cegonha => @cegonha, :editar_localizacao => true  and return
         else
@@ -171,8 +182,8 @@ class CegonhasController < ApplicationController
           format.json { head :no_content }
         end
       else
-        format.html { render action: "edit" }
-        format.json { render json: @cegonha.errors, status: :unprocessable_entity }
+          format.html { render action: "edit" }
+          format.json { render json: @cegonha.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -204,6 +215,50 @@ class CegonhasController < ApplicationController
     File.delete(filename)
   end
 
+  # quando o destino do carro == atualizacao atual da cegonha
+  # vai perguntar qual carro vai ficar em logistica e qual carro vai aguardar retirada
+  # todos os carros com destino == atualizacao da cegonha vao sair da cegonha.
+  def logistica
+    @cegonha = Cegonha.find(params[:id])
+    @cars = @cegonha.cars.select {|car| car.cidade_destino == @cegonha.cidade_id and car.estado_destino == @cegonha.estado_id }
+    #unless @cars.nil?
+    #  @cars.each do |car|    
+    #    car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
+    #    car.ativo = 2
+    #    car.cegonha = nil
+    #    car.save
+    #  end
+    #end
+  end
+
+  def logistica_save
+    
+    @cegonha = Cegonha.find(params[:id])
+    cars_logistica = Car.find_all_by_id(params[:finalizados])
+    all_cars = Car.find_all_by_id(params[:cars])
+    all_cars -= cars_logistica
+
+    unless cars_logistica.empty?
+      cars_logistica.each do |car|
+        car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
+        car.ativo = 6
+        car.cegonha = nil
+        car.save
+      end
+    end
+
+    unless all_cars.empty?
+      all_cars.each do |car|
+        car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
+        car.ativo = 2
+        car.cegonha = nil
+        car.save
+      end
+    end
+    contagem_carros(Cegonha.all)
+    redirect_to @cegonha
+  end
+
 private 
   def sort_direction  
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"  
@@ -220,8 +275,22 @@ private
       end
   end
 
+ # checa a logistica dos carros
+ # se destino do carro == localizacao atual da cegonha, perguntar se ele chegou ao destino
+ # ou se vai embarcar em outra cegonha
+  def checar_logistica_carros(cegonha)
+    cars = cegonha.cars.select {|car| car.cidade_destino == cegonha.cidade_id and car.estado_destino == cegonha.estado_id }
+    if cars.empty?
+      return false
+    else
+      return true
+    end
+   
+  end
+
  # se chegou no destino, tira os carros da cegonha e fecha o historico
- def chegou_no_destino?(cegonha)
+  def chegou_no_destino?(cegonha)
+
     if cegonha.cidade_destino == cegonha.cidade_id && cegonha.estado_destino == cegonha.estado_id
       cegonha.cars.each do |car|
         # protege contra codigo legado antes do historico
@@ -230,16 +299,28 @@ private
         end
         #saiu da cegonha
         car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
-        car.ativo = 2
+        # verifica se o carro descarregado chegou no destino ou se vai embarcar em outra cegonha/parceiro (logistica)
+        if car.cidade_destino == cegonha.cidade_destino and car.estado_destino == cegonha.estado_destino
+          car.ativo = 2
+        else
+          car.ativo = 6
+        end
         car.cegonha = nil
         car.save
+
       end
+
+
       cegonha.rotas += 1
       cegonha.cidade_origem = nil
       cegonha.cidade_destino = nil
       cegonha.estado_origem = nil
       cegonha.estado_destino = nil
       cegonha.save
+      return true
+    else
+      return false
     end
   end
+
 end

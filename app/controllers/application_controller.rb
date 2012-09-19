@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ativar_status_de_carro_com_terceiros(terceiro)
+    
     unless terceiro.cars.nil?
       terceiro.cars.each do |car|
         car.ativo = 1
@@ -62,7 +63,7 @@ class ApplicationController < ActionController::Base
           car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
         end
       else
-        car.historicos.last.update_attributes(:data_entrada => Time.now, :localizacao_entrada => car.cegonha.localizacao, :rota => car.cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
+        car.historicos.last.update_attributes(:data_entrada => Time.now, :localizacao_entrada => car.cegonha.localizacao, :rota => car.cegonha.rotas, :nome_rota => car.cegonha.get_nome_rota)
       end
     end
   end
