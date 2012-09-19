@@ -152,10 +152,16 @@ end %>
 
   <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">  
     <% if i == @cegonha.rotas %>
-      <caption><h5><%= "Rota Atual, #{@cegonha.get_nome_rota}." %></h5> </caption>
+      <caption><h5><%= "Rota Atual #{@cegonha.get_nome_rota}" %></h5> </caption>
       <caption><p><%= "Frete Total: #{retorna_valor_monetario(frete_total)}, Saldo Devedor: #{retorna_valor_monetario(saldo_devedor)}" %> </p> </caption>
     <% else %>
-      <caption><h5><%= "Rota #{i}, #{@cegonha.get_nome_rota}." %></h5> </caption>
+      <% h_nome = Historico.find_all_by_rota(i) 
+        nome_rota = ""
+        if !h_nome.empty?
+          nome_rota = h_nome.first.nome_rota
+        end
+      %>
+      <caption><h5><%= "Rota #{i} #{nome_rota}" %></h5> </caption>
       <caption><p><%= "Frete Total: #{retorna_valor_monetario(frete_total)}, Saldo Devedor: #{retorna_valor_monetario(saldo_devedor)}" %> </p> </caption>
     <% end -%>
   
