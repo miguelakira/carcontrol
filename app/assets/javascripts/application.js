@@ -14,4 +14,4 @@
 //= require jquery_ujs
 //= require pjax
 //= require_tree .
-$.pjax.defaults.timeout = 8000
+$.pjax.defaults.timeout = 15000
