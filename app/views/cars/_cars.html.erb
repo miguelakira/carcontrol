@@ -38,8 +38,8 @@
         <th width = '180'><%= sortable 'localizacao', "Localização Atual" %></th>
         
         <th width = '150'> <%= sortable 'nome', 'Cliente' %> </th>
-        <th width = '100'> <%= sortable 'modelo' %> </th> 
-        <th width = '70'> <%= sortable 'placa' %> </th> 
+        <th width = '70'> <%= sortable 'modelo' %> </th> 
+        <th width = '100'> <%= sortable 'placa' %> </th> 
         <th width = '100'> <%= sortable 'ativo', 'Status' %> </th>
         <th width = "40px"><%= sortable "status_pagamento", "Status do Pagamento" %></th>
         
@@ -71,7 +71,7 @@
     <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <% if car.ativo? %><%= link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %><% end -%> <% end -%></td>
     <td class = "<%= @row_class %>"> <%= car.comprador ? car.comprador.nome : car.empresa.nome %></td>
     <td class = "<%= @row_class %>"><%= car.modelo.titleize %></td>
-    <td class = "<%= @row_class %>"><%= link_to car.placa, :car_id => car.id %></td>
+    <td class = "<%= @row_class %>"><%= link_to car.placa, :car_id => car.id %><%= link_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :car => car.id), :class => 'right'  %> </td>
     <td class = "<%= @row_class %>"><%= StatusVeiculo::estados[car.ativo] %></td>
     
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
