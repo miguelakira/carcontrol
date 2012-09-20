@@ -19,11 +19,11 @@ class CarsController < ApplicationController
       
       #@cars = Car.search(params[:search], params[:search_by]).order(:data_compra, :created_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5])
       if params[:search].nil?
-        @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5,6])    
+        @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 100, :page => params[:page]).where(:ativo => [1,2,3,4,5,6])    
         @cars.empty? ? @mensagem = "Nenhum Cliente Cadastrado" : @mensagem = "Clientes Ativos"
       else
         
-        @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5,6,0])  
+        @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 5, :page => params[:page]).where(:ativo => [1,2,3,4,5,6,0])  
         @cars.empty? ? @mensagem = "Nenhum Resultado Encontrado na Busca" : @mensagem = "Resultado da Busca"
       end 
     

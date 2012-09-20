@@ -1,6 +1,6 @@
 class CreateCidade < ActiveRecord::Migration
   def up
-  	unless table_exists? :cidades
+  	unless table_exists?(:cidades)
       create_table :cidades do |t|
       	t.boolean :capital
       	t.string :text
