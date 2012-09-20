@@ -13,7 +13,7 @@ gem 'heroku'
 
 gem 'will_paginate', '3.0.3'
 gem 'thin', '1.3.1'
-gem 'pjax_rails'
+gem 'pjax_rails', '~> 0.2.0'
 
 
 gem 'squeel'
@@ -25,6 +25,7 @@ gem 'taps'
 group :assets do
   gem 'sass-rails',   '3.2.5'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'jquery-ui-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platform => :ruby
