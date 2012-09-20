@@ -26,7 +26,7 @@
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_total)%></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_pago) %></td>
     <td class = "<%= @row_class %>"><%= car.pagamento.data_pagamento.strftime("%d/%m/%Y") unless car.pagamento.data_pagamento.nil? %></td>
-    <td class = "<%= @row_class %>"><%= car.comprador.observacao %></td>
+    <td class = "<%= @row_class %>"><%= car.observacao %></td>
 
   </tr>
 <% end -%>
