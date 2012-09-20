@@ -2,7 +2,7 @@
 
 <table id="mytable" cellspacing="0" summary="Lista de Vendas" style = "width:1200px">  <tr>
     <th width = '10' class = 'none'>Nº</th>
-    <th width = '150' class = 'begin'> <%= sortable "cnpj" %></th>
+    <th width = '150' class = 'begin'> <%= sortable "CPF/CNPJ" %></th>
     <th width = '150'><%= sortable "nome" %></th>
     <th width = '180'><%= sortable "contato" %></th>
     <th width = '180'><%= sortable "telefone", "telefone" %></th>
@@ -20,7 +20,11 @@
 
   <tr>
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
-    <td class = "<%= @row_class %> begin"><%= link_to(parceiro.cnpj, parceiro) %></td>
+    <% if parceiro.cpf %>
+        <td class = "<%= @row_class %> begin"><%= link_to(parceiro.cpf, parceiro) %></td>
+    <% else %>
+        <td class = "<%= @row_class %> begin"><%= link_to(parceiro.cnpj, parceiro) %></td>
+    <% end -%>
     <td class = "<%= @row_class %>"><%= parceiro.nome %> </td>
     <td class = "<%= @row_class %>"><%= parceiro.contato %> </td>
     <td class = "<%= @row_class %>"><%= parceiro.telefone %> </td>

@@ -3,15 +3,15 @@ class ApplicationController < ActionController::Base
 
   def contagem_carros(terceiros)
     # faz update da contagem de carros da cegonha ou dos parceiros
-    
+      
     terceiros.each do |terceiro|
       terceiro.carros = terceiro.cars.count
       terceiro.save
     end
   end
 
-  def ativar_status_de_carro_com_terceiros(terceiro)
-    
+  def ativar_status_de_carro_com_terceiros(id, nome_terceiro)
+    terceiro = eval(nome_terceiro).find(id)
     unless terceiro.cars.nil?
       terceiro.cars.each do |car|
         car.ativo = 1
