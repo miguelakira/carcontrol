@@ -13,7 +13,7 @@ gem 'heroku'
 
 gem 'will_paginate', '3.0.3'
 gem 'thin', '1.3.1'
-gem 'pjax_rails', '~> 0.2.0'
+gem 'pjax_rails', '~> 0.3.3'
 
 
 gem 'squeel'
