@@ -14,4 +14,3 @@
 //= require jquery_ujs
 //= require pjax
 //= require_tree .
-$.pjax.defaults.timeout = false;
