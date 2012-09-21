@@ -18,7 +18,8 @@ describe Comprador do
     FactoryGirl.build(:comprador, cpf: comprador.cpf).should_not be_valid
   end
   it 'returns true if has saldo_devedor > 0' do
-    FactoryGirl.build(:comprador).devedor?.should == true
+    FactoryGirl.build(:comprador_with_cars).devedor?.should == true
+    
   end
   it 'returns false if has saldo_devedor == 0' do
     pagamento = FactoryGirl.create(:pagamento, 

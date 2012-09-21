@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :car do
     association :pagamento
+    association :comprador
     modelo "Ford Ka"  
     status_pagamento_id 1
     estado_id 1
