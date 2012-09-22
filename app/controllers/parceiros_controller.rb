@@ -71,7 +71,6 @@ class ParceirosController < ApplicationController
         # se chegou no destino, todos os carros saem da parceiro e o status deles muda para descarregados.
         contagem_carros(Parceiro.all)
         ativar_status_de_carro_com_terceiros(@parceiro.id, @parceiro.class.to_s) 
-        retorna_valor_dos_fretes(@parceiro)
 
         if params[:editar_localizacao]
           flash[:notice] = 'Dados atualizados com sucesso!'
