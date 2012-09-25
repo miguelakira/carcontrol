@@ -85,7 +85,7 @@
     </td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.saldo_devedor) %></td>
     <td class = "<%= @row_class %>"><%= car.cegonha ? link_to(car.cegonha.placa, car.cegonha) : "" %></td>
-    <td class = "<%= @row_class %>"><%= car.parceiro ? link_to(car.parceiro.nome.titleize, car.parceiro) : "" %></td>
+    <td class = "<%= @row_class %>"><%= car.parceiro ? link_to(car.parceiro.nome, car.parceiro) : "" %></td>
     <!--<td class = "<%#= @row_class %>"><%#= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td> -->
 
 

@@ -6,17 +6,17 @@
 
 <div class = 'floating_box'>
 
-<table id="mytable" cellspacing="0" summary="Detalhes da parceiro" style="width:450px">  
+<table id="mytable" cellspacing="0" summary="Detalhes da parceiro" style="width:450px">
   <caption><h5>Detalhes da parceiro</h5></caption>
   <tr>
-    <% if @parceiro.cpf %>
+    <% if !@parceiro.cpf.empty? %>
       <th style="width:150px">CPF do Parceiro</th>
       <td style='border-top: 1px solid #C1DAD7;'><%= @parceiro.cpf %> </td>
     <% else %>
       <th style="width:150px">CNPJ do Parceiro</th>
       <td style='border-top: 1px solid #C1DAD7;'><%= @parceiro.cnpj %> </td>
     <% end -%>
-  </tr>  
+  </tr>
 
   <tr>
   	<th>Nome do Parceiro</th>
@@ -43,21 +43,21 @@
     <td><%= Cidade.find(@parceiro.cidade_destino).text %>, <%= Estado.find(@parceiro.estado_destino).sigla %></td>
   </tr>
   <% end -%>
-  <tr> 
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @parceiro.observacao %></td>
   </tr>
-  <tr>  
+  <tr>
 </table>
 
-<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">  
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
   <caption><h5>Transações Financeiras do Parceiro</h5> </caption>
 
   <tr>
     <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
     <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
   </tr>
-  
+
   <tr>
     <th class = 'begin'>Valor Total Pago</th>
     <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
@@ -82,17 +82,17 @@
 <p><b>Este parceiro não possui carros ativos no momento. </b></p>
 <% end -%>
 <div style="clear: both;"></div>
-  <% frete_total = 0 
-     saldo_devedor = 0 
-     @parceiro.historicos.each do |hist| 
+  <% frete_total = 0
+     saldo_devedor = 0
+     @parceiro.historicos.each do |hist|
         frete_total = hist.car.pagamento.valor_total + frete_total
         saldo_devedor =  hist.car.pagamento.saldo_devedor + saldo_devedor
     end%>
-  <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">  
+  <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">
       <caption><p><b>HISTÓRICO</b></p>
 
         <p><%= "Frete Total: #{retorna_valor_monetario(frete_total)}, Saldo Devedor: #{retorna_valor_monetario(saldo_devedor)}" %> </p> </caption>
-  
+
     <% if @parceiro.historicos.empty? %>
       <th style = "text-align:left;">Nenhum carro no histórico</th>
       </table>
@@ -106,7 +106,7 @@
       <th>Data de Saída</th>
       <th>Cidade de Saída</th>
     </tr>
-    
+
     <% @parceiro.historicos.each_with_index do |historico, index| %>
     <tr>
       <td class = "none"> <%= index + 1 %>. </td>
@@ -117,8 +117,8 @@
       <td><%= historico.localizacao_saida %> </td>
       </tr>
     <%end%>
-    
-    
+
+
   </table>
   <% end -%>
 
