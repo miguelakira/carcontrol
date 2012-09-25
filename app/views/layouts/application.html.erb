@@ -5,9 +5,6 @@
   <title>Controle de Transporte</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <script src="/assets/jquery.pjax.js?body=1" type="text/javascript"></script>
-  <script src="/assets/jquery.js?body=1" type="text/javascript"></script>
-  <script src="/assets/jquery_ujs.js?body=1" type="text/javascript"></script>
 
   <%= csrf_meta_tags %>
 </head>
@@ -24,17 +21,17 @@
 				  <% end -%>
 			  	<li><% if user_signed_in? %> <%= render 'devise/menu/registration_items' %> <% end -%> </li>
 			  	<li><%= render 'devise/menu/login_items' %></li>
-			  	
+
 
 			  </ul>
 			</div>
 		</div>
-		
+
 		<div id='header'>
 			<div id='quick-search'>
 				<%= form_tag cars_path, :method => 'get' do %>
 					<%= text_field_tag :search, params[:search] %>
-					<%= select_tag(:search_by, options_for_select([:placa, :cliente, :empresa]))%> 
+					<%= select_tag(:search_by, options_for_select([:placa, :cliente, :empresa]))%>
 					<%= submit_tag "Buscar", :name => nil %> <br />
 					<%#= link_to "Busca Avançada", :controller => :search, :action => :index %>
 				<% end -%>
@@ -49,11 +46,13 @@
 					<li><a href="/financeiros">Controle Financeiro</a></li>
 				</ul>
 			</div>
-			
+
 		</div>
 		<div id='main'>
 			<div id='content'>
+				<div data-pjax-container>
 					<%= yield %>
+				</div>
 			</div>
 		</div>
 		<div id='footer'>
