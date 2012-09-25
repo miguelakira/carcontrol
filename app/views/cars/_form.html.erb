@@ -1,22 +1,22 @@
-<% if @car.pagamento.valor_frete == 0 
+<% if @car.pagamento.valor_frete == 0
   @car.pagamento.valor_frete = nil
-  end 
+  end
 %>
-<% if @car.pagamento.taxa_plataforma == 0 
+<% if @car.pagamento.taxa_plataforma == 0
   @car.pagamento.taxa_plataforma = nil
-  end 
+  end
 %>
-<% if @car.pagamento.taxa_despacho == 0 
+<% if @car.pagamento.taxa_despacho == 0
   @car.pagamento.taxa_despacho = nil
-  end 
+  end
 %>
-<% if @car.pagamento.desconto == 0 
+<% if @car.pagamento.desconto == 0
   @car.pagamento.desconto = nil
-  end 
+  end
 %>
-<% if @car.pagamento.valor_pago == 0 
+<% if @car.pagamento.valor_pago == 0
   @car.pagamento.valor_pago = nil
-  end 
+  end
 %>
 
 
@@ -33,7 +33,7 @@
 
 <% else %>
 
-<% if @editar_localizacao %> 
+<% if @editar_localizacao %>
   <% render 'editar_localizacao' %>
 <%else%>
 
@@ -42,12 +42,12 @@
   <% if @car.errors.any? %>
     <div id="error_explanation">
       <h1><%= pluralize(@car.errors.count, "erro") %> impediram que o cliente fosse atualizado:</h1>
-      
+
       <ul>
       <% @car.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
-      
+
       </ul>
     </div>
   <% end %>
@@ -58,7 +58,7 @@
   <%= f.fields_for :empresa do |builder| %>
     <div class="field">
       <%= builder.label :cnpj, "CNPJ*" %><br />
-      <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj' %> 
+      <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj' %>
     </div>
 
     <div class="field">
@@ -79,17 +79,17 @@
 
     <div class="field">
       <%= builder.label :telefone %>*<br />
-      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone' %> 
+      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone' %>
     </div>
 
     <div class="field">
       <%= builder.label :celular %><br />
-      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular' %> 
+      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular' %>
     </div>
 
     <div class="field">
       <%= builder.label :observacao, "Observação" %><br />
-      <%= builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'empresa_observacao' %> 
+      <%= builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'empresa_observacao' %>
     </div>
   </fieldset>
  <% end -%>
@@ -99,7 +99,7 @@
 <fieldset> <legend><h5 style="font-size: 1.3em">Dados do Cliente</h5></legend>
   <%= f.fields_for :comprador do |builder| %>
   <br />
-  
+
     <div class="field">
       <%= builder.label :cpf, "Digite o CPF cliente*" %><br />
       <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsComprador(this)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf' %>
@@ -132,10 +132,10 @@
 
     <div class="field">
       <%= builder.label :observacao, "Observação" %><br />
-      <%= builder.text_area "observacao".gsub("<br>", "\r\n"), :cols => 40, :rows => 7, :id => 'comprador_observacao' %> 
+      <%= builder.text_area "observacao".gsub("<br>", "\r\n"), :cols => 40, :rows => 7, :id => 'comprador_observacao' %>
     </div>
 
- 
+
   <% end %>
   </fieldset>
 <% end -%>
@@ -144,28 +144,28 @@
 <br />
 <!-- dados do veículo -->
 <fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
-  
+
   <div class="field">
     <%= f.label :placa %>*<br />
-    <%= f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15' %> 
+    <%= f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15' %>
   </div>
 
   <div class="field">
     <%= f.label :modelo %>*<br />
     <%= f.text_field :modelo %> (Por exemplo: Ford Ka)
   </div>
-    
+
 
   <div class="field">
-    <%= f.label :data_compra, "Data da Compra" %><br />
-    <%= f.date_select :data_compra, :order => [:day, :month, :year]  %> 
+    <%= f.label :data_compra, "Início da Prestação de Serviços" %><br />
+    <%= f.date_select :data_compra, :order => [:day, :month, :year], :start_year => Time.now.year - 1  %>
   </div>
 
   <div class="field">
     <%= f.label :data_prevista, "Data Prevista de Entrega" %><br />
-    <%= f.date_select :data_prevista, :order => [:day, :month, :year], :include_blank => true  %><br> 
+    <%= f.date_select :data_prevista, :order => [:day, :month, :year], :start_year => Time.now.year, :include_blank => true  %><br>
   </div>
-      
+
   <div class="field">
     <%= f.label :status_pagamento_id, "Status do Pagamento" %><br />
     <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
@@ -173,33 +173,33 @@
   <% @cegonhas.nil? ? @cegonhas = Cegonha.all : %>
   <div class="field">
     <%= f.label :cegonha_id, "Cegonha" %><br />
-    <%= f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }, :onchange => "parceiroOrCegonhaNotBoth(this,'parceiro');", :id => 'cegonha' %> 
+    <%= f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }, :onchange => "parceiroOrCegonhaNotBoth(this,'parceiro');", :id => 'cegonha' %>
 
   </div>
 
   <% @parceiros.nil? ? @parceiros = Parceiro.all : %>
 <div class="field">
     <%= f.label :parceiro_id, "Parceiro" %><br />
-    <%= f.select :parceiro_id, @parceiros.collect {|p| [ p.nome, p.id ] }, { :include_blank => true}, :onchange => "parceiroOrCegonhaNotBoth(this,'cegonha');", :id => :parceiro   %> 
+    <%= f.select :parceiro_id, @parceiros.collect {|p| [ p.nome, p.id ] }, { :include_blank => true}, :onchange => "parceiroOrCegonhaNotBoth(this,'cegonha');", :id => :parceiro   %>
   </div>
 
   <div class="field">
     <%= f.label :ativo, "Status do Carro" %><br />
     <%= select_tag :ativo, options_for_select(StatusVeiculo::estados.collect {|p| [p[1], p[0]]}, @car.ativo)   %>
-  </div>  
+  </div>
 
   <div class="field">
       <%= f.label :observacao, "Observação" %><br />
-      <%= f.text_area :observacao, :cols => 40, :rows => 7 %> 
+      <%= f.text_area :observacao, :cols => 40, :rows => 7 %>
     </div>
 </fieldset>
-  <!-- fim dos dados do veículo -->  
+  <!-- fim dos dados do veículo -->
 
   <!-- dados do pagamento -->
 <br />
 <fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
   <%= f.fields_for :pagamento do |builder| %>
-    
+
     <div class="field">
       <%= builder.label :forma_pagamento, "Forma de Pagamento" %><br />
       &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
@@ -209,7 +209,7 @@
       <%#= builder.label :parcelas, "Parcelas" %><br />
       &nbsp;&nbsp;&nbsp;<%#= builder.text_field :parcelas, :size => 5%>
     </div>-->
-    
+
     <div class="field">
       <%= builder.label :valor_frete, "Valor do Frete" %><br />
       R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
@@ -253,17 +253,17 @@
 
   <div class="field">
     <%= builder.label :data_pagamento, "Data do Pagamento" %><br />
-    <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :include_blank => true  %> 
+    <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :include_blank => true  %>
   </div>
 
 
 
     <div class="field">
       <%= builder.label :observacao, "Observação" %><br />
-      <%= builder.text_area :observacao, :cols => 40, :rows => 7 %> 
+      <%= builder.text_area :observacao, :cols => 40, :rows => 7 %>
     </div>
 
-    
+
 
   <% end -%>
 
@@ -292,9 +292,9 @@
 function fillFieldsComprador(oSel)
 {
   var oForm = oSel.form;
-  
+
   switch (oSel.value)
-  { 
+  {
     <% compradores.each do |comprador| %>
     case '<%= comprador.cpf %>':
       oForm.comprador_nome.value='<%= comprador.nome%>';
@@ -309,7 +309,7 @@ function fillFieldsComprador(oSel)
       oForm.comprador_observacao.value= '<%= comprador.observacao %>';
 
     break;
-    
+
     <%end%>
     case '':
       oForm.comprador_nome.value='';
@@ -326,9 +326,9 @@ function fillFieldsComprador(oSel)
 function fillFieldsEmpresa(oSel)
 {
   var oForm = oSel.form;
-  
+
   switch (oSel.value)
-  { 
+  {
     <% empresas.each do |empresa| %>
     case '<%= empresa.cnpj %>':
       oForm.empresa_nome.value='<%= empresa.nome%>';
@@ -340,7 +340,7 @@ function fillFieldsEmpresa(oSel)
       oForm.empresa_observacao.value='<%= empresa.observacao%>';
 
     break;
-    
+
     <%end%>
     case '':
       oForm.empresa_nome.value='';
@@ -368,17 +368,17 @@ function fillFieldsEmpresa(oSel)
   <div class="field">
     <%= f.label :status_pagamento_id %><br />
     <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
-   
+
   <br />
 
   <%= f.fields_for :pagamento do |builder| %>
-    
+
     <div class="field">
       <%= builder.label :forma_pagamento, "Forma de Pagamento" %><br />
       &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
     </div>
 
-   
+
     <div class="field">
       <%= builder.label :valor_frete, "Valor do Frete" %><br />
       R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
@@ -406,7 +406,7 @@ function fillFieldsEmpresa(oSel)
 
     <div class="field">
       <%= builder.label :observacao, "Observação" %><br />
-      <%= builder.text_area :observacao, :cols => 40, :rows => 7 %> 
+      <%= builder.text_area :observacao, :cols => 40, :rows => 7 %>
     </div>
 
 
@@ -420,4 +420,4 @@ function fillFieldsEmpresa(oSel)
   </div>
 
 
-<% end -%>  
+<% end -%>
