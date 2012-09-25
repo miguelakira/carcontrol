@@ -7,7 +7,7 @@
             <h3><%= @car.placa %></h3>
 
             <dt>CPF/CNPJ do cliente</dt>
-            <dd>  <%= car.comprador ? car.comprador.cpf : car.empresa.cnpj  %></dd>
+            <dd>  <%= @car.comprador ? @car.comprador.cpf : @car.empresa.cnpj  %></dd>
 
             <dt>Localização Atual:</dt>
             <dd><% unless @car.localizacao.nil? %><%= @car.localizacao %><% end -%>
