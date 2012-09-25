@@ -1144,7 +1144,7 @@ td.alt {
 
 
 td.nao-pago a {
-  color: #F00;
+  background: #F00;
   text-decoration: underline;
 
 }
@@ -1156,8 +1156,8 @@ td.nao-pago a:hover {
 
 
 td.nao-pago {
-
-  color: #F00;
+background:#ff4141;
+color:black;
 }
 
 td.pendente {
