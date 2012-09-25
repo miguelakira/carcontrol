@@ -38,7 +38,7 @@
     <tr>
         <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
         <th width = '10' class = 'none'>Nº</th>
-        <th width = '30'class = 'begin'><%= sortable 'data_compra' %></th>
+        <th width = '30'class = 'begin'><%= sortable 'data_compra', "Início da Prestação de Serviço" %></th>
         <th width = '70'> <%= sortable 'placa' %> </th>
         <th width = '100'> <%= sortable 'modelo' %> </th>
         <th width = '30'><%= sortable 'data_prevista', 'Previsão Entrega' %></th>
@@ -68,7 +68,7 @@
   <tr>
 
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
-    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
+    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m/%Y") %></td>
     <td class = "<%= @row_class %>"><%= car.placa %></td>
     <td class = "<%= @row_class %>"><%= car.modelo.titleize %></td>
 <td class = "<%= @row_class %>"><%= car.data_prevista.strftime("%d/%m/%Y") unless car.data_prevista.nil? %></td>

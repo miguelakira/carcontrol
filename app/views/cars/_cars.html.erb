@@ -40,7 +40,7 @@
     <tr>
         <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
         <th width = '10' class = 'none'>Nº</th>
-        <th width = '30'class = 'begin'><%= sortable 'data_compra' %></th>
+        <th width = '30'class = 'begin'><%= sortable 'data_compra' , "início da prestação de serviço"%></th>
         <th width = '100'> <%= sortable 'placa' %> </th>
         <th width = '180'><%= sortable 'localizacao', "Localização Atual" %></th>
         <th width = '150'> <%= sortable 'nome', 'Cliente' %> </th>
@@ -71,7 +71,7 @@
   <tr>
 
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
-    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
+    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m/%y") %></td>
     <td class = "<%= @row_class %>"><%= link_to car.placa, :car_id => car.id %><%= link_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :car => car.id), :class => 'right'  %> </td>
     <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <% if car.ativo? %><%= link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %><% end -%> <% end -%></td>
     <td class = "<%= @row_class %>"> <%= car.comprador ? car.comprador.nome : car.empresa.nome %></td>
