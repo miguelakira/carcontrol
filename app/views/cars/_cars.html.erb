@@ -6,6 +6,9 @@
          <dl>
             <h3><%= @car.placa %></h3>
 
+            <dt>CPF/CNPJ do cliente</dt>
+            <dd>  <%= car.comprador ? car.comprador.cpf : car.empresa.cnpj  %></dd>
+
             <dt>Localização Atual:</dt>
             <dd><% unless @car.localizacao.nil? %><%= @car.localizacao %><% end -%>
             </dd>
@@ -45,7 +48,6 @@
         <th width = '180'><%= sortable 'localizacao', "Localização Atual" %></th>
         <th width = '150'> <%= sortable 'nome', 'Cliente' %> </th>
         <th width = '80'> Telefone </th>
-        <th width = '80'> CPF/CNPJ </th>
         <th width = "40px"><%= sortable "status_pagamento", "Status do Pagamento" %></th>
 
         <th width = '100'> <%= sortable 'saldo_total' %> </th>
@@ -76,7 +78,6 @@
     <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %> <% if car.ativo? %><%= link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %><% end -%> <% end -%></td>
     <td class = "<%= @row_class %>"> <%= car.comprador ? car.comprador.nome : car.empresa.nome %></td>
     <td class = "<%= @row_class %>"> <%= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td>
-    <td class = "<%= @row_class %>"> <%= car.comprador ? car.comprador.cpf : car.empresa.cnpj %></td>
 
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
 
