@@ -13,7 +13,7 @@ gem 'heroku'
 
 gem 'will_paginate', '3.0.3'
 gem 'thin', '1.3.1'
-gem 'pjax_rails', '~> 0.3.3'
+gem 'pjax_rails', '~> 0.2.0'
 
 
 gem 'squeel'
@@ -32,10 +32,11 @@ group :assets do
 end
 
 group :development, :test do
-	gem 'mysql2'
+  gem 'mysql2'
   gem 'rspec-rails', '~> 2.0'
   gem 'factory_girl_rails', '~> 3.2.0'
   gem 'guard-rspec', '~> 0.7.0'
+  gem 'sqlite3'
 end
 
 group :production do
