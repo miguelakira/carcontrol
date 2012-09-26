@@ -5,9 +5,6 @@
          <dl>
             <h3><%= @car.placa %></h3>
 
-            <dt>CPF/CNPJ do cliente</dt>
-            <dd>  <%= @car.comprador ? @car.comprador.cpf : @car.empresa.cnpj  %></dd>
-
             <dt>Localização Atual:</dt>
             <dd><% unless @car.localizacao.nil? %><%= @car.localizacao %><% end -%>
             </dd>
@@ -20,6 +17,9 @@
 
             <dt>Previsão de Entrega:</dt>
             <dd><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></dd>
+
+            <dt>Status do Pagamento</dt>
+            <dd>  <%= @car.status_pagamento.status %></dd>
 
             <dt>Status do Veículo</dt>
             <dd><%= StatusVeiculo::estados[@car.ativo] %></dd>
@@ -46,7 +46,7 @@
                   <th>Localização <br> Atual </th>
                   <th>Cliente</th>
                   <th>Telefone</th>
-                  <th> Status do<br />Pagamento</th>
+                  <th> CPF/CNPJ</th>
                   <th>Saldo <br>Total</th>
                   <th>Saldo <br>Devedor </th>
                   <th>Cegonha </th>
@@ -71,7 +71,7 @@
      <td class = " <%= @row_class %> "><% unless car.localizacao.nil? %><%= car.localizacao %> <% if car.ativo? %><%= link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %><% end -%> <% end -%></td>
      <td class = " <%= @row_class %> " > <%= car.comprador ? car.comprador.nome : car.empresa.nome %></td>
      <td class = " <%= @row_class %> "> <%= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td>
-     <td class = " <%= @row_class %> " ><%= car.status_pagamento.status %></td>
+     <td class = " <%= @row_class %> " ><%= car.comprador ? car.comprador.cpf : car.empresa.cnpj  %></td>
      <td class = " <%= @row_class %> " ><%= retorna_valor_monetario(car.pagamento.valor_total) %>
      </td>
      <td class = " <%= @row_class %> " ><%= retorna_valor_monetario(car.pagamento.saldo_devedor) %></td>
