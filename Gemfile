@@ -11,10 +11,9 @@ gem 'pg', '0.13.2'
 gem 'devise', '2.0.4'
 gem 'heroku'
 
-#gem 'will_paginate', '3.0.3'
+gem 'will_paginate', '3.0.3'
 gem 'thin', '1.3.1'
 gem 'pjax_rails', '~> 0.3.3'
-
 
 gem 'squeel'
 gem 'pdfkit'
@@ -22,6 +21,7 @@ gem 'pdfkit'
 gem 'taps'
 
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'jquery-ui-rails'
 
 # Gems used only for assets and not requiredg
 # in production environments by default.

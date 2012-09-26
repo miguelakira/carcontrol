@@ -4,7 +4,7 @@
 
 jQuery ->
         $('#cars').dataTable
-          aaSorting: null
+          bJQueryUI: true
           sPaginationType: "full_numbers"
           oLanguage:
             sInfo: "Exibindo _START_ à _END_ de _TOTAL_ entradas"
@@ -14,7 +14,7 @@ jQuery ->
             sLoadingRecords: "Carregando..."
             sProcessing: "Processando..."
             sSearch: "Buscar:"
-            sZeroRecords: "Não foi encontrado nenhum resultado para sua busca."
+            sZeroRecords: "Não foi encontrado nenhum resultado para sua busca. Verifique se você digitou corretamente, incluindo pontuações\r\n (ex: Para placa: DFQ-1324 ao invés de DFQ1234 e para CPF, 331.644.333-45 ao invés de 33164433345)"
             oPaginate:
               sFirst: "Início"
               sNext: "Próximo"

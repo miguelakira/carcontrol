@@ -1222,7 +1222,6 @@ hr.small{
  * DataTables framework
  */
 div.dataTables_wrapper {
-  background-color: #719ba7;
 }
 
 div.dataTables_length {
@@ -1283,21 +1282,10 @@ table.pretty th {
 }
 
 /* Header cells */
-table.pretty thead th {
-  text-align: center;
-  background: #66a9bd;
-}
+
 
 /* Body cells */
-table.pretty tbody th {
-  text-align: left;
-  background: #91c5d4;
-}
 
-table.pretty tbody td {
-  text-align: center;
-  background: #d5eaf0;
-}
 
 table.pretty tbody td.nao-pago {
   text-align: center;
