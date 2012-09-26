@@ -1278,7 +1278,7 @@ table.pretty {
 
 table.pretty td,
 table.pretty th {
-  padding: 2px;
+  padding: 0px;
   border: 1px solid #fff;
 }
 
