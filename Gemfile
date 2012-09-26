@@ -11,7 +11,7 @@ gem 'pg', '0.13.2'
 gem 'devise', '2.0.4'
 gem 'heroku'
 
-gem 'will_paginate', '3.0.3'
+#gem 'will_paginate', '3.0.3'
 gem 'thin', '1.3.1'
 gem 'pjax_rails', '~> 0.2.0'
 
@@ -29,6 +29,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platform => :ruby
   gem 'uglifier', '>= 1.0.3'
+  gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 end
 
 group :development, :test do
