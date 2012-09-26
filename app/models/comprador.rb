@@ -2,6 +2,7 @@
 class Comprador < ActiveRecord::Base
   attr_accessible :celular, :email, :rg, :cpf, :telefone, :nome, :car_id, :observacao
   has_many :cars
+  has_many :contatos
   accepts_nested_attributes_for :cars
 
 

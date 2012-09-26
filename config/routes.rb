@@ -1,6 +1,8 @@
 Carcontrol::Application.routes.draw do
  
 
+  resources :contatos
+
   get "clientes/index"
 
   # resources :cegonhas
