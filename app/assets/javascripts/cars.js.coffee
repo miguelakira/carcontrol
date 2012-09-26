@@ -3,5 +3,4 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-scri
 jQuery ->
         $('#cars').dataTable()
-        bScrollAutoCss: false,
-        sScrollY: "200px"
+        bJQueryUI: true

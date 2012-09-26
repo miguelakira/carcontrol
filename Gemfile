@@ -20,6 +20,8 @@ gem 'squeel'
 gem 'pdfkit'
 
 gem 'taps'
+
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 # Gems used only for assets and not requiredg
 # in production environments by default.
 group :assets do
@@ -29,7 +31,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platform => :ruby
   gem 'uglifier', '>= 1.0.3'
-  gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+
 end
 
 group :development, :test do
