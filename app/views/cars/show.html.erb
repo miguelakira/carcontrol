@@ -3,7 +3,7 @@
 
 <% if @car.comprador %>
 <div class = "floating_box">
-<table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:450px">  
+<table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:450px">
   <caption><h5>Detalhes do Cliente</h5></caption>
   <tr>
     <th style="width:180px">Nome do Cliente</th>
@@ -25,15 +25,15 @@
     <th>Telefone</th>
     <td><%= @car.comprador.telefone %></td>
   </tr>
-  <tr>  
+  <tr>
     <th>Celular</th>
     <td><%= @car.comprador.celular %></td>
   </tr>
-  <tr> 
+  <tr>
     <th>E-Mail</th>
     <td><%= @car.comprador.email %></td>
   </tr>
-  <tr> 
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @car.comprador.observacao %></td>
   </tr>
@@ -41,7 +41,7 @@
 
 <% elsif @car.empresa %>
 
-<table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:600px">
   <caption><h5>Detalhes da Empresa</h5></caption>
   <tr>
     <th style="width:180px">Nome da Empresa</th>
@@ -62,15 +62,15 @@
     <th>Telefone</th>
     <td><%= @car.empresa.telefone %></td>
   </tr>
-  <tr>  
+  <tr>
     <th>Celular</th>
     <td><%= @car.empresa.celular %></td>
   </tr>
-  <tr> 
+  <tr>
     <th>E-Mail</th>
     <td><%= @car.empresa.email %></td>
   </tr>
-  <tr> 
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @car.empresa.observacao %></td>
   </tr>
@@ -78,7 +78,7 @@
 <% end -%>
 
 
-<table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:450px">  
+<table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:450px">
     <caption><h5>Detalhes do Carro</h5></caption>
 
   <tr>
@@ -121,7 +121,7 @@
     <th>Data da Compra</th>
     <td><%= @car.data_compra.strftime("%d/%m/%Y") unless @car.data_compra.nil? %></td>
   </tr>
-  
+
   <tr>
     <th>Status do Carro</th>
     <td><%= StatusVeiculo::estados[@car.ativo] %></td>
@@ -131,8 +131,8 @@
     <th>Data Prevista da Entrega</th>
     <td><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></td>
   </tr>
-  
-  <tr> 
+
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @car.observacao %></td>
   </tr>
@@ -140,9 +140,9 @@
 
 </div>
 
-<div class = "floating-box">
+<div class = "floating_box">
 
-<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">  
+<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
   <caption><h5>Detalhes do frete</h5></caption>
 
 <tr>
@@ -185,7 +185,7 @@
 </tr>
 <tr>
     <th>Desconto</th>
-    
+
     <td>-<%= retorna_valor_monetario(@car.pagamento.desconto) %></td>
 </tr>
 
@@ -193,11 +193,11 @@
     <th>Valor Pago pelo Cliente</th>
     <td>-<%= retorna_valor_monetario(@car.pagamento.valor_pago) %> <%= "em #{@car.pagamento.data_pagamento.strftime('%d/%m/%Y')}" unless @car.pagamento.data_pagamento.nil? %></td>
 </tr>
-  
+
 <tr>
     <th>Total do Frete</th>
     <td><%= retorna_valor_monetario(@car.pagamento.valor_total) %></td>
-</tr> 
+</tr>
 
   <tr>
     <th>Saldo Devedor</th>
@@ -205,7 +205,7 @@
   </tr>
 
 
-  <tr> 
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @car.pagamento.observacao %></td>
   </tr>

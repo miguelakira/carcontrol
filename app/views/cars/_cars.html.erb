@@ -1,5 +1,4 @@
 
-
     <div id = "sidebar">
     <% if @car %>
 
@@ -37,20 +36,19 @@
     <% end -%>
 </div>
 
-
-
-<table  id="cars" class="pretty" >
+<div class = "floating-left">
+<table  id="cars" class="pretty"  width = "1200px"  style = "float: left;">
     <thead>
       <tr>
-                  <th>Nº</th>
-                  <th>Início <br /> prestação <br />de serviço</th>
+                  <th title = "Sequência em que veículo foi adicioando no sistema">Nº </th>
+                  <th>Início</th>
                   <th>Placa  </th>
-                  <th>Localização Atual </th>
+                  <th>Localização <br> Atual </th>
                   <th>Cliente</th>
                   <th>Telefone</th>
                   <th> Status do<br />Pagamento</th>
-                  <th>Saldo Total</th>
-                  <th>Saldo Devedor </th>
+                  <th>Saldo <br>Total</th>
+                  <th>Saldo <br>Devedor </th>
                   <th>Cegonha </th>
                   <th>Parceiro </th>
       </tr>
@@ -83,4 +81,4 @@
  <% end %>
 </tbody>
 </table>
-
+</div>
