@@ -4,12 +4,12 @@
 
 <div class = 'floating_box'>
 
-<table id="mytable" cellspacing="0" summary="Detalhes da Cegonha" style="width:450px">  
+<table id="mytable" cellspacing="0" summary="Detalhes da Cegonha" style="width:450px">
   <caption><h5>Detalhes da Cegonha</h5></caption>
   <tr>
     <th style="width:150px">Placa da Cegonha</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @cegonha.placa %> </td>
-  </tr>  
+  </tr>
 
   <% if @cegonha.empresa %>
     <tr>
@@ -38,21 +38,21 @@
     <td><%= Cidade.find(@cegonha.cidade_destino).text %>, <%= Estado.find(@cegonha.estado_destino).sigla %></td>
   </tr>
   <% end -%>
-  <tr> 
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @cegonha.observacao %></td>
   </tr>
-  <tr>  
+  <tr>
 </table>
 
 
 
-<table id="mytable" cellspacing="0" summary="Detalhes do Motorista" style="width:450px">  
+<table id="mytable" cellspacing="0" summary="Detalhes do Motorista" style="width:450px">
   <caption><h5>Detalhes do Motorista</h5> </caption>
   <tr>
     <th style="width:150px">Nome</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @cegonha.motorista.nome %> </td>
-  
+
   <tr>
     <th>RG</th>
     <td> <%= @cegonha.motorista.rg %></td>
@@ -73,20 +73,20 @@
     <th>E-Mail</th>
     <td><%= @cegonha.motorista.email %></td>
   </tr>
-  <tr> 
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @cegonha.motorista.observacao %></td>
   </tr>
-  
+
 </table>
 
 
 
 <%if @cegonha.empresa %>
-  
 
 
-<table id="mytable" cellspacing="0" summary="Detalhes do Frete da Empresa" style="width:450px">  
+
+<table id="mytable" cellspacing="0" summary="Detalhes do Frete da Empresa" style="width:450px">
 <caption><h5>Detalhes do Frete da Empresa Contratada</h5></caption>
 
 <tr>
@@ -106,7 +106,7 @@
 
 <tr>
     <th>Desconto</th>
-    
+
     <td>-<%= retorna_valor_monetario(@cegonha.pagamento.desconto) %></td>
 </tr>
 
@@ -114,11 +114,11 @@
     <th>Valor Pago</th>
     <td>-<%= retorna_valor_monetario(@cegonha.pagamento.valor_pago) %></td>
 </tr>
-  
+
 <tr>
     <th>Valor Total</th>
     <td><%= retorna_valor_monetario(@cegonha.pagamento.valor_total) %></td>
-</tr> 
+</tr>
 
   <tr>
     <th>Saldo Devedor</th>
@@ -130,7 +130,7 @@
     <td><%= @cegonha.pagamento.forma_pagamento %></td>
   </tr>
 
-  <tr> 
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @cegonha.pagamento.observacao %></td>
   </tr>
@@ -142,20 +142,20 @@
 <% end -%>
 
 <% @cegonha.rotas.downto(1) do |i|
-  carros_na_rota = @cegonha.historicos.select{|hist| hist.rota == i} 
-  frete_total = 0 
-  saldo_devedor = 0 
-  carros_na_rota.each do |hist| 
-    frete_total = hist.car.pagamento.valor_total + frete_total
-    saldo_devedor =  hist.car.pagamento.saldo_devedor + saldo_devedor
+  carros_na_rota = @cegonha.historicos.select{|hist| hist.rota == i}
+  frete_total = 0
+  saldo_devedor = 0
+  carros_na_rota.each do |hist|
+    frete_total = hist.car.pagamento.valor_total + frete_total unless hist.car.nil?
+    saldo_devedor =  hist.car.pagamento.saldo_devedor + saldo_devedor unless hist.car.nil?
 end %>
 
-  <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">  
+  <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">
     <% if i == @cegonha.rotas %>
       <caption><h5><%= "Rota Atual #{@cegonha.get_nome_rota}" %></h5> </caption>
       <caption><p><%= "Frete Total: #{retorna_valor_monetario(frete_total)}, Saldo Devedor: #{retorna_valor_monetario(saldo_devedor)}" %> </p> </caption>
     <% else %>
-      <% h_nome = Historico.find_all_by_rota(i) 
+      <% h_nome = Historico.find_all_by_rota(i)
         nome_rota = ""
         if !h_nome.empty?
           nome_rota = h_nome.first.nome_rota
@@ -164,7 +164,7 @@ end %>
       <caption><h5><%= "Rota #{i} #{nome_rota}" %></h5> </caption>
       <caption><p><%= "Frete Total: #{retorna_valor_monetario(frete_total)}, Saldo Devedor: #{retorna_valor_monetario(saldo_devedor)}" %> </p> </caption>
     <% end -%>
-  
+
     <% if carros_na_rota.empty? %>
       <th style = "text-align:left;">Nenhum carro na cegonha</th>
       </table>
@@ -178,7 +178,7 @@ end %>
       <th>Data de Saída</th>
       <th>Cidade de Saída</th>
     </tr>
-    
+
     <% carros_na_rota.each_with_index do |historico, index| %>
     <tr>
       <td class = "none"> <%= index + 1 %>. </td>
@@ -189,8 +189,8 @@ end %>
       <td><%= historico.localizacao_saida %> </td>
       </tr>
     <%end%>
-    
-    
+
+
   </table>
   <% end -%>
 <% end %>

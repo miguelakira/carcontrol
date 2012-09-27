@@ -1,33 +1,34 @@
 
+<div class="floating-left">
+<table id="parceiros" class="display">
+    <thead><tr>
+        <th>Nº</th>
+        <th> CPF/CNPJ</th>
+        <th>Nome</th>
+        <th>Contato</th>
+        <th>Telefone</th>
+        <th >Carros</th>
+        <th>Frete Total dos Carros</th>
+        <% if current_user.admin? %>
+            <th>Ações</th>
+        <% end -%>
 
-<table id="mytable" cellspacing="0" summary="Lista de Vendas" style = "width:1200px">  <tr>
-    <th width = '10' class = 'none'>Nº</th>
-    <th width = '150' class = 'begin'> <%= sortable "CPF/CNPJ" %></th>
-    <th width = '150'><%= sortable "nome" %></th>
-    <th width = '180'><%= sortable "contato" %></th>
-    <th width = '180'><%= sortable "telefone", "telefone" %></th>
-    <th ><%= sortable "carros" %></th>
-    <th width = '100'>Frete Total<br />dos Veículos</th>
-    <% if current_user.admin? %>
-        <th width = '140'>Ações</th>
-    <% end -%>
-
-  </tr>
-
-<% x = 0%>
+      </tr>
+    </thead>
+<tbody><% x = 0%>
 
 <% @parceiros.each_with_index do |parceiro, index| %>
 
   <tr>
-    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
+    <td class = "<%= @row_class %>"> <%= index + 1 %>. </td>
     <% if parceiro.cpf %>
-    <td class = "<%= @row_class %> begin">
+    <td class = "<%= @row_class %>">
         <% if !parceiro.cpf.empty? %>
             <%= link_to(parceiro.cpf, parceiro) %>
         <% end %>
         </td>
     <% else %>
-        <td class = "<%= @row_class %> begin"><%= link_to(parceiro.cnpj, parceiro) %></td>
+        <td class = "<%= @row_class %>"><%= link_to(parceiro.cnpj, parceiro) %></td>
     <% end -%>
     <td class = "<%= @row_class %>"><%= parceiro.nome %> </td>
     <td class = "<%= @row_class %>"><%= parceiro.contato %> </td>
@@ -41,5 +42,6 @@
     <% end -%>
 
   </tr>
-<% end %>
+<% end %></tbody>
 </table>
+</div>

@@ -34,26 +34,24 @@
 <div style="clear: both;"></div>
 
 
-<table style = "width:1420px" id="mytable" cellspacing="0" summary="Lista de Vendas" >
+<table id="clientes" class="display" >
+<thead>
     <tr>
-        <!-- usar < % = sortable 'modelo' % > caso queira deixar sortable -->
-        <th width = '10' class = 'none'>Nº</th>
-        <th width = '30'class = 'begin'><%= sortable 'data_compra', "Início da Prestação de Serviço" %></th>
-        <th width = '70'> <%= sortable 'placa' %> </th>
-        <th width = '100'> <%= sortable 'modelo' %> </th>
-        <th width = '30'><%= sortable 'data_prevista', 'Previsão Entrega' %></th>
-        <th width = '180'><%= sortable 'localizacao', "Localização Atual" %></th>
-
-        <th width = '180'><%= sortable 'cidade_origem', 'Origem' %> </th>
-        <th width = '180'> <%= sortable 'cidade_destino', 'destino' %> </th>
-        <th width = '100'> <%= sortable 'ativo', 'Status' %> </th>
-        <th width = "40px"><%= sortable "status_pagamento", "Status do Pagamento" %></th>
-        <th width = '100'> <%= sortable 'saldo_total' %> </th>
-        <th width = '100'> <%= sortable 'saldo_devedor' %> </th>
-
+        <th>Nº</th>
+        <th>Início da Prestação<br /> de Serviço</th>
+        <th width="90px">Placa </th>
+        <th>Modelo</th>
+        <th>Previsão <br>Entrega</th>
+        <th>Localização Atual</th>
+        <th>Origem</th>
+        <th>Destino</th>
+        <th>Status do Veículo</th>
+        <th>Status do <br>Pagamento</th>
+        <th>Saldo Total </th>
+        <th>Saldo Devedor </th>
   </tr>
-
-<% x = 0%>
+</thead>
+<tbody><% x = 0%>
 
 
 <% @cars_cpf.each_with_index do |car, index| %>
@@ -67,8 +65,8 @@
 
   <tr>
 
-    <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
-    <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m/%Y") %></td>
+    <td class = "<%= @row_class %>"> <%= index + 1 %>. </td>
+    <td class = "<%= @row_class %>"><%= car.data_compra.strftime("%d/%m/%Y") %></td>
     <td class = "<%= @row_class %>"><%= car.placa %></td>
     <td class = "<%= @row_class %>"><%= car.modelo.titleize %></td>
 <td class = "<%= @row_class %>"><%= car.data_prevista.strftime("%d/%m/%Y") unless car.data_prevista.nil? %></td>
@@ -89,5 +87,5 @@
 
 
   </tr>
-<% end %>
+<% end %></tbody>
 </table>

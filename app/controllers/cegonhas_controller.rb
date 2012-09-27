@@ -4,7 +4,7 @@ class CegonhasController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @cegonhas = Cegonha.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page])
+    @cegonhas = Cegonha.search(params[:search], params[:search_by])
     @cegonhas.empty? ? @mensagem = "Nenhuma Cegonha Cadastrada" : @mensagem = "Cegonhas Cadastradas"
     @cars = Car.all
 
@@ -44,7 +44,7 @@ class CegonhasController < ApplicationController
     if params[:cegonha_contratada]
       @cegonha.build_empresa
       @cegonha.build_pagamento
-      
+
     end
 
     respond_to do |format|
@@ -64,7 +64,7 @@ class CegonhasController < ApplicationController
     @origens_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_origem})
     # pega o nome das cidades atualmente no banco (origem, destino e atual)
     unless @cegonha.cidade_id.nil?
-      @cidade_atual = Cidade.find(@cegonha.cidade_id).text 
+      @cidade_atual = Cidade.find(@cegonha.cidade_id).text
       @cidade_origem = Cidade.find(@cegonha.cidade_origem).text unless @cegonha.cidade_origem.nil?
       @cidade_destino = Cidade.find(@cegonha.cidade_destino).text unless @cegonha.cidade_destino.nil?
     end
@@ -77,7 +77,7 @@ class CegonhasController < ApplicationController
     @cegonha.carros = 0
 
     if !(params[:cegonha][:pagamento_attributes]).nil?
-      
+
       converter_string_to_bigdecimal(@cegonha, params[:cegonha][:pagamento_attributes])
     end
 
@@ -85,11 +85,11 @@ class CegonhasController < ApplicationController
     motoristas = Motorista.all
     motorista_existente = motoristas.collect{|motorista| if motorista.cpf == @cegonha.motorista.cpf; motorista; end}
     motorista_existente.delete(nil)
-    
+
     if !motorista_existente.empty?
       @cegonha.motorista = Motorista.find(motorista_existente[0][:id])
       @cegonha.motorista.update_attributes(params[:cegonha][:motorista_attributes])
-    end  
+    end
   end
   if @cegonha.empresa
     empresas = Empresa.all
@@ -98,7 +98,7 @@ class CegonhasController < ApplicationController
     if !empresa_existente.empty?
       @cegonha.empresa = Empresa.find(empresa_existente[0][:id])
       @cegonha.empresa.update_attributes(params[:cegonha][:empresa_attributes])
-    end  
+    end
   end
 
 
@@ -121,7 +121,7 @@ class CegonhasController < ApplicationController
   def update
     @cegonha = Cegonha.find(params[:id])
     @cegonha.carros = @cegonha.cars.count
-    
+
     if defined?(params[:cegonha][:pagamento_attributes])
       if !(params[:cegonha][:pagamento_attributes]).nil?
         converter_string_to_bigdecimal(@cegonha, params[:cegonha][:pagamento_attributes])
@@ -132,42 +132,42 @@ class CegonhasController < ApplicationController
       @cegonha.estado_id = params[:estado_id]
       @cegonha.estado_origem = params[:estado_origem]
       @cegonha.estado_destino = params[:estado_destino]
-      
+
       # atençao! Ele vai pegar a cidade pelo nome, e nao separa por estado - pode ser
       # que se futuramente queira-se comprar a cidade pelo ID, pode dar erro (pegar cidade com mesmo nome mas
       # de estados diferentes )
       cidade_atual = Cidade.find_by_text(params[:cidade_id]).id
       cidade_origem = Cidade.find_by_text(params[:cidade_origem]).id
       cidade_destino = Cidade.find_by_text(params[:cidade_destino]).id
-      
+
       @cegonha.cidade_id = cidade_atual
       @cegonha.cidade_origem = cidade_origem
       @cegonha.cidade_destino = cidade_destino
 
 
-      
+
       # altera a localizacao de todos os carros que estao na cegonha
       unless @cegonha.cars.nil?
         @cegonha.cars.each do |car|
           car.estado_id = @cegonha.estado_id
           car.cidade_id = @cegonha.cidade_id
-          car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"  
+          car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
           car.save
         end
       end
-      
-      @cegonha.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"  
+
+      @cegonha.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
     end
 
     respond_to do |format|
       if @cegonha.update_attributes(params[:cegonha])
         # se chegou no destino, todos os carros saem da cegonha e o status deles muda para descarregados.
-        #if 
-        
+        #if
+
         #  redirect_to logistica_cegonha_path(@cegonha) and return
         chegou_no_destino?(@cegonha)
         contagem_carros(Cegonha.all)
-        ativar_status_de_carro_com_terceiros(@cegonha.id, @cegonha.class.to_s) 
+        ativar_status_de_carro_com_terceiros(@cegonha.id, @cegonha.class.to_s)
         if params[:salvar_localizacao]
           if checar_logistica_carros(@cegonha.id)
             redirect_to logistica_cegonha_path(@cegonha) and return
@@ -204,7 +204,7 @@ class CegonhasController < ApplicationController
     @cegonha = Cegonha.find(params[:id])
 
     flash[:notice] = "PDF gerado na data #{Time.now.strftime('%d/%m/%Y')}"
-    
+
     filename = "#{Rails.root}/public/Relatorio_#{@cegonha.placa}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
     html = render_to_string(:template => "/cegonhas/show.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
     kit = PDFKit.new(html, :disable_javascript => true )
@@ -223,7 +223,7 @@ class CegonhasController < ApplicationController
     @cars = @cegonha.cars.select {|car| car.cidade_destino == @cegonha.cidade_id and car.estado_destino == @cegonha.estado_id }
 
     #unless @cars.nil?
-    #  @cars.each do |car|    
+    #  @cars.each do |car|
     #    car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
     #    car.ativo = 2
     #    car.cegonha = nil
@@ -233,7 +233,7 @@ class CegonhasController < ApplicationController
   end
 
   def logistica_save
-    
+
     @cegonha = Cegonha.find(params[:id])
     cars_logistica = Car.find_all_by_id(params[:finalizados])
     all_cars = Car.find_all_by_id(params[:cars])
@@ -260,19 +260,19 @@ class CegonhasController < ApplicationController
     redirect_to @cegonha
   end
 
-private 
-  def sort_direction  
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"  
-  end  
+private
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 
-  def sort_column  
-    Cegonha.column_names.include?(params[:sort]) ? params[:sort] : "placa"  
-  end  
+  def sort_column
+    Cegonha.column_names.include?(params[:sort]) ? params[:sort] : "placa"
+  end
 
   def for_sectionid
-      @subsections = Cidade.find( :all, :conditions => [" estado_id = ?", params[:id]]  ).sort_by{ |k| k['nome'] }    
+      @subsections = Cidade.find( :all, :conditions => [" estado_id = ?", params[:id]]  ).sort_by{ |k| k['nome'] }
       respond_to do |format|
-        format.json  { render :json => @subsections }      
+        format.json  { render :json => @subsections }
       end
   end
 
@@ -287,7 +287,7 @@ private
     else
       return true
     end
-   
+
   end
 
  # se chegou no destino, tira os carros da cegonha e fecha o historico

@@ -1,8 +1,9 @@
 <p id="notice"><%= notice %></p>
 <p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @car.id %> </b></p>
 
-<% if @car.comprador %>
 <div class = "floating_box">
+<% if @car.comprador %>
+
 <table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:450px">
   <caption><h5>Detalhes do Cliente</h5></caption>
   <tr>
@@ -41,7 +42,7 @@
 
 <% elsif @car.empresa %>
 
-<table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:600px">
+<table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:450px">
   <caption><h5>Detalhes da Empresa</h5></caption>
   <tr>
     <th style="width:180px">Nome da Empresa</th>

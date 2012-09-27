@@ -19,11 +19,11 @@ class CarsController < ApplicationController
 
       #@cars = Car.search(params[:search], params[:search_by]).order(:data_compra, :created_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => [1,2,3,4,5])
       if params[:search].nil?
-        @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).where(:ativo => [1,2,3,4,5,6])
+        @cars = Car.search(params[:search], params[:search_by]).order(:data_compra).where(:ativo => [1,2,3,4,5,6])
         @cars.empty? ? @mensagem = "Nenhum Cliente Cadastrado" : @mensagem = "Clientes Ativos"
       else
 
-        @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).where(:ativo => [1,2,3,4,5,6,0])
+        @cars = Car.search(params[:search], params[:search_by]).order(:data_compra).where(:ativo => [1,2,3,4,5,6,0])
         @cars.empty? ? @mensagem = "Nenhum Resultado Encontrado na Busca" : @mensagem = "Resultado da Busca"
       end
 
@@ -39,6 +39,7 @@ class CarsController < ApplicationController
    # para o sidebar
    @car = Car.find(params[:car_id]) if params[:car_id]
 
+    # apagar o loop abaixo
     if params[:sort] == "saldo_total"
       ativo = false
       @cars = sort_by_saldo_total(ativo)
@@ -47,7 +48,7 @@ class CarsController < ApplicationController
       @cars = sort_by_status_pagamento(ativo)
     else
 
-    @cars = Car.search(params[:search], params[:search_by]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 30, :page => params[:page]).where(:ativo => 0)
+    @cars = Car.search(params[:search], params[:search_by]).order(:data_compra).where(:ativo => 0)
     @cars.empty? ? @mensagem = "Nenhum Cliente Finalizado" : @mensagem = "Clientes Finalizados"
     #@cars = Car.search(params[:search], params[:search_by]).order(:updated_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => 0)
 
