@@ -85,7 +85,7 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
 * html #sidebar hr{ width: 95%; position: relative; left: -6px; color: #ccc; }
 #sidebar .contextual { margin-right: 1em; }
 
-#content {   width:1450px; background-color: #fff; margin: 0px; border-right: 0px solid #ddd; padding: 0px 10px 10px 10px; z-index: 10; height: 100%;}
+#content {   width:1500px; background-color: #fff; margin: 0px; border-right: 0px solid #ddd; padding: 0px 10px 10px 10px; z-index: 10; height: 100%;}
 * html #content{ width: 100%; padding-left: 0; margin-top: 0px; padding: 6px 10px 10px 10px;}
 html>body #content { min-height: 600px; }
 * html body #content { height: 600px; } /* IE */
@@ -1114,8 +1114,8 @@ td.alt {
 
 
 td.nao-pago a {
-  background: #ff4141;
-  color: yellow;
+  background: #FFF;
+  color: red;
   text-decoration: underline;
 
 }
@@ -1127,8 +1127,8 @@ td.nao-pago a:hover {
 
 
 td.nao-pago {
-background:#ff4141;
-color: yellow;
+  background: #FFF;
+  color: red;
 }
 
 td.pendente {
