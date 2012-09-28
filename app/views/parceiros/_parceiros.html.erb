@@ -21,15 +21,13 @@
 
   <tr>
     <td class = "<%= @row_class %>"> <%= index + 1 %>. </td>
-    <% if parceiro.cpf %>
     <td class = "<%= @row_class %>">
         <% if !parceiro.cpf.empty? %>
             <%= link_to(parceiro.cpf, parceiro) %>
-        <% end %>
-        </td>
     <% else %>
-        <td class = "<%= @row_class %>"><%= link_to(parceiro.cnpj, parceiro) %></td>
+       <%= link_to(parceiro.cnpj, parceiro) %>
     <% end -%>
+    </td>
     <td class = "<%= @row_class %>"><%= parceiro.nome %> </td>
     <td class = "<%= @row_class %>"><%= parceiro.contato %> </td>
     <td class = "<%= @row_class %>"><%= parceiro.telefone %> </td>
