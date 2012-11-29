@@ -5,7 +5,8 @@ class Empresa < ActiveRecord::Base
 
   has_many :cars
   has_many :cegonhas
-  accepts_nested_attributes_for :cars, :cegonhas
+  has_many :pagamentos
+  accepts_nested_attributes_for :cars, :cegonhas, :pagamentos
 
 
   validates :nome,

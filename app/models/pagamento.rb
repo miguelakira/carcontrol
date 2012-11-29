@@ -1,12 +1,28 @@
 class Pagamento < ActiveRecord::Base
-  attr_accessible :car_id, :data_pagamento, :forma_pagamento, :observacao, :valor_pago, :valor_total, 
+  attr_accessible :car_id, :data_pagamento, :forma_pagamento, :observacao, :valor_pago, :valor_total,
   		:taxa_despacho, :taxa_plataforma, :desconto, :valor_frete, :taxa_plataforma_origem, :taxa_plataforma_destino,
-      :taxa_balsa
+      :taxa_balsa, :comprador_id, :empresa_id
 
   belongs_to :car
   belongs_to :cegonha
+  belongs_to :cliente
+  belongs_to :empresa
 
   before_save :calcula_saldo_devedor, :calcula_valor_total
+  after_find :verifica_se_pertence_a_comprador
+
+  # codigo pra ajustar pagamentos legados que pertenciam ao carro, nao ao comprador
+  def verifica_se_pertence_a_comprador
+    if comprador_id.nil? and empresa_id.nil?
+      if car.empresa
+        self.update_attributes(:empresa_id => car.empresa.id)
+      elsif car.comprador
+        self.update_attributes(:comprador_id => car.comprador.id)
+      end
+    end
+  end
+
+
 
   def calcula_saldo_devedor
     if self.valor_total.nil?
