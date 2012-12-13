@@ -153,62 +153,62 @@
 
   <tr>
     <th>Forma de Pagamento</th>
-    <td><%= @car.pagamento.forma_pagamento %></td>
+    <td><%= @car.pagamentos.last.forma_pagamento %></td>
   </tr>
 <tr>
     <th>Valor do Frete</th>
-    <td> <%= retorna_valor_monetario(@car.pagamento.valor_frete) %></td>
+    <td> <%= retorna_valor_monetario(@car.debito.valor_frete) %></td>
   </tr>
 
 
 <tr>
     <th>Taxa de Plataforma</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_plataforma) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma) %></td>
 </tr>
 
 <tr>
     <th>Taxa de Plataforma Origem</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_plataforma_origem) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma_origem) %></td>
 </tr>
 <tr>
     <th>Taxa de Plataforma Destino</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_plataforma_destino) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma_destino) %></td>
 </tr>
 
 <tr>
     <th>Taxa de Balsa</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_balsa) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.taxa_balsa) %></td>
 </tr>
 
 <tr>
     <th>Taxa de Redespacho</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_despacho) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.taxa_despacho) %></td>
 </tr>
 <tr>
     <th>Desconto</th>
 
-    <td>-<%= retorna_valor_monetario(@car.pagamento.desconto) %></td>
+    <td>-<%= retorna_valor_monetario(@car.debito.desconto) %></td>
 </tr>
 
 <tr>
     <th>Valor Pago pelo Cliente</th>
-    <td>-<%= retorna_valor_monetario(@car.pagamento.valor_pago) %> <%= "em #{@car.pagamento.data_pagamento.strftime('%d/%m/%Y')}" unless @car.pagamento.data_pagamento.nil? %></td>
+    <td>-<%= retorna_valor_monetario(@car.pagamento.last.valor) %> <%= "em #{@car.pagamento.data_pagamento.strftime('%d/%m/%Y')}" unless @car.pagamentos.last.data_pagamento.nil? %></td>
 </tr>
 
 <tr>
     <th>Total do Frete</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.valor_total) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.valor_total) %></td>
 </tr>
 
   <tr>
     <th>Saldo Devedor</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.saldo_devedor) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.saldo_devedor) %></td>
   </tr>
 
 
   <tr>
     <th style = "height:50px">Observação</th>
-    <td><%= @car.pagamento.observacao %></td>
+    <td><%= @car.debito.observacao %></td>
   </tr>
 
 

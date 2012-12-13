@@ -64,7 +64,7 @@ class CarsController < ApplicationController
     Car.paginate(
       :per_page => 30,
       :page => params[:page],
-      :joins => :pagamento,
+      :joins => :debito,
       :order => "valor_total #{sort_direction}",
       :conditions => {:ativo => ativo})
   end
@@ -103,7 +103,9 @@ class CarsController < ApplicationController
     else
       @car.build_comprador
     end
-    @car.build_pagamento
+    @car.build_debito
+    @car.pagamentos.build
+
     @status_pagamentos = StatusPagamento.all
     @editar_localizacao = params[:editar_localizacao]
     @cegonhas = Cegonha.all
@@ -113,41 +115,6 @@ class CarsController < ApplicationController
     end
   end
 
-  # GET /cars/1/edit
-  def edit
-    @editar_localizacao = params[:editar_localizacao]
-    @car = Car.find(params[:id])
-    @status_pagamentos = StatusPagamento.all
-    @cegonhas = Cegonha.all
-    @parceiros = Parceiro.all
-    # pega um array com todas as cidades dos estados atualmente no banco, pra encher os forms.
-    @locais_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_id})
-    @destinos_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_destino})
-    @origens_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_origem})
-    # pega o nome das cidades atualmente no banco (origem, destino e atual)
-
-    @cidade_atual = Cidade.find(@car.cidade_id).text unless @car.cidade_id.nil?
-    @cidade_origem = Cidade.find(@car.cidade_origem).text unless @car.cidade_origem.nil?
-    @cidade_destino = Cidade.find(@car.cidade_destino).text unless @car.cidade_destino.nil?
-  end
-
-  def limited_edit
-    @car = Car.find(params[:id])
-    @status_pagamentos = StatusPagamento.all
-    if defined?(params[:car][:pagamento_attributes])
-      converter_string_to_bigdecimal(@car, params[:car][:pagamento_attributes])
-    end
-    respond_to do |format|
-      if @car.update_attributes(params[:car])
-        # faz update da contagem de carros da cegonha
-          format.html { redirect_to @car, notice: 'Dados atualizados com sucesso.' }
-          format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @car.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # POST /POST
   # cars /cars.json
@@ -156,6 +123,8 @@ class CarsController < ApplicationController
     @status_pagamentos = StatusPagamento.all
     @car.ativo = params[:ativo] unless params[:ativo].nil?
     # vai ajustar o formato para converter pra BigDecimal
+    converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
+    raise params[:car][:pagamento_attributes].inspect
     converter_string_to_bigdecimal(@car, params[:car][:pagamento_attributes])
     if @car.comprador
       compradores = Comprador.all
@@ -200,15 +169,54 @@ class CarsController < ApplicationController
     end
   end
 
+
+  # GET /cars/1/edit
+  def edit
+
+    @editar_localizacao = params[:editar_localizacao]
+    @car = Car.find(params[:id])
+    @status_pagamentos = StatusPagamento.all
+    @cegonhas = Cegonha.all
+    @parceiros = Parceiro.all
+    # pega um array com todas as cidades dos estados atualmente no banco, pra encher os forms.
+    @locais_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_id})
+    @destinos_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_destino})
+    @origens_atual = Cidade.find(:all, :conditions => {:estado_id => @car.estado_origem})
+    # pega o nome das cidades atualmente no banco (origem, destino e atual)
+
+    @cidade_atual = Cidade.find(@car.cidade_id).text unless @car.cidade_id.nil?
+    @cidade_origem = Cidade.find(@car.cidade_origem).text unless @car.cidade_origem.nil?
+    @cidade_destino = Cidade.find(@car.cidade_destino).text unless @car.cidade_destino.nil?
+  end
+
+  def limited_edit
+    @car = Car.find(params[:id])
+    @status_pagamentos = StatusPagamento.all
+    if defined?(params[:car][:debito_attributes])
+      converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
+    end
+    respond_to do |format|
+      if @car.update_attributes(params[:car])
+        # faz update da contagem de carros da cegonha
+          format.html { redirect_to @car, notice: 'Dados atualizados com sucesso.' }
+          format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @car.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # PUT /cars/1
   # PUT /cars/1.json
   def update
+
     @car = Car.find(params[:id])
     @car.ativo = params[:ativo] unless params[:ativo].nil?
     # vai ajustar o formato para converter pra BigDecimal
 
-    if defined?(params[:car][:pagamento_attributes])
-      converter_string_to_bigdecimal(@car, params[:car][:pagamento_attributes])
+    if defined?(params[:car][:debito_attributes])
+      converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
     end
     if params[:salvar_localizacao]
       if !@car.estado_origem.nil?

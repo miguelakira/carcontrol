@@ -1,9 +1,9 @@
 module ApplicationHelper
 
 def sortable(column, title = nil)
-    title ||= column.titleize  
-    css_class = column == sort_column ? "current #{sort_direction}" : nil  
-    
+    title ||= column.titleize
+    css_class = column == sort_column ? "current #{sort_direction}" : nil
+
     if column == 'nome'
       if sort_direction == 'asc'
         direction = 'desc'
@@ -25,10 +25,10 @@ def sortable(column, title = nil)
         direction = 'desc'
       end
     else
-    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"  
-    
+    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+
     end
-    link_to title, :sort => column, :direction => direction  
+    link_to title, :sort => column, :direction => direction
   end
 
 # def button(name,url)
@@ -47,14 +47,14 @@ def sortable(column, title = nil)
     end
   end
 
- def sort_direction  
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"  
-  end  
+ def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 
-  def sort_column  
-    Car.column_names.include?(params[:sort]) ? params[:sort] : "placa"  
-  end  
-  
+  def sort_column
+    Car.column_names.include?(params[:sort]) ? params[:sort] : "placa"
+  end
+
   def retorna_valor_monetario(valor)
     number_to_currency(valor, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")
   end
@@ -67,9 +67,9 @@ def sortable(column, title = nil)
   def retorna_valor_dos_fretes(terceiro)
     valor_total = 0
     terceiro.cars.each do |car|
-      valor_total += car.pagamento.valor_total
+      valor_total += car.debito.valor_total
     end
-  return number_to_currency(valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")  
+  return number_to_currency(valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")
   end
 
 

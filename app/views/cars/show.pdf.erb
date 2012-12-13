@@ -8,7 +8,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  
+
 <div id='wrapper'>
   <%= pdf_image_tag('/app/assets/images/logo.png', :style=>"margin:0px;padding:0px")%>
 
@@ -17,7 +17,7 @@
 <p><b>DETALHES DO CLIENTE</b> </p>
 
 
-<table id="mytable" cellspacing="0" summary="DETALHES do Cliente" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="DETALHES do Cliente" style="width:600px">
   <tr>
     <th style="width:180px">Nome do Cliente</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @car.comprador.nome %> </td>
@@ -38,15 +38,15 @@
     <th>Telefone</th>
     <td><%= @car.comprador.telefone %></td>
   </tr>
-  <tr>  
+  <tr>
     <th>Celular</th>
     <td><%= @car.comprador.celular %></td>
   </tr>
-  <tr> 
+  <tr>
     <th>E-Mail</th>
     <td><%= @car.comprador.email %></td>
   </tr>
-  <tr> 
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @car.comprador.observacao %></td>
   </tr>
@@ -55,7 +55,7 @@
 
 <% elsif @car.empresa %>
 <p><b>DETALHES DA EMPRESA</b> </p>
-<table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:600px">
   <tr>
     <th style="width:180px">Nome da Empresa</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @car.empresa.nome %> </td>
@@ -75,15 +75,15 @@
     <th>Telefone</th>
     <td><%= @car.empresa.telefone %></td>
   </tr>
-  <tr>  
+  <tr>
     <th>Celular</th>
     <td><%= @car.empresa.celular %></td>
   </tr>
-  <tr> 
+  <tr>
     <th>E-Mail</th>
     <td><%= @car.empresa.email %></td>
   </tr>
-  <tr> 
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @car.empresa.observacao %></td>
   </tr>
@@ -91,7 +91,7 @@
 <% end -%>
 
 <p><b>DETALHES DO CARRO</b></p>
-<table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:600px">
   <tr>
     <th style="width:180px" >Modelo do Carro</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @car.modelo %></td>
@@ -127,7 +127,7 @@
     <th>Data da Compra</th>
     <td><%= @car.data_compra.strftime("%d/%m/%Y") unless @car.data_compra.nil? %></td>
   </tr>
-  
+
   <tr>
     <th>Status do Carro</th>
     <td><%= StatusVeiculo::estados[@car.ativo] %></td>
@@ -137,8 +137,8 @@
     <th>Data Prevista da Entrega</th>
     <td><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></td>
   </tr>
-  
-  <tr> 
+
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @car.observacao %></td>
   </tr>
@@ -148,7 +148,7 @@
 
 <p><b>DETALHES DO FRETE</b></p>
 
-<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:600px">  
+<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:600px">
 
 <tr>
     <th style="width:180px">Status do Pagamento</th>
@@ -161,56 +161,56 @@
   </tr>
 <tr>
     <th>Valor do Frete</th>
-    <td> <%= retorna_valor_monetario(@car.pagamento.valor_frete) %></td>
+    <td> <%= retorna_valor_monetario(@car.debito.valor_frete) %></td>
   </tr>
 
 
 <tr>
     <th>Taxa de Plataforma</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_plataforma) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma) %></td>
 </tr>
 <tr>
     <th>Taxa de Plataforma Origem</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_plataforma_origem) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma_origem) %></td>
 </tr>
 <tr>
     <th>Taxa de Plataforma Destino</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_plataforma_destino) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma_destino) %></td>
 </tr>
 
 <tr>
     <th>Taxa de Balsa</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_balsa) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.taxa_balsa) %></td>
 </tr>
 <tr>
     <th>Taxa de Redespacho</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.taxa_despacho) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.taxa_despacho) %></td>
 </tr>
 <tr>
     <th>Desconto</th>
-    
-    <td>-<%= retorna_valor_monetario(@car.pagamento.desconto) %></td>
+
+    <td>-<%= retorna_valor_monetario(@car.debito.desconto) %></td>
 </tr>
 
 <tr>
     <th>Valor Pago pelo Cliente</th>
     <td>-<%= retorna_valor_monetario(@car.pagamento.valor_pago) %> <%= "em #{@car.pagamento.data_pagamento.strftime('%d/%m/%Y')}" unless @car.pagamento.data_pagamento.nil? %></td>
 </tr>
-  
+
 <tr>
     <th>Total do Frete</th>
     <td><%= retorna_valor_monetario(@car.pagamento.valor_total) %></td>
-</tr> 
+</tr>
 
   <tr>
     <th>Saldo Devedor</th>
-    <td><%= retorna_valor_monetario(@car.pagamento.saldo_devedor) %></td>
+    <td><%= retorna_valor_monetario(@car.debito.saldo_devedor) %></td>
   </tr>
 
 
-  <tr> 
+  <tr>
     <th style = "height:50px">Observação</th>
-    <td><%= @car.pagamento.observacao %></td>
+    <td><%= @car.debito.observacao %></td>
   </tr>
 
 </table>

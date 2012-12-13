@@ -1,21 +1,21 @@
-<% if @car.pagamento.valor_frete == 0
-  @car.pagamento.valor_frete = nil
+<% if @car.debito.valor_frete == 0
+  @car.debito.valor_frete = nil
   end
 %>
-<% if @car.pagamento.taxa_plataforma == 0
-  @car.pagamento.taxa_plataforma = nil
+<% if @car.debito.taxa_plataforma == 0
+  @car.debito.taxa_plataforma = nil
   end
 %>
-<% if @car.pagamento.taxa_despacho == 0
-  @car.pagamento.taxa_despacho = nil
+<% if @car.debito.taxa_despacho == 0
+  @car.debito.taxa_despacho = nil
   end
 %>
-<% if @car.pagamento.desconto == 0
-  @car.pagamento.desconto = nil
+<% if @car.debito.desconto == 0
+  @car.debito.desconto = nil
   end
 %>
-<% if @car.pagamento.valor_pago == 0
-  @car.pagamento.valor_pago = nil
+<% if @car.debito.valor_pago == 0
+  @car.debito.valor_pago = nil
   end
 %>
 
@@ -195,10 +195,10 @@
 </fieldset>
   <!-- fim dos dados do veículo -->
 
-  <!-- dados do pagamento -->
+  <!-- dados do debito -->
 <br />
 <fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
-  <%= f.fields_for :pagamento do |builder| %>
+  <%= f.fields_for :debito do |builder| %>
 
     <div class="field">
       <%= builder.label :forma_pagamento, "Forma de Pagamento" %><br />
@@ -212,43 +212,43 @@
 
     <div class="field">
       <%= builder.label :valor_frete, "Valor do Frete" %><br />
-      R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">
       <%= builder.label :taxa_plataforma, "Taxa de Plataforma" %><br />
-      R$<%= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
   <div class="field">
       <%= builder.label :taxa_plataforma_origem, "Taxa de Plataforma Origem" %><br />
-      R$<%= builder.text_field :taxa_plataforma_origem, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.taxa_plataforma_origem, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :taxa_plataforma_origem, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_origem, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">
       <%= builder.label :taxa_plataforma_destino, "Taxa de Plataforma Destino" %><br />
-      R$<%= builder.text_field :taxa_plataforma_destino, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.taxa_plataforma_destino, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :taxa_plataforma_destino, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_destino, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">
       <%= builder.label :taxa_balsa, "Taxa de Balsa" %><br />
-      R$<%= builder.text_field :taxa_balsa, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.taxa_balsa, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :taxa_balsa, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_balsa, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
 
     <div class="field">
       <%= builder.label :taxa_despacho, "Taxa de Redespacho" %><br />
-      R$<%= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">
       <%= builder.label :desconto, "Desconto" %><br />
-      R$<%= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">
       <%= builder.label :valor_pago, "Valor Pago pelo Cliente" %><br />
-      R$<%= builder.text_field :valor_pago, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')%>
+      R$<%= builder.text_field :valor_pago, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')%>
     </div>
 
   <div class="field">
@@ -256,15 +256,10 @@
     <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :include_blank => true  %>
   </div>
 
-
-
     <div class="field">
       <%= builder.label :observacao, "Observação" %><br />
       <%= builder.text_area :observacao, :cols => 40, :rows => 7 %>
     </div>
-
-
-
   <% end -%>
 
 
@@ -371,7 +366,7 @@ function fillFieldsEmpresa(oSel)
 
   <br />
 
-  <%= f.fields_for :pagamento do |builder| %>
+  <%= f.fields_for :debito do |builder| %>
 
     <div class="field">
       <%= builder.label :forma_pagamento, "Forma de Pagamento" %><br />
@@ -381,27 +376,27 @@ function fillFieldsEmpresa(oSel)
 
     <div class="field">
       <%= builder.label :valor_frete, "Valor do Frete" %><br />
-      R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">
       <%= builder.label :taxa_plataforma, "Taxa de Plataforma" %><br />
-      R$<%= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">
       <%= builder.label :taxa_despacho, "Taxa de Redespacho" %><br />
-      R$<%= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">
       <%= builder.label :desconto, "Desconto" %><br />
-      R$<%= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+      R$<%= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
     </div>
 
     <div class="field">
       <%= builder.label :valor_pago, "Valor Pago pelo Cliente" %><br />
-      R$<%= builder.text_field :valor_pago, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.pagamento.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')%>
+      R$<%= builder.text_field :valor_pago, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')%>
     </div>
 
     <div class="field">

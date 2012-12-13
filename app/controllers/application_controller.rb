@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def contagem_carros(terceiros)
     # faz update da contagem de carros da cegonha ou dos parceiros
-      
+
     terceiros.each do |terceiro|
       terceiro.carros = terceiro.cars.count
       terceiro.save
@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
 
 
 def atualiza_historico_parceiro(car)
-  
+
     # protege contra codigo legado antes do historico
     if car.parceiro
       if car.historicos.empty?
@@ -125,33 +125,54 @@ def atualiza_historico_parceiro(car)
 
 
   def converter_string_to_bigdecimal(veiculo, valores)
+if valores[:valor_frete]
+
     unless valores[:valor_frete].empty?
       valores[:valor_frete].gsub!('.', '')
       valores[:valor_frete].gsub!(',','.')
-      veiculo.pagamento.valor_total = BigDecimal(valores[:valor_frete])
+      veiculo.debito.valor_total = BigDecimal(valores[:valor_frete])
     end
+  end
+  if valores[:valor_pago]
+
     unless valores[:valor_pago].empty?
       valores[:valor_pago].gsub!('.', '')
       valores[:valor_pago].gsub!(',','.')
-      veiculo.pagamento.valor_pago = BigDecimal(valores[:valor_pago])
+      veiculo.debito.valor_pago = BigDecimal(valores[:valor_pago])
     end
+  end
 
+if valores[:valor_despacho]
     unless valores[:taxa_despacho].empty?
       valores[:taxa_despacho].gsub!('.', '')
       valores[:taxa_despacho].gsub!(',','.')
-      veiculo.pagamento.taxa_despacho = BigDecimal(valores[:taxa_despacho])
+      veiculo.debito.taxa_despacho = BigDecimal(valores[:taxa_despacho])
     end
+end
 
+if valores[:taxa_plataforma]
     unless valores[:taxa_plataforma].empty?
       valores[:taxa_plataforma].gsub!('.', '')
       valores[:taxa_plataforma].gsub!(',','.')
-      veiculo.pagamento.taxa_plataforma = BigDecimal(valores[:taxa_plataforma])
+      veiculo.debito.taxa_plataforma = BigDecimal(valores[:taxa_plataforma])
     end
+  end
+
+if valores[:desconto]
 
     unless valores[:desconto].empty?
       valores[:desconto].gsub!('.', '')
       valores[:desconto].gsub!(',','.')
-      veiculo.pagamento.desconto = BigDecimal(valores[:desconto])
+      veiculo.debito.desconto = BigDecimal(valores[:desconto])
     end
+  end
+
+if valores[:valor]
+    unless valores[:valor].empty?
+      valores[:valor].gsub!('.', '')
+      valores[:valor].gsub!(',','.')
+      veiculo.pagamento.valor = BigDecimal(valores[:valor])
+    end
+  end
   end
 end

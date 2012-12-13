@@ -43,7 +43,7 @@ class CegonhasController < ApplicationController
 
     if params[:cegonha_contratada]
       @cegonha.build_empresa
-      @cegonha.build_pagamento
+      @cegonha.build_debito
 
     end
 

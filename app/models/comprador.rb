@@ -4,8 +4,9 @@ class Comprador < ActiveRecord::Base
   has_many :cars
   has_many :contatos
   has_many :pagamentos
+  has_one :debito
 
-  accepts_nested_attributes_for :cars, :pagamentos
+  accepts_nested_attributes_for :cars, :pagamentos, :debito
 
 
   validates :nome,

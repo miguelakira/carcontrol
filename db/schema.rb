@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121129125919) do
+ActiveRecord::Schema.define(:version => 20121213175305) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -96,6 +96,28 @@ ActiveRecord::Schema.define(:version => 20121129125919) do
     t.integer  "car_id"
   end
 
+  create_table "debitos", :force => true do |t|
+    t.integer  "car_id"
+    t.datetime "data_pagamento"
+    t.string   "forma_pagamento"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.decimal  "valor_total",             :precision => 8, :scale => 2
+    t.decimal  "valor_pago",              :precision => 8, :scale => 2
+    t.string   "observacao"
+    t.decimal  "taxa_despacho",           :precision => 8, :scale => 2
+    t.decimal  "taxa_plataforma",         :precision => 8, :scale => 2
+    t.decimal  "desconto",                :precision => 8, :scale => 2
+    t.decimal  "saldo_devedor",           :precision => 8, :scale => 2
+    t.integer  "cegonha_id"
+    t.decimal  "valor_frete",             :precision => 8, :scale => 2
+    t.decimal  "taxa_plataforma_origem",  :precision => 8, :scale => 2
+    t.decimal  "taxa_plataforma_destino", :precision => 8, :scale => 2
+    t.decimal  "taxa_balsa",              :precision => 8, :scale => 2
+    t.integer  "comprador_id"
+    t.integer  "empresa_id"
+  end
+
   create_table "empresas", :force => true do |t|
     t.string   "nome"
     t.string   "cnpj"
@@ -143,25 +165,13 @@ ActiveRecord::Schema.define(:version => 20121129125919) do
   end
 
   create_table "pagamentos", :force => true do |t|
-    t.integer  "car_id"
-    t.datetime "data_pagamento"
-    t.string   "forma_pagamento"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
-    t.decimal  "valor_total",             :precision => 8, :scale => 2
-    t.decimal  "valor_pago",              :precision => 8, :scale => 2
-    t.string   "observacao"
-    t.decimal  "taxa_despacho",           :precision => 8, :scale => 2
-    t.decimal  "taxa_plataforma",         :precision => 8, :scale => 2
-    t.decimal  "desconto",                :precision => 8, :scale => 2
-    t.decimal  "saldo_devedor",           :precision => 8, :scale => 2
-    t.integer  "cegonha_id"
-    t.decimal  "valor_frete",             :precision => 8, :scale => 2
-    t.decimal  "taxa_plataforma_origem",  :precision => 8, :scale => 2
-    t.decimal  "taxa_plataforma_destino", :precision => 8, :scale => 2
-    t.decimal  "taxa_balsa",              :precision => 8, :scale => 2
     t.integer  "comprador_id"
     t.integer  "empresa_id"
+    t.datetime "data_pagamento"
+    t.string   "forma_pagamento"
+    t.string   "observacao"
+    t.decimal  "valor",           :precision => 8, :scale => 2
+    t.integer  "car_id"
   end
 
   create_table "parceiros", :force => true do |t|

@@ -1,33 +1,33 @@
 #encoding: UTF-8
 class Car < ActiveRecord::Base
   attr_accessible :localizacao, :modelo, :placa, :rota_id, :status_pagamento_id, :ativo, :estado_id, :cidade_id, :data_compra,
-        :data_prevista, :cegonha_id, :comprador_attributes, :empresa_attributes, :pagamento_attributes, :observacao,
-        :parceiro_id
+        :data_prevista, :cegonha_id, :comprador_attributes, :empresa_attributes, :debito_attributes, :observacao,
+        :parceiro_id, :pagamento_attributes
 
-
-        
   belongs_to :status_pagamento
   belongs_to :cegonha
   belongs_to :comprador
   belongs_to :empresa
   belongs_to :parceiro
-  has_one :pagamento
+  has_one :debito
   has_many :historicos
-  accepts_nested_attributes_for :comprador, :empresa, :pagamento, :parceiro
+  has_many :pagamentos
+  accepts_nested_attributes_for :comprador, :empresa, :debito, :parceiro, :pagamentos
 
-  validates	:placa, 
+  validates	:placa,
   			:presence => { :message => "- A placa não pode ser deixada em branco!" },
   			:uniqueness => { :message => "- A placa já existe no banco de dados. É necessário que ela seja única" }
-  
+
   validates :modelo,
   			:presence => { :message => "- O modelo do carro não pode ser deixado em branco!" }
 
-  validates :status_pagamento_id, :car_not_paid => true  
-  
-  before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula, :eliminar_da_cegonha_caso_inativo, :ajusta_nome
-  
+  validates :status_pagamento_id, :car_not_paid => true
+
+  before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula,
+      :eliminar_da_cegonha_caso_inativo, :ajusta_nome
+
   after_find :capitaliza_modelo
-  
+
   def ajusta_nome
     if self.nome.nil?
       if self.comprador
@@ -69,18 +69,27 @@ class Car < ActiveRecord::Base
 
   def transforma_modelo_em_minuscula
   	self.modelo.downcase!
-  end  
+  end
 
   def capitaliza_modelo
   	self.modelo = self.modelo.titleize
   end
 
 =begin
-  define_index do 
+  def verifica_pagamento
+    if self.comprador and self.comprador_id.nil?
+      self.update_attributes(:comprador_id => self.comprador.id)
+    elsif  self.empresa and self.empresa_id.nil?
+      self.update_attributes(:empresa_id => self.empresa.id)
+    end
+    raise self.inspect
+  end
+=end
+=begin
+  define_index do
   	indexes placa
   	indexes modelo, :sortable => true
   	indexes localizacao, :sortable => true
-
   end
 =end
 end
