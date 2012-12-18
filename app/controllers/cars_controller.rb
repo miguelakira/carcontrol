@@ -102,9 +102,11 @@ class CarsController < ApplicationController
       @car.build_empresa
     else
       @car.build_comprador
+
     end
     @car.build_debito
     @car.pagamentos.build
+
 
     @status_pagamentos = StatusPagamento.all
     @editar_localizacao = params[:editar_localizacao]
@@ -123,9 +125,10 @@ class CarsController < ApplicationController
     @status_pagamentos = StatusPagamento.all
     @car.ativo = params[:ativo] unless params[:ativo].nil?
     # vai ajustar o formato para converter pra BigDecimal
+
+    #raise params[:car][:pagamentos_attributes].inspect
     converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
-    raise params[:car][:pagamento_attributes].inspect
-    converter_string_to_bigdecimal(@car, params[:car][:pagamento_attributes])
+    converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes])
     if @car.comprador
       compradores = Comprador.all
       comprador_existente = compradores.collect{|comprador| if comprador.cpf == @car.comprador.cpf; comprador; end}
@@ -145,7 +148,6 @@ class CarsController < ApplicationController
         @car.empresa.update_attributes(params[:car][:empresa_attributes])
       end
     end
-
 
       respond_to do |format|
       if @car.save
@@ -168,7 +170,6 @@ class CarsController < ApplicationController
       end
     end
   end
-
 
   # GET /cars/1/edit
   def edit
@@ -241,7 +242,6 @@ class CarsController < ApplicationController
       else
         @car.localizacao = nil
       end
-
     end
 
     # se o carro ja esta na cegonha e a cegonha foi mudada
@@ -325,9 +325,6 @@ class CarsController < ApplicationController
         format.json  { render :json => @subsections }
       end
   end
-
-
-
 
 
 end

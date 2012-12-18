@@ -168,6 +168,7 @@ if valores[:desconto]
   end
 
 if valores[:valor]
+  raise valores[:valor].inspect
     unless valores[:valor].empty?
       valores[:valor].gsub!('.', '')
       valores[:valor].gsub!(',','.')

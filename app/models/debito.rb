@@ -18,9 +18,9 @@ class Debito < ActiveRecord::Base
       self.valor_frete = 0
     end
     if self.taxa_despacho.nil?
- 		  self.taxa_despacho = 0
-  	end
-  	if self.taxa_plataforma.nil?
+ 	self.taxa_despacho = 0
+  end
+  if self.taxa_plataforma.nil?
   		self.taxa_plataforma = 0
   	end
     if self.desconto.nil?

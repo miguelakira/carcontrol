@@ -1,3 +1,4 @@
+
 <% if @car.debito.valor_frete == 0
   @car.debito.valor_frete = nil
   end
@@ -198,6 +199,8 @@
   <!-- dados do debito -->
 <br />
 <fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
+
+
   <%= f.fields_for :debito do |builder| %>
 
     <div class="field">
@@ -261,6 +264,11 @@
       <%= builder.text_area :observacao, :cols => 40, :rows => 7 %>
     </div>
   <% end -%>
+
+<%= f.fields_for :pagamentos do |builder | %>
+<%= builder.text_area :valor %>
+<% end %>
+
 
 
 </fieldset>
