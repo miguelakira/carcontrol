@@ -19,10 +19,6 @@
     <td><%= @car.comprador.cpf %></td>
   </tr>
   <tr>
-    <th>Status do Pagamento</th>
-    <td><%= @car.status_pagamento.status %></td>
-  </tr>
-  <tr>
     <th>Telefone</th>
     <td><%= @car.comprador.telefone %></td>
   </tr>
@@ -54,10 +50,6 @@
   <tr>
     <th>CNPJ</th>
     <td><%= @car.empresa.cnpj %></td>
-  </tr>
-  <tr>
-    <th>Status do Pagamento</th>
-    <td><%= @car.status_pagamento.status %></td>
   </tr>
   <tr>
     <th>Telefone</th>
@@ -147,13 +139,8 @@
   <caption><h5>Detalhes do frete</h5></caption>
 
 <tr>
-    <th style="width:180px">Status do Pagamento</th>
+    <th style="width:180px">Status do Pagamento <br> do Carro</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= @car.status_pagamento.status %></td>
-  </tr>
-
-  <tr>
-    <th>Forma de Pagamento</th>
-    <td><%= @car.pagamentos.last.forma_pagamento %></td>
   </tr>
 <tr>
     <th>Valor do Frete</th>
@@ -191,20 +178,9 @@
 </tr>
 
 <tr>
-    <th>Valor Pago pelo Cliente</th>
-    <td>-<%= retorna_valor_monetario(@car.pagamento.last.valor) %> <%= "em #{@car.pagamento.data_pagamento.strftime('%d/%m/%Y')}" unless @car.pagamentos.last.data_pagamento.nil? %></td>
-</tr>
-
-<tr>
     <th>Total do Frete</th>
     <td><%= retorna_valor_monetario(@car.debito.valor_total) %></td>
 </tr>
-
-  <tr>
-    <th>Saldo Devedor</th>
-    <td><%= retorna_valor_monetario(@car.debito.saldo_devedor) %></td>
-  </tr>
-
 
   <tr>
     <th style = "height:50px">Observação</th>
@@ -212,6 +188,38 @@
   </tr>
 
 
+
+</table>
+
+<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
+  <caption><h5>Detalhes dos Pagamentos</h5></caption>
+
+  <tr>
+    <th width=50px>Data do <br>Pagamento</th>
+    <th>Valor do <br> Pagamento</th>
+    <th>Forma de <br> Pagamento</th>
+  </tr>
+  <% @car.pagamentos.each do |pagamento| %>
+
+<tr>
+    <td><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
+    <td><%= retorna_valor_monetario(pagamento.valor) %></td>
+    <td><%= pagamento.forma_pagamento %></td>
+  </tr>
+<% end %>
+</table>
+
+<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
+
+<tr>
+    <th width=100px>Total Pago</th>
+    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></td>
+</tr>
+
+  <tr>
+    <th>Saldo Devedor</th>
+    <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></td>
+  </tr>
 
 </table>
 </div>

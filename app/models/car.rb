@@ -26,7 +26,8 @@ class Car < ActiveRecord::Base
   before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula,
       :eliminar_da_cegonha_caso_inativo, :ajusta_nome
 
-  after_find :capitaliza_modelo
+  after_find :capitaliza_modelo, :verifica_pagamento
+
 
   def ajusta_nome
     if self.nome.nil?
@@ -75,16 +76,14 @@ class Car < ActiveRecord::Base
   	self.modelo = self.modelo.titleize
   end
 
-=begin
+
+
   def verifica_pagamento
-    if self.comprador and self.comprador_id.nil?
-      self.update_attributes(:comprador_id => self.comprador.id)
-    elsif  self.empresa and self.empresa_id.nil?
-      self.update_attributes(:empresa_id => self.empresa.id)
+    if self.pagamentos.empty?
+      self.pagamentos.new(:valor => 0)
     end
-    raise self.inspect
   end
-=end
+
 =begin
   define_index do
   	indexes placa

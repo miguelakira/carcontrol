@@ -125,6 +125,8 @@ def atualiza_historico_parceiro(car)
 
 
   def converter_string_to_bigdecimal(veiculo, valores)
+
+
 if valores[:valor_frete]
 
     unless valores[:valor_frete].empty?
@@ -168,11 +170,12 @@ if valores[:desconto]
   end
 
 if valores[:valor]
-  raise valores[:valor].inspect
+
     unless valores[:valor].empty?
       valores[:valor].gsub!('.', '')
       valores[:valor].gsub!(',','.')
-      veiculo.pagamento.valor = BigDecimal(valores[:valor])
+
+      veiculo.pagamentos.last.valor = BigDecimal(valores[:valor])
     end
   end
   end

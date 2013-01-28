@@ -128,7 +128,7 @@ class CarsController < ApplicationController
 
     #raise params[:car][:pagamentos_attributes].inspect
     converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
-    converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes])
+    converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0'])
     if @car.comprador
       compradores = Comprador.all
       comprador_existente = compradores.collect{|comprador| if comprador.cpf == @car.comprador.cpf; comprador; end}
@@ -196,6 +196,9 @@ class CarsController < ApplicationController
     if defined?(params[:car][:debito_attributes])
       converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
     end
+    if defined?(params[:car][:pagamentos_attributes])
+      converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0'])
+    end
     respond_to do |format|
       if @car.update_attributes(params[:car])
         # faz update da contagem de carros da cegonha
@@ -213,11 +216,15 @@ class CarsController < ApplicationController
   def update
 
     @car = Car.find(params[:id])
+
     @car.ativo = params[:ativo] unless params[:ativo].nil?
     # vai ajustar o formato para converter pra BigDecimal
 
     if defined?(params[:car][:debito_attributes])
       converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
+    end
+    if defined?(params[:car][:pagamentos_attributes])
+      converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0'])
     end
     if params[:salvar_localizacao]
       if !@car.estado_origem.nil?
