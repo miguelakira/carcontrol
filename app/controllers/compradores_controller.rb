@@ -5,6 +5,7 @@ class CompradoresController < ApplicationController
 
   def index
     @compradores = Comprador.all
+    @empresas = Empresa.all
 
     respond_to do |format|
       format.html # index.html.erb

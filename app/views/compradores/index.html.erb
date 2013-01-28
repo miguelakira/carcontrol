@@ -4,11 +4,13 @@
   <tr>
     <th>Nome</th>
     <th>Email</th>
-    <th>Rg</th>
+    <th>RG</th>
+    <th>CPF</th>
     <th>Telefone</th>
     <th>Celular</th>
-    <th></th>
-    <th></th>
+    <th>Carros Comprados</th>
+    <th>Valor Pago Total</th>
+    <th>Saldo Devedor</th>
     <th></th>
   </tr>
 
@@ -17,15 +19,34 @@
     <td><%= comprador.nome %></td>
     <td><%= comprador.email %></td>
     <td><%= comprador.rg %></td>
+    <td><%= comprador.rg %></td>
     <td><%= comprador.telefone %></td>
     <td><%= comprador.celular %></td>
     <td><%= link_to 'Show', comprador %></td>
-    <td><%= link_to 'Edit', edit_comprador_path(comprador) %></td>
-    <td><%= link_to 'Destroy', comprador, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<table>
+  <tr>
+    <th>Nome</th>
+    <th>Email</th>
+    <th>CNPJ</th>
+    <th>Telefone</th>
+    <th>Celular</th>
+    <th></th>
+  </tr>
+
+<% @empresas.each do |empresa| %>
+  <tr>
+    <td><%= empresa.nome %></td>
+    <td><%= empresa.email %></td>
+    <td><%= empresa.cnpj %></td>
+    <td><%= empresa.telefone %></td>
+    <td><%= empresa.celular %></td>
+
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Comprador', new_comprador_path %>
