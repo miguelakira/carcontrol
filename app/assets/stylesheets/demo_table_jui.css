@@ -111,6 +111,7 @@ table.display thead th div.DataTables_sort_wrapper span {
 	position: relative;
 	clear: both;
 	box-shadow: 2px 2px 6px #666666;
+	width: 1200px;
 }
 
 .dataTables_processing {
