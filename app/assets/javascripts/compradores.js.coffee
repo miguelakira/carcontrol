@@ -1,11 +1,6 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
         $('#compradores').dataTable
           bJQueryUI: true
-          bRetrieve: false
-          bDestroy: true
           sPaginationType: "full_numbers"
           aLengthMenu: [ 10, 30, 50, 100 ],
           iDisplayLength: 30
@@ -25,3 +20,4 @@ jQuery ->
               sLast: "Final"
               sPrevious: "Anterior"
               sEmptyTable: "Nenhum dado disponível na tabela"
+

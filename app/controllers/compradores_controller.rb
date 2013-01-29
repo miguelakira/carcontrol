@@ -9,7 +9,6 @@ class CompradoresController < ApplicationController
     @compradores.empty? ? @mensagem_compradores = "Nenhum Cliente Cadastrado" : @mensagem_compradores = "Clientes Cadastrados"
     @empresas.empty? ? @mensagem_empresas = "Nenhuma Empresa Cadastrada" : @mensagem_empresas = "Empresas Cadastradas"
 
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @compradores }
