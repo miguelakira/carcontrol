@@ -15,9 +15,9 @@
 
   </tr>
     </thead>
-
-<% @compradores.each do |comprador| %>
 <tbody>
+<% @compradores.each do |comprador| %>
+
   <tr>
     <td><%= comprador.nome %> <%= link_to image_tag("edit_local.png", :border=>0),edit_comprador_path(comprador, :comprador => comprador.id), :class => 'right'  %></td>
     <td><%= comprador.email %></td>
@@ -50,8 +50,9 @@
 
   </tr>
 </thead>
-<% @empresas.each do |empresa| %>
 <tbody>
+<% @empresas.each do |empresa| %>
+
   <tr>
     <td><%= empresa.nome %> <%= link_to image_tag("edit_local.png", :border=>0), edit_empresa_path(empresa, :empresa => empresa.id), :class => 'right'  %></td>
     <td><%= empresa.email %></td>
