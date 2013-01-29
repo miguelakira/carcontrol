@@ -170,7 +170,9 @@ if valores[:desconto]
   end
 
 if valores[:valor]
-
+  if veiculo.pagamentos.last.valor.nil?
+    veiculo.pagamentos.last.destroy
+  end
     unless valores[:valor].empty?
       valores[:valor].gsub!('.', '')
       valores[:valor].gsub!(',','.')

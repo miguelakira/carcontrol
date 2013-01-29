@@ -265,12 +265,12 @@ class CarsController < ApplicationController
     #se o carro nao estava na cegonha e foi colocado em uma
     if !@car.cegonha
       if params[:car]
-
         @car.update_attributes(:localizacao => Cegonha.find(params[:car][:cegonha_id]).localizacao, :cidade_id => Cegonha.find(params[:car][:cegonha_id]).cidade_id, :estado_id => Cegonha.find(params[:car][:cegonha_id]).estado_id, :ativo => 1) unless params[:car][:cegonha_id].empty?
       end
     end
 
     respond_to do |format|
+
       if @car.update_attributes(params[:car])
         # faz update da contagem de carros da cegonha
         contagem_carros(Parceiro.all) unless Parceiro.all.nil?

@@ -9,14 +9,11 @@ class Pagamento < ActiveRecord::Base
   before_save :verifica_comprador_ou_empresa_id
 
   def verifica_comprador_ou_empresa_id
-
     if self.car.comprador_id
       self.comprador_id = self.car.comprador_id
-
     elsif self.car.empresa_id
       self.empresa_id = self.car.empresa_id
     end
-
   end
 
 end
