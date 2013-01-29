@@ -6,7 +6,10 @@ module CarsHelper
       cliente.cars.each do |car|
         if car.pagamentos
           car.pagamentos.each do |pagamento|
-            pagamento_total += pagamento.valor unless pagamento.nil?
+            unless pagamento.nil?
+              pagamento.valor ||= 0
+              pagamento_total += pagamento.valor
+            end
           end
         end
         # codigo legado para pagamentos no sistema antigo
