@@ -7,6 +7,8 @@ jQuery ->
           sPaginationType: "full_numbers"
           aLengthMenu: [ 10, 30, 50, 100 ],
           iDisplayLength: 30
+          bRetrieve: true
+          bDestroy: true
           oLanguage:
             sInfo: "Exibindo _START_ à _END_ de _TOTAL_ entradas"
             sInfoEmpty: "Exibindo 0 à 0 de 0 entradas"
