@@ -213,12 +213,20 @@
 
 <tr>
     <th width=100px>Total Pago</th>
+    <% if @car.comprador %>
     <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></td>
+    <% elsif @car.empresa %>
+    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></td>
+    <% end %>
 </tr>
 
   <tr>
     <th>Saldo Devedor</th>
+    <% if @car.comprador %>
     <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></td>
+    <% elsif @car.empresa %>
+    <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></td>
+    <% end %>
   </tr>
 
 </table>
