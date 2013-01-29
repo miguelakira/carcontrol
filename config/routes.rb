@@ -12,6 +12,7 @@ Carcontrol::Application.routes.draw do
   get "cars/editar_localizacao"
 
   resources :compradores
+  resources :empresas
   resources :cars do
     get :limited_edit
   end

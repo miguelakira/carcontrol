@@ -1,6 +1,8 @@
-<h1>Listing compradores</h1>
 
-<table>
+ <p><h1><%= @mensagem_compradores %> </h1></p>
+
+<table  id="compradores" class="display"  style = "float: left;">
+    <thead>
   <tr>
     <th>Nome</th>
     <th>Email</th>
@@ -8,38 +10,48 @@
     <th>CPF</th>
     <th>Telefone</th>
     <th>Celular</th>
-    <th>Carros Comprados</th>
-    <th>Valor Pago Total</th>
-    <th>Saldo Devedor</th>
+    <th>Carros <br>Comprados</th>
+    <th>Valor Pago <br> Total</th>
+    <th>Saldo <br> Devedor</th>
     <th></th>
   </tr>
+    </thead>
 
 <% @compradores.each do |comprador| %>
+<tbody>
   <tr>
-    <td><%= comprador.nome %></td>
+    <td><%= comprador.nome %> <%= link_to image_tag("edit_local.png", :border=>0),edit_comprador_path(comprador, :comprador => comprador.id), :class => 'right'  %></td>
     <td><%= comprador.email %></td>
     <td><%= comprador.rg %></td>
-    <td><%= comprador.rg %></td>
+    <td><%= comprador.cpf %></td>
     <td><%= comprador.telefone %></td>
     <td><%= comprador.celular %></td>
+    <td><%= carros_do_comprador(comprador).html_safe %></td>
+    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(comprador)) %>  </td>
+    <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(comprador)) %></td>
     <td><%= link_to 'Show', comprador %></td>
   </tr>
 <% end %>
+</tbody>
 </table>
 
-<table>
+<br />
+<p><h1> <%= @mensagem_empresas %> </h1></p>
+<table  id="empresas" class="display"  style = "float: left;">
+    <thead>
+
   <tr>
     <th>Nome</th>
     <th>Email</th>
     <th>CNPJ</th>
     <th>Telefone</th>
     <th>Celular</th>
-    <th></th>
   </tr>
-
+</thead>
 <% @empresas.each do |empresa| %>
+<tbody>
   <tr>
-    <td><%= empresa.nome %></td>
+    <td><%= empresa.nome %> <%= link_to image_tag("edit_local.png", :border=>0), edit_empresa_path(empresa, :empresa => empresa.id), :class => 'right'  %></td>
     <td><%= empresa.email %></td>
     <td><%= empresa.cnpj %></td>
     <td><%= empresa.telefone %></td>
@@ -47,6 +59,7 @@
 
   </tr>
 <% end %>
+</tbody>
 </table>
 
 <br />

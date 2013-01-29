@@ -1,0 +1,48 @@
+<%= form_for(@empresa) do |f| %>
+  <% if @empresa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@empresa.errors.count, "error") %> prohibited this empresa from being saved:</h2>
+
+      <ul>
+      <% @empresa.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <br>
+<fieldset> <legend><h5 style="font-size: 1.3em">Dados da Empresa</h5></legend>
+
+  <div class="field">
+    <%= f.label :nome, "Nome da Empresa" %><br />
+    <%= f.text_field :nome %>
+  </div>
+
+<div class="field">
+    <%= f.label :contato, "Nome do Contato" %><br />
+    <%= f.text_field :nome %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email, "E-Mail" %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :telefone %><br />
+    <%= f.text_field :telefone %>
+  </div>
+  <div class="field">
+    <%= f.label :celular %><br />
+    <%= f.text_field :celular %>
+  </div>
+  <div class="field">
+    <%= f.label :observacao, "Observação" %><br />
+    <%= f.text_area :observacao, :cols => 40, :rows => 7 %>
+  </div>
+</fieldset>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

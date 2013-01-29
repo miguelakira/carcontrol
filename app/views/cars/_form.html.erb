@@ -20,7 +20,6 @@
   end
 %>
 
-
 <% if @car.ativo != 0 %>
 
 
@@ -57,6 +56,9 @@
 <!-- Dados da empresa -->
 <fieldset> <legend><h5 style="font-size: 1.3em">Dados da Empresa</h5></legend>
   <%= f.fields_for :empresa do |builder| %>
+
+  <div class = 'floating_form'>
+
     <div class="field">
       <%= builder.label :cnpj, "CNPJ*" %><br />
       <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj' %>
@@ -72,6 +74,7 @@
       <%= builder.text_field :contato, :id => 'empresa_contato'  %>
     </div>
 
+  </div>
     <div class="field">
       <%= builder.label :email, "E-Mail" %><br />
       <%= builder.text_field :email, :id => 'empresa_email'  %>
@@ -87,7 +90,7 @@
       <%= builder.label :celular %><br />
       <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular' %>
     </div>
-
+    <br />
     <div class="field">
       <%= builder.label :observacao, "Observação" %><br />
       <%= builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'empresa_observacao' %>
@@ -100,6 +103,8 @@
 <fieldset> <legend><h5 style="font-size: 1.3em">Dados do Cliente</h5></legend>
   <%= f.fields_for :comprador do |builder| %>
   <br />
+
+  <div class = 'floating_form'>
 
     <div class="field">
       <%= builder.label :cpf, "Digite o CPF cliente*" %><br />
@@ -121,6 +126,8 @@
       <%= builder.text_field :rg , :id => 'comprador_rg' %>
     </div>
 
+  </div>
+
     <div class="field">
       <%= builder.label :telefone %><br />
       <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_telefone' %>
@@ -130,6 +137,17 @@
       <%= builder.label :celular %><br />
       <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_celular' %>
     </div>
+    <div class="field">
+      <%= builder.label :parente, "Parente ou Conhecido do Cliente" %><br />
+      <%= builder.text_field :parente, :id => 'comprador_parente' %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :telefone_parente, "Telefone do Parente ou Conhecido do Cliente" %><br />
+      <%= builder.text_field :telefone_parente, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_telefone_parente' %>
+    </div>
+
+    <br />
 
     <div class="field">
       <%= builder.label :observacao, "Observação" %><br />
@@ -146,14 +164,15 @@
 <!-- dados do veículo -->
 <fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
 
+  <div class = 'floating_form'>
   <div class="field">
     <%= f.label :placa %>*<br />
     <%= f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15' %>
   </div>
 
   <div class="field">
-    <%= f.label :modelo %>*<br />
-    <%= f.text_field :modelo %> (Por exemplo: Ford Ka)
+    <%= f.label :modelo %>* (Por exemplo: Ford Ka)<br />
+    <%= f.text_field :modelo %>
   </div>
 
 
@@ -166,6 +185,8 @@
     <%= f.label :data_prevista, "Data Prevista de Entrega" %><br />
     <%= f.date_select :data_prevista, :order => [:day, :month, :year], :start_year => Time.now.year, :include_blank => true  %><br>
   </div>
+</div>
+
 
   <div class="field">
     <%= f.label :status_pagamento_id, "Status do Pagamento" %><br />
@@ -189,6 +210,8 @@
     <%= select_tag :ativo, options_for_select(StatusVeiculo::estados.collect {|p| [p[1], p[0]]}, @car.ativo)   %>
   </div>
 
+  <br />
+
   <div class="field">
       <%= f.label :observacao, "Observação" %><br />
       <%= f.text_area :observacao, :cols => 40, :rows => 7 %>
@@ -204,6 +227,7 @@
   <%= f.fields_for :debito do |builder| %>
 
 
+    <div class = 'floating_form'>
     <!--<div class="field">
       <%#= builder.label :parcelas, "Parcelas" %><br />
       &nbsp;&nbsp;&nbsp;<%#= builder.text_field :parcelas, :size => 5%>
@@ -227,6 +251,8 @@
     <div class="field">
       <%= builder.label :taxa_plataforma_destino, "Taxa de Plataforma Destino" %><br />
       R$<%= builder.text_field :taxa_plataforma_destino, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_destino, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+    </div>
+
     </div>
 
     <div class="field">
@@ -254,6 +280,8 @@
     <%= builder.label :data_pagamento, "Data do Pagamento" %><br />
     <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :include_blank => true  %>
   </div>
+
+  <br />
 
     <div class="field">
       <%= builder.label :observacao, "Observação" %><br />
@@ -291,11 +319,7 @@
       R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
     </div>
 <% end %>
-
-
-
 </fieldset>
-
   <br />
   <div class="actions">
     <% if @car.id.nil? %>
@@ -329,6 +353,8 @@ function fillFieldsComprador(oSel)
       oForm.comprador_cpf.value='<%= comprador.cpf%>';
       oForm.comprador_telefone.value='<%= comprador.telefone%>';
       oForm.comprador_celular.value='<%= comprador.celular%>';
+      oForm.comprador_telefone_parente.value='<%= comprador.telefone_parente%>';
+      oForm.comprador_parente.value='<%= comprador.parente%>';
        <% if comprador.observacao.include?("\r\n") %>
       <% comprador.observacao = comprador.observacao.gsub("\r\n", "   ") %>
       <% end -%>
@@ -345,6 +371,8 @@ function fillFieldsComprador(oSel)
       oForm.comprador_telefone.value='';
       oForm.comprador_celular.value='';
       oForm.comprador_observacao.value='';
+      oForm.comprador_telefone_parente.value='';
+      oForm.comprador_parente.value='';
       break;
   }
 }
