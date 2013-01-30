@@ -2,6 +2,9 @@ class FinanceirosController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+    @compradores = Comprador.all
+    @empresas = Empresa.all
+    @parceiros = Parceiro.all
 
   end
 

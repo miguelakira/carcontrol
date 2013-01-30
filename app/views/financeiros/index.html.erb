@@ -1,31 +1,68 @@
+<p><h1> Clientes </h1></p>
+<table  id="compradores_financeiro" class="display"  style = "float: left;">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Débito Total</th>
+      <th>Pagamento Total</th>
+    </tr>
+  </thead>
 
+  <tbody>
+    <% @compradores.each do |comprador| %>
+    <tr>
+      <td> <%= comprador.nome %> </td>
+      <td> <%= comprador.cpf %> </td>
+      <td> <%= retorna_valor_monetario(saldo_devedor_do_cliente(comprador)) %> </td>
+      <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(comprador)) %> </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<%= form_tag :action => :show do %>
-	<p><h1>Buscar Cliente por CPF</h1></p>
-	<%= text_field_tag :comprador_cpf,nil, :onkeyup =>"mascara(this,cpf);",:maxlength=>"14", :size => '30' %>
-	<%= submit_tag "Buscar por CPF" %>
-<% end -%>
+<p><h1> Empresas </h1></p>
+<table  id="empresas_financeiro" class="display"  style = "float: left;">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>CNPJ</th>
+      <th>Débito Total</th>
+      <th>Pagamento Total</th>
+    </tr>
+  </thead>
 
-<%= form_tag :action => :show do %>
-	<p><h1>Buscar Cliente por CNPJ</h1></p>
-	<%= text_field_tag :comprador_cnpj,nil, :onkeyup =>"mascara(this,cnpj);",:maxlength=>"18", :size => '30' %>
-	<%= submit_tag "Buscar por CNPJ" %>
-<% end -%>
-<br>
-<br>
-<br>
+  <tbody>
+    <% @empresas.each do |empresa| %>
+    <tr>
+      <td> <%= empresa.nome %> </td>
+      <td> <%= empresa.cnpj %> </td>
+      <td> <%= retorna_valor_monetario(saldo_devedor_do_cliente(empresa)) %> </td>
+      <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(empresa)) %> </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<%= form_tag :action => :show do %>
-    <p><h1>Buscar Parceiro por CPF</h1></p>
-    <%= text_field_tag :parceiro_cpf,nil, :onkeyup =>"mascara(this,cpf);",:maxlength=>"14", :size => '30' %>
-    <%= submit_tag "Buscar Parceiro por CPF" %>
-<% end -%>
+<p><h1> Parceiros </h1></p>
+<table  id="parceiros_financeiro" class="display"  style = "float: left;">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>CPF/CNPJ</th>
+      <th>Débito Total</th>
+      <th>Pagamento Total</th>
+    </tr>
+  </thead>
 
-<%= form_tag :action => :show do %>
-    <p><h1>Buscar Parceiro por CNPJ</h1></p>
-    <%= text_field_tag :parceiro_cnpj,nil, :onkeyup =>"mascara(this,cnpj);",:maxlength=>"18", :size => '30' %>
-    <%= submit_tag "Buscar Parceiro por CNPJ" %>
-<% end -%>
-
-
-
+  <tbody>
+    <% @parceiros.each do |parceiro| %>
+    <tr>
+      <td> <%= parceiro.nome %> </td>
+      <td> <%= parceiro.cpf ? parceiro.cpf : parceiro.cnpj  %> </td>
+      <td> <%= retorna_valor_monetario(saldo_devedor_do_cliente(parceiro)) %> </td>
+      <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(parceiro)) %> </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
