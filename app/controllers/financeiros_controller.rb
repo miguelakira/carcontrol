@@ -9,8 +9,8 @@ class FinanceirosController < ApplicationController
   end
 
   def show
-
-   	if params[:comprador_cnpj]
+   	raise params
+    if params[:comprador_cnpj]
   		@empresa = Empresa.find_by_cnpj(params[:comprador_cnpj])
   		unless @empresa.nil?
         @cars_cnpj = @empresa.cars

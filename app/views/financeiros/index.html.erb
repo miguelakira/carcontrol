@@ -12,7 +12,7 @@
   <tbody>
     <% @compradores.each do |comprador| %>
     <tr>
-      <td> <%= comprador.nome %> </td>
+      <td> <%= link_to comprador.nome, financeiro_path(comprador.cpf) %> </td>
       <td> <%= comprador.cpf %> </td>
       <td> <%= retorna_valor_monetario(saldo_devedor_do_cliente(comprador)) %> </td>
       <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(comprador)) %> </td>
