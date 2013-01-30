@@ -27,7 +27,7 @@ class ParceirosController < ApplicationController
   	    format.html { render action: "new" }
   	    format.json { render json: @parceiro.errors, status: :unprocessable_entity }
   	  end
-	  end	
+	  end
   end
 
   def show
@@ -43,8 +43,8 @@ class ParceirosController < ApplicationController
       @valor_pago = 0
       unless @cars_ativos.nil?
         @cars_ativos.each do |car|
-          @valor_total += car.pagamento.valor_total unless car.pagamento.valor_total.nil?
-          @valor_pago += car.pagamento.valor_pago unless car.pagamento.valor_pago.nil?
+          @valor_total += car.debito.valor_total unless car.debito.valor_total.nil?
+          @valor_pago += car.debito.valor_pago unless car.debito.valor_pago.nil?
         end
       end
     @saldo_devedor = @valor_total - @valor_pago
@@ -55,22 +55,22 @@ class ParceirosController < ApplicationController
       format.json { render json: @parceiro }
     end
   end
-  
+
 
   def edit
     @parceiro = Parceiro.find(params[:id])
-    
+
   end
 
   def update
     @parceiro = Parceiro.find(params[:id])
     @parceiro.carros = @parceiro.cars.count
-    
+
     respond_to do |format|
       if @parceiro.update_attributes(params[:parceiro])
         # se chegou no destino, todos os carros saem da parceiro e o status deles muda para descarregados.
         contagem_carros(Parceiro.all)
-        ativar_status_de_carro_com_terceiros(@parceiro.id, @parceiro.class.to_s) 
+        ativar_status_de_carro_com_terceiros(@parceiro.id, @parceiro.class.to_s)
 
         if params[:editar_localizacao]
           flash[:notice] = 'Dados atualizados com sucesso!'

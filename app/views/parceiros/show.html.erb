@@ -9,7 +9,7 @@
 <table id="mytable" cellspacing="0" summary="Detalhes da parceiro" style="width:450px">
   <caption><h5>Detalhes da parceiro</h5></caption>
   <tr>
-    <% if !@parceiro.cpf.empty? %>
+    <% if !@parceiro.cpf.nil? %>
       <th style="width:150px">CPF do Parceiro</th>
       <td style='border-top: 1px solid #C1DAD7;'><%= @parceiro.cpf %> </td>
     <% else %>

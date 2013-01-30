@@ -40,9 +40,9 @@
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_balsa) %></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_despacho) %></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.desconto) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_pago) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_pago) %></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.saldo_devedor) %></td>
-    <td class = "<%= @row_class %>"><%= car.pagamento.data_pagamento.strftime("%d/%m/%Y") unless car.pagamento.data_pagamento.nil? %></td>
+    <td class = "<%= @row_class %>"><%= car.debito.data_pagamento.strftime("%d/%m/%Y") unless car.debito.data_pagamento.nil? %></td>
   </tr>
 <% end -%>
 </table>
