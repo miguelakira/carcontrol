@@ -63,6 +63,9 @@ class CompradoresController < ApplicationController
   def update
     @comprador = Comprador.find(params[:id])
 
+    # ajusta o valor da string do valor do pagamento pra bigdecimal
+    converter_string_to_bigdecimal(@comprador, params[:comprador][:pagamentos_attributes]['0'])
+
     respond_to do |format|
       if @comprador.update_attributes(params[:comprador])
         format.html { redirect_to @comprador, notice: 'Comprador was successfully updated.' }

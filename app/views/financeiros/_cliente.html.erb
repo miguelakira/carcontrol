@@ -2,20 +2,50 @@
 <p><h5>Transações Financeiras do Cliente</h5> </p>
 
 
-<br /> 
+<br />
 <div class = "floating_box" style = "min-height:100px">
 <fieldset style = "width:320px; float:left; margin-top: 20px;" >
   <b>Nome: <%= @cliente.nome %> </b> <br />
   <b>CPF: <%= @cliente.cpf %> </b><br>
-  <%= "Telefone: #{@cliente.telefone}" unless @cliente.telefone.empty? %> 
+  <%= "Telefone: #{@cliente.telefone}" unless @cliente.telefone.empty? %>
 </fieldset>
 
-<table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">  
+
+
+<%= form_for(@cliente) do |f| %>
+<%= f.fields_for :pagamentos, @cliente.pagamentos.build do |builder| %>
+  <div class="field">
+      Total Pago pelo Cliente: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@cliente)) %></b>
+  </div>
+  <div class="field">
+    Dívida Restante do Cliente: <b><span style = "color: red;"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@cliente)) %></span></b>
+  </div>
+
+  <div class="field">
+    <%= builder.label :forma_pagamento, "Forma do Novo Pagamento" %><br />
+    &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :valor, "Valor do Novo Pagamento" %><br />
+      R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
+    </div>
+
+<% end %>
+<%= f.submit "Salvar" %>
+<% end %>
+
+</fieldset>
+
+
+
+
+<table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">
   <tr>
     <th style="width:180px" class = 'begin'>Carros Ativos do Cliente</th>
     <td style='border-top: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
   </tr>
-  
+
   <tr>
     <th class = 'begin'>Carros Finalizados</th>
     <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
@@ -23,12 +53,12 @@
 
 </table>
 
-<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">  
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
   <tr>
     <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
     <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
   </tr>
-  
+
   <tr>
     <th class = 'begin'>Valor Total Pago</th>
     <td><%= retorna_valor_monetario(@valor_pago) %>  </td>

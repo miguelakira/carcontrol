@@ -1,6 +1,7 @@
 #encoding: UTF-8
 class Comprador < ActiveRecord::Base
-  attr_accessible :celular, :email, :rg, :cpf, :telefone, :nome, :car_id, :observacao, :parente, :telefone_parente
+  attr_accessible :celular, :email, :rg, :cpf, :telefone, :nome, :car_id, :observacao, :parente, :telefone_parente,
+          :pagamentos_attributes
   has_many :cars
   has_many :contatos
   has_many :pagamentos

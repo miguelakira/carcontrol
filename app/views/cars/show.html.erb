@@ -199,7 +199,11 @@
     <th>Valor do <br> Pagamento</th>
     <th>Forma de <br> Pagamento</th>
   </tr>
-  <% @car.pagamentos.each do |pagamento| %>
+  <% klass = [@car.parceiro.class.name, @car.comprador.class.name, @car.empresa.class.name].reject {|a| a == "NilClass"}  %>
+  <% owner_id = [@car.parceiro_id, @car.comprador_id, @car.empresa_id].reject {|a| a.nil?} %>
+  <% owner = (eval("#{klass[0]}.find(#{owner_id[0]})")) %>
+
+  <% owner.pagamentos.each do |pagamento| %>
 
 <tr>
     <td><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>

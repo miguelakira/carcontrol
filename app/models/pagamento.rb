@@ -5,14 +5,19 @@ class Pagamento < ActiveRecord::Base
   belongs_to :cegonha
   belongs_to :cliente
   belongs_to :empresa
+  belongs_to :parceiro
 
   before_save :verifica_comprador_ou_empresa_id
 
   def verifica_comprador_ou_empresa_id
-    if self.car.comprador_id
-      self.comprador_id = self.car.comprador_id
-    elsif self.car.empresa_id
-      self.empresa_id = self.car.empresa_id
+    if self.car
+      if self.car.comprador_id
+        self.comprador_id = self.car.comprador_id
+      elsif self.car.empresa_id
+        self.empresa_id = self.car.empresa_id
+      elsif self.car.parceiro_id
+        self.parceiro_id = self.car.parceiro_id
+      end
     end
   end
 

@@ -9,7 +9,6 @@ class FinanceirosController < ApplicationController
   end
 
   def show
-   	raise params
     if params[:comprador_cnpj]
   		@empresa = Empresa.find_by_cnpj(params[:comprador_cnpj])
   		unless @empresa.nil?
@@ -22,6 +21,8 @@ class FinanceirosController < ApplicationController
       end
   	elsif params[:comprador_cpf]
   		@cliente = Comprador.find_by_cpf(params[:comprador_cpf])
+      @cliente.pagamentos.build
+
   		unless @cliente.nil?
         @cars_cpf = @cliente.cars
 
