@@ -2,13 +2,13 @@
 
 <%= form_tag :action => :show do %>
 	<p><h1>Buscar Cliente por CPF</h1></p>
-	<%= text_field_tag :comprador_cpf,nil, :onkeyup =>"mascara(this,cpf);",:maxlength=>"14", :size => '30' %> 
+	<%= text_field_tag :comprador_cpf,nil, :onkeyup =>"mascara(this,cpf);",:maxlength=>"14", :size => '30' %>
 	<%= submit_tag "Buscar por CPF" %>
 <% end -%>
 
 <%= form_tag :action => :show do %>
 	<p><h1>Buscar Cliente por CNPJ</h1></p>
-	<%= text_field_tag :comprador_cnpj,nil, :onkeyup =>"mascara(this,cnpj);",:maxlength=>"18", :size => '30' %> 
+	<%= text_field_tag :comprador_cnpj,nil, :onkeyup =>"mascara(this,cnpj);",:maxlength=>"18", :size => '30' %>
 	<%= submit_tag "Buscar por CNPJ" %>
 <% end -%>
 <br>
@@ -17,13 +17,13 @@
 
 <%= form_tag :action => :show do %>
     <p><h1>Buscar Parceiro por CPF</h1></p>
-    <%= text_field_tag :parceiro_cpf,nil, :onkeyup =>"mascara(this,cpf);",:maxlength=>"14", :size => '30' %> 
+    <%= text_field_tag :parceiro_cpf,nil, :onkeyup =>"mascara(this,cpf);",:maxlength=>"14", :size => '30' %>
     <%= submit_tag "Buscar Parceiro por CPF" %>
 <% end -%>
 
 <%= form_tag :action => :show do %>
     <p><h1>Buscar Parceiro por CNPJ</h1></p>
-    <%= text_field_tag :parceiro_cnpj,nil, :onkeyup =>"mascara(this,cnpj);",:maxlength=>"18", :size => '30' %> 
+    <%= text_field_tag :parceiro_cnpj,nil, :onkeyup =>"mascara(this,cnpj);",:maxlength=>"18", :size => '30' %>
     <%= submit_tag "Buscar Parceiro por CNPJ" %>
 <% end -%>
 
