@@ -84,6 +84,8 @@ class Car < ActiveRecord::Base
     end
   end
 
+
+
 =begin
   define_index do
   	indexes placa

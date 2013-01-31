@@ -40,4 +40,9 @@ class Empresa < ActiveRecord::Base
     self.contato = self.contato.titleize
   end
 
+  def carros_ativos
+    self.cars.reject {|c| c.ativo == 0}.count
+  end
+
+
 end

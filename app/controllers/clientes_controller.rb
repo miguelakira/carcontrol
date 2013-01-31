@@ -38,8 +38,8 @@ class ClientesController < ApplicationController
 
       unless @cars_ativos.nil?
         @cars_ativos.each do |car|
-          @valor_total += car.pagamento.valor_total unless car.pagamento.valor_total.nil?
-          @valor_pago += car.pagamento.valor_pago unless car.pagamento.valor_pago.nil?
+          @valor_total += car.debito.valor_total unless car.debito.valor_total.nil?
+          @valor_pago += car.debito.valor_pago unless car.debito.valor_pago.nil?
         end
       end
     @saldo_devedor = @valor_total - @valor_pago

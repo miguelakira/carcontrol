@@ -77,9 +77,9 @@
     <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
     <td class = "<%= @row_class %>"><%= StatusVeiculo::estados[car.ativo] %></td>
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.valor_total) %>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_total) %>
     </td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.pagamento.saldo_devedor) %></td>
+    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.saldo_devedor) %></td>
     <!--<td class = "<%#= @row_class %>"><%#= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td> -->
 
 

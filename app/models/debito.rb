@@ -39,7 +39,7 @@ class Debito < ActiveRecord::Base
       self.taxa_balsa= 0
     end
 
-    self.saldo_devedor = self.valor_frete + self.taxa_despacho + self.taxa_plataforma - self.desconto - self.valor_pago + self.taxa_plataforma_destino + self.taxa_plataforma_origem + self.taxa_balsa
+    self.saldo_devedor = self.valor_frete + self.taxa_despacho + self.taxa_plataforma - self.desconto + self.taxa_plataforma_destino + self.taxa_plataforma_origem + self.taxa_balsa
 
   end
 

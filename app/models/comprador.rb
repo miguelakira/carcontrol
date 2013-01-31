@@ -32,7 +32,7 @@ class Comprador < ActiveRecord::Base
   end
 
   def devedor?
-    devedor = cars.select { |c| c.pagamento.saldo_devedor > 0}
+    devedor = cars.select { |c| c.debito.saldo_devedor > 0}
     devedor.empty? ? false : true
   end
 
@@ -54,5 +54,10 @@ class Comprador < ActiveRecord::Base
   def capitaliza_nome
     self.nome = self.nome.titleize unless self.nome.nil?
   end
+
+  def carros_ativos
+    self.cars.reject {|c| c.ativo == 0}.count
+  end
+
 end
 

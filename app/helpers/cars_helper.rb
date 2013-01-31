@@ -24,7 +24,6 @@ module CarsHelper
     saldo_devedor = 0
     cliente.cars.each do |car|
       saldo_devedor += car.debito.valor_total
-
     end
     return saldo_devedor - soma_dos_pagamentos_efetuados(cliente)
   end

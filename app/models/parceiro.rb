@@ -20,4 +20,9 @@ class Parceiro < ActiveRecord::Base
     end
   end
 
+  def carros_ativos
+    self.cars.reject {|c| c.ativo == 0}.count
+  end
+
+
 end
