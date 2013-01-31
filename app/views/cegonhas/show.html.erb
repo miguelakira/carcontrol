@@ -91,48 +91,48 @@
 
 <tr>
     <th style="width:180px">Valor do Frete</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@cegonha.pagamento.valor_frete) %></td>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@cegonha.debito.valor_frete) %></td>
   </tr>
 
 <tr>
     <th>Taxa de Redespacho</th>
-    <td><%= retorna_valor_monetario(@cegonha.pagamento.taxa_despacho) %></td>
+    <td><%= retorna_valor_monetario(@cegonha.debito.taxa_despacho) %></td>
 </tr>
 
 <tr>
     <th>Taxa de Plataforma</th>
-    <td><%= retorna_valor_monetario(@cegonha.pagamento.taxa_plataforma) %></td>
+    <td><%= retorna_valor_monetario(@cegonha.debito.taxa_plataforma) %></td>
 </tr>
 
 <tr>
     <th>Desconto</th>
 
-    <td>-<%= retorna_valor_monetario(@cegonha.pagamento.desconto) %></td>
+    <td>-<%= retorna_valor_monetario(@cegonha.debito.desconto) %></td>
 </tr>
 
 <tr>
     <th>Valor Pago</th>
-    <td>-<%= retorna_valor_monetario(@cegonha.pagamento.valor_pago) %></td>
+    <td>-<%= retorna_valor_monetario(@cegonha.debito.valor_pago) %></td>
 </tr>
 
 <tr>
     <th>Valor Total</th>
-    <td><%= retorna_valor_monetario(@cegonha.pagamento.valor_total) %></td>
+    <td><%= retorna_valor_monetario(@cegonha.debito.valor_total) %></td>
 </tr>
 
   <tr>
     <th>Saldo Devedor</th>
-    <td><%= retorna_valor_monetario(@cegonha.pagamento.saldo_devedor) %></td>
+    <td><%= retorna_valor_monetario(@cegonha.debito.saldo_devedor) %></td>
   </tr>
 
   <tr>
     <th>Forma de Pagamento</th>
-    <td><%= @cegonha.pagamento.forma_pagamento %></td>
+    <td><%= @cegonha.debito.forma_pagamento %></td>
   </tr>
 
   <tr>
     <th style = "height:50px">Observação</th>
-    <td><%= @cegonha.pagamento.observacao %></td>
+    <td><%= @cegonha.debito.observacao %></td>
   </tr>
 
 
@@ -146,8 +146,8 @@
   frete_total = 0
   saldo_devedor = 0
   carros_na_rota.each do |hist|
-    frete_total = hist.car.pagamento.valor_total + frete_total unless hist.car.nil?
-    saldo_devedor =  hist.car.pagamento.saldo_devedor + saldo_devedor unless hist.car.nil?
+    frete_total = hist.car.debito.valor_total + frete_total unless hist.car.nil?
+    saldo_devedor =  hist.car.debito.saldo_devedor + saldo_devedor unless hist.car.nil?
 end %>
 
   <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">

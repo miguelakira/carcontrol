@@ -86,6 +86,7 @@
      saldo_devedor = 0
      @parceiro.historicos.each do |hist|
         frete_total = hist.car.debito.valor_total + frete_total
+
         saldo_devedor =  hist.car.debito.saldo_devedor + saldo_devedor
     end%>
   <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">

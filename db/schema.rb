@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130130191616) do
+ActiveRecord::Schema.define(:version => 20130131192047) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -102,20 +102,20 @@ ActiveRecord::Schema.define(:version => 20130130191616) do
     t.integer  "car_id"
     t.datetime "data_pagamento"
     t.string   "forma_pagamento"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
-    t.decimal  "valor_total",             :precision => 8, :scale => 2
+    t.datetime "created_at",                                                             :null => false
+    t.datetime "updated_at",                                                             :null => false
+    t.decimal  "valor_total",             :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "valor_pago",              :precision => 8, :scale => 2
     t.string   "observacao"
-    t.decimal  "taxa_despacho",           :precision => 8, :scale => 2
-    t.decimal  "taxa_plataforma",         :precision => 8, :scale => 2
-    t.decimal  "desconto",                :precision => 8, :scale => 2
-    t.decimal  "saldo_devedor",           :precision => 8, :scale => 2
+    t.decimal  "taxa_despacho",           :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "taxa_plataforma",         :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "desconto",                :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "saldo_devedor",           :precision => 8, :scale => 2, :default => 0.0
     t.integer  "cegonha_id"
     t.decimal  "valor_frete",             :precision => 8, :scale => 2
-    t.decimal  "taxa_plataforma_origem",  :precision => 8, :scale => 2
-    t.decimal  "taxa_plataforma_destino", :precision => 8, :scale => 2
-    t.decimal  "taxa_balsa",              :precision => 8, :scale => 2
+    t.decimal  "taxa_plataforma_origem",  :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "taxa_plataforma_destino", :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "taxa_balsa",              :precision => 8, :scale => 2, :default => 0.0
     t.integer  "comprador_id"
     t.integer  "empresa_id"
   end

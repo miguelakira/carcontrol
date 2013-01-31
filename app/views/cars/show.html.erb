@@ -195,18 +195,16 @@
   <caption><h5>Detalhes dos Pagamentos</h5></caption>
 
   <tr>
-    <th width=50px>Data do <br>Pagamento</th>
+    <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
     <th>Valor do <br> Pagamento</th>
     <th>Forma de <br> Pagamento</th>
   </tr>
-  <% klass = [@car.parceiro.class.name, @car.comprador.class.name, @car.empresa.class.name].reject {|a| a == "NilClass"}  %>
-  <% owner_id = [@car.parceiro_id, @car.comprador_id, @car.empresa_id].reject {|a| a.nil?} %>
-  <% owner = (eval("#{klass[0]}.find(#{owner_id[0]})")) %>
 
+  <% @car.comprador ? owner = @car.comprador : owner = @car.empresa %>
   <% owner.pagamentos.each do |pagamento| %>
 
 <tr>
-    <td><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
+    <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
     <td><%= retorna_valor_monetario(pagamento.valor) %></td>
     <td><%= pagamento.forma_pagamento %></td>
   </tr>
@@ -216,16 +214,16 @@
 <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
 
 <tr>
-    <th width=100px>Total Pago</th>
+    <th width=100px style='border-left: 1px solid #C1DAD7;'>Total Pago</th>
     <% if @car.comprador %>
-    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></td>
+    <td style='border-top: 1px solid #C1DAD7;'><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></td>
     <% elsif @car.empresa %>
     <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></td>
     <% end %>
 </tr>
 
   <tr>
-    <th>Saldo Devedor</th>
+    <th style='border-left: 1px solid #C1DAD7;'>Saldo Devedor</th>
     <% if @car.comprador %>
     <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></td>
     <% elsif @car.empresa %>
