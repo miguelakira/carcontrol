@@ -208,6 +208,7 @@
     <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
     <th>Valor do <br> Pagamento</th>
     <th>Forma de <br> Pagamento</th>
+    <th>Saldo </th>
   </tr>
 
   <% @car.comprador ? owner = @car.comprador : owner = @car.empresa %>
@@ -217,6 +218,7 @@
     <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
     <td><%= retorna_valor_monetario(pagamento.valor) %></td>
     <td><%= pagamento.forma_pagamento %></td>
+    <td><%= retorna_valor_monetario(pagamento.saldo) %></td>
   </tr>
 <% end %>
 </table>

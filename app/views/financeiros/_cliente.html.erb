@@ -36,13 +36,33 @@
       R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
     </div>
 
+    <div class="field">
+    <%= builder.label :data_pagamento, "Data do Novo Pagamento" %><br />
+    <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today   %>
+  </div>
+
 <% end %>
 <%= f.submit "Salvar" %>
 <% end %>
 </fieldset>
 
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
+  <tr>
+    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(frete_total_do_cliente(@cliente)) %> </td>
+  </tr>
 
+  <tr>
+    <th class = 'begin'>Valor Total Pago</th>
+    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@cliente)) %></td>
+  </tr>
 
+  <tr>
+    <th class = 'begin'>Saldo Devedor Total</th>
+    <td><b><span class = 'red'><%= retorna_valor_monetario(saldo_devedor_do_cliente(@cliente)) %></span></b></td>
+  </tr>
+
+</table>
 
 <table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">
   <tr>
@@ -57,23 +77,7 @@
 
 </table>
 
-<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
-  <tr>
-    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
-  </tr>
 
-  <tr>
-    <th class = 'begin'>Valor Total Pago</th>
-    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
-  </tr>
-
-  <tr>
-    <th class = 'begin'>Saldo Devedor Total</th>
-    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
-  </tr>
-
-</table>
 </div>
 <div style="clear: both;"></div>
 
