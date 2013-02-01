@@ -214,7 +214,6 @@ class CarsController < ApplicationController
   # PUT /cars/1
   # PUT /cars/1.json
   def update
-
     @car = Car.find(params[:id])
 
     @car.ativo = params[:ativo] unless params[:ativo].nil?

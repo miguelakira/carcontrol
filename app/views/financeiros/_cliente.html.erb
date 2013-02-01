@@ -17,18 +17,18 @@
 <div class = "floating_box" style = "min-height:100px">
 <fieldset style = "width:320px; float:left; margin-top: 20px;"  >
   <legend><h5 style="font-size: 1.3em">Novo Pagamento</h5></legend>
-<%= form_for(@cliente) do |f| %>
-<%= f.fields_for :pagamentos, @cliente.pagamentos.build do |builder| %>
-  <div class="field">
+    <%= form_for(@cliente) do |f| %>
+    <%= f.fields_for :pagamentos, @cliente.pagamentos.build do |builder| %>
+    <div class="field">
       Total Pago pelo Cliente: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@cliente)) %></b>
-  </div>
-  <div class="field">
-    Dívida Restante do Cliente: <b><span class = 'red'><%= retorna_valor_monetario(saldo_devedor_do_cliente(@cliente)) %></span></b>
-  </div>
+    </div>
+    <div class="field">
+      Dívida Restante do Cliente: <b><span class = 'red'><%= retorna_valor_monetario(saldo_devedor_do_cliente(@cliente)) %></span></b>
+    </div>
 
-  <div class="field">
-    <%= builder.label :forma_pagamento, "Forma do Novo Pagamento" %><br />
-    &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
+    <div class="field">
+      <%= builder.label :forma_pagamento, "Forma do Novo Pagamento" %><br />
+      &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
     </div>
 
     <div class="field">
@@ -37,11 +37,10 @@
     </div>
 
     <div class="field">
-    <%= builder.label :data_pagamento, "Data do Novo Pagamento" %><br />
-    <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today   %>
-  </div>
-
-<% end %>
+      <%= builder.label :data_pagamento, "Data do Novo Pagamento" %><br />
+      <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today   %>
+    </div>
+  <% end %>
 <%= f.submit "Salvar" %>
 <% end %>
 </fieldset>
