@@ -271,15 +271,15 @@
     <% if @car.comprador %>
       Total Pago pelo Cliente: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></b>
     <% elsif @car.empresa %>
-      Total Pago pelo Cliente: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></b>
+      Total Pago pela Empresa: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></b>
     <% end %>
   </div>
 
   <div class="field">
     <% if @car.comprador %>
-    Dívida Restante do Cliente: <b><span style = "color: red;"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></span></b>
+    Dívida Restante do Cliente: <b><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></span></b>
     <% elsif @car.empresa %>
-    Dívida Restante do Cliente: <b><span style = "color: red;"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></span></b>
+    Dívida Restante da Empresa: <b><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></span></b>
     <% end %>
   </div>
 

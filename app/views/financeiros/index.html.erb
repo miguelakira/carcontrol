@@ -67,7 +67,7 @@
       <td style='border-left: 1px solid #C1DAD7;'> <%= parceiro.cpf ? link_to(parceiro.nome, financeiro_path(:show, :parceiro_cpf => parceiro.cpf)) : link_to(parceiro.nome, financeiro_path(:show, :parceiro_cnpj => parceiro.cnpj)) %> </td>
       <td> <%= parceiro.cpf ? parceiro.cpf : parceiro.cnpj  %> </td>
       <td> <%= retorna_valor_monetario(saldo_devedor_do_cliente(parceiro)) %> </td>
-      <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(parceiro)) %> </td>
+      <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(parceiro))  %> </td>
       <td> <%= "#{pluralize(parceiro.carros_ativos, 'carro')}" %> </td>
 
     </tr>

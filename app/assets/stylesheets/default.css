@@ -1366,3 +1366,6 @@ table.pretty thead th.sorting {
   background: #66A9BD url('/assets/sort_both.png') no-repeat right center;
 }
 
+.red {
+  color: red;
+}

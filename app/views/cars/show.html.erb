@@ -31,6 +31,16 @@
     <td><%= @car.comprador.email %></td>
   </tr>
   <tr>
+    <th>Nome de Parente <br> ou Conhecido</th>
+    <td><%= @car.comprador.parente %></td>
+  </tr>
+  <tr>
+    <th>Telefone de Parente <br> ou Conhecido</th>
+    <td><%= @car.comprador.telefone_parente %></td>
+  </tr>
+
+
+  <tr>
     <th style = "height:50px">Observação</th>
     <td><%= @car.comprador.observacao %></td>
   </tr>
@@ -225,9 +235,9 @@
   <tr>
     <th style='border-left: 1px solid #C1DAD7;'>Saldo Devedor</th>
     <% if @car.comprador %>
-    <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></td>
+    <td><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></span></td>
     <% elsif @car.empresa %>
-    <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></td>
+    <td><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></span></td>
     <% end %>
   </tr>
 
