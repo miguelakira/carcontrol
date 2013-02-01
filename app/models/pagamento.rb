@@ -8,6 +8,7 @@ class Pagamento < ActiveRecord::Base
   belongs_to :parceiro
 
   before_save :verifica_comprador_ou_empresa_id
+  after_save :apaga_se_valor_for_nulo_ou_zero
 
   def verifica_comprador_ou_empresa_id
     if self.car
@@ -18,6 +19,12 @@ class Pagamento < ActiveRecord::Base
       elsif self.car.parceiro_id
         self.parceiro_id = self.car.parceiro_id
       end
+    end
+  end
+
+  def apaga_se_valor_for_nulo_ou_zero
+    if self.valor.nil? || self.valor == 0
+      self.destroy
     end
   end
 

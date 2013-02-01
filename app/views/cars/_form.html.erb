@@ -295,7 +295,7 @@
 
   <div class="field">
     <%= builder.label :data_pagamento, "Data do Pagamento" %><br />
-    <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :include_blank => true  %>
+    <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today   %>
   </div>
 
 <% end %>
@@ -398,7 +398,7 @@ function fillFieldsEmpresa(oSel)
 <fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
 
 
-<!-- dados do pagamento -->
+<!-- dados do débito -->
   <div class="field">
     <%= f.label :status_pagamento_id %><br />
     <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>

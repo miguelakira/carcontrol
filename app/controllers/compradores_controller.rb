@@ -62,13 +62,12 @@ class CompradoresController < ApplicationController
   # PUT /compradores/1.json
   def update
     @comprador = Comprador.find(params[:id])
-
     # ajusta o valor da string do valor do pagamento pra bigdecimal
-    converter_string_to_bigdecimal(@comprador, params[:comprador][:pagamentos_attributes]['0'])
+    # converter_string_to_bigdecimal(@comprador, params[:comprador][:pagamentos_attributes]['0'])
 
     respond_to do |format|
       if @comprador.update_attributes(params[:comprador])
-        format.html { redirect_to @comprador, notice: 'Comprador was successfully updated.' }
+        format.html { redirect_to compradores_url, notice: 'Dados do Cliente atualizados com sucesso.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

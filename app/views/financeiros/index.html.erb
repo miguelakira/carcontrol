@@ -13,7 +13,7 @@
   <tbody>
     <% @compradores.each do |comprador| %>
     <tr>
-      <td> <%= link_to comprador.nome, financeiro_path(:show, :comprador_cpf => comprador.cpf) %> </td>
+      <td style='border-left: 1px solid #C1DAD7;'> <%= link_to comprador.nome, financeiro_path(:show, :comprador_cpf => comprador.cpf) %> </td>
       <td> <%= comprador.cpf %> </td>
       <td> <%= retorna_valor_monetario(saldo_devedor_do_cliente(comprador)) %> </td>
       <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(comprador)) %> </td>
@@ -38,7 +38,7 @@
   <tbody>
     <% @empresas.each do |empresa| %>
     <tr>
-      <td> <%= link_to empresa.nome, financeiro_path(:show, :comprador_cnpj => empresa.cnpj) %></td>
+      <td style='border-left: 1px solid #C1DAD7;'> <%= link_to empresa.nome, financeiro_path(:show, :comprador_cnpj => empresa.cnpj) %></td>
       <td> <%= empresa.cnpj %> </td>
       <td> <%= retorna_valor_monetario(saldo_devedor_do_cliente(empresa)) %> </td>
       <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(empresa)) %> </td>
@@ -64,7 +64,7 @@
   <tbody>
     <% @parceiros.each do |parceiro| %>
     <tr>
-      <td> <%= parceiro.cpf ? link_to(parceiro.nome, financeiro_path(:show, :parceiro_cpf => parceiro.cpf)) : link_to(parceiro.nome, financeiro_path(:show, :parceiro_cnpj => parceiro.cnpj)) %> </td>
+      <td style='border-left: 1px solid #C1DAD7;'> <%= parceiro.cpf ? link_to(parceiro.nome, financeiro_path(:show, :parceiro_cpf => parceiro.cpf)) : link_to(parceiro.nome, financeiro_path(:show, :parceiro_cnpj => parceiro.cnpj)) %> </td>
       <td> <%= parceiro.cpf ? parceiro.cpf : parceiro.cnpj  %> </td>
       <td> <%= retorna_valor_monetario(saldo_devedor_do_cliente(parceiro)) %> </td>
       <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(parceiro)) %> </td>
