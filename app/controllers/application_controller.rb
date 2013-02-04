@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
 
   def contagem_carros(terceiros)
     # faz update da contagem de carros da cegonha ou dos parceiros
-
     terceiros.each do |terceiro|
       terceiro.carros = terceiro.cars.count
       terceiro.save
@@ -126,6 +125,7 @@ def atualiza_historico_parceiro(car)
 
   def converter_string_to_bigdecimal(veiculo, valores)
 
+    #raise valores.keys.remove
 
 if valores[:valor_frete]
 
