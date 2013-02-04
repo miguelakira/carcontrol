@@ -1,4 +1,43 @@
+
+<% if saldo_devedor_do_cliente(cliente) >= 0
+    @row_class  = 'blue'
+  else
+    @row_class = 'red'
+  end
+    %>
+
+<br />
 <div class = "floating_box" style = "min-height:100px">
+<fieldset style = "width:300px; float:left; margin-top: 20px;" >
+
+  <b>Nome: <%= cliente.nome %> </b> <br />
+  <% if defined?(cliente.cpf) %>
+    <b>CPF: <%= cliente.cpf %> </b><br>
+  <% else %>
+    <b>CNPJ: <%= cliente.cnpj %> </b><br>
+    <b>Contato na Empresa: <%= @empresa.contato unless @empresa.contato.empty? %> </b> <br />
+  <% end %>
+  <%= "Telefone: #{cliente.telefone}" unless cliente.telefone.empty? %>
+</fieldset>
+
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
+  <tr>
+    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(frete_total_do_cliente(cliente)) %> </td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Valor Total Pago</th>
+    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(cliente)) %></td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Saldo Devedor Total</th>
+
+    <td><b><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(cliente)) %></span></b></td>
+  </tr>
+
+</table>
 
 <table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">
   <tr>
@@ -12,25 +51,9 @@
   </tr>
 
 </table>
-
-<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
-  <tr>
-    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
-  </tr>
-
-  <tr>
-    <th class = 'begin'>Valor Total Pago</th>
-    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
-  </tr>
-
-  <tr>
-    <th class = 'begin'>Saldo Devedor Total</th>
-    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
-  </tr>
-
-</table>
 </div>
+<div style="clear: both;"></div>
+
 <div style="clear: both;"></div>
 
 
@@ -47,8 +70,7 @@
         <th>Destino</th>
         <th>Status do Veículo</th>
         <th>Status do <br>Pagamento</th>
-        <th>Saldo Total </th>
-        <th>Saldo Devedor </th>
+        <th>Frete Total </th>
   </tr>
 </thead>
 <tbody><% x = 0%>
@@ -69,21 +91,15 @@
     <td class = "<%= @row_class %>"><%= car.data_compra.strftime("%d/%m/%Y") %></td>
     <td class = "<%= @row_class %>"><%= car.placa %></td>
     <td class = "<%= @row_class %>"><%= car.modelo.titleize %></td>
-<td class = "<%= @row_class %>"><%= car.data_prevista.strftime("%d/%m/%Y") unless car.data_prevista.nil? %></td>
+    <td class = "<%= @row_class %>"><%= car.data_prevista.strftime("%d/%m/%Y") unless car.data_prevista.nil? %></td>
     <td class = "<%= @row_class %>"><% unless car.localizacao.nil? %><%= car.localizacao %>  <% end -%></td>
 
     <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
     <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
-
-
     <td class = "<%= @row_class %>"><%= StatusVeiculo::estados[car.ativo] %></td>
-
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
-
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_total) %>
     </td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.saldo_devedor) %></td>
-    <!--<td class = "<%#= @row_class %>"><%#= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td> -->
 
 
   </tr>
