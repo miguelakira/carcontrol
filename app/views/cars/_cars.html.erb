@@ -2,12 +2,18 @@
 
     <div id = "sidebar">
     <% if @car %>
+    <% if saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa) >= 0
+        row_class = 'blue'
+      else
+        row_class = 'red'
+      end
+    %>
 
          <dl>
             <h3><%= @car.placa %></h3>
 
             <dt>Saldo Devedor do Cliente</dt>
-            <dd><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa)) %></dd>
+            <dd class = '<%= row_class %>'><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa)) %></dd>
             <dt>Localização Atual:</dt>
             <dd><% unless @car.localizacao.nil? %><%= @car.localizacao %><% end -%>
             </dd>
@@ -51,7 +57,7 @@
       <th>Cliente</th>
       <th>Telefone</th>
       <th width = "130px"> CPF/CNPJ</th>
-      <th>Saldo <br>Total</th>
+      <th title = "Custo total do frete - desconto">Frete <br>Total</th>
       <th>Cegonha </th>
       <th>Parceiro </th>
     </tr>

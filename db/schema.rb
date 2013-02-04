@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130201183111) do
+ActiveRecord::Schema.define(:version => 20130204173907) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(:version => 20130201183111) do
     t.decimal  "valor",           :precision => 8, :scale => 2
     t.integer  "car_id"
     t.integer  "parceiro_id"
-    t.decimal  "saldo",           :precision => 8, :scale => 2
+    t.decimal  "saldo",           :precision => 8, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

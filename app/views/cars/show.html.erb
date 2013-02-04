@@ -214,14 +214,24 @@
   <% @car.comprador ? owner = @car.comprador : owner = @car.empresa %>
   <% owner.pagamentos.each do |pagamento| %>
 
+    <% if pagamento.saldo >= 0
+        row_class  = 'blue'
+      else
+        row_class = 'red'
+      end
+        %>
 <tr>
     <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
     <td><%= retorna_valor_monetario(pagamento.valor) %></td>
     <td><%= pagamento.forma_pagamento %></td>
-    <td><%= retorna_valor_monetario(pagamento.saldo) %></td>
+    <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
   </tr>
 <% end %>
 </table>
+
+
+
+
 
 <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
 
@@ -237,9 +247,21 @@
   <tr>
     <th style='border-left: 1px solid #C1DAD7;'>Saldo Devedor</th>
     <% if @car.comprador %>
-    <td><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></span></td>
+    <% if saldo_devedor_do_cliente(@car.comprador) >= 0
+        @row_class  = 'blue'
+      else
+        @row_class = 'red'
+      end
+    %>
+    <td><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></span></td>
     <% elsif @car.empresa %>
-    <td><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></span></td>
+    <% if saldo_devedor_do_cliente(@car.empresa) >= 0
+        @row_class  = 'blue'
+      else
+        @row_class = 'red'
+      end
+    %>
+    <td><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></span></td>
     <% end %>
   </tr>
 

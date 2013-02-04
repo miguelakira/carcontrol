@@ -66,7 +66,16 @@ class CompradoresController < ApplicationController
 
     if params[:comprador][:pagamentos_attributes]
       converter_string_to_bigdecimal(@comprador, params[:comprador][:pagamentos_attributes]['0'])
-    end
+      respond_to do |format|
+        if @comprador.update_attributes(params[:comprador])
+          format.html { redirect_to financeiros_url, notice: 'Dados do Cliente atualizados com sucesso.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @comprador.errors, status: :unprocessable_entity }
+        end
+      end
+    else
 
     respond_to do |format|
       if @comprador.update_attributes(params[:comprador])
@@ -77,6 +86,7 @@ class CompradoresController < ApplicationController
         format.json { render json: @comprador.errors, status: :unprocessable_entity }
       end
     end
+  end
   end
 
   # DELETE /compradores/1
