@@ -45,7 +45,7 @@ def verifica_saldo
         saldo_devedor = car.debito.valor_total - car.debito.desconto
       end
     end
-    self.saldo = saldo_devedor - (saldo_credor + self.valor)
+    self.saldo = (saldo_credor + self.valor) - saldo_devedor
   end
 end
 

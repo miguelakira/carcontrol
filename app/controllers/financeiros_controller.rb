@@ -21,7 +21,7 @@ class FinanceirosController < ApplicationController
       end
   	elsif params[:comprador_cpf]
   		@cliente = Comprador.find_by_cpf(params[:comprador_cpf])
-      @cliente.pagamentos.build
+      #@cliente.pagamentos.build
 
   		unless @cliente.nil?
         @cars_cpf = @cliente.cars
