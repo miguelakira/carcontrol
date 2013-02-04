@@ -1,4 +1,32 @@
+
+<% if saldo_devedor_do_cliente(cliente) >= 0
+    @row_class  = 'blue'
+  else
+    @row_class = 'red'
+  end
+    %>
+
+<br />
 <div class = "floating_box" style = "min-height:100px">
+
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
+  <tr>
+    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(frete_total_do_cliente(cliente)) %> </td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Valor Total Pago</th>
+    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(cliente)) %></td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Saldo Devedor Total</th>
+
+    <td><b><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(cliente)) %></span></b></td>
+  </tr>
+
+</table>
 
 <table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">
   <tr>
@@ -12,27 +40,8 @@
   </tr>
 
 </table>
-
-<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
-  <tr>
-    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
-  </tr>
-
-  <tr>
-    <th class = 'begin'>Valor Total Pago</th>
-    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
-  </tr>
-
-  <tr>
-    <th class = 'begin'>Saldo Devedor Total</th>
-    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
-  </tr>
-
-</table>
 </div>
 <div style="clear: both;"></div>
-
 
 
 <table id="clientes" class="display">
@@ -48,8 +57,7 @@
         <th>Destino</th>
         <th>Status do Veículo</th>
         <th>Status do <br>Pagamento</th>
-        <th>Saldo Total </th>
-        <th>Saldo Devedor </th>
+        <th>Frete Total </th>
   </tr>
 </thead>
 <tbody><% x = 0%>
@@ -79,8 +87,6 @@
     <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
     <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_total) %>
     </td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.saldo_devedor) %></td>
-    <!--<td class = "<%#= @row_class %>"><%#= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td> -->
 
 
   </tr>

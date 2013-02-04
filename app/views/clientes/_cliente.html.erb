@@ -8,17 +8,6 @@
 
 <br />
 <div class = "floating_box" style = "min-height:100px">
-<fieldset style = "width:300px; float:left; margin-top: 20px;" >
-
-  <b>Nome: <%= cliente.nome %> </b> <br />
-  <% if defined?(cliente.cpf) %>
-    <b>CPF: <%= cliente.cpf %> </b><br>
-  <% else %>
-    <b>CNPJ: <%= cliente.cnpj %> </b><br>
-    <b>Contato na Empresa: <%= @empresa.contato unless @empresa.contato.empty? %> </b> <br />
-  <% end %>
-  <%= "Telefone: #{cliente.telefone}" unless cliente.telefone.empty? %>
-</fieldset>
 
 <table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
   <tr>
@@ -52,8 +41,6 @@
 
 </table>
 </div>
-<div style="clear: both;"></div>
-
 <div style="clear: both;"></div>
 
 
