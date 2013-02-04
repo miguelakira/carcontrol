@@ -1,0 +1,116 @@
+
+<% if saldo_devedor_do_cliente(cliente) >= 0
+    @row_class  = 'blue'
+  else
+    @row_class = 'red'
+  end
+    %>
+
+<br />
+<div class = "floating_box" style = "min-height:100px">
+<fieldset style = "width:300px; float:left; margin-top: 20px;" >
+
+  <b>Nome: <%= cliente.nome %> </b> <br />
+  <% if defined?(cliente.cpf) %>
+    <b>CPF: <%= cliente.cpf %> </b><br>
+  <% else %>
+    <b>CNPJ: <%= cliente.cnpj %> </b><br>
+    <b>Contato na Empresa: <%= @empresa.contato unless @empresa.contato.empty? %> </b> <br />
+  <% end %>
+  <%= "Telefone: #{cliente.telefone}" unless cliente.telefone.empty? %>
+</fieldset>
+
+<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
+  <tr>
+    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(frete_total_do_cliente(cliente)) %> </td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Valor Total Pago</th>
+    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(cliente)) %></td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Saldo Devedor Total</th>
+
+    <td><b><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(cliente)) %></span></b></td>
+  </tr>
+
+</table>
+
+<table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">
+  <tr>
+    <th style="width:180px" class = 'begin'>Carros Ativos do Cliente</th>
+    <td style='border-top: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
+  </tr>
+
+  <tr>
+    <th class = 'begin'>Carros Finalizados</th>
+    <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
+  </tr>
+
+</table>
+</div>
+<div style="clear: both;"></div>
+<div class = "floating_box" style = "min-height:100px">
+
+<fieldset style = "width:320px; float:left; "  >
+  <legend><h5 style="font-size: 1.3em">Novo Pagamento</h5></legend>
+    <%= form_for(cliente) do |f| %>
+    <%= f.fields_for :pagamentos, cliente.pagamentos.build do |builder| %>
+
+    <div class="field">
+      <%= builder.label :data_pagamento, "Data do Novo Pagamento" %><br />
+      <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today   %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :forma_pagamento, "Forma do Novo Pagamento" %><br />
+      &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :valor, "Valor do Novo Pagamento" %><br />
+      R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
+    </div>
+
+  <% end %>
+<%= f.submit "Salvar" %>
+<% end %>
+</fieldset>
+
+<fieldset style = "width:480px; float:left; margin-left:20px;"  >
+<legend><h5 style="font-size: 1.3em">Detalhes dos Pagamentos Efetuados</h5></legend>
+
+<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; float:left; margin-left:20px;">
+
+  <tr>
+    <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
+    <th>Valor do <br> Pagamento</th>
+    <th>Forma de <br> Pagamento</th>
+    <th>Saldo </th>
+  </tr>
+
+  <% cliente.pagamentos.each do |pagamento| %>
+<% unless pagamento.id.nil? %>
+<% if pagamento.saldo >= 0
+    row_class  = 'blue'
+  else
+    row_class = 'red'
+  end
+    %>
+
+
+<tr>
+    <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
+    <td><%= retorna_valor_monetario(pagamento.valor) %></td>
+    <td><%= pagamento.forma_pagamento %></td>
+    <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
+  </tr>
+<% end %>
+<% end %>
+</table>
+</fieldset>
+</div>
+<div style="clear: both;"></div>
