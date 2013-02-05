@@ -9,11 +9,11 @@ class Cegonha < ActiveRecord::Base
   belongs_to :motorista
   accepts_nested_attributes_for :empresa, :motorista, :pagamento
 
-  validates	:placa, 
+  validates	:placa,
   			:presence => { :message => "- A placa não pode ser deixada em branco!" },
   			:uniqueness => { :message => "- A placa já existe no banco de dados. É preciso que seja única." }
 
-  before_save :check_rotas
+  before_save :check_rotas, :salva_nome_do_motorista
 
   def check_rotas
     if rotas.nil?
@@ -21,26 +21,18 @@ class Cegonha < ActiveRecord::Base
     end
 
   end
-  
+
+  def salva_nome_do_motorista
+    if self.nome.nil?
+      self.nome = self.motorista.nome
+    end
+  end
+
   def get_nome_rota
     if cidade_origem and estado_origem and estado_destino and cidade_destino
       nome_rota = "#{Cidade.find(cidade_origem).text}, #{Estado.find(estado_origem).sigla} -  #{Cidade.find(cidade_destino).text}, #{Estado.find(estado_destino).sigla}"
       return nome_rota
     end
   end
-
-  def self.search(search, search_by)
-    if search
-      if search_by == 'placa'
-        where{{placa.like => "%#{search}%"}}
-      elsif search_by == 'motorista'
-        search = search.split(" ")
-        joins(:motorista).where{(motorista.firstname.like_any search) | (motorista.middlename.like_any search) | (motorista.lastname.like_any search)}
-      end
-    else
-      scoped
-    end
-  end
-
 
 end

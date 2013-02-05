@@ -4,17 +4,11 @@ class CegonhasController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @cegonhas = Cegonha.search(params[:search], params[:search_by])
+    @cegonhas = Cegonha.all
     @cegonhas.empty? ? @mensagem = "Nenhuma Cegonha Cadastrada" : @mensagem = "Cegonhas Cadastradas"
     @cars = Car.all
 
-    @cegonhas.each do |ceg|
-      if ceg.nome.nil?
-        ceg.nome = ceg.motorista.nome
-        ceg.save
-      end
 
-    end
 
     respond_to do |format|
       format.html # index.html.erb

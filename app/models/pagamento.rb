@@ -3,7 +3,7 @@ class Pagamento < ActiveRecord::Base
       :comprador_id, :empresa_id
   belongs_to :car
   belongs_to :cegonha
-  belongs_to :cliente
+  belongs_to :comprador
   belongs_to :empresa
   belongs_to :parceiro
 
@@ -23,33 +23,7 @@ class Pagamento < ActiveRecord::Base
   end
 
   def verifica_saldo
-    # unless self.valor.nil? || self.valor == 0
-    #   saldo_devedor = 0
-    #   saldo_credor = 0
-    #   if self.comprador_id
-    #     pagamentos = Comprador.find(self.comprador_id).pagamentos
-    #     pagamentos.each do |pagamento|
-    #       saldo_credor += pagamento.valor
-    #     end
-    #     cars = Comprador.find(self.comprador_id).cars
-    #     cars.each do |car|
-    #       saldo_devedor = car.debito.valor_total - car.debito.desconto
-    #     end
-    #   elsif self.empresa_id
-    #     pagamentos = Empresa.find(self.empresa_id).pagamentos
-    #     pagamentos.each do |pagamento|
-    #       saldo_credor += pagamento.valor
-    #     end
-    #     cars = Empresa.find(self.Empresa_id).cars
-    #     cars.each do |car|
-    #       saldo_devedor = car.debito.valor_total - car.debito.desconto
-    #     end
-    #   end
-    #   self.saldo = (saldo_credor + self.valor) - saldo_devedor
-    # end
-
     self.car.comprador ? cliente = self.comprador : cliente = self.empresa
-
     self.saldo = ApplicationController.helpers.saldo_devedor_do_cliente(cliente) + self.valor unless self.valor.nil?
   end
 

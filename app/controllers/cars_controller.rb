@@ -5,26 +5,11 @@ class CarsController < ApplicationController
 
   def index
 
-
+    # para o sidebar
     @car = Car.find(params[:car_id]) if params[:car_id]
-    if params[:sort] == 'status_pagamento'
-      ativo = [1,2,3,4,5,6]
-      @cars = sort_by_status_pagamento(ativo)
-    elsif params[:sort] == 'saldo_total'
-      ativo = [1,2,3,4,5,6]
-      @cars = sort_by_saldo_total(ativo)
-    else
+    @cars = Car.order(:data_compra).where(:ativo => [1,2,3,4,5,6])
+    @cars.empty? ? @mensagem = "Nenhum Cliente Cadastrado" : @mensagem = "Clientes Ativos"
 
-      if params[:search].nil?
-        @cars = Car.order(:data_compra).where(:ativo => [1,2,3,4,5,6])
-        @cars.empty? ? @mensagem = "Nenhum Cliente Cadastrado" : @mensagem = "Clientes Ativos"
-      else
-        @cars = Car.search(params[:search], params[:search_by]).order(:data_compra).where(:ativo => [1,2,3,4,5,6,0])
-        @cars.empty? ? @mensagem = "Nenhum Resultado Encontrado na Busca" : @mensagem = "Resultado da Busca"
-
-      end
-
-    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @cars }
@@ -32,52 +17,16 @@ class CarsController < ApplicationController
   end
 
   def inativos
+    # para o sidebar
+    @car = Car.find(params[:car_id]) if params[:car_id]
 
-   # para o sidebar
-   @car = Car.find(params[:car_id]) if params[:car_id]
-
-    # apagar o loop abaixo
-    if params[:sort] == "saldo_total"
-      ativo = false
-      @cars = sort_by_saldo_total(ativo)
-    elsif params[:sort] == 'status_pagamento'
-      ativo = false
-      @cars = sort_by_status_pagamento(ativo)
-    else
-
-    @cars = Car.search(params[:search], params[:search_by]).order(:data_compra).where(:ativo => 0)
+    @cars = Car.order(:data_compra).where(:ativo => 0)
     @cars.empty? ? @mensagem = "Nenhum Cliente Finalizado" : @mensagem = "Clientes Finalizados"
-    #@cars = Car.search(params[:search], params[:search_by]).order(:updated_at).paginate(:per_page => 30, :page => params[:page]).where(:ativo => 0)
 
-    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @cars }
     end
-  end
-
-  def sort_by_saldo_total(ativo)
-
-    Car.paginate(
-      :per_page => 30,
-      :page => params[:page],
-      :joins => :debito,
-      :order => "valor_total #{sort_direction}",
-      :conditions => {:ativo => ativo})
-  end
-
-  def sort_by_status_pagamento(ativo)
-    Car.paginate(
-      :per_page => 30,
-      :page => params[:page],
-      :joins => :status_pagamento,
-      :order => "value #{sort_direction}",
-      :conditions => {:ativo => ativo})
-  end
-
-  def update_city_menu
-    @estado = Estado.find(params[:search][:estado])
-    render :layout => false
   end
 
   # GET /cars/1
@@ -311,22 +260,6 @@ class CarsController < ApplicationController
     file = kit.to_file(filename)
     send_file filename, :type => 'application/pdf'
     File.delete(filename)
-  end
-
-  private
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
-  def sort_column
-    Car.column_names.include?(params[:sort]) ? params[:sort] : "data_compra, id"
-  end
-
-  def for_sectionid
-      @subsections = Cidade.find( :all, :conditions => [" estado_id = ?", params[:id]]  ).sort_by{ |k| k['nome'] }
-      respond_to do |format|
-        format.json  { render :json => @subsections }
-      end
   end
 
 
