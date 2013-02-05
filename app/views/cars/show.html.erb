@@ -200,40 +200,8 @@
 
 
 </table>
-
-<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
+<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-bottom:10px;">
   <caption><h5>Detalhes dos Pagamentos</h5></caption>
-
-  <tr>
-    <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
-    <th>Valor do <br> Pagamento</th>
-    <th>Forma de <br> Pagamento</th>
-    <th>Saldo </th>
-  </tr>
-
-  <% @car.comprador ? owner = @car.comprador : owner = @car.empresa %>
-  <% owner.pagamentos.each do |pagamento| %>
-
-    <% if pagamento.saldo >= 0
-        row_class  = 'blue'
-      else
-        row_class = 'red'
-      end
-        %>
-<tr>
-    <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
-    <td><%= retorna_valor_monetario(pagamento.valor) %></td>
-    <td><%= pagamento.forma_pagamento %></td>
-    <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
-  </tr>
-<% end %>
-</table>
-
-
-
-
-
-<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
 
 <tr>
     <th width=100px style='border-left: 1px solid #C1DAD7;'>Total Pago</th>
@@ -266,6 +234,39 @@
   </tr>
 
 </table>
+
+<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-top:0px;" >
+
+  <tr>
+    <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
+    <th>Valor do <br> Pagamento</th>
+    <th>Forma de <br> Pagamento</th>
+    <th>Saldo </th>
+  </tr>
+
+  <% @car.comprador ? owner = @car.comprador : owner = @car.empresa %>
+  <% owner.pagamentos.each do |pagamento| %>
+
+    <% if pagamento.saldo >= 0
+        row_class  = 'blue'
+      else
+        row_class = 'red'
+      end
+        %>
+<tr>
+    <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
+    <td><%= retorna_valor_monetario(pagamento.valor) %></td>
+    <td><%= pagamento.forma_pagamento %></td>
+    <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
+  </tr>
+<% end %>
+</table>
+
+
+
+
+
+
 </div>
 <div style="clear: both;"></div>
 

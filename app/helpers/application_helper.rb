@@ -1,36 +1,5 @@
 module ApplicationHelper
 
-def sortable(column, title = nil)
-    title ||= column.titleize
-    css_class = column == sort_column ? "current #{sort_direction}" : nil
-
-    if column == 'nome'
-      if sort_direction == 'asc'
-        direction = 'desc'
-      end
-    elsif column == 'status_pagamento'
-      if sort_direction == 'asc'
-        direction = 'desc'
-      end
-    elsif column == 'origem'
-      if sort_direction == 'asc'
-        direction = 'desc'
-      end
-    elsif column == 'destino'
-      if sort_direction == 'asc'
-        direction = 'desc'
-      end
-    elsif column == 'saldo_total'
-      if sort_direction == 'asc'
-        direction = 'desc'
-      end
-    else
-    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-
-    end
-    link_to title, :sort => column, :direction => direction
-  end
-
 # def button(name,url)
   def button(*args)
     if args.size == 2
@@ -47,13 +16,6 @@ def sortable(column, title = nil)
     end
   end
 
- def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
-  def sort_column
-    Car.column_names.include?(params[:sort]) ? params[:sort] : "placa"
-  end
 
   def retorna_valor_monetario(valor)
     number_to_currency(valor, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")

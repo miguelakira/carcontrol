@@ -4,7 +4,7 @@ module CegonhasHelper
     unless cegonha.carros.nil?
       if cegonha.carros > 0
         frase = "#{pluralize(cegonha.carros, 'carro')}: "
-      end 
+      end
       cegonha.cars.each do |car|
       frase = frase + link_to(car.placa, car)
       cegonha.cars.last == car ? frase = frase + '.' :frase = frase + ', '
@@ -12,7 +12,4 @@ module CegonhasHelper
     end
     return frase
   end
-
-
-  
 end
