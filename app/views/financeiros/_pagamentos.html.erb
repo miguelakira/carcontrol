@@ -79,12 +79,15 @@
 <%= f.submit "Salvar" %>
 <% end %>
 </fieldset>
+<div style="clear: both;"></div>
 
-<fieldset style = "width:480px; float:left; margin-left:20px;"  >
+<br>
+<br>
+
 <legend><h5 style="font-size: 1.3em">Detalhes dos Pagamentos Efetuados</h5></legend>
 
-<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; float:left; margin-left:20px;">
-
+<table  id="cars" class="display"  style = "float: left;">
+  <thead>
   <tr>
     <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
     <th>Valor do <br> Pagamento</th>
@@ -92,14 +95,15 @@
     <th>Saldo </th>
   </tr>
 
-  <% cliente.pagamentos.each do |pagamento| %>
-<% unless pagamento.id.nil? %>
-<% if pagamento.saldo >= 0
-    row_class  = 'blue'
-  else
-    row_class = 'red'
-  end
-    %>
+<tbody>
+<% cliente.pagamentos.each do |pagamento| %>
+  <% unless pagamento.id.nil? %>
+    <% if pagamento.saldo >= 0
+      row_class  = 'blue'
+    else
+      row_class = 'red'
+    end
+      %>
 
 
 <tr>
@@ -110,7 +114,6 @@
   </tr>
 <% end %>
 <% end %>
+</tbody>
 </table>
-</fieldset>
-</div>
 <div style="clear: both;"></div>

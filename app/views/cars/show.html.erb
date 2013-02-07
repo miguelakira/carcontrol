@@ -203,34 +203,24 @@
 <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-bottom:10px;">
   <caption><h5>Detalhes dos Pagamentos</h5></caption>
 
-<tr>
+  <tr>
     <th width=100px style='border-left: 1px solid #C1DAD7;'>Total Pago</th>
     <% if @car.comprador %>
     <td style='border-top: 1px solid #C1DAD7;'><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></td>
     <% elsif @car.empresa %>
     <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></td>
     <% end %>
-</tr>
+  </tr>
 
   <tr>
     <th style='border-left: 1px solid #C1DAD7;'>Saldo Devedor</th>
-    <% if @car.comprador %>
-    <% if saldo_devedor_do_cliente(@car.comprador) >= 0
+    <% if saldo_devedor_do_cliente(@owner) >= 0
         @row_class  = 'blue'
       else
         @row_class = 'red'
       end
     %>
-    <td><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></span></td>
-    <% elsif @car.empresa %>
-    <% if saldo_devedor_do_cliente(@car.empresa) >= 0
-        @row_class  = 'blue'
-      else
-        @row_class = 'red'
-      end
-    %>
-    <td><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></span></td>
-    <% end %>
+    <td><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@owner)) %></span></td>
   </tr>
 
 </table>
@@ -244,8 +234,7 @@
     <th>Saldo </th>
   </tr>
 
-  <% @car.comprador ? owner = @car.comprador : owner = @car.empresa %>
-  <% owner.pagamentos.each do |pagamento| %>
+  <% @owner.pagamentos.each do |pagamento| %>
 
     <% if pagamento.saldo >= 0
         row_class  = 'blue'
@@ -253,18 +242,16 @@
         row_class = 'red'
       end
         %>
+<% if pagamento.data_pagamento.month == Time.now.month && pagamento.data_pagamento.year == Time.now.year  %>
 <tr>
     <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
     <td><%= retorna_valor_monetario(pagamento.valor) %></td>
     <td><%= pagamento.forma_pagamento %></td>
     <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
   </tr>
+  <% end %>
 <% end %>
 </table>
-
-
-
-
 
 
 </div>

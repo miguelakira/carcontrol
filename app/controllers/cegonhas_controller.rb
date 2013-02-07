@@ -33,8 +33,6 @@ class CegonhasController < ApplicationController
     @editar_localizacao = params[:editar_localizacao]
     @cegonha.build_motorista
 
-
-
     if params[:cegonha_contratada]
       @cegonha.build_empresa
       @cegonha.build_debito
@@ -138,8 +136,6 @@ class CegonhasController < ApplicationController
       @cegonha.cidade_origem = cidade_origem
       @cegonha.cidade_destino = cidade_destino
 
-
-
       # altera a localizacao de todos os carros que estao na cegonha
       unless @cegonha.cars.nil?
         @cegonha.cars.each do |car|
@@ -149,7 +145,6 @@ class CegonhasController < ApplicationController
           car.save
         end
       end
-
       @cegonha.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
     end
 

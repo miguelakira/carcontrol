@@ -34,6 +34,8 @@ class CarsController < ApplicationController
   def show
     @car = Car.find(params[:id])
 
+    @car.comprador ? @owner = @car.comprador : @owner = @car.empresa
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @car }
@@ -70,9 +72,8 @@ class CarsController < ApplicationController
     @car = Car.new(params[:car])
     @status_pagamentos = StatusPagamento.all
     @car.ativo = params[:ativo] unless params[:ativo].nil?
-    # vai ajustar o formato para converter pra BigDecimal
 
-    #raise params[:car][:pagamentos_attributes].inspect
+    # vai ajustar o formato para converter pra BigDecimal
     converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
     converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0'])
     if @car.comprador
