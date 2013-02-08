@@ -2,34 +2,33 @@
 <p><%= " #{@cars.count} carros chegaram no destino (#{@cegonha.localizacao})" %></p>
 <p>Selecione quais carros irão ficar em logística aguardando para embarcar em outra cegonha ou parceiro</p>
 
-
 <div class = "floating_box" style = "min-height:100px">
-<table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">  
-  <tr>
-    <th style="width:180px" class = 'begin'>Cegonha</th>
-    <td style='border-top: 1px solid #C1DAD7;'><%= @cegonha.placa %> </td>
-  </tr>
-  
-  <tr>
-    <th class = 'begin'>Localização Atual</th>
-    <td><%= @cegonha.localizacao %> </td>
-  </tr>
+  <table id="mytable" cellspacing="0" summary="Carros" style="width:300px;">
+    <tr>
+      <th style="width:180px" class = 'begin'>Cegonha</th>
+      <td style='border-top: 1px solid #C1DAD7;'><%= @cegonha.placa %> </td>
+    </tr>
 
-</table>
+    <tr>
+      <th class = 'begin'>Localização Atual</th>
+      <td><%= @cegonha.localizacao %> </td>
+    </tr>
+  </table>
 </div>
+
 <div style="clear: both;"></div>
 
-
 <%= form_tag(logistica_save_cegonha_path(@cegonha), :method => 'post') do %>
+
 <dl>
-    <% @cars.each do |car| %>
-        <dt>Carro <%= car.placa %>
-        <%= check_box_tag 'finalizados[]', car.id %> Logística?</dt>
-        <%= hidden_field_tag 'cars[]', car.id %>
-    <% end %>
+  <% @cars.each do |car| %>
+    <dt>Carro <%= car.placa %>
+    <%= check_box_tag 'finalizados[]', car.id %> Logística?</dt>
+    <%= hidden_field_tag 'cars[]', car.id %>
+  <% end %>
 </dl>
-    <%= submit_tag "Salvar" %>
+  <%= submit_tag "Salvar" %>
 <% end -%>
 
 
-  
+

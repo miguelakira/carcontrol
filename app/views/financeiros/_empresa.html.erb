@@ -4,42 +4,40 @@
 
 
 <div class = "floating_box" style = "min-height:100px">
-<fieldset style = "width:300px; float:left; margin-top: 20px;" >
-  <b>Nome da Empresa: <%= @empresa.nome %> </b> <br />
-  <b>Contato na Empresa: <%= @empresa.contato unless @empresa.contato.empty? %> </b> <br />
-  <b>CNPJ: <%= @empresa.cnpj %> </b><br>
-  <%= "Telefone: #{@empresa.telefone}" unless @empresa.telefone.empty? %>
-</fieldset>
-<table id="mytable" cellspacing="0" summary="Carros" style="width:300px">
-  <tr>
-    <th style="width:180px" class = 'begin'>Carros Ativos da Empresa</th>
-    <td style='border-top: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
-  </tr>
+  <fieldset style = "width:300px; float:left; margin-top: 20px;" >
+    <b>Nome da Empresa: <%= @empresa.nome %> </b> <br />
+    <b>Contato na Empresa: <%= @empresa.contato unless @empresa.contato.empty? %> </b> <br />
+    <b>CNPJ: <%= @empresa.cnpj %> </b><br>
+    <%= "Telefone: #{@empresa.telefone}" unless @empresa.telefone.empty? %>
+  </fieldset>
+  <table id="mytable" cellspacing="0" summary="Carros" style="width:300px">
+    <tr>
+      <th style="width:180px" class = 'begin'>Carros Ativos da Empresa</th>
+      <td style='border-top: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
+    </tr>
 
-  <tr>
-    <th class = 'begin' >Carros Finalizados</th>
-    <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
-  </tr>
+    <tr>
+      <th class = 'begin' >Carros Finalizados</th>
+      <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
+    </tr>
+  </table>
 
-</table>
+  <table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
+    <tr>
+      <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
+      <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
+    </tr>
 
-<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
-  <tr>
-    <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
-  </tr>
+    <tr>
+      <th class = 'begin'>Valor Total Pago</th>
+      <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
+    </tr>
 
-  <tr>
-    <th class = 'begin'>Valor Total Pago</th>
-    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
-  </tr>
-
-  <tr>
-    <th class = 'begin'>Saldo Devedor Total</th>
-    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
-  </tr>
-
-</table>
+    <tr>
+      <th class = 'begin'>Saldo Devedor Total</th>
+      <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
+    </tr>
+  </table>
 </div>
 <div style="clear: both;"></div>
 

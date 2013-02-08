@@ -1,16 +1,14 @@
  <p><h1><%= @mensagem %> </h1></p>
 <% if !@cars.empty? %>
-
-<%= render 'cars' %>
-
-<br />
+  <%= render 'cars' %>
+  <br />
 <% end -%>
 <br />
 <div style="clear: both;"></div>
 <div class = 'floating_box'>
   <br>
-<% if current_user.admin? %>
-  <%= button('Novo Cliente (Pessoa Física)', new_car_path)%>
-  <%= button('Novo Cliente (Pessoa Jurídica)', :action => :new, :pessoa_juridica => true)%>
-<% end -%>
+  <% if current_user.admin? %>
+    <%= button('Novo Cliente (Pessoa Física)', new_car_path)%>
+    <%= button('Novo Cliente (Pessoa Jurídica)', :action => :new, :pessoa_juridica => true)%>
+  <% end -%>
 </div>

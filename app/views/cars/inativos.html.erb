@@ -1,11 +1,11 @@
 <p><h1><%= @mensagem %> </h1></p>
 <% if !@cars.empty? %>
 
-<%= render 'cars' %>
+  <%= render 'cars' %>
 
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
 
-<br />
+  <br />
 <% end -%>
 

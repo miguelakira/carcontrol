@@ -1,71 +1,64 @@
-
- <p><h1><%= @mensagem_compradores %> </h1></p>
+<p><h1><%= @mensagem_compradores %> </h1></p>
 
 <table  id="compradores" class="display"  style = "float: left;">
-<thead>
-  <tr>
-    <th width = 100px>Nome</th>
-    <th width = 100px>Email</th>
-    <th width = 50px>RG</th>
-    <th width = 70px>CPF</th>
-    <th width = 80px>Telefone</th>
-    <th width = 100px>Carros <br>Ativos</th>
-    <th width = 80px>Valor Pago <br> Total</th>
-    <th width = 80px>Saldo <br> Devedor</th>
-
-  </tr>
-</thead>
-<tbody>
-<% @compradores.each do |comprador| %>
-
-  <tr>
-    <td style='border-left: 1px solid #C1DAD7;'><%= link_to comprador.nome, comprador  %> <%= link_to image_tag("edit_local.png", :border=>0),edit_comprador_path(comprador, :comprador => comprador.id), :class => 'right'  %></td>
-    <td><%= comprador.email %></td>
-    <td width = 50px><%= comprador.rg %></td>
-    <td><%= comprador.cpf %></td>
-    <td><%= comprador.telefone %></td>
-    <td width = 100px><%= carros_ativos_do_cliente(comprador).html_safe %></td>
-    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(comprador)) %>  </td>
-    <td>-<%= retorna_valor_monetario(saldo_devedor_do_cliente(comprador)) %></td>
-
-  </tr>
-<% end %>
-</tbody>
+  <thead>
+    <tr>
+      <th width = 100px>Nome</th>
+      <th width = 100px>Email</th>
+      <th width = 50px>RG</th>
+      <th width = 70px>CPF</th>
+      <th width = 80px>Telefone</th>
+      <th width = 100px>Carros <br>Ativos</th>
+      <th width = 80px>Valor Pago <br> Total</th>
+      <th width = 80px>Saldo <br> Devedor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @compradores.each do |comprador| %>
+      <tr>
+        <td style='border-left: 1px solid #C1DAD7;'><%= link_to comprador.nome, comprador  %> <%= link_to image_tag("edit_local.png", :border=>0),edit_comprador_path(comprador, :comprador => comprador.id), :class => 'right'  %></td>
+        <td><%= comprador.email %></td>
+        <td width = 50px><%= comprador.rg %></td>
+        <td><%= comprador.cpf %></td>
+        <td><%= comprador.telefone %></td>
+        <td width = 100px><%= carros_ativos_do_cliente(comprador).html_safe %></td>
+        <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(comprador)) %>  </td>
+        <td>-<%= retorna_valor_monetario(saldo_devedor_do_cliente(comprador)) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
 <br />
 <p><h1> <%= @mensagem_empresas %> </h1></p>
 <table  id="empresas" class="display"  style = "float: left;">
-    <thead>
+  <thead>
+    <tr>
+      <th width = 150px>Nome</th>
+      <th width = 100px>Email</th>
+      <th width = 80px>CNPJ</th>
+      <th width = 80px>Telefone</th>
+      <th width = 80px>Celular</th>
+      <th width = 100px>Carros <br>Ativos</th>
+      <th width = 80px>Valor Pago <br> Total</th>
+      <th width = 80px>Saldo <br> Devedor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @empresas.each do |empresa| %>
 
-  <tr>
-    <th width = 150px>Nome</th>
-    <th width = 100px>Email</th>
-    <th width = 80px>CNPJ</th>
-    <th width = 80px>Telefone</th>
-    <th width = 80px>Celular</th>
-    <th width = 100px>Carros <br>Ativos</th>
-    <th width = 80px>Valor Pago <br> Total</th>
-    <th width = 80px>Saldo <br> Devedor</th>
-
-  </tr>
-</thead>
-<tbody>
-<% @empresas.each do |empresa| %>
-
-  <tr>
-    <td style='border-left: 1px solid #C1DAD7;'><%= link_to empresa.nome, empresa %> <%= link_to image_tag("edit_local.png", :border=>0), edit_empresa_path(empresa, :empresa => empresa.id), :class => 'right'  %></td>
-    <td><%= empresa.email %></td>
-    <td><%= empresa.cnpj %></td>
-    <td><%= empresa.telefone %></td>
-    <td><%= empresa.celular %></td>
-    <td><%= carros_ativos_do_cliente(empresa).html_safe %></td>
-    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(empresa)) %> </td>
-    <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(empresa)) %></td>
-
-  </tr>
-<% end %>
-</tbody>
+      <tr>
+        <td style='border-left: 1px solid #C1DAD7;'><%= link_to empresa.nome, empresa %> <%= link_to image_tag("edit_local.png", :border=>0), edit_empresa_path(empresa, :empresa => empresa.id), :class => 'right'  %></td>
+        <td><%= empresa.email %></td>
+        <td><%= empresa.cnpj %></td>
+        <td><%= empresa.telefone %></td>
+        <td><%= empresa.celular %></td>
+        <td><%= carros_ativos_do_cliente(empresa).html_safe %></td>
+        <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(empresa)) %> </td>
+        <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(empresa)) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
 <br />

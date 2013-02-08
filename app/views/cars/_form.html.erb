@@ -175,15 +175,6 @@
        </fieldset>
       <!-- fim dos dados do veículo -->
 
-
-
-
-
-<!-- PAREI de organizar AQUI AQUI AQUI -->
-
-
-
-
       <!-- dados do debito -->
       <br />
       <fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
@@ -233,52 +224,51 @@
         <% end -%>
       </fieldset>
 
-    <fieldset><legend><h5 style="font-size: 1.3em">Dados dos Pagamentos</h5></legend>
-      <%= f.fields_for :pagamentos, @car.pagamentos.build do |builder| %>
-        <div class="field">
-          <% if @car.comprador %>
-            Total Pago pelo Cliente: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></b>
-          <% elsif @car.empresa %>
-            Total Pago pela Empresa: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></b>
-          <% end %>
-        </div>
+      <fieldset><legend><h5 style="font-size: 1.3em">Dados dos Pagamentos</h5></legend>
+        <%= f.fields_for :pagamentos, @car.pagamentos.build do |builder| %>
+          <div class="field">
+            <% if @car.comprador %>
+              Total Pago pelo Cliente: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></b>
+            <% elsif @car.empresa %>
+              Total Pago pela Empresa: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></b>
+            <% end %>
+          </div>
 
-        <div class="field">
-          <% if @car.comprador %>
-          Dívida Restante do Cliente: <b><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></span></b>
-          <% elsif @car.empresa %>
-          Dívida Restante da Empresa: <b><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></span></b>
-          <% end %>
-        </div>
+          <div class="field">
+            <% if @car.comprador %>
+            Dívida Restante do Cliente: <b><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></span></b>
+            <% elsif @car.empresa %>
+            Dívida Restante da Empresa: <b><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></span></b>
+            <% end %>
+          </div>
 
-        <div class="field">
-          <%= builder.label :forma_pagamento, "Forma do Novo Pagamento" %><br />
-          &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
-        </div>
+          <div class="field">
+            <%= builder.label :forma_pagamento, "Forma do Novo Pagamento" %><br />
+            &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
+          </div>
 
-        <div class="field">
-          <%= builder.label :valor, "Valor do Novo Pagamento" %><br />
-          R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
-        </div>
+          <div class="field">
+            <%= builder.label :valor, "Valor do Novo Pagamento" %><br />
+            R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
+          </div>
 
-        <div class="field">
-          <%= builder.label :data_pagamento, "Data do Pagamento" %><br />
-          <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today   %>
-        </div>
-      <% end %>
-    </fieldset>
-
-    <br />
-    <div class="actions">
-      <% if @car.id.nil? %>
-        <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
-      <% else -%>
-        <%= f.submit "Salvar" %>
-        <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
-      <% end -%>
-    </div>
+          <div class="field">
+            <%= builder.label :data_pagamento, "Data do Pagamento" %><br />
+            <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today   %>
+          </div>
+        <% end %>
+      </fieldset>
+      <br />
+      <div class="actions">
+        <% if @car.id.nil? %>
+          <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
+        <% else -%>
+          <%= f.submit "Salvar" %>
+          <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
+        <% end -%>
+      </div>
+    <% end -%>
   <% end -%>
-<% end -%>
 <% end -%>
 
 
@@ -357,69 +347,52 @@ function fillFieldsEmpresa(oSel)
 }
 </script>
 
-
 <% else %>
+  <%= form_for(@car, :url => {:id => @car.id, :action => "limited_edit"},:method => :put) do |f| %>
+    <fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
+      <!-- dados do débito -->
+      <div class="field">
+        <%= f.label :status_pagamento_id %><br />
+        <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
+      </div>
+      <br />
+      <%= f.fields_for :debito do |builder| %>
+        <div class="field">
+          <%= builder.label :forma_pagamento, "Forma de Pagamento" %><br />
+          &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
+        </div>
 
-<%= form_for(@car, :url => {:id => @car.id, :action => "limited_edit"},:method => :put) do |f| %>
-<%#= form_for(:project, :url => {:action => 'destroy', :id => @project.id }, :method => :delete) do |f| %>
+        <div class="field">
+          <%= builder.label :valor_frete, "Valor do Frete" %><br />
+          R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+        </div>
 
-<fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
+        <div class="field">
+          <%= builder.label :taxa_plataforma, "Taxa de Plataforma" %><br />
+          R$<%= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+        </div>
 
+        <div class="field">
+          <%= builder.label :taxa_despacho, "Taxa de Redespacho" %><br />
+          R$<%= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+        </div>
 
-<!-- dados do débito -->
-  <div class="field">
-    <%= f.label :status_pagamento_id %><br />
-    <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
+        <div class="field">
+          <%= builder.label :desconto, "Desconto" %><br />
+          R$<%= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+        </div>
 
-  <br />
+        <div class="field">
+          <%= builder.label :valor_pago, "Valor Pago pelo Cliente" %><br />
+          R$<%= builder.text_field :valor_pago, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')%>
+        </div>
 
-  <%= f.fields_for :debito do |builder| %>
-
-    <div class="field">
-      <%= builder.label :forma_pagamento, "Forma de Pagamento" %><br />
-      &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
-    </div>
-
-
-    <div class="field">
-      <%= builder.label :valor_frete, "Valor do Frete" %><br />
-      R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :taxa_plataforma, "Taxa de Plataforma" %><br />
-      R$<%= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :taxa_despacho, "Taxa de Redespacho" %><br />
-      R$<%= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :desconto, "Desconto" %><br />
-      R$<%= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :valor_pago, "Valor Pago pelo Cliente" %><br />
-      R$<%= builder.text_field :valor_pago, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')%>
-    </div>
-
-    <div class="field">
-      <%= builder.label :observacao, "Observação" %><br />
-      <%= builder.text_area :observacao, :cols => 40, :rows => 7 %>
-    </div>
-
-
-  <% end -%>
-
-
-</fieldset>
-
+        <div class="field">
+          <%= builder.label :observacao, "Observação" %><br />
+          <%= builder.text_area :observacao, :cols => 40, :rows => 7 %>
+        </div>
+      <% end -%>
+    </fieldset>
     <%= f.submit "Salvar" %>
   <% end -%>
-  </div>
-
-
 <% end -%>

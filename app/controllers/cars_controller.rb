@@ -144,7 +144,7 @@ class CarsController < ApplicationController
       converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
     end
     if defined?(params[:car][:pagamentos_attributes])
-      converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0'])
+      converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0']) unless params[:car][:pagamentos_attributes].nil?
     end
     respond_to do |format|
       if @car.update_attributes(params[:car])

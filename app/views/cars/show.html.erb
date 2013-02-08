@@ -3,78 +3,76 @@
 
 <div class = "floating_box">
   <% if @car.comprador %>
-
-  <table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:450px">
-    <caption><h5>Detalhes do Cliente</h5></caption>
-    <tr>
-      <th style="width:180px">Nome do Cliente</th>
-      <td style='border-top: 1px solid #C1DAD7;'><%= @car.comprador.nome %> </td>
-    </tr>
-    <tr>
-      <th>RG</th>
-      <td><%= @car.comprador.rg %></td>
-    </tr>
-    <tr>
-      <th>CPF</th>
-      <td><%= @car.comprador.cpf %></td>
-    </tr>
-    <tr>
-      <th>Telefone</th>
-      <td><%= @car.comprador.telefone %></td>
-    </tr>
-    <tr>
-      <th>Celular</th>
-      <td><%= @car.comprador.celular %></td>
-    </tr>
-    <tr>
-      <th>E-Mail</th>
-      <td><%= @car.comprador.email %></td>
-    </tr>
-    <tr>
-      <th>Nome de Parente <br> ou Conhecido</th>
-      <td><%= @car.comprador.parente %></td>
-    </tr>
-    <tr>
-      <th>Telefone de Parente <br> ou Conhecido</th>
-      <td><%= @car.comprador.telefone_parente %></td>
-    </tr>
-    <tr>
-      <th style = "height:50px">Observação</th>
-      <td><%= @car.comprador.observacao %></td>
-    </tr>
-  </table>
-
+    <table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:450px">
+      <caption><h5>Detalhes do Cliente</h5></caption>
+      <tr>
+        <th style="width:180px">Nome do Cliente</th>
+        <td style='border-top: 1px solid #C1DAD7;'><%= @car.comprador.nome %> </td>
+      </tr>
+      <tr>
+        <th>RG</th>
+        <td><%= @car.comprador.rg %></td>
+      </tr>
+      <tr>
+        <th>CPF</th>
+        <td><%= @car.comprador.cpf %></td>
+      </tr>
+      <tr>
+        <th>Telefone</th>
+        <td><%= @car.comprador.telefone %></td>
+      </tr>
+      <tr>
+        <th>Celular</th>
+        <td><%= @car.comprador.celular %></td>
+      </tr>
+      <tr>
+        <th>E-Mail</th>
+        <td><%= @car.comprador.email %></td>
+      </tr>
+      <tr>
+        <th>Nome de Parente <br> ou Conhecido</th>
+        <td><%= @car.comprador.parente %></td>
+      </tr>
+      <tr>
+        <th>Telefone de Parente <br> ou Conhecido</th>
+        <td><%= @car.comprador.telefone_parente %></td>
+      </tr>
+      <tr>
+        <th style = "height:50px">Observação</th>
+        <td><%= @car.comprador.observacao %></td>
+      </tr>
+    </table>
   <% elsif @car.empresa %>
-  <table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:450px">
-    <caption><h5>Detalhes da Empresa</h5></caption>
-    <tr>
-      <th style="width:180px">Nome da Empresa</th>
-      <td style='border-top: 1px solid #C1DAD7;'><%= @car.empresa.nome %> </td>
-    <tr>
-      <th>Nome do Contato</th>
-      <td><%= @car.empresa.contato %></td>
-    </tr>
-    <tr>
-      <th>CNPJ</th>
-      <td><%= @car.empresa.cnpj %></td>
-    </tr>
-    <tr>
-      <th>Telefone</th>
-      <td><%= @car.empresa.telefone %></td>
-    </tr>
-    <tr>
-      <th>Celular</th>
-      <td><%= @car.empresa.celular %></td>
-    </tr>
-    <tr>
-      <th>E-Mail</th>
-      <td><%= @car.empresa.email %></td>
-    </tr>
-    <tr>
-      <th style = "height:50px">Observação</th>
-      <td><%= @car.empresa.observacao %></td>
-    </tr>
-  </table>
+    <table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:450px">
+      <caption><h5>Detalhes da Empresa</h5></caption>
+      <tr>
+        <th style="width:180px">Nome da Empresa</th>
+        <td style='border-top: 1px solid #C1DAD7;'><%= @car.empresa.nome %> </td>
+      <tr>
+        <th>Nome do Contato</th>
+        <td><%= @car.empresa.contato %></td>
+      </tr>
+      <tr>
+        <th>CNPJ</th>
+        <td><%= @car.empresa.cnpj %></td>
+      </tr>
+      <tr>
+        <th>Telefone</th>
+        <td><%= @car.empresa.telefone %></td>
+      </tr>
+      <tr>
+        <th>Celular</th>
+        <td><%= @car.empresa.celular %></td>
+      </tr>
+      <tr>
+        <th>E-Mail</th>
+        <td><%= @car.empresa.email %></td>
+      </tr>
+      <tr>
+        <th style = "height:50px">Observação</th>
+        <td><%= @car.empresa.observacao %></td>
+      </tr>
+    </table>
   <% end -%>
 
   <table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:450px">

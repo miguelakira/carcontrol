@@ -1,52 +1,51 @@
 <table  id='cars_financeiro<%= "#{status}" %>' class="display"  style = "float: left;">
   <thead>
-  <tr>
-    <th width = '1'>Nº</th>
-    <th width = '30'>Data da Compra</th>
-    <th width = '140'>Modelo e Placa</th>
-    <th width = '180'>Origem </th>
-    <th width = '180'>Destino</th>
-    <th width = '60'>Frete</th>
-    <th width = '60'>Plataforma </th>
-    <th width = '60'>Plataforma Origem</th>
-    <th width = '60'>Plataforma Destino</th>
-    <th width = '60'>Balsa</th>
-    <th width = '60'>Redespacho</th>
-    <th width = '60'>Desconto</th>
-    <th width = '60'>Valor Pago</th>
-    <th width = '60'>Saldo Devedor</th>
-    <th width = '60'>Data de<br/>Pagamento</th>
-  </tr>
+    <tr>
+        <th width = '1'>Nº</th>
+        <th width = '30'>Data da Compra</th>
+        <th width = '140'>Modelo e Placa</th>
+        <th width = '180'>Origem </th>
+        <th width = '180'>Destino</th>
+        <th width = '60'>Frete</th>
+        <th width = '60'>Plataforma </th>
+        <th width = '60'>Plataforma Origem</th>
+        <th width = '60'>Plataforma Destino</th>
+        <th width = '60'>Balsa</th>
+        <th width = '60'>Redespacho</th>
+        <th width = '60'>Desconto</th>
+        <th width = '60'>Valor Pago</th>
+        <th width = '60'>Saldo Devedor</th>
+        <th width = '60'>Data de<br/>Pagamento</th>
+    </tr>
   </thead>
   <tbody>
+      <% carros.each_with_index do |car, index| %>
+      <% if car.status_pagamento.value == 1
+            @row_class = 'nao-pago'
+        elsif car.status_pagamento.value == 2
+            @row_class = 'pendente'
+        else
+            @row_class = '';
+        end %>
 
-  <% carros.each_with_index do |car, index| %>
-  <% if car.status_pagamento.value == 1
-        @row_class = 'nao-pago'
-    elsif car.status_pagamento.value == 2
-        @row_class = 'pendente'
-    else
-        @row_class = '';
-    end %>
-
-  <tr>
-    <td class = "<%= @row_class %>"> <%= index + 1 %>. </td>
-    <td class = "<%= @row_class %>"><%= car.data_compra.strftime("%d/%m") %></td>
-    <td class = "<%= @row_class %>"><%= link_to "#{car.modelo} - #{car.placa}", car %></td>
-    <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
-    <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_frete)%></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_plataforma) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_plataforma_origem) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_plataforma_destino) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_balsa) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_despacho) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.desconto) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_pago) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.saldo_devedor) %></td>
-    <td class = "<%= @row_class %>"><%= car.debito.data_pagamento.strftime("%d/%m/%Y") unless car.debito.data_pagamento.nil? %></td>
-  </tr>
-<% end -%>
-</tbody>
+      <tr>
+        <td class = "<%= @row_class %>"> <%= index + 1 %>. </td>
+        <td class = "<%= @row_class %>"><%= car.data_compra.strftime("%d/%m") %></td>
+        <td class = "<%= @row_class %>"><%= link_to "#{car.modelo} - #{car.placa}", car %></td>
+        <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
+        <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
+        <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_frete)%></td>
+        <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_plataforma) %></td>
+        <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_plataforma_origem) %></td>
+        <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_plataforma_destino) %></td>
+        <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_balsa) %></td>
+        <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_despacho) %></td>
+        <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.desconto) %></td>
+        <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_pago) %></td>
+        <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.saldo_devedor) %></td>
+        <td class = "<%= @row_class %>"><%= car.debito.data_pagamento.strftime("%d/%m/%Y") unless car.debito.data_pagamento.nil? %></td>
+      </tr>
+    <% end -%>
+    </tbody>
 </table>
 <%= stylesheet_link_tag "default" %>

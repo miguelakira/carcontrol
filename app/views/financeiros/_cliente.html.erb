@@ -9,6 +9,7 @@
 <br />
 
 <legend><h5 style="font-size: 1.3em">Carros Inativos</h5></legend>
+
 <% if @cars_inativos.empty? %>
   <p>Não há carros finalizados para este cliente</p>
 <% else %>
@@ -16,6 +17,7 @@
 <% end -%>
 
 <legend><h5 style="font-size: 1.3em">Carros Não-Pagos</h5></legend>
+
 <% if @cars_nao_pagos.empty? %>
   <p>Este cliente pagou todos os carros</p>
 <% else %>
@@ -23,6 +25,7 @@
 <% end -%>
 
 <legend><h5 style="font-size: 1.3em">Carros Pagos</h5></legend>
+
 <% if @cars_pagos.empty? %>
   <p>Este cliente não possui carros pagos.</p>
 <% else %>

@@ -1,12 +1,13 @@
 <% if !current_user.admin? %>
   Desculpe, você precisa ter direitos administrativos para visualizar esta página!
 <% else %>
-<p><h1>Editando Cegonha</h1></p>
-<%if @editar_localizacao %>
-  <%= render 'editar_localizacao' %>
-<% else %>
-  <%= render 'form' %>
-<% end %>
+  <p><h1>Editando Cegonha</h1></p>
+  <%if @editar_localizacao %>
+    <%= render 'editar_localizacao' %>
+  <% else %>
+    <%= render 'form' %>
+  <% end %>
 <% end -%>
+
 <%= link_to 'Detalhes', @cegonha %> |
 <%= link_to 'Voltar', cegonhas_path %>
