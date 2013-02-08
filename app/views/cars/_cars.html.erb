@@ -1,94 +1,89 @@
+<div id = "sidebar">
+<% if @car %>
+<% if saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa) >= 0
+    row_class = 'blue'
+  else
+    row_class = 'red'
+  end
+%>
 
+  <dl>
+    <h3><%= @car.placa %></h3>
 
-    <div id = "sidebar">
-    <% if @car %>
-    <% if saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa) >= 0
-        row_class = 'blue'
-      else
-        row_class = 'red'
-      end
-    %>
+    <dt>Saldo Devedor do Cliente</dt>
+    <dd class = '<%= row_class %>'><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa)) %></dd>
 
-         <dl>
-            <h3><%= @car.placa %></h3>
+    <dt>Localização Atual:</dt>
+    <dd><% unless @car.localizacao.nil? %><%= @car.localizacao %><% end -%></dd>
 
-            <dt>Saldo Devedor do Cliente</dt>
-            <dd class = '<%= row_class %>'><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa)) %></dd>
-            <dt>Localização Atual:</dt>
-            <dd><% unless @car.localizacao.nil? %><%= @car.localizacao %><% end -%>
-            </dd>
+    <dt>Cidade de Origem:</dt>
+    <dd><% unless @car.cidade_origem.nil? %><%= Cidade.find(@car.cidade_origem).text %>, <%= Estado.find(@car.estado_origem).sigla %><% end -%></dd>
+    <dt>Cidade de Destino:</dt>
+    <dd><% unless @car.cidade_destino.nil? %><%= Cidade.find(@car.cidade_destino).text %>, <%= Estado.find(@car.estado_destino).sigla %><% end -%></dd>
 
-            <dt>Cidade de Origem:</dt>
-            <dd><% unless @car.cidade_origem.nil? %><%= Cidade.find(@car.cidade_origem).text %>, <%= Estado.find(@car.estado_origem).sigla %><% end -%>
-            </dd>
-            <dt>Cidade de Destino:</dt>
-            <dd><% unless @car.cidade_destino.nil? %><%= Cidade.find(@car.cidade_destino).text %>, <%= Estado.find(@car.estado_destino).sigla %><% end -%></dd>
+    <dt>Previsão de Entrega:</dt>
+    <dd><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></dd>
 
-            <dt>Previsão de Entrega:</dt>
-            <dd><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></dd>
+    <dt>Status do Pagamento</dt>
+    <dd>  <%= @car.status_pagamento.status %></dd>
 
-            <dt>Status do Pagamento</dt>
-            <dd>  <%= @car.status_pagamento.status %></dd>
+    <dt>Status do Veículo</dt>
+    <dd><%= StatusVeiculo::estados[@car.ativo] %></dd>
 
-            <dt>Status do Veículo</dt>
-            <dd><%= StatusVeiculo::estados[@car.ativo] %></dd>
+    <dt>Modelo</dt>
+    <dd> <%= @car.modelo.titleize %> </dd>
 
-            <dt>Modelo</dt>
-            <dd> <%= @car.modelo.titleize %> </dd>
-
-            <p class="acoes">
-                <%= link_to "Detalhes", @car %> |
-                <%= link_to "Editar", edit_car_path(@car) %> |
-                <%= link_to "Deletar", @car, method: :delete, confirm: "Are you sure?" %>
-            </p>
-        </dl>
-    <% end -%>
+    <p class="acoes">
+      <%= link_to "Detalhes", @car %> |
+      <%= link_to "Editar", edit_car_path(@car) %> |
+      <%= link_to "Deletar", @car, method: :delete, confirm: "Are you sure?" %>
+    </p>
+  </dl>
+<% end -%>
 </div>
 
 <div class = "floating-left">
-<table  id="cars" class="display"  style = "float: left;">
-  <thead>
-    <tr>
-      <th title = "Sequência em que veículo foi adicioando no sistema">Nº </th>
-      <th>Início</th>
-      <th width = "90px">Placa  </th>
-      <th>Modelo</th>
-      <th width = "200px">Localização <br> Atual </th>
-      <th>Cliente</th>
-      <th>Telefone</th>
-      <th width = "130px"> CPF/CNPJ</th>
-      <th title = "Custo total do frete - desconto">Frete <br>Total</th>
-      <th>Cegonha </th>
-      <th>Parceiro </th>
-    </tr>
-  </thead>
-<tbody>
-<% x = 0%>
-<% @cars.each_with_index do |car, index| %>
-<% if car.status_pagamento.value == 1
-        @row_class = 'nao-pago'
-    elsif car.status_pagamento.value == 2
-        @row_class = 'pendente'
-    else
-        @row_class = '';
-    end %>
-
-  <tr>
-     <td class = "<%= @row_class %>"> <%= index + 1 %>. </td>
-     <td class = " <%= @row_class %> "><%= car.data_compra.strftime("%d/%m/%y") %></td>
-     <td class = " <%= @row_class %> "><%= link_to car.placa, :car_id => car.id %><%= link_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :car => car.id), :class => 'right'  %> </td>
-      <td class = "<%= @row_class %>"> <%= car.modelo.titleize %> </dd>
-
-     <td class = " <%= @row_class %> "><% unless car.localizacao.nil? %><%= car.localizacao %> <% if car.ativo? %><%= link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %><% end -%> <% end -%></td>
-     <td class = " <%= @row_class %> " > <%= car.comprador ? car.comprador.nome : car.empresa.nome %></td>
-     <td class = " <%= @row_class %> "> <%= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td>
-     <td class = " <%= @row_class %> " ><%= car.comprador ? car.comprador.cpf : car.empresa.cnpj  %></td>
-     <td class = " <%= @row_class %> " ><%= retorna_valor_monetario(car.debito.valor_total) %>
-     </td>
-     <td class = " <%= @row_class %> " ><%= car.cegonha ? link_to(car.cegonha.placa, car.cegonha) : "" %></td>
-     <td class = " <%= @row_class %> " ><%= car.parceiro ? link_to(car.parceiro.nome, car.parceiro) : "" %></td>
-    </tr>
- <% end %>
-</tbody>
-</table>
+  <table  id="cars" class="display"  style = "float: left;">
+    <thead>
+      <tr>
+        <th title = "Sequência em que veículo foi adicioando no sistema">Nº </th>
+        <th>Início</th>
+        <th width = "90px">Placa  </th>
+        <th>Modelo</th>
+        <th width = "200px">Localização <br> Atual </th>
+        <th>Cliente</th>
+        <th>Telefone</th>
+        <th width = "130px"> CPF/CNPJ</th>
+        <th title = "Custo total do frete - desconto">Frete <br>Total</th>
+        <th>Cegonha </th>
+        <th>Parceiro </th>
+      </tr>
+    </thead>
+      <tbody>
+      <% x = 0%>
+      <% @cars.each_with_index do |car, index| %>
+      <% if car.status_pagamento.value == 1
+            @row_class = 'nao-pago'
+          elsif car.status_pagamento.value == 2
+            @row_class = 'pendente'
+          else
+            @row_class = '';
+          end %>
+      <tr>
+        <td class = "<%= @row_class %>"> <%= index + 1 %>. </td>
+        <td class = " <%= @row_class %> "><%= car.data_compra.strftime("%d/%m/%y") %></td>
+        <td class = " <%= @row_class %> "><%= link_to car.placa, :car_id => car.id %><%= link_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :car => car.id), :class => 'right'  %> </td>
+        <td class = "<%= @row_class %>"> <%= car.modelo.titleize %> </dd>
+        <td class = " <%= @row_class %> "><% unless car.localizacao.nil? %><%= car.localizacao %> <% if car.ativo? %><%= link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'  %><% end -%> <% end -%></td>
+        <td class = " <%= @row_class %> " > <%= car.comprador ? car.comprador.nome : car.empresa.nome %></td>
+        <td class = " <%= @row_class %> "> <%= car.comprador ? car.comprador.telefone : car.empresa.telefone %></td>
+        <td class = " <%= @row_class %> " ><%= car.comprador ? car.comprador.cpf : car.empresa.cnpj  %></td>
+        <td class = " <%= @row_class %> " ><%= retorna_valor_monetario(car.debito.valor_total) %>
+        </td>
+        <td class = " <%= @row_class %> " ><%= car.cegonha ? link_to(car.cegonha.placa, car.cegonha) : "" %></td>
+        <td class = " <%= @row_class %> " ><%= car.parceiro ? link_to(car.parceiro.nome, car.parceiro) : "" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

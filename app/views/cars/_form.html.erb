@@ -1,315 +1,283 @@
 <% if @car.ativo != 0 %>
 
-
 <% empresas = Empresa.all %>
 <% compradores = Comprador.all %>
 
-
-
 <% if !current_user.admin? %>
   Desculpe, você precisa ter direitos administrativos para visualizar esta página!
-
 <% else %>
-
-<% if @editar_localizacao %>
-  <% render 'editar_localizacao' %>
-<%else%>
-
-<%= form_for(@car) do |f| %>
-
-  <% if @car.errors.any? %>
-    <div id="error_explanation">
-      <h1><%= pluralize(@car.errors.count, "erro") %> impediram que o cliente fosse atualizado:</h1>
-
-      <ul>
-      <% @car.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+  <% if @editar_localizacao %>
+    <% render 'editar_localizacao' %>
+  <%else%>
+    <%= form_for(@car) do |f| %>
+      <% if @car.errors.any? %>
+        <div id="error_explanation">
+          <h1><%= pluralize(@car.errors.count, "erro") %> impediram que o cliente fosse atualizado:</h1>
+          <ul>
+            <% @car.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
+      <% if @car.empresa %>
+        <!-- Dados da empresa -->
+        <fieldset> <legend><h5 style="font-size: 1.3em">Dados da Empresa</h5></legend>
+        <%= f.fields_for :empresa do |builder| %>
+          <div class = 'floating_form'>
+            <div class="field">
+              <%= builder.label :cnpj, "CNPJ*" %><br />
+              <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj' %>
+            </div>
+            <div class="field">
+              <%= builder.label :nome, "Nome da Empresa*" %><br />
+              <%= builder.text_field :nome, :id => 'empresa_nome' %>
+            </div>
+            <div class="field">
+              <%= builder.label :contato, "Nome do Contato" %><br />
+              <%= builder.text_field :contato, :id => 'empresa_contato'  %>
+            </div>
+          </div>
+          <div class="field">
+            <%= builder.label :email, "E-Mail" %><br />
+            <%= builder.text_field :email, :id => 'empresa_email'  %>
+          </div>
+          <div class="field">
+            <%= builder.label :telefone %>*<br />
+            <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone' %>
+          </div>
+          <div class="field">
+            <%= builder.label :celular %><br />
+            <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular' %>
+          </div>
+          <br />
+          <div class="field">
+            <%= builder.label :observacao, "Observação" %><br />
+            <%= builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'empresa_observacao' %>
+          </div>
+        </fieldset>
+      <% end -%>
 
-      </ul>
-    </div>
-  <% end %>
+      <% elsif @car.comprador %>
+        <br />
+        <!-- Dados do cliente-->
+        <fieldset> <legend><h5 style="font-size: 1.3em">Dados do Cliente</h5></legend>
+          <%= f.fields_for :comprador do |builder| %>
+            <br />
+            <div class = 'floating_form'>
+              <div class="field">
+                <%= builder.label :cpf, "Digite o CPF cliente*" %><br />
+                <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsComprador(this)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf' %>
+              </div>
 
-<% if @car.empresa %>
-<!-- Dados da empresa -->
-<fieldset> <legend><h5 style="font-size: 1.3em">Dados da Empresa</h5></legend>
-  <%= f.fields_for :empresa do |builder| %>
+              <div class="field">
+                <%= builder.label :nome, "Nome Completo*" %><br />
+                <%= builder.text_field :nome, :id => 'comprador_nome' %>
+              </div>
 
-  <div class = 'floating_form'>
+              <div class="field">
+                <%= builder.label :email, "E-Mail" %><br />
+                <%= builder.text_field :email, :id => 'comprador_email' %>
+              </div>
 
-    <div class="field">
-      <%= builder.label :cnpj, "CNPJ*" %><br />
-      <%= builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj' %>
-    </div>
+              <div class="field">
+                <%= builder.label :rg, "RG" %><br />
+                <%= builder.text_field :rg , :id => 'comprador_rg' %>
+              </div>
+            </div>
 
-    <div class="field">
-      <%= builder.label :nome, "Nome da Empresa*" %><br />
-      <%= builder.text_field :nome, :id => 'empresa_nome' %>
-    </div>
+            <div class="field">
+              <%= builder.label :telefone %><br />
+              <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_telefone' %>
+            </div>
 
-    <div class="field">
-      <%= builder.label :contato, "Nome do Contato" %><br />
-      <%= builder.text_field :contato, :id => 'empresa_contato'  %>
-    </div>
+            <div class="field">
+              <%= builder.label :celular %><br />
+              <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_celular' %>
+            </div>
 
-  </div>
-    <div class="field">
-      <%= builder.label :email, "E-Mail" %><br />
-      <%= builder.text_field :email, :id => 'empresa_email'  %>
-    </div>
+            <div class="field">
+              <%= builder.label :parente, "Parente ou Conhecido do Cliente" %><br />
+              <%= builder.text_field :parente, :id => 'comprador_parente' %>
+            </div>
+
+            <div class="field">
+              <%= builder.label :telefone_parente, "Telefone do Parente ou Conhecido do Cliente" %><br />
+              <%= builder.text_field :telefone_parente, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_telefone_parente' %>
+            </div>
+
+            <br />
+
+            <div class="field">
+              <%= builder.label :observacao, "Observação" %><br />
+              <%= builder.text_area "observacao".gsub("<br>", "\r\n"), :cols => 40, :rows => 7, :id => 'comprador_observacao' %>
+            </div>
+         <% end %>
+        </fieldset>
+      <% end -%>
+      <!-- fim dos dados do comprador -->
+
+      <br />
+      <!-- dados do veículo -->
+      <fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
+        <div class = 'floating_form'>
+          <div class="field">
+            <%= f.label :placa %>*<br />
+            <%= f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15' %>
+          </div>
+
+          <div class="field">
+            <%= f.label :modelo %>* (Por exemplo: Ford Ka)<br />
+            <%= f.text_field :modelo %>
+          </div>
+
+          <div class="field">
+            <%= f.label :data_compra, "Início da Prestação de Serviços" %><br />
+            <%= f.date_select :data_compra, :order => [:day, :month, :year], :start_year => Time.now.year - 1  %>
+          </div>
+
+          <div class="field">
+            <%= f.label :data_prevista, "Data Prevista de Entrega" %><br />
+            <%= f.date_select :data_prevista, :order => [:day, :month, :year], :start_year => Time.now.year, :include_blank => true  %><br>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= f.label :status_pagamento_id, "Status do Pagamento" %><br />
+          <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
+        </div>
+
+        <% @cegonhas.nil? ? @cegonhas = Cegonha.all : nil %>
+
+        <div class="field">
+          <%= f.label :cegonha_id, "Cegonha" %><br />
+          <%= f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }, :onchange => "parceiroOrCegonhaNotBoth(this,'parceiro');", :id => 'cegonha' %>
+        </div>
+
+        <% @parceiros.nil? ? @parceiros = Parceiro.all : nil %>
+
+        <div class="field">
+          <%= f.label :parceiro_id, "Parceiro" %><br />
+          <%= f.select :parceiro_id, @parceiros.collect {|p| [ p.nome, p.id ] }, { :include_blank => true}, :onchange => "parceiroOrCegonhaNotBoth(this,'cegonha');", :id => :parceiro   %>
+        </div>
+
+        <div class="field">
+          <%= f.label :ativo, "Status do Carro" %><br />
+          <%= select_tag :ativo, options_for_select(StatusVeiculo::estados.collect {|p| [p[1], p[0]]}, @car.ativo)   %>
+        </div>
+
+        <br />
+
+        <div class="field">
+          <%= f.label :observacao, "Observação" %><br />
+          <%= f.text_area :observacao, :cols => 40, :rows => 7 %>
+        </div>
+       </fieldset>
+      <!-- fim dos dados do veículo -->
 
 
-    <div class="field">
-      <%= builder.label :telefone %>*<br />
-      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone' %>
-    </div>
 
-    <div class="field">
-      <%= builder.label :celular %><br />
-      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular' %>
-    </div>
+
+
+<!-- PAREI de organizar AQUI AQUI AQUI -->
+
+
+
+
+      <!-- dados do debito -->
+      <br />
+      <fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
+        <%= f.fields_for :debito do |builder| %>
+          <div class = 'floating_form'>
+            <div class="field">
+              <%= builder.label :valor_frete, "Valor do Frete" %><br />
+              R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+            </div>
+
+            <div class="field">
+              <%= builder.label :taxa_plataforma, "Taxa de Plataforma" %><br />
+              R$<%= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+            </div>
+
+            <div class="field">
+              <%= builder.label :taxa_plataforma_origem, "Taxa de Plataforma Origem" %><br />
+              R$<%= builder.text_field :taxa_plataforma_origem, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_origem, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+            </div>
+
+            <div class="field">
+              <%= builder.label :taxa_plataforma_destino, "Taxa de Plataforma Destino" %><br />
+              R$<%= builder.text_field :taxa_plataforma_destino, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_destino, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= builder.label :taxa_balsa, "Taxa de Balsa" %><br />
+            R$<%= builder.text_field :taxa_balsa, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_balsa, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+          </div>
+
+          <div class="field">
+            <%= builder.label :taxa_despacho, "Taxa de Redespacho" %><br />
+            R$<%= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+          </div>
+
+          <div class="field">
+            <%= builder.label :desconto, "Desconto" %><br />
+            R$<%= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+          </div>
+          <br />
+
+          <div class="field">
+            <%= builder.label :observacao, "Observação" %><br />
+            <%= builder.text_area :observacao, :cols => 40, :rows => 7 %>
+          </div>
+        <% end -%>
+      </fieldset>
+
+    <fieldset><legend><h5 style="font-size: 1.3em">Dados dos Pagamentos</h5></legend>
+      <%= f.fields_for :pagamentos, @car.pagamentos.build do |builder| %>
+        <div class="field">
+          <% if @car.comprador %>
+            Total Pago pelo Cliente: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></b>
+          <% elsif @car.empresa %>
+            Total Pago pela Empresa: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></b>
+          <% end %>
+        </div>
+
+        <div class="field">
+          <% if @car.comprador %>
+          Dívida Restante do Cliente: <b><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></span></b>
+          <% elsif @car.empresa %>
+          Dívida Restante da Empresa: <b><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></span></b>
+          <% end %>
+        </div>
+
+        <div class="field">
+          <%= builder.label :forma_pagamento, "Forma do Novo Pagamento" %><br />
+          &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
+        </div>
+
+        <div class="field">
+          <%= builder.label :valor, "Valor do Novo Pagamento" %><br />
+          R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
+        </div>
+
+        <div class="field">
+          <%= builder.label :data_pagamento, "Data do Pagamento" %><br />
+          <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today   %>
+        </div>
+      <% end %>
+    </fieldset>
+
     <br />
-    <div class="field">
-      <%= builder.label :observacao, "Observação" %><br />
-      <%= builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'empresa_observacao' %>
-    </div>
-  </fieldset>
- <% end -%>
-<% elsif @car.comprador %>
-<br />
-<!-- Dados do cliente-->
-<fieldset> <legend><h5 style="font-size: 1.3em">Dados do Cliente</h5></legend>
-  <%= f.fields_for :comprador do |builder| %>
-  <br />
-
-  <div class = 'floating_form'>
-
-    <div class="field">
-      <%= builder.label :cpf, "Digite o CPF cliente*" %><br />
-      <%= builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsComprador(this)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf' %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :nome, "Nome Completo*" %><br />
-      <%= builder.text_field :nome, :id => 'comprador_nome' %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :email, "E-Mail" %><br />
-      <%= builder.text_field :email, :id => 'comprador_email' %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :rg, "RG" %><br />
-      <%= builder.text_field :rg , :id => 'comprador_rg' %>
-    </div>
-
-  </div>
-
-    <div class="field">
-      <%= builder.label :telefone %><br />
-      <%= builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_telefone' %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :celular %><br />
-      <%= builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_celular' %>
-    </div>
-    <div class="field">
-      <%= builder.label :parente, "Parente ou Conhecido do Cliente" %><br />
-      <%= builder.text_field :parente, :id => 'comprador_parente' %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :telefone_parente, "Telefone do Parente ou Conhecido do Cliente" %><br />
-      <%= builder.text_field :telefone_parente, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_telefone_parente' %>
-    </div>
-
-    <br />
-
-    <div class="field">
-      <%= builder.label :observacao, "Observação" %><br />
-      <%= builder.text_area "observacao".gsub("<br>", "\r\n"), :cols => 40, :rows => 7, :id => 'comprador_observacao' %>
-    </div>
-
-
-  <% end %>
-  </fieldset>
-<% end -%>
-  <!-- fim dos dados do comprador -->
-
-<br />
-<!-- dados do veículo -->
-<fieldset><legend><h5 style="font-size: 1.3em">Dados do Veículo</h5></legend>
-
-  <div class = 'floating_form'>
-  <div class="field">
-    <%= f.label :placa %>*<br />
-    <%= f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15' %>
-  </div>
-
-  <div class="field">
-    <%= f.label :modelo %>* (Por exemplo: Ford Ka)<br />
-    <%= f.text_field :modelo %>
-  </div>
-
-
-  <div class="field">
-    <%= f.label :data_compra, "Início da Prestação de Serviços" %><br />
-    <%= f.date_select :data_compra, :order => [:day, :month, :year], :start_year => Time.now.year - 1  %>
-  </div>
-
-  <div class="field">
-    <%= f.label :data_prevista, "Data Prevista de Entrega" %><br />
-    <%= f.date_select :data_prevista, :order => [:day, :month, :year], :start_year => Time.now.year, :include_blank => true  %><br>
-  </div>
-</div>
-
-
-  <div class="field">
-    <%= f.label :status_pagamento_id, "Status do Pagamento" %><br />
-    <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
-  </div>
-  <% @cegonhas.nil? ? @cegonhas = Cegonha.all : %>
-  <div class="field">
-    <%= f.label :cegonha_id, "Cegonha" %><br />
-    <%= f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }, :onchange => "parceiroOrCegonhaNotBoth(this,'parceiro');", :id => 'cegonha' %>
-
-  </div>
-
-  <% @parceiros.nil? ? @parceiros = Parceiro.all : %>
-<div class="field">
-    <%= f.label :parceiro_id, "Parceiro" %><br />
-    <%= f.select :parceiro_id, @parceiros.collect {|p| [ p.nome, p.id ] }, { :include_blank => true}, :onchange => "parceiroOrCegonhaNotBoth(this,'cegonha');", :id => :parceiro   %>
-  </div>
-
-  <div class="field">
-    <%= f.label :ativo, "Status do Carro" %><br />
-    <%= select_tag :ativo, options_for_select(StatusVeiculo::estados.collect {|p| [p[1], p[0]]}, @car.ativo)   %>
-  </div>
-
-  <br />
-
-  <div class="field">
-      <%= f.label :observacao, "Observação" %><br />
-      <%= f.text_area :observacao, :cols => 40, :rows => 7 %>
-    </div>
-</fieldset>
-  <!-- fim dos dados do veículo -->
-
-  <!-- dados do debito -->
-<br />
-<fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
-
-
-  <%= f.fields_for :debito do |builder| %>
-
-
-    <div class = 'floating_form'>
-    <!--<div class="field">
-      <%#= builder.label :parcelas, "Parcelas" %><br />
-      &nbsp;&nbsp;&nbsp;<%#= builder.text_field :parcelas, :size => 5%>
-    </div>-->
-
-    <div class="field">
-      <%= builder.label :valor_frete, "Valor do Frete" %><br />
-      R$<%= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :taxa_plataforma, "Taxa de Plataforma" %><br />
-      R$<%= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-  <div class="field">
-      <%= builder.label :taxa_plataforma_origem, "Taxa de Plataforma Origem" %><br />
-      R$<%= builder.text_field :taxa_plataforma_origem, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_origem, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :taxa_plataforma_destino, "Taxa de Plataforma Destino" %><br />
-      R$<%= builder.text_field :taxa_plataforma_destino, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_destino, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-    </div>
-
-    <div class="field">
-      <%= builder.label :taxa_balsa, "Taxa de Balsa" %><br />
-      R$<%= builder.text_field :taxa_balsa, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_balsa, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-
-    <div class="field">
-      <%= builder.label :taxa_despacho, "Taxa de Redespacho" %><br />
-      R$<%= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :desconto, "Desconto" %><br />
-      R$<%= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
-    </div>
-
-<!--     <div class="field">
-      <%#= builder.label :valor_pago, "Valor Pago pelo Cliente" %><br />
-      R$<%#= builder.text_field :valor_pago, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')%>
-    </div> -->
-
-
-  <br />
-
-    <div class="field">
-      <%= builder.label :observacao, "Observação" %><br />
-      <%= builder.text_area :observacao, :cols => 40, :rows => 7 %>
+    <div class="actions">
+      <% if @car.id.nil? %>
+        <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
+      <% else -%>
+        <%= f.submit "Salvar" %>
+        <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
+      <% end -%>
     </div>
   <% end -%>
-</fieldset>
-
-<fieldset><legend><h5 style="font-size: 1.3em">Dados dos Pagamentos</h5></legend>
-
-<%= f.fields_for :pagamentos, @car.pagamentos.build do |builder| %>
-  <div class="field">
-    <% if @car.comprador %>
-      Total Pago pelo Cliente: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></b>
-    <% elsif @car.empresa %>
-      Total Pago pela Empresa: <b><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></b>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <% if @car.comprador %>
-    Dívida Restante do Cliente: <b><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador)) %></span></b>
-    <% elsif @car.empresa %>
-    Dívida Restante da Empresa: <b><span class = "red"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.empresa)) %></span></b>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= builder.label :forma_pagamento, "Forma do Novo Pagamento" %><br />
-    &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
-    </div>
-
-    <div class="field">
-      <%= builder.label :valor, "Valor do Novo Pagamento" %><br />
-      R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
-    </div>
-
-  <div class="field">
-    <%= builder.label :data_pagamento, "Data do Pagamento" %><br />
-    <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today   %>
-  </div>
-
-<% end %>
-</fieldset>
-  <br />
-  <div class="actions">
-    <% if @car.id.nil? %>
-      <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
-    <% else -%>
-      <%= f.submit "Salvar" %>
-      <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
-    <% end -%>
-  </div>
-<% end -%>
 <% end -%>
 <% end -%>
 

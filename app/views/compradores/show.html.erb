@@ -1,101 +1,98 @@
 <p id="notice"><%= notice %></p>
 
 <div class = "floating_box">
-<table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:450px">
-  <caption><h5>Detalhes do Cliente</h5></caption>
-  <tr>
-    <th style="width:180px">Nome do Cliente</th>
-    <td style='border-top: 1px solid #C1DAD7;'><%= @comprador.nome %> </td>
-  </tr>
-  <tr>
-    <th>RG</th>
-    <td><%= @comprador.rg %></td>
-  </tr>
-  <tr>
-    <th>CPF</th>
-    <td><%= @comprador.cpf %></td>
-  </tr>
-  <tr>
-    <th>Telefone</th>
-    <td><%= @comprador.telefone %></td>
-  </tr>
-  <tr>
-    <th>Celular</th>
-    <td><%= @comprador.celular %></td>
-  </tr>
-  <tr>
-    <th>E-Mail</th>
-    <td><%= @comprador.email %></td>
-  </tr>
-  <tr>
-    <th>Nome de Parente <br> ou Conhecido</th>
-    <td><%= @comprador.parente %></td>
-  </tr>
-  <tr>
-    <th>Telefone de Parente <br> ou Conhecido</th>
-    <td><%= @comprador.telefone_parente %></td>
-  </tr>
-  <tr>
-    <th style = "height:50px">Observação</th>
-    <td><%= @comprador.observacao %></td>
-  </tr>
-</table>
+  <table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:450px">
+    <caption><h5>Detalhes do Cliente</h5></caption>
+    <tr>
+      <th style="width:180px">Nome do Cliente</th>
+      <td style='border-top: 1px solid #C1DAD7;'><%= @comprador.nome %> </td>
+    </tr>
+    <tr>
+      <th>RG</th>
+      <td><%= @comprador.rg %></td>
+    </tr>
+    <tr>
+      <th>CPF</th>
+      <td><%= @comprador.cpf %></td>
+    </tr>
+    <tr>
+      <th>Telefone</th>
+      <td><%= @comprador.telefone %></td>
+    </tr>
+    <tr>
+      <th>Celular</th>
+      <td><%= @comprador.celular %></td>
+    </tr>
+    <tr>
+      <th>E-Mail</th>
+      <td><%= @comprador.email %></td>
+    </tr>
+    <tr>
+      <th>Nome de Parente <br> ou Conhecido</th>
+      <td><%= @comprador.parente %></td>
+    </tr>
+    <tr>
+      <th>Telefone de Parente <br> ou Conhecido</th>
+      <td><%= @comprador.telefone_parente %></td>
+    </tr>
+    <tr>
+      <th style = "height:50px">Observação</th>
+      <td><%= @comprador.observacao %></td>
+    </tr>
+  </table>
 
-<table id="mytable" cellspacing="0" summary="Detalhes dos Carros" style="width:450px">
+  <table id="mytable" cellspacing="0" summary="Detalhes dos Carros" style="width:450px">
     <caption><h5>Detalhes dos Carros</h5></caption>
 
-  <tr>
-    <th style="width:130px" >Carros Ativos</th>
-    <td style='border-top: 1px solid #C1DAD7;'><%= carros_ativos_do_cliente(@comprador).html_safe %></td>
-  </tr>
-  <tr>
-    <th>Frete Total dos <br> Carros Ativos</th>
-    <td> <%= retorna_valor_monetario(frete_total_do_cliente(@comprador)) %> </td>
-  </tr>
-  <tr>
-    <th>Pagamento Total <br> Efetuado</th>
-    <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@comprador)) %> </td>
-  </tr>
-  <tr>
-    <th>Saldo Devedor</th>
-    <td> <%= retorna_valor_monetario(saldo_devedor_do_cliente(@comprador)) %> </td>
-  </tr>
-  <tr>
-    <th style = "height:50px">Observação</th>
-    <td><%= @observacao %></td>
-  </tr>
-</table>
-
+    <tr>
+      <th style="width:130px" >Carros Ativos</th>
+      <td style='border-top: 1px solid #C1DAD7;'><%= carros_ativos_do_cliente(@comprador).html_safe %></td>
+    </tr>
+    <tr>
+      <th>Frete Total dos <br> Carros Ativos</th>
+      <td> <%= retorna_valor_monetario(frete_total_do_cliente(@comprador)) %> </td>
+    </tr>
+    <tr>
+      <th>Pagamento Total <br> Efetuado</th>
+      <td> <%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@comprador)) %> </td>
+    </tr>
+    <tr>
+      <th>Saldo Devedor</th>
+      <td> <%= retorna_valor_monetario(saldo_devedor_do_cliente(@comprador)) %> </td>
+    </tr>
+    <tr>
+      <th style = "height:50px">Observação</th>
+      <td><%= @observacao %></td>
+    </tr>
+  </table>
 </div>
-
-</table>
 
 <div class = 'floating_left'>
-<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
-  <caption><h5>Detalhes dos Pagamentos</h5></caption>
-
-  <tr>
-    <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
-    <th>Valor do <br> Pagamento</th>
-    <th>Forma de <br> Pagamento</th>
-  </tr>
-
-  <% @comprador ? owner = @comprador : owner = @empresa %>
-  <% owner.pagamentos.each do |pagamento| %>
-
-<tr>
-    <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
-    <td><%= retorna_valor_monetario(pagamento.valor) %></td>
-    <td><%= pagamento.forma_pagamento %></td>
-  </tr>
-<% end %>
-</table>
-</div>
+  <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
+    <caption><h5>Detalhes dos Pagamentos</h5></caption>
+    <tr>
+      <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
+      <th>Valor do <br> Pagamento</th>
+      <th>Forma de <br> Pagamento</th>
+      <th>Saldo</th>
+    </tr>
+    <% @comprador ? owner = @comprador : owner = @empresa %>
+    <% owner.pagamentos.each do |pagamento| %>
+    <% if pagamento.saldo >= 0
+          row_class  = 'blue'
+        else
+          row_class = 'red'
+        end
+          %>
+    <tr>
+      <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
+      <td><%= retorna_valor_monetario(pagamento.valor) %></td>
+      <td><%= pagamento.forma_pagamento %></td>
+      <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
+    </tr>
+    <% end %>
+  </table>
 </div>
 <div style="clear: both;"></div>
-
-<br />
-
-
 <%= button 'Editar', edit_comprador_path(@comprador) %>
 <%= button 'Voltar', compradores_path %>

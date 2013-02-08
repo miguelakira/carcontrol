@@ -2,262 +2,231 @@
 <p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @car.id %> </b></p>
 
 <div class = "floating_box">
-<% if @car.comprador %>
+  <% if @car.comprador %>
 
-<table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:450px">
-  <caption><h5>Detalhes do Cliente</h5></caption>
-  <tr>
-    <th style="width:180px">Nome do Cliente</th>
-    <td style='border-top: 1px solid #C1DAD7;'><%= @car.comprador.nome %> </td>
-  </tr>
-  <tr>
-    <th>RG</th>
-    <td><%= @car.comprador.rg %></td>
-  </tr>
-  <tr>
-    <th>CPF</th>
-    <td><%= @car.comprador.cpf %></td>
-  </tr>
-  <tr>
-    <th>Telefone</th>
-    <td><%= @car.comprador.telefone %></td>
-  </tr>
-  <tr>
-    <th>Celular</th>
-    <td><%= @car.comprador.celular %></td>
-  </tr>
-  <tr>
-    <th>E-Mail</th>
-    <td><%= @car.comprador.email %></td>
-  </tr>
-  <tr>
-    <th>Nome de Parente <br> ou Conhecido</th>
-    <td><%= @car.comprador.parente %></td>
-  </tr>
-  <tr>
-    <th>Telefone de Parente <br> ou Conhecido</th>
-    <td><%= @car.comprador.telefone_parente %></td>
-  </tr>
+  <table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:450px">
+    <caption><h5>Detalhes do Cliente</h5></caption>
+    <tr>
+      <th style="width:180px">Nome do Cliente</th>
+      <td style='border-top: 1px solid #C1DAD7;'><%= @car.comprador.nome %> </td>
+    </tr>
+    <tr>
+      <th>RG</th>
+      <td><%= @car.comprador.rg %></td>
+    </tr>
+    <tr>
+      <th>CPF</th>
+      <td><%= @car.comprador.cpf %></td>
+    </tr>
+    <tr>
+      <th>Telefone</th>
+      <td><%= @car.comprador.telefone %></td>
+    </tr>
+    <tr>
+      <th>Celular</th>
+      <td><%= @car.comprador.celular %></td>
+    </tr>
+    <tr>
+      <th>E-Mail</th>
+      <td><%= @car.comprador.email %></td>
+    </tr>
+    <tr>
+      <th>Nome de Parente <br> ou Conhecido</th>
+      <td><%= @car.comprador.parente %></td>
+    </tr>
+    <tr>
+      <th>Telefone de Parente <br> ou Conhecido</th>
+      <td><%= @car.comprador.telefone_parente %></td>
+    </tr>
+    <tr>
+      <th style = "height:50px">Observação</th>
+      <td><%= @car.comprador.observacao %></td>
+    </tr>
+  </table>
 
+  <% elsif @car.empresa %>
+  <table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:450px">
+    <caption><h5>Detalhes da Empresa</h5></caption>
+    <tr>
+      <th style="width:180px">Nome da Empresa</th>
+      <td style='border-top: 1px solid #C1DAD7;'><%= @car.empresa.nome %> </td>
+    <tr>
+      <th>Nome do Contato</th>
+      <td><%= @car.empresa.contato %></td>
+    </tr>
+    <tr>
+      <th>CNPJ</th>
+      <td><%= @car.empresa.cnpj %></td>
+    </tr>
+    <tr>
+      <th>Telefone</th>
+      <td><%= @car.empresa.telefone %></td>
+    </tr>
+    <tr>
+      <th>Celular</th>
+      <td><%= @car.empresa.celular %></td>
+    </tr>
+    <tr>
+      <th>E-Mail</th>
+      <td><%= @car.empresa.email %></td>
+    </tr>
+    <tr>
+      <th style = "height:50px">Observação</th>
+      <td><%= @car.empresa.observacao %></td>
+    </tr>
+  </table>
+  <% end -%>
 
-  <tr>
-    <th style = "height:50px">Observação</th>
-    <td><%= @car.comprador.observacao %></td>
-  </tr>
-</table>
-
-<% elsif @car.empresa %>
-
-<table id="mytable" cellspacing="0" summary="Detalhes da Empresa" style="width:450px">
-  <caption><h5>Detalhes da Empresa</h5></caption>
-  <tr>
-    <th style="width:180px">Nome da Empresa</th>
-    <td style='border-top: 1px solid #C1DAD7;'><%= @car.empresa.nome %> </td>
-  <tr>
-    <th>Nome do Contato</th>
-    <td><%= @car.empresa.contato %></td>
-  </tr>
-  <tr>
-    <th>CNPJ</th>
-    <td><%= @car.empresa.cnpj %></td>
-  </tr>
-  <tr>
-    <th>Telefone</th>
-    <td><%= @car.empresa.telefone %></td>
-  </tr>
-  <tr>
-    <th>Celular</th>
-    <td><%= @car.empresa.celular %></td>
-  </tr>
-  <tr>
-    <th>E-Mail</th>
-    <td><%= @car.empresa.email %></td>
-  </tr>
-  <tr>
-    <th style = "height:50px">Observação</th>
-    <td><%= @car.empresa.observacao %></td>
-  </tr>
-</table>
-<% end -%>
-
-
-<table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:450px">
+  <table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:450px">
     <caption><h5>Detalhes do Carro</h5></caption>
-
-  <tr>
-    <th style="width:180px" >Modelo do Carro</th>
-    <td style='border-top: 1px solid #C1DAD7;'><%= @car.modelo %></td>
-  </tr>
-  <tr>
-    <th>Placa</th>
-    <td><%= @car.placa %></td>
-  </tr>
-
-  <% if @car.cegonha %>
-  <tr>
-    <th>Cegonha</th>
-    <td><%= link_to(@car.cegonha.placa, @car.cegonha)%></td>
-  </tr>
-  <% elsif @car.parceiro %>
-  <tr>
-    <th>Parceiro</th>
-    <td><%= link_to(@car.parceiro.nome, @car.parceiro)%></td>
-  </tr>
-  <% end -%>
-  <tr>
-    <th>Localização Atual</th>
-    <td><%= @car.localizacao %></td>
-  </tr>
-  <% unless @car.cidade_origem.nil? && @car.estado_origem.nil? %>
-  <tr>
-    <th>Origem</th>
-    <td><%= Cidade.find(@car.cidade_origem).text %>, <%= Estado.find(@car.estado_origem).sigla %></td>
-  </tr>
-  <% end -%>
-  <% unless @car.cidade_origem.nil? && @car.estado_origem.nil? %>
-  <tr>
-    <th>Destino</th>
-    <td><%= Cidade.find(@car.cidade_destino).text %>, <%= Estado.find(@car.estado_destino).sigla %></td>
-  </tr>
-  <% end -%>
-  <tr>
-    <th>Data da Compra</th>
-    <td><%= @car.data_compra.strftime("%d/%m/%Y") unless @car.data_compra.nil? %></td>
-  </tr>
-
-  <tr>
-    <th>Status do Carro</th>
-    <td><%= StatusVeiculo::estados[@car.ativo] %></td>
-  </tr>
-
-<tr>
-    <th>Data Prevista da Entrega</th>
-    <td><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></td>
-  </tr>
-
-  <tr>
-    <th style = "height:50px">Observação</th>
-    <td><%= @car.observacao %></td>
-  </tr>
-</table>
-
+    <tr>
+      <th style="width:180px" >Modelo do Carro</th>
+      <td style='border-top: 1px solid #C1DAD7;'><%= @car.modelo %></td>
+    </tr>
+    <tr>
+      <th>Placa</th>
+      <td><%= @car.placa %></td>
+    </tr>
+    <% if @car.cegonha %>
+    <tr>
+      <th>Cegonha</th>
+      <td><%= link_to(@car.cegonha.placa, @car.cegonha)%></td>
+    </tr>
+    <% elsif @car.parceiro %>
+    <tr>
+      <th>Parceiro</th>
+      <td><%= link_to(@car.parceiro.nome, @car.parceiro)%></td>
+    </tr>
+    <% end -%>
+    <tr>
+      <th>Localização Atual</th>
+      <td><%= @car.localizacao %></td>
+    </tr>
+    <% unless @car.cidade_origem.nil? && @car.estado_origem.nil? %>
+    <tr>
+      <th>Origem</th>
+      <td><%= Cidade.find(@car.cidade_origem).text %>, <%= Estado.find(@car.estado_origem).sigla %></td>
+    </tr>
+    <% end -%>
+    <% unless @car.cidade_origem.nil? && @car.estado_origem.nil? %>
+    <tr>
+      <th>Destino</th>
+      <td><%= Cidade.find(@car.cidade_destino).text %>, <%= Estado.find(@car.estado_destino).sigla %></td>
+    </tr>
+    <% end -%>
+    <tr>
+      <th>Data da Compra</th>
+      <td><%= @car.data_compra.strftime("%d/%m/%Y") unless @car.data_compra.nil? %></td>
+    </tr>
+    <tr>
+      <th>Status do Carro</th>
+      <td><%= StatusVeiculo::estados[@car.ativo] %></td>
+    </tr>
+    <tr>
+      <th>Data Prevista da Entrega</th>
+      <td><%= @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil? %></td>
+    </tr>
+    <tr>
+      <th style = "height:50px">Observação</th>
+      <td><%= @car.observacao %></td>
+    </tr>
+  </table>
 </div>
 
 <div class = "floating_box">
+  <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
+    <caption><h5>Detalhes do frete</h5></caption>
+    <tr>
+      <th style="width:180px">Status do Pagamento <br> do Carro</th>
+      <td style='border-top: 1px solid #C1DAD7;'><%= @car.status_pagamento.status %></td>
+    </tr>
+    <tr>
+      <th>Valor do Frete</th>
+      <td> <%= retorna_valor_monetario(@car.debito.valor_frete) %></td>
+    </tr>
+    <tr>
+      <th>Taxa de Plataforma</th>
+      <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma) %></td>
+    </tr>
+    <tr>
+      <th>Taxa de Plataforma Origem</th>
+      <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma_origem) %></td>
+    </tr>
+    <tr>
+      <th>Taxa de Plataforma Destino</th>
+      <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma_destino) %></td>
+    </tr>
+    <tr>
+      <th>Taxa de Balsa</th>
+      <td><%= retorna_valor_monetario(@car.debito.taxa_balsa) %></td>
+    </tr>
+    <tr>
+      <th>Taxa de Redespacho</th>
+      <td><%= retorna_valor_monetario(@car.debito.taxa_despacho) %></td>
+    </tr>
+    <tr>
+      <th>Desconto</th>
+      <td>-<%= retorna_valor_monetario(@car.debito.desconto) %></td>
+    </tr>
+    <tr>
+      <th>Total do Frete</th>
+      <td><%= retorna_valor_monetario(@car.debito.valor_total) %></td>
+    </tr>
+    <tr>
+      <th style = "height:50px">Observação</th>
+      <td><%= @car.debito.observacao %></td>
+    </tr>
+  </table>
 
-<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
-  <caption><h5>Detalhes do frete</h5></caption>
+  <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-bottom:10px;">
+    <caption><h5>Detalhes dos Pagamentos</h5></caption>
+    <tr>
+      <th width=100px style='border-left: 1px solid #C1DAD7;'>Total Pago</th>
+      <% if @car.comprador %>
+      <td style='border-top: 1px solid #C1DAD7;'><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></td>
+      <% elsif @car.empresa %>
+      <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <th style='border-left: 1px solid #C1DAD7;'>Saldo Devedor</th>
+      <% if saldo_devedor_do_cliente(@owner) >= 0
+          @row_class  = 'blue'
+        else
+          @row_class = 'red'
+        end
+      %>
+      <td><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@owner)) %></span></td>
+    </tr>
+  </table>
 
-<tr>
-    <th style="width:180px">Status do Pagamento <br> do Carro</th>
-    <td style='border-top: 1px solid #C1DAD7;'><%= @car.status_pagamento.status %></td>
-  </tr>
-<tr>
-    <th>Valor do Frete</th>
-    <td> <%= retorna_valor_monetario(@car.debito.valor_frete) %></td>
-  </tr>
-
-
-<tr>
-    <th>Taxa de Plataforma</th>
-    <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma) %></td>
-</tr>
-
-<tr>
-    <th>Taxa de Plataforma Origem</th>
-    <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma_origem) %></td>
-</tr>
-<tr>
-    <th>Taxa de Plataforma Destino</th>
-    <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma_destino) %></td>
-</tr>
-
-<tr>
-    <th>Taxa de Balsa</th>
-    <td><%= retorna_valor_monetario(@car.debito.taxa_balsa) %></td>
-</tr>
-
-<tr>
-    <th>Taxa de Redespacho</th>
-    <td><%= retorna_valor_monetario(@car.debito.taxa_despacho) %></td>
-</tr>
-<tr>
-    <th>Desconto</th>
-
-    <td>-<%= retorna_valor_monetario(@car.debito.desconto) %></td>
-</tr>
-
-<tr>
-    <th>Total do Frete</th>
-    <td><%= retorna_valor_monetario(@car.debito.valor_total) %></td>
-</tr>
-
-  <tr>
-    <th style = "height:50px">Observação</th>
-    <td><%= @car.debito.observacao %></td>
-  </tr>
-
-
-
-</table>
-<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-bottom:10px;">
-  <caption><h5>Detalhes dos Pagamentos</h5></caption>
-
-  <tr>
-    <th width=100px style='border-left: 1px solid #C1DAD7;'>Total Pago</th>
-    <% if @car.comprador %>
-    <td style='border-top: 1px solid #C1DAD7;'><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></td>
-    <% elsif @car.empresa %>
-    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></td>
+  <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-top:0px;" >
+    <tr>
+      <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
+      <th>Valor do <br> Pagamento</th>
+      <th>Forma de <br> Pagamento</th>
+      <th>Saldo </th>
+    </tr>
+    <% @owner.pagamentos.each do |pagamento| %>
+      <% if pagamento.saldo >= 0
+          row_class  = 'blue'
+        else
+          row_class = 'red'
+        end
+          %>
+      <% if pagamento.data_pagamento.month == Time.now.month && pagamento.data_pagamento.year == Time.now.year  %>
+      <tr>
+        <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
+        <td><%= retorna_valor_monetario(pagamento.valor) %></td>
+        <td><%= pagamento.forma_pagamento %></td>
+        <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
+      </tr>
+      <% end %>
     <% end %>
-  </tr>
-
-  <tr>
-    <th style='border-left: 1px solid #C1DAD7;'>Saldo Devedor</th>
-    <% if saldo_devedor_do_cliente(@owner) >= 0
-        @row_class  = 'blue'
-      else
-        @row_class = 'red'
-      end
-    %>
-    <td><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@owner)) %></span></td>
-  </tr>
-
-</table>
-
-<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-top:0px;" >
-
-  <tr>
-    <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
-    <th>Valor do <br> Pagamento</th>
-    <th>Forma de <br> Pagamento</th>
-    <th>Saldo </th>
-  </tr>
-
-  <% @owner.pagamentos.each do |pagamento| %>
-
-    <% if pagamento.saldo >= 0
-        row_class  = 'blue'
-      else
-        row_class = 'red'
-      end
-        %>
-<% if pagamento.data_pagamento.month == Time.now.month && pagamento.data_pagamento.year == Time.now.year  %>
-<tr>
-    <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
-    <td><%= retorna_valor_monetario(pagamento.valor) %></td>
-    <td><%= pagamento.forma_pagamento %></td>
-    <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
-  </tr>
-  <% end %>
-<% end %>
-</table>
-
-
+  </table>
 </div>
 <div style="clear: both;"></div>
 
-<br />
 
 <% if @car.ativo? %><%= button('Editar', edit_car_path(@car)) %><% end -%>
 <%= button('Voltar', cars_path) %>
