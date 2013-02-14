@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130204173907) do
+ActiveRecord::Schema.define(:version => 20130214183339) do
 
   create_table "cars", :force => true do |t|
     t.string   "placa"
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(:version => 20130204173907) do
     t.decimal  "desconto",                :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "saldo_devedor",           :precision => 8, :scale => 2, :default => 0.0
     t.integer  "cegonha_id"
-    t.decimal  "valor_frete",             :precision => 8, :scale => 2
+    t.decimal  "valor_frete",             :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "taxa_plataforma_origem",  :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "taxa_plataforma_destino", :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "taxa_balsa",              :precision => 8, :scale => 2, :default => 0.0
