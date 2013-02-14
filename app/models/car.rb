@@ -28,7 +28,6 @@ class Car < ActiveRecord::Base
 
   after_find :capitaliza_modelo, :verifica_pagamento
 
-
   def ajusta_nome
     if self.nome.nil?
       if self.comprador
@@ -45,25 +44,6 @@ class Car < ActiveRecord::Base
     end
   end
 
-  def self.search(search, search_by)
-    if search
-      if search_by == 'placa'
-        search.gsub!(/[^[:alnum:]]/, '')
-        search.insert(3, '-')
-        where{{placa.like => "%#{search}%"}}
-      elsif search_by == 'cliente'
-        search = search.split(" ")
-        joins(:comprador).where{(comprador.firstname.like_any search) | (comprador.middlename.like_any search) | (comprador.lastname.like_any search)}
-      elsif search_by == 'empresa'
-        search = search.split(" ")
-        search.collect! {|s| s + "%"} # coloca '%' no final pra procurar por nomes incompletos - 'jul' acha 'juliano' e 'julio'
-        joins(:empresa).where{(empresa.nome.like_any search)}
-      end
-    else
-      scoped
-    end
-  end
-
   def transforma_placa_em_maiuscula
   	self.placa.upcase!
   end
@@ -76,21 +56,10 @@ class Car < ActiveRecord::Base
   	self.modelo = self.modelo.titleize
   end
 
-
-
   def verifica_pagamento
     if self.pagamentos.empty?
       self.pagamentos.new(:valor => 0)
     end
   end
 
-
-
-=begin
-  define_index do
-  	indexes placa
-  	indexes modelo, :sortable => true
-  	indexes localizacao, :sortable => true
-  end
-=end
 end

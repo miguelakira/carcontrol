@@ -9,61 +9,49 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div id='wrapper'>
-	<div id='wrapper2'>
-		<div id='top-menu'>
-			<div id="account">
-			  <ul>
-			  	<% if !current_user.nil? %>
-			  	<% if current_user.admin? %>
-						<li><%= link_to "Usuários |", users_path %></li>
-				  <% end -%>
-				  <% end -%>
-			  	<li><% if user_signed_in? %> <%= render 'devise/menu/registration_items' %> <% end -%> </li>
-			  	<li><%= render 'devise/menu/login_items' %></li>
-
-
-			  </ul>
-			</div>
-		</div>
-
-		<div id='header'>
-			<div id='quick-search'>
-				<%#= form_tag cars_path, :method => 'get' do %>
-					<%#= text_field_tag :search, params[:search] %>
-					<%#= select_tag(:search_by, options_for_select([:placa, :cliente, :empresa]))%>
-					<%#= submit_tag "Buscar", :name => nil %> <br />
-					<%#= link_to "Busca Avançada", :controller => :search, :action => :index %>
-				<%# end -%>
-			</div>
-			<%= image_tag("logo.png") %>
-			<div id='main-menu'>
-				<ul>
-
-					<li> <%= link_to "Ativos", cars_path %> </li>
-					<li><a href="/cars/inativos">Finalizados</a></li>
-					<li><%= link_to "Cegonhas", cegonhas_path %></li>
-					<li><%= link_to "Parceiros", parceiros_path %></li>
-					<li><%= link_to "Clientes", compradores_path %></li>
-					<li><%= link_to "Controle Financeiro", financeiros_path %></li>
-				</ul>
+	<div id='wrapper'>
+		<div id='wrapper2'>
+			<div id='top-menu'>
+				<div id="account">
+				  <ul>
+				  	<% if !current_user.nil? %>
+				  	<% if current_user.admin? %>
+							<li><%= link_to "Usuários |", users_path %></li>
+					  <% end -%>
+					  <% end -%>
+				  	<li><% if user_signed_in? %> <%= render 'devise/menu/registration_items' %> <% end -%> </li>
+				  	<li><%= render 'devise/menu/login_items' %></li>
+				  </ul>
+				</div>
 			</div>
 
-		</div>
-		<div id='main'>
-			<div id='content'>
-					<%= yield %>
+			<div id='header'>
+				<%= image_tag("logo.png") %>
+				<div id='main-menu'>
+					<ul>
+						<li> <%= link_to "Ativos", cars_path %> </li>
+						<li><a href="/cars/inativos">Finalizados</a></li>
+						<li><%= link_to "Cegonhas", cegonhas_path %></li>
+						<li><%= link_to "Parceiros", parceiros_path %></li>
+						<li><%= link_to "Clientes", compradores_path %></li>
+						<li><%= link_to "Controle Financeiro", financeiros_path %></li>
+					</ul>
+				</div>
 			</div>
-		</div>
-		<div id='footer'>
-			<div class='bgl'>
-				<div class='bgr'>
-					2012 - Akirayoshida Solutions &copy (43) 9121-7750;. Powered by <a href='http://www.rubyonrails.org'>Ruby on Rails</a><br />
-					Licenciado para TransRoyal
+			<div id='main'>
+				<div id='content'>
+						<%= yield %>
+				</div>
+			</div>
+			<div id='footer'>
+				<div class='bgl'>
+					<div class='bgr'>
+						2012 - Akirayoshida Solutions &copy (43) 9121-7750;. Powered by <a href='http://www.rubyonrails.org'>Ruby on Rails</a><br />
+						Licenciado para TransRoyal
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </body>
 </html>

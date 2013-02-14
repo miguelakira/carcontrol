@@ -9,53 +9,48 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div id='wrapper'>
-    <div id='wrapper2'>
-        <div id='top-menu'>
-            <div id="account">
-              <ul>
-                <% if !current_user.nil? %>
-                <% if current_user.admin? %>
-                        <li><%= link_to "Usuários", users_path %></li>
-                  <% end -%>
-                  <% end -%>
-                <li><%= render 'devise/menu/login_items' %></li>
-
-
-              </ul>
-            </div>
-        </div>
-
-        <div id='header'>
-
-            <%= image_tag("logo.png") %>
-
-            <div id='main-menu'>
-                <ul>
-                    <li><a href="/clientes">Buscar Carros</a></li>
-                    <li><a href="http://www.transroyal.com.br/index.php/empresa" target="_new">Sobre a Transroyal</a></li>
-                    <li><a href="http://www.transroyal.com.br/index.php/duvidas">Dúvidas</a></li>
-                    <li><a href="http://www.transroyal.com.br/index.php/contato" target="_new">Contato</a></li>
-                </ul>
-            </div>
-
-        </div>
-        <div id='main'>
-            <div id='content'>
-                <div data-pjax-container>
-                    <%= yield %>
+    <div id='wrapper'>
+        <div id='wrapper2'>
+            <div id='top-menu'>
+                <div id="account">
+                  <ul>
+                    <% if !current_user.nil? %>
+                    <% if current_user.admin? %>
+                            <li><%= link_to "Usuários", users_path %></li>
+                      <% end -%>
+                      <% end -%>
+                    <li><%= render 'devise/menu/login_items' %></li>
+                  </ul>
                 </div>
             </div>
-        </div>
-        <div id='footer'>
-            <div class='bgl'>
-                <div class='bgr'>
-                    2012 - Akirayoshida Solutions &copy;. Powered by <a href='http://www.rubyonrails.org'>Ruby on Rails</a><br />
-                    Licenciado para TransRoyal
+            <div id='header'>
+                <%= image_tag("logo.png") %>
+                <div id='main-menu'>
+                    <ul>
+                        <li><a href="/clientes">Buscar Carros</a></li>
+                        <li><a href="http://www.transroyal.com.br/index.php/empresa" target="_new">Sobre a Transroyal</a></li>
+                        <li><a href="http://www.transroyal.com.br/index.php/duvidas">Dúvidas</a></li>
+                        <li><a href="http://www.transroyal.com.br/index.php/contato" target="_new">Contato</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div id='main'>
+                <div id='content'>
+                    <div data-pjax-container>
+                        <%= yield %>
+                    </div>
+                </div>
+            </div>
+            <div id='footer'>
+                <div class='bgl'>
+                    <div class='bgr'>
+                        2012 - Akirayoshida Solutions &copy;. Powered by <a href='http://www.rubyonrails.org'>Ruby on Rails</a><br />
+                        Licenciado para TransRoyal
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

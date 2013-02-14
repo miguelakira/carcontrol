@@ -3,7 +3,7 @@
 Um app para uma transportadora de carros. Faz o controle financeiro, controle das rotas, entregas e de clientes. Exporta os relatórios para PDF caso necessário.
 
 Para instalar, siga os procedimentos:
-1 - Edite o database.yml
+1 - Configure o database.yml
 2 - digite no terminal: bundle install
 3 - digite no terminal: rake db:migrate
 4 - digite no terminal: rake db:seed

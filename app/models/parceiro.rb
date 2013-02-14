@@ -12,9 +12,9 @@ class Parceiro < ActiveRecord::Base
   validates	:nome,
   			:presence => { :message => "- O nome nao pode ser deixada em branco!" }
 
-  before_save :titleize_nome
+  before_save :capitaliza_nome
 
-  def titleize_nome
+  def capitaliza_nome
     if self.nome
       self.nome = self.nome.titleize
     end
