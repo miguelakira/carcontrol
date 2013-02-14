@@ -250,18 +250,20 @@ class CarsController < ApplicationController
 
   def generate_pdf
     @car = Car.find(params[:id])
-
+    @car.comprador ? @owner = @car.comprador : @owner = @car.empresa
     flash[:notice] = "PDF gerado na data #{Time.now.strftime('%d/%m/%Y')}"
 
     filename = "#{Rails.root}/public/Relatorio_#{@car.placa}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
+
     html = render_to_string(:template => "/cars/show.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
     kit = PDFKit.new(html, :disable_javascript => true )
+
     kit.stylesheets << "#{Rails.root}/app/assets/to_pdf.css"
     pdf = kit.to_pdf
     file = kit.to_file(filename)
+
     send_file filename, :type => 'application/pdf'
+
     File.delete(filename)
   end
-
-
 end
