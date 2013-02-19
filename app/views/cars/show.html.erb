@@ -196,16 +196,26 @@
       %>
       <td><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@owner)) %></span></td>
     </tr>
+    <tr>
+      <th style='border-left: 1px solid #C1DAD7;'>Provisionados</th>
+      <% if saldo_devedor_do_cliente(@owner) >= 0
+          @row_class  = 'red'
+        else
+          @row_class = 'blue'
+        end
+      %>
+      <td><span class = "<%= @row_class %>"><%= retorna_valor_monetario(pagamentos_provisionados(@owner)) %></span></td>
+    </tr>
   </table>
 
-  <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-top:0px;" >
+  <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-top:0px; margin-bottom:10px;" >
     <tr>
       <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
       <th>Valor do <br> Pagamento</th>
       <th>Forma de <br> Pagamento</th>
       <th>Saldo </th>
     </tr>
-    <% @owner.pagamentos.each do |pagamento| %>
+    <% @owner.pagamentos.where(:data_pagamento => (Time.now.beginning_of_month..Time.now.end_of_day)).find_each do |pagamento| %>
       <% if pagamento.saldo >= 0
           row_class  = 'blue'
         else
@@ -220,6 +230,29 @@
         <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
       </tr>
       <% end %>
+    <% end %>
+  </table>
+
+<table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-top:0px;" >
+    <tr>
+      <th width=50px style='border-left: 1px solid #C1DAD7;'>Provisionado <br>Para Dia</th>
+      <th>Valor <br> Provisionado</th>
+      <th>Forma de <br> Pagamento</th>
+      <th>Saldo </th>
+    </tr>
+    <% @owner.pagamentos.where(:data_pagamento => (Time.now + 1.day..Time.now + 10.years)).find_each do |pagamento| %>
+      <% if pagamento.saldo >= 0
+          row_class  = 'blue'
+        else
+          row_class = 'red'
+        end
+          %>
+      <tr>
+        <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
+        <td><%= retorna_valor_monetario(pagamento.valor) %></td>
+        <td><%= pagamento.forma_pagamento %></td>
+        <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
+      </tr>
     <% end %>
   </table>
 </div>

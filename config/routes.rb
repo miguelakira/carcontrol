@@ -23,6 +23,7 @@ Carcontrol::Application.routes.draw do
       post :logistica_save
     end
   end
+
   resources :parceiros
   devise_for :users, :path_prefix => 'd'
   resources :users

@@ -28,7 +28,6 @@ module ApplicationHelper
     valor_total = 0
     terceiro.cars.each do |car|
       valor_total += car.debito.valor_total
-
     end
   return number_to_currency(valor_total, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$")
   end

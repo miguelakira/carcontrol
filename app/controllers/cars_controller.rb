@@ -261,9 +261,10 @@ class CarsController < ApplicationController
     kit.stylesheets << "#{Rails.root}/app/assets/to_pdf.css"
     pdf = kit.to_pdf
     file = kit.to_file(filename)
-
     send_file filename, :type => 'application/pdf'
 
     File.delete(filename)
   end
+
+
 end
