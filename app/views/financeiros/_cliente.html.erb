@@ -24,10 +24,4 @@
   <%= render 'cars', :carros => @cars_nao_pagos, :status => "_nao_pagos" %>
 <% end -%>
 
-<legend><h5 style="font-size: 1.3em">Carros Pagos</h5></legend>
 
-<% if @cars_pagos.empty? %>
-  <p>Este cliente não possui carros pagos.</p>
-<% else %>
-  <%= render 'cars_pagos', :carros => @cars_pagos, :status => "_pagos" %>
-<% end -%>
