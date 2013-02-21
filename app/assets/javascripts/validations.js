@@ -65,14 +65,12 @@ function cnpj(v){
 function romanos(v){
     v=v.toUpperCase()             //Maiúsculas
     v=v.replace(/[^IVXLCDM]/g,"") //Remove tudo o que não for I, V, X, L, C, D ou M
-    //Essa é complicada! Copiei daqui: http://www.diveintopython.org/refactoring/refactoring.html
     while(v.replace(/^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/,"")!="")
         v=v.replace(/.$/,"")
     return v
 }
 
 function site(v){
-    //Esse sem comentarios para que você entenda sozinho ;-)
     v=v.replace(/^http:\/\/?/,"")
     dominio=v
     caminho=""
@@ -96,7 +94,7 @@ function site(v){
         return v
     }
 /*Função que padroniza valor monétario MELHOR*/
-function moeda(z){  
+function moeda(z){
                 v = z.value;
                 v=v.replace(/\D/g,"")  //permite digitar apenas números
         v=v.replace(/[0-9]{12}/,"inválido")   //limita pra máximo 999.999.999,99
