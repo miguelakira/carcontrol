@@ -4,7 +4,6 @@ class CarsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-
     # para o sidebar
     @car = Car.find(params[:car_id]) if params[:car_id]
     @cars = Car.order(:data_compra).where(:ativo => [1,2,3,4,5,6])
@@ -15,6 +14,10 @@ class CarsController < ApplicationController
       format.json { render json: @cars }
     end
   end
+
+
+
+
 
   def inativos
     # para o sidebar
