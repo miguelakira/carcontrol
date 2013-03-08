@@ -68,7 +68,12 @@ class CompradoresController < ApplicationController
       converter_string_to_bigdecimal(@comprador, params[:comprador][:pagamentos_attributes]['0'])
       respond_to do |format|
         if @comprador.update_attributes(params[:comprador])
-          format.html { redirect_to financeiros_url, notice: 'Dados do Cliente atualizados com sucesso.' }
+          # redireciona para o financeiros ao efetuar novo pagamento. Separa por cliente ou empresa
+          if defined?(@comprador.cnpj)
+            format.html { redirect_to :controller => :financeiros, :action => :show, :comprador_cnpj => @comprador.cnpj }
+          elsif defined?(@comprador.cpf)
+            format.html { redirect_to :controller => :financeiros, :action => :show, :comprador_cpf => @comprador.cpf }
+          end
           format.json { head :no_content }
         else
           format.html { render action: "edit" }

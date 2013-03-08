@@ -1373,3 +1373,61 @@ table.pretty thead th.sorting {
 .blue {
   color:blue;
 }
+
+.paragraph {
+  margin-right:10px;
+}
+
+
+#blank {
+  width: 350px;
+  padding: 0;
+  margin: 0;
+  float:left;
+  margin: 10px;
+  background: #fff;
+  color: black;
+
+
+}
+
+caption {
+  padding: 0 0 5px 0;
+  width: 450px;
+  font: italic 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+  text-align: left;
+}
+
+#blank th {
+  text-align: left;
+  padding:2px 0px 0px 4px;
+  border: none;
+}
+
+#blank th.last {
+  padding-bottom: 12px;
+}
+
+#blank td.last {
+  padding-bottom: 12px;
+}
+
+#blank tr {
+  padding:0px 0px 0px 4px;
+}
+
+#blank td {
+  text-align: left;
+  padding:0px;
+  border: none;
+  height: 0;
+}
+
+.financeiros {
+  border: 2px solid #E4E4E4;
+  width:350px;
+  float:left;
+  height: 240px;
+  margin-right:30px;
+}
+

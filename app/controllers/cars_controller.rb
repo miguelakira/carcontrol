@@ -15,10 +15,6 @@ class CarsController < ApplicationController
     end
   end
 
-
-
-
-
   def inativos
     # para o sidebar
     @car = Car.find(params[:car_id]) if params[:car_id]
@@ -268,6 +264,4 @@ class CarsController < ApplicationController
 
     File.delete(filename)
   end
-
-
 end

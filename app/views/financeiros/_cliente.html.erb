@@ -8,13 +8,6 @@
   <%= render 'cars', :carros => @cars_ativos, :status => "_ativos" %>
 <br />
 
-<legend><h5 style="font-size: 1.3em">Carros Inativos</h5></legend>
-
-<% if @cars_inativos.empty? %>
-  <p>Não há carros finalizados para este cliente</p>
-<% else %>
-  <%= render 'cars', :carros => @cars_inativos, :status => "_inativos" %>
-<% end -%>
 
 <legend><h5 style="font-size: 1.3em">Carros Não-Pagos</h5></legend>
 
@@ -22,6 +15,14 @@
   <p>Este cliente pagou todos os carros</p>
 <% else %>
   <%= render 'cars', :carros => @cars_nao_pagos, :status => "_nao_pagos" %>
+<% end -%>
+
+<legend><h5 style="font-size: 1.3em">Carros Finalizados</h5></legend>
+
+<% if @cars_inativos.empty? %>
+  <p>Não há carros finalizados para este cliente</p>
+<% else %>
+  <%= render 'cars', :carros => @cars_inativos, :status => "_inativos" %>
 <% end -%>
 
 

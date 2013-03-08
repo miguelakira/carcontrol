@@ -23,7 +23,13 @@ class Pagamento < ActiveRecord::Base
   end
 
   def verifica_saldo
-    self.car.comprador ? cliente = self.comprador : cliente = self.empresa
+    if self.car.nil?
+      self.comprador ? cliente = self.comprador : cliente = self.empresa
+    end
+
+    if !self.car.nil?
+      self.car.comprador ? cliente = self.comprador : cliente = self.empresa
+    end
     self.saldo = ApplicationController.helpers.saldo_devedor_do_cliente(cliente) + self.valor unless self.valor.nil?
   end
 

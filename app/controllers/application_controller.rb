@@ -128,6 +128,5 @@ def atualiza_historico_parceiro(car)
         valor[1].gsub!(',','.')
       end
     end
-
   end
 end

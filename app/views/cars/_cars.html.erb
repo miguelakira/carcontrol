@@ -14,7 +14,7 @@
     <dd class = '<%= row_class %>'><%= retorna_valor_monetario(saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa)) %></dd>
 
     <dt>Localização Atual:</dt>
-    <dd><% unless @car.localizacao.nil? %><%= @car.localizacao %><% end -%></dd>
+    <dd><% unless @car.localizacao.   nil? %><%= @car.localizacao %><% end -%></dd>
 
     <dt>Cidade de Origem:</dt>
     <dd><% unless @car.cidade_origem.nil? %><%= Cidade.find(@car.cidade_origem).text %>, <%= Estado.find(@car.estado_origem).sigla %><% end -%></dd>
