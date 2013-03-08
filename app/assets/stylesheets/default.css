@@ -8,6 +8,7 @@ h2, .wiki h1 {font-size: 20px;padding: 2px 10px 1px 0px;margin: 0 0 10px 0; bord
 h3, .wiki h2 {font-size: 16px;padding: 2px 10px 1px 0px;margin: 0 0 10px 0; border-bottom: 1px solid #bbbbbb; color: #444;}
 h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; border-bottom: 1px dotted #bbbbbb; color: #444;}
 
+/***** Layout *****/
 #wrapper {background: white;}
 
 .acoes {
@@ -73,6 +74,7 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
 #admin-menu a.info { background-image: url(/assets/help.png); }
 #admin-menu a.server_authentication { background-image: url(/assets/server_key.png); }
 
+/*#main {background-color:#EEE;} */
 #main {background-color:#FFF;}
 
 
@@ -86,7 +88,7 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
 #content {   width:1500px; background-color: #fff; margin: 0px; border-right: 0px solid #ddd; padding: 0px 10px 10px 10px; z-index: 10; height: 100%;}
 * html #content{ width: 100%; padding-left: 0; margin-top: 0px; padding: 6px 10px 10px 10px;}
 html>body #content { min-height: 600px; }
-* html body #content { height: 600px; }
+* html body #content { height: 600px; } /* IE */
 
 #main.nosidebar #sidebar{ display: none; }
 #main.nosidebar #content{ width: auto; border-right: 0; }
@@ -102,12 +104,14 @@ input#openid_url { background: url(/assets/openid-bg.gif) no-repeat; background-
 
 .clear:after{ content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 
+/***** Links *****/
 a, a:link, a:visited{ color: #2A5685; text-decoration: none; }
 a:hover, a:active{ color: #c61a1a; text-decoration: underline;}
 a img{ border: 0; }
 
 a.issue.closed, a.issue.closed:link, a.issue.closed:visited { color: #999; text-decoration: line-through; }
 
+/***** Tables *****/
 table.list { border: 1px solid #e4e4e4;  border-collapse: collapse; width: 100%; margin-bottom: 4px; }
 table.list th {  background-color:#EEEEEE; padding: 4px; white-space:nowrap; }
 table.list td { vertical-align: top; }
@@ -389,10 +393,11 @@ textarea#custom_field_possible_values {width: 99%;}
 .pagination {font-size: 90%;}
 p.pagination {margin-top:8px;}
 
+/***** Tabular forms ******/
 .tabular p{
 margin: 0;
 padding: 5px 0 8px 0;
-padding-left: 180px;
+padding-left: 180px; /*width of left column containing the label elements*/
 height: 1%;
 clear:left;
 }
@@ -403,9 +408,8 @@ html>body .tabular p {overflow:hidden;}
 font-weight: bold;
 float: left;
 text-align: right;
-margin-left: -180px;
-width: 175px;
-margin*/
+margin-left: -180px; /*width of left column*/
+width: 175px; /*width of labels. Should be smaller than left column to create some right margin*/
 }
 
 .tabular label.floating{
@@ -460,6 +464,7 @@ p.other-formats { text-align: right; font-size:0.9em; color: #666; }
 
 a.atom { background: url(/assets/feed.png) no-repeat 1px 50%; padding: 2px 0px 3px 16px; }
 
+/* Project members tab */
 div#tab-content-members .splitcontentleft, div#tab-content-memberships .splitcontentleft, div#tab-content-users .splitcontentleft { width: 64% }
 div#tab-content-members .splitcontentright, div#tab-content-memberships .splitcontentright, div#tab-content-users .splitcontentright { width: 34% }
 div#tab-content-members fieldset, div#tab-content-memberships fieldset, div#tab-content-users fieldset { padding:1em; margin-bottom: 1em; }
@@ -473,6 +478,7 @@ input#principal_search, input#user_search {width:100%}
 
 * html div#tab-content-members fieldset div { height: 450px; }
 
+/***** Flash & error messages ****/
 #errorExplanation, div.flash, .nodata, .warning {
     padding: 4px 4px 4px 30px;
     margin-bottom: 12px;
@@ -516,8 +522,9 @@ span.error {padding-left:20px; background:url(/assets/exclamation.png) no-repeat
 #errorExplanation ul { font-size: 0.9em;}
 #errorExplanation h2, #errorExplanation p { display: none; }
 
+/***** Ajax indicator ******/
 #ajax-indicator {
-position: absolute;
+position: absolute; /* fixed not supported by IE */
 background-color:#eee;
 border: 1px solid #bbb;
 top:35%;
@@ -541,6 +548,7 @@ padding-left: 26px;
 vertical-align: bottom;
 }
 
+/***** Calendar *****/
 table.cal {border-collapse: collapse; width: 100%; margin: 0px 0 6px 0;border: 1px solid #d7d7d7;}
 table.cal thead th {width: 14%; background-color:#EEEEEE; padding: 4px; }
 table.cal thead th.week-number {width: auto;}
@@ -556,6 +564,7 @@ table.cal .ending a, p.cal.legend .ending {background: url(/assets/bullet_end.pn
 table.cal .starting.ending a, p.cal.legend .starting.ending {background: url(/assets/bullet_diamond.png) no-repeat -1px -2px; padding-left:16px;}
 p.cal.legend span {display:block;}
 
+/***** Tooltips ******/
 .tooltip{position:relative;z-index:24;}
 .tooltip:hover{z-index:25;color:#000;}
 .tooltip span.tip{display: none; text-align:left;}
@@ -571,6 +580,7 @@ font-size: 0.8em;
 color:#505050;
 }
 
+/***** Progress bar *****/
 table.progress {
     border: 1px solid #D7D7D7;
     border-collapse: collapse;
@@ -588,6 +598,7 @@ table.progress td.open { background: #FFF none repeat scroll 0%; }
 p.pourcent {font-size: 80%;}
 p.progress-info {clear: left; font-style: italic; font-size: 80%;}
 
+/***** Tabs *****/
 #content .tabs {height: 2.6em; margin-bottom:1.2em; position:relative; overflow:hidden;}
 #content .tabs ul {margin:0; position:absolute; bottom:0; padding-left:1em; width: 2000px; border-bottom: 1px solid #bbbbbb;}
 #content .tabs ul li {
@@ -651,6 +662,7 @@ button.tab-right {
 	background: #eeeeee url(/assets/bullet_arrow_right.png) no-repeat 50% 50%;
 }
 
+/***** Auto-complete *****/
 div.autocomplete {
   position:absolute;
   width:400px;
@@ -683,6 +695,7 @@ div.autocomplete ul li span.informal {
 #parent_issue_candidates ul li {width: 500px;}
 #related_issue_candidates ul li {width: 500px;}
 
+/***** Diff *****/
 .diff_out { background: #fcc; }
 .diff_out span { background: #faa; }
 .diff_in { background: #cfc; }
@@ -695,6 +708,7 @@ color:#505050;
 border: 1px solid #e4e4e4;
 }
 
+/***** Wiki *****/
 div.wiki table {
     border: 1px solid #505050;
     border-collapse: collapse;
@@ -737,7 +751,7 @@ div.wiki ul.toc {
     margin-left: 0;
     display: table
 }
-* html div.wiki ul.toc { width: 50%; }
+* html div.wiki ul.toc { width: 50%; } /* IE6 doesn't autosize div */
 
 div.wiki ul.toc.right { float: right; margin-left: 12px; margin-right: 0; width: auto; }
 div.wiki ul.toc.left  { float: left; margin-right: 12px; margin-left: 0; width: auto; }
@@ -760,6 +774,7 @@ h1:hover a.wiki-anchor, h2:hover a.wiki-anchor, h3:hover a.wiki-anchor { display
 
 div.wiki img { vertical-align: middle; }
 
+/***** My page layout *****/
 .block-receiver {
 border:1px dashed #c0c0c0;
 margin-bottom: 20px;
@@ -791,6 +806,7 @@ a.close-icon:hover {
 background-image:url('/assets/close_hl.png');
 }
 
+/***** Gantt chart *****/
 .gantt_hdr {
   position:absolute;
   top:0;
@@ -841,6 +857,7 @@ background-image:url('/assets/close_hl.png');
 .version-behind-schedule a, .issue-behind-schedule a {color: #f66914;}
 .version-overdue a, .issue-overdue a, .project-overdue a {color: #f00;}
 
+/***** Icons *****/
 .icon {
 background-position: 0% 50%;
 background-repeat: no-repeat;
@@ -942,6 +959,7 @@ td.username img.gravatar {
 	margin: 0 1em 1em 0;
 }
 
+/* Used on 12px Gravatar img tags without the icon background */
 .icon-gravatar {
   float: left;
   margin-right: 4px;
@@ -960,6 +978,7 @@ h2 img { vertical-align:middle; }
 
 .hascontextmenu { cursor: context-menu; }
 
+/***** Media print specific styles *****/
 @media print {
   #top-menu, #header, #main-menu, #sidebar, #footer, .contextual, .other-formats { display:none; }
   #main { background: #fff; }
@@ -972,7 +991,7 @@ h2 img { vertical-align:middle; }
 }
 
 
-
+/**************** TABLE ****************************/
 
 body {
   font: normal 11px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
@@ -1176,6 +1195,7 @@ hr.small{
 
 
 
+/*------------ Flecha do sortable -----------------_*/
 
 .pretty th .current {
   padding-right: 12px;
@@ -1190,12 +1210,16 @@ hr.small{
   background-image: url(/assets/down_arrow.gif);
 }
 
+/*-------- texto ---------) */
 .right {
   float: right;
 }
 
 
 
+/*
+ * DataTables framework
+ */
 div.dataTables_wrapper {
 }
 
@@ -1222,6 +1246,7 @@ div.dataTables_paginate {
   padding: 6px;
 }
 
+/* Self clearing - http://www.webtoolkit.info/css-clearfix.html */
 .dataTables_wrapper:after {
   content: ".";
   display: block;
@@ -1239,6 +1264,10 @@ html[xmlns] .dataTables_wrapper {
   height: 1%;
 }
 
+
+/*
+ * Table styles
+ */
 table.pretty {
   width: 100%;
   clear: both;
@@ -1250,6 +1279,11 @@ table.pretty th {
   padding: 0px;
   border: 1px solid #fff;
 }
+
+/* Header cells */
+
+
+/* Body cells */
 
 
 table.pretty tbody td.nao-pago {
@@ -1269,6 +1303,7 @@ table.pretty tbody td.nao-pago {
   background: #ff4141;
   color: yellow;
 }
+/* Footer cells */
 table.pretty tfoot th {
   background: #b0cc7f;
   text-align: left;
@@ -1281,6 +1316,9 @@ table.pretty tfoot td {
 }
 
 
+/*
+ * Pagination
+ */
 a.paginate_button,
 a.paginate_active {
   display: inline-block;
@@ -1312,6 +1350,9 @@ div.dataTables_paginate span>a {
 }
 
 
+/*
+ * Sorting
+ */
 table.pretty thead th.sorting_asc {
   background: #66A9BD url('/assets/sort_asc.png') no-repeat right center;
 }
