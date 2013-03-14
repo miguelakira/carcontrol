@@ -25,12 +25,16 @@ gem 'jquery-ui-rails'
 
 # Gems used only for assets and not requiredg
 # in production environments by default.
+# como disse, só com terapia
+
 group :assets do
   gem 'sass-rails',   '3.2.5'
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'uglifier', '>= 1.0.3'
+  gem 'therubyracer'
+  gem 'execjs'
 
 end
 
@@ -60,6 +64,7 @@ gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
+#
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
