@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+  <p id="notice"><%= notice %></p>
 <p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @car.id %> </b></p>
 
 <div class = "floating_box">
@@ -131,6 +131,7 @@
   </table>
 </div>
 
+  <br><br>
 <div class = "floating_box">
   <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
     <caption><h5>Detalhes do frete</h5></caption>
@@ -183,7 +184,7 @@
       <% if @car.comprador %>
       <td style='border-top: 1px solid #C1DAD7;'><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></td>
       <% elsif @car.empresa %>
-      <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></td>
+      <td style='border-top: 1px solid #C1DAD7;'><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></td>
       <% end %>
     </tr>
     <tr>
