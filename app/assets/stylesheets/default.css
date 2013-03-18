@@ -7,6 +7,9 @@ h1 {margin:0; padding:0; font-size: 24px;}
 h2, .wiki h1 {font-size: 20px;padding: 2px 10px 1px 0px;margin: 0 0 10px 0; border-bottom: 1px solid #bbbbbb; color: #444;}
 h3, .wiki h2 {font-size: 16px;padding: 2px 10px 1px 0px;margin: 0 0 10px 0; border-bottom: 1px solid #bbbbbb; color: #444;}
 h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; border-bottom: 1px dotted #bbbbbb; color: #444;}
+table, tr, td, th, tbody, thead, tfoot {
+    page-break-inside: avoid !important;
+}
 
 #wrapper {background: white;}
 
@@ -962,6 +965,17 @@ h2 img { vertical-align:middle; }
 	.autoscroll {overflow-x: visible;}
 	table.list {margin-top:0.5em;}
 	table.list th, table.list td {border: 1px solid #aaa;}
+
+ #container {
+        width: auto;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    #line_items {
+        page-break-before: always;
+    }
 }
 
 
@@ -1334,8 +1348,6 @@ table.pretty thead th.sorting {
   margin: 10px;
   background: #fff;
   color: black;
-
-
 }
 
 caption {
@@ -1374,7 +1386,7 @@ caption {
   border: 2px solid #E4E4E4;
   width:350px;
   float:left;
-  height: 240px;
+  height: 280px;
   margin-right:30px;
 }
 

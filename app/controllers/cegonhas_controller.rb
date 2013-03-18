@@ -8,8 +8,6 @@ class CegonhasController < ApplicationController
     @cegonhas.empty? ? @mensagem = "Nenhuma Cegonha Cadastrada" : @mensagem = "Cegonhas Cadastradas"
     @cars = Car.all
 
-
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @cegonhas }
@@ -36,7 +34,6 @@ class CegonhasController < ApplicationController
     if params[:cegonha_contratada]
       @cegonha.build_empresa
       @cegonha.build_debito
-
     end
 
     respond_to do |format|

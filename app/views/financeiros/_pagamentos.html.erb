@@ -82,6 +82,11 @@
       R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
     </div>
 
+    <div class="field">
+      <%= builder.label :observacao, "Observação" %><br>
+      <%= builder.text_area :observacao, :cols => 40, :rows => 3 %>
+    </div>
+
   <% end %>
 <%= f.submit "Salvar" %>
 <% end %>
@@ -101,9 +106,10 @@
     <thead>
     <tr>
       <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
-      <th>Valor do <br> Pagamento</th>
-      <th>Forma de <br> Pagamento</th>
-      <th>Saldo </th>
+      <th width=120px>Valor do <br> Pagamento</th>
+      <th width=120px>Forma de <br> Pagamento</th>
+      <th width=120px>Saldo </th>
+      <th>Observação</th>
     </tr>
 
   <tbody>
@@ -122,6 +128,7 @@
       <td><%= retorna_valor_monetario(pagamento.valor) %></td>
       <td><%= pagamento.forma_pagamento %></td>
       <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
+      <td><%= pagamento.observacao %> </td>
     </tr>
   <% end %>
   <% end %>

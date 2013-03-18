@@ -1,5 +1,22 @@
 .page-break { display:block; clear:both; page-break-after:always; }
 
+table, tr, td, th, tbody, thead, tfoot {
+
+}
+@media print {
+ #container {
+        width: auto;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+}
+
+ #line items {
+    clear: both; page-break-before: always;
+
+}
+
 #mytable th.none {
   background: #fff;
   color: black;
@@ -24,8 +41,6 @@
 th.begin {
   border-left: 1px solid #C1DAD7;
   min-width: 30px;
-    
-  
 }
 th.nobg {
   border-top: 0;
@@ -58,14 +73,14 @@ td a:visited{
 td.total {
     color: #4f6b72;
     background: #CAE8EA  no-repeat;
-    
+
 }
 
 td.begin,
 td.begin_total {
   border-left: 1px solid #C1DAD7;
   border-bottom: 1px solid #C1DAD7;
-  
+
   padding: 6px 6px 6px 12px;
   color: #4f6b72;
 }
@@ -82,7 +97,7 @@ td.alt {
 }
 
 th a:link {
-  text-decoration: none; 
+  text-decoration: none;
     color: #4f6b72;
 
 }
@@ -100,7 +115,7 @@ td.nao-pago a:hover {
 
 
 td.nao-pago {
- 
+
   color: #F00;
 }
 
@@ -158,25 +173,9 @@ p {
 hr.small{
     width:980px;
     float: left;
-    text-style: left;
+    text-align: left;
 }
 
-
-
-/*------------ Flecha do sortable -----------------_*/
-
-.pretty th .current {  
-  padding-right: 12px;  
-  background-repeat: no-repeat;  
-  background-position: right center;  
-}  
-.pretty th .asc {   
-  background-image: url(/assets/up_arrow.gif);   
-}  
-  
-.pretty th .desc {   
-  background-image: url(/assets/down_arrow.gif);   
-}  
 
 /*-------- texto ---------) */
 .right {

@@ -55,7 +55,7 @@ module Carcontrol
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    config.autoload_paths += Dir["#{config.root}/lib/**/"]  
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
     # para resolver problema com precompile no heroku
     config.assets.initialize_on_precompile = false
@@ -66,9 +66,11 @@ module Carcontrol
 
 
     # PDFKIT
+    config.middleware.use "PDFKit::Middleware", :print_media_type => true
+
     PDFKit.configure do |config|
     config.wkhtmltopdf = `which wkhtmltopdf`.to_s.strip
-    config.wkhtmltopdf = Rails.root.join('bin', 'wkhtmltopdf-amd64').to_s if Rails.env.production? 
+    config.wkhtmltopdf = Rails.root.join('bin', 'wkhtmltopdf-amd64').to_s if Rails.env.production?
     config.default_options = {
         :encoding=>"UTF-8",
         :page_size=>"A4",

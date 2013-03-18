@@ -54,7 +54,6 @@ class CarsController < ApplicationController
     @car.build_debito
     @car.pagamentos.build
 
-
     @status_pagamentos = StatusPagamento.all
     @editar_localizacao = params[:editar_localizacao]
     @cegonhas = Cegonha.all
@@ -259,9 +258,11 @@ class CarsController < ApplicationController
 
     kit.stylesheets << "#{Rails.root}/app/assets/to_pdf.css"
     pdf = kit.to_pdf
+
     file = kit.to_file(filename)
+
     send_file filename, :type => 'application/pdf'
 
-    File.delete(filename)
+    #File.delete(filename)
   end
 end
