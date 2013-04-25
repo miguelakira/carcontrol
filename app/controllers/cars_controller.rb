@@ -167,9 +167,9 @@ class CarsController < ApplicationController
     if defined?(params[:car][:debito_attributes])
       converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
     end
-    if defined?(params[:car][:pagamentos_attributes])
-      converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0'])
-    end
+    #if defined?(params[:car][:pagamentos_attributes])
+    #  converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0'])
+    #end
     if params[:salvar_localizacao]
       if !@car.estado_origem.nil?
         @car.cegonha_id = nil

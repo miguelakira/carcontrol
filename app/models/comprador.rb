@@ -1,13 +1,14 @@
 #encoding: UTF-8
 class Comprador < ActiveRecord::Base
-  attr_accessible :celular, :email, :rg, :cpf, :telefone, :nome, :car_id, :observacao, :parente, :telefone_parente,
+  attr_accessible :celular, :email, :rg, :cpf, :telefone, :nome, :car_id, :observacao, :parente, :telefone_parente, :parceiro_id
           :pagamentos_attributes
   has_many :cars
   has_many :contatos
   has_many :pagamentos
   has_one :debito
+  belongs_to :parceiro
 
-  accepts_nested_attributes_for :cars, :pagamentos, :debito
+  accepts_nested_attributes_for :cars, :pagamentos, :debito, :parceiro
 
 
   validates :nome,

@@ -25,7 +25,7 @@
             <%= link_to(parceiro.cnpj, parceiro) %>
           <% end -%>
         </td>
-        <td class = "<%= @row_class %>"><%= parceiro.nome %> </td>
+        <td class = "<%= @row_class %>"><%= link_to parceiro.nome, parceiro %> </td>
         <td class = "<%= @row_class %>"><%= parceiro.contato %> </td>
         <td class = "<%= @row_class %>"><%= parceiro.telefone %> </td>
         <td> <%= (carros_com_parceiro(parceiro)).html_safe %> </td>

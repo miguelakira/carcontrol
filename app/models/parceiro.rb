@@ -6,8 +6,11 @@ class Parceiro < ActiveRecord::Base
   has_many :cars
   has_many :historicos
   has_many :pagamentos
+  has_many :compradores
+  has_many :empresas
 
-  accepts_nested_attributes_for :cars, :pagamentos
+
+  accepts_nested_attributes_for :cars, :pagamentos, :compradores
 
   validates	:nome,
   			:presence => { :message => "- O nome nao pode ser deixada em branco!" }
