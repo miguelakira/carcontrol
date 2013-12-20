@@ -10,10 +10,12 @@ class Cegonha < ActiveRecord::Base
   accepts_nested_attributes_for :empresa, :motorista, :pagamento
 
   validates	:placa,
-  			:presence => { :message => "- A placa não pode ser deixada em branco!" },
-  			:uniqueness => { :message => "- A placa já existe no banco de dados. É preciso que seja única." }
+    :presence => { :message => "- A placa não pode ser deixada em branco!" },
+    :uniqueness => { :message => "- A placa já existe no banco de dados. É preciso que seja única." }
 
   before_save :check_routes, :salva_nome_do_motorista
+
+  after_save :unload_cars_if_arrived_at_destination
 
   def check_routes
     if rotas.nil?
@@ -34,7 +36,36 @@ class Cegonha < ActiveRecord::Base
   end
 
    def total_freight
-     self.cars.map {|car| car.debito.valor_total}.inject(0, &:+)
+     cars.map {|car| car.debito.valor_total}.inject(0, &:+)
    end
+
+ # se chegou no destino, tira os carros da cegonha e fecha o historico
+  def unload_cars_if_arrived_at_destination
+    if (cidade_destino == cidade_id && estado_destino == estado_id)
+      cars.each do |car|
+        # protege contra codigo legado antes do historico
+        if car.historicos.empty?
+            car.historicos.create(:cegonha_id => car.cegonha.id)
+        end
+        #saiu da cegonha
+        car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => localizacao)
+        # verifica se o carro descarregado chegou no destino ou se vai embarcar em outra cegonha/parceiro (logistica)
+        if car.cidade_destino == cidade_destino and car.estado_destino == estado_destino
+          car.ativo = VEHICLE_STATUS.index('UNLOADED')
+        else
+          car.ativo = VEHICLE_STATUS.index('IN_LOGISTICS')
+        end
+        car.cegonha = nil
+        car.save
+
+      end
+      self.rotas += 1
+      self.cidade_origem = nil
+      self.cidade_destino = nil
+      self.estado_origem = nil
+      self.estado_destino = nil
+      self.save
+    end
+  end
 
 end

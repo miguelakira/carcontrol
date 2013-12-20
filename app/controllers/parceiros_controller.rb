@@ -66,7 +66,6 @@ class ParceirosController < ApplicationController
 
     respond_to do |format|
       if @parceiro.update_attributes(params[:parceiro])
-        # se chegou no destino, todos os carros saem da parceiro e o status deles muda para descarregados.
         ativar_status_de_carro_com_terceiros(@parceiro.id, @parceiro.class.to_s)
 
         if params[:editar_localizacao]

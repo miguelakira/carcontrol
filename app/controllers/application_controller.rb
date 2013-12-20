@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     # protege contra codigo legado antes do historico
     if car.cegonha
       if car.historicos.empty?
-        car.historicos.create(:cegonha_id => car.cegonha.id, :nome_rota => car.cegonha.get_nome_rota, :rota => car.cegonha.rotas)
+        car.historicos.create(:cegonha_id => car.cegonha.id, :nome_rota => car.cegonha.route_name, :rota => car.cegonha.rotas)
       end
     end
     # entrou na cegonha
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
       if params[:car]
         if !params[:car][:cegonha_id].empty? and !car.parceiro
           cegonha = Cegonha.find(params[:car][:cegonha_id])
-          cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
+          cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.route_name)
           cegonha.save
         end
       end
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
           if params[:car][:cegonha_id].to_i != car.cegonha.id
             car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
             cegonha = Cegonha.find(params[:car][:cegonha_id])
-            cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
+            cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.route_name)
             cegonha.save
           end
         end
@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
           car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
         end
       else
-        car.historicos.last.update_attributes(:data_entrada => Time.now, :localizacao_entrada => car.cegonha.localizacao, :rota => car.cegonha.rotas, :nome_rota => car.cegonha.get_nome_rota)
+        car.historicos.last.update_attributes(:data_entrada => Time.now, :localizacao_entrada => car.cegonha.localizacao, :rota => car.cegonha.rotas, :nome_rota => car.cegonha.route_name)
       end
     end
   end
@@ -104,7 +104,7 @@ def atualiza_historico_parceiro(car)
         elsif params[:car][:parceiro_id].empty? and !params[:car][:cegonha_id].empty?
           car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.localizacao)
           cegonha = Cegonha.find(params[:car][:cegonha_id])
-          cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.get_nome_rota)
+          cegonha.historicos.new(:car_id => car.id, :data_entrada => Time.now, :localizacao_entrada => cegonha.localizacao, :rota => cegonha.rotas, :nome_rota => cegonha.route_name)
           cegonha.save
         end
       else

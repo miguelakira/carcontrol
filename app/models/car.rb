@@ -83,6 +83,6 @@ class Car < ActiveRecord::Base
   end
 
   def is_delivered?
-    return self.ativo == VEHICLE_STATUS.index('DELIVERED')
+    self.ativo == VEHICLE_STATUS.index('DELIVERED')
   end
 end

@@ -11,7 +11,7 @@ class CarsController < ApplicationController
     @cars.empty? ? @mensagem = "Nenhum Cliente Cadastrado" : @mensagem = "Clientes Ativos"
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @cars }
     end
   end
@@ -24,7 +24,7 @@ class CarsController < ApplicationController
     @cars.empty? ? @mensagem = "Nenhum Cliente Finalizado" : @mensagem = "Clientes Finalizados"
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @cars }
     end
   end
@@ -35,7 +35,7 @@ class CarsController < ApplicationController
     @car.comprador ? @owner = @car.comprador : @owner = @car.empresa
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @car }
     end
   end
@@ -55,7 +55,7 @@ class CarsController < ApplicationController
     @editar_localizacao = params[:editar_localizacao]
     @cegonhas = Cegonha.all
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @car }
     end
   end

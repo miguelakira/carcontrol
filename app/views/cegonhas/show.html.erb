@@ -145,7 +145,7 @@
 
     <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">
       <% if i == @cegonha.rotas %>
-        <caption><h5><%= "Rota Atual #{@cegonha.get_nome_rota}" %></h5> </caption>
+        <caption><h5><%= "Rota Atual #{@cegonha.route_name}" %></h5> </caption>
         <caption><p><%= "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}" %> </p> </caption>
       <% else %>
         <% h_nome = Historico.find_all_by_rota(i)

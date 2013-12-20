@@ -1,6 +1,4 @@
 class CegonhasController < ApplicationController
-  # GET /cegonhas
-  # GET /cegonhas.json
   before_filter :authenticate_user!
 
   def index
@@ -14,8 +12,6 @@ class CegonhasController < ApplicationController
     end
   end
 
-  # GET /cegonhas/1
-  # GET /cegonhas/1.json
   def show
     @cegonha = Cegonha.find(params[:id])
     respond_to do |format|
@@ -24,8 +20,6 @@ class CegonhasController < ApplicationController
     end
   end
 
-  # GET /cegonhas/new
-  # GET /cegonhas/new.json
   def new
     @cegonha = Cegonha.new
     @editar_localizacao = params[:editar_localizacao]
@@ -41,8 +35,6 @@ class CegonhasController < ApplicationController
       format.json { render json: @cegonha }
     end
   end
-
-  # GET /cegonhas/1/edit
   def edit
     @editar_localizacao = params[:editar_localizacao]
     @cegonha = Cegonha.find(params[:id])
@@ -59,8 +51,6 @@ class CegonhasController < ApplicationController
     end
   end
 
-  # POST /cegonhas
-  # POST /cegonhas.json
   def create
     @cegonha = Cegonha.new(params[:cegonha])
     @cegonha.carros = 0
@@ -105,8 +95,6 @@ class CegonhasController < ApplicationController
     end
   end
 
-  # PUT /cegonhas/1
-  # PUT /cegonhas/1.json
   def update
     @cegonha = Cegonha.find(params[:id])
     @cegonha.carros = @cegonha.cars.count
@@ -147,11 +135,6 @@ class CegonhasController < ApplicationController
 
     respond_to do |format|
       if @cegonha.update_attributes(params[:cegonha])
-        # se chegou no destino, todos os carros saem da cegonha e o status deles muda para descarregados.
-        #if
-
-        #  redirect_to logistica_cegonha_path(@cegonha) and return
-        chegou_no_destino?(@cegonha)
         ativar_status_de_carro_com_terceiros(@cegonha.id, @cegonha.class.to_s)
         if params[:salvar_localizacao]
           if checar_logistica_carros(@cegonha.id)
@@ -173,8 +156,6 @@ class CegonhasController < ApplicationController
     end
   end
 
-  # DELETE /cegonhas/1
-  # DELETE /cegonhas/1.json
   def destroy
     @cegonha = Cegonha.find(params[:id])
     @cegonha.destroy
@@ -273,40 +254,4 @@ private
     end
 
   end
-
- # se chegou no destino, tira os carros da cegonha e fecha o historico
-  def chegou_no_destino?(cegonha)
-
-    if cegonha.cidade_destino == cegonha.cidade_id && cegonha.estado_destino == cegonha.estado_id
-      cegonha.cars.each do |car|
-        # protege contra codigo legado antes do historico
-        if car.historicos.empty?
-            car.historicos.create(:cegonha_id => car.cegonha.id)
-        end
-        #saiu da cegonha
-        car.historicos.last.update_attributes(:data_saida => Time.now, :localizacao_saida => car.cegonha.localizacao)
-        # verifica se o carro descarregado chegou no destino ou se vai embarcar em outra cegonha/parceiro (logistica)
-        if car.cidade_destino == cegonha.cidade_destino and car.estado_destino == cegonha.estado_destino
-          car.ativo = 2
-        else
-          car.ativo = 6
-        end
-        car.cegonha = nil
-        car.save
-
-      end
-      ceg_id = cegonha.id
-      cegonha = Cegonha.find(ceg_id)
-      cegonha.rotas += 1
-      cegonha.cidade_origem = nil
-      cegonha.cidade_destino = nil
-      cegonha.estado_origem = nil
-      cegonha.estado_destino = nil
-      cegonha.save
-      return true
-    else
-      return false
-    end
-  end
-
 end
