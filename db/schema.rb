@@ -61,9 +61,9 @@ ActiveRecord::Schema.define(:version => 20130425183055) do
   end
 
   create_table "cidades", :force => true do |t|
+    t.boolean  "capital"
     t.string   "text"
     t.integer  "estado_id"
-    t.integer  "capital"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -83,9 +83,7 @@ ActiveRecord::Schema.define(:version => 20130425183055) do
     t.string   "observacao"
     t.string   "parente"
     t.string   "telefone_parente"
-<<<<<<< HEAD
     t.integer  "parceiro_id"
-=======
   end
 
   create_table "contatos", :force => true do |t|
@@ -98,7 +96,6 @@ ActiveRecord::Schema.define(:version => 20130425183055) do
     t.string   "email"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
->>>>>>> Eliminando códigos antigos, tirando métodos inúteis, refatorando variáveis e nomes de métodos
   end
 
   create_table "debitos", :force => true do |t|
