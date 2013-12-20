@@ -75,8 +75,10 @@ Carcontrol::Application.configure do
     :enable_starttls_auto => true  }
 
 
-  config.middleware.use ExceptionNotifier,
-    :email_prefix => "[Exception] ",
-    :sender_address => %{"Exception Notifier" <miguel.akira@gmail.com>},
-    :exception_recipients => %w{miguel.akira@gmail.com}
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[Exception] ",
+      :sender_address => %{"Exception Notifier" <miguel.akira@gmail.com>},
+      :exception_recipients => %w{miguel.akira@gmail.com}
+    }
 end
