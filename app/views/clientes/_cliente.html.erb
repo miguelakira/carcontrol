@@ -10,18 +10,18 @@
   <table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">
     <tr>
       <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
-      <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(frete_total_do_cliente(cliente)) %> </td>
+      <td style='border-top: 1px solid #C1DAD7;'> <%= number_to_currency(frete_total_do_cliente(cliente)) %> </td>
     </tr>
 
     <tr>
       <th class = 'begin'>Valor Total Pago</th>
-      <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(cliente)) %></td>
+      <td><%= number_to_currency(soma_dos_pagamentos_efetuados(cliente)) %></td>
     </tr>
 
     <tr>
       <th class = 'begin'>Saldo Devedor Total</th>
 
-      <td><b><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(cliente)) %></span></b></td>
+      <td><b><span class = "<%= @row_class %>"><%= number_to_currency(saldo_devedor_do_cliente(cliente)) %></span></b></td>
     </tr>
   </table>
 
@@ -78,7 +78,7 @@
           <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
           <td class = "<%= @row_class %>"><%= StatusVeiculo::estados[car.ativo] %></td>
           <td class = "<%= @row_class %>"><%= car.status_pagamento.status %></td>
-          <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_total) %>
+          <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.valor_total) %>
           </td>
         </tr>
     <% end %>

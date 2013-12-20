@@ -83,7 +83,22 @@ ActiveRecord::Schema.define(:version => 20130425183055) do
     t.string   "observacao"
     t.string   "parente"
     t.string   "telefone_parente"
+<<<<<<< HEAD
     t.integer  "parceiro_id"
+=======
+  end
+
+  create_table "contatos", :force => true do |t|
+    t.string   "especie"
+    t.string   "nome"
+    t.string   "telefone"
+    t.integer  "cidade_id"
+    t.integer  "estado_id"
+    t.integer  "comprador_id"
+    t.string   "email"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+>>>>>>> Eliminando códigos antigos, tirando métodos inúteis, refatorando variáveis e nomes de métodos
   end
 
   create_table "debitos", :force => true do |t|

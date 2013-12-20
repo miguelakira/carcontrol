@@ -163,7 +163,7 @@
 
         <div class="field">
           <%= f.label :ativo, "Status do Carro" %><br>
-          <%= select_tag :ativo, options_for_select(StatusVeiculo::estados.collect {|p| [p[1], p[0]]}, @car.ativo)   %>
+          <%= select_tag :ativo, options_for_select(vehicle_status_as_array_with_index, @car.ativo) %>
         </div>
 
         <br>
@@ -226,6 +226,33 @@
         <% end -%>
       </fieldset>
 
+      <fieldset><legend><h5 style="font-size: 1.3em">Dados dos Pagamentos</h5></legend>
+        <%= f.fields_for :pagamentos, @car.pagamentos.build do |builder| %>
+          <div class="field">
+            <% if @car.comprador %>
+              Total Pago pelo Cliente: <b><%= number_to_currency(soma_dos_pagamentos_efetuados(@car.comprador)) %></b>
+            <% elsif @car.empresa %>
+              Total Pago pela Empresa: <b><%= number_to_currency(soma_dos_pagamentos_efetuados(@car.empresa)) %></b>
+            <% end %>
+          </div>
+
+          <div class="field">
+            <% if @car.comprador %>
+            Dívida Restante do Cliente: <b><span class = "red"><%= number_to_currency(saldo_devedor_do_cliente(@car.comprador)) %></span></b>
+            <% elsif @car.empresa %>
+            Dívida Restante da Empresa: <b><span class = "red"><%= number_to_currency(saldo_devedor_do_cliente(@car.empresa)) %></span></b>
+            <% end %>
+          </div>
+
+          <div class="field">
+            <%= builder.label :forma_pagamento, "Forma do Novo Pagamento" %><br />
+            &nbsp;&nbsp;&nbsp;<%= builder.text_field :forma_pagamento %>
+          </div>
+
+          <div class="field">
+            <%= builder.label :valor, "Valor do Novo Pagamento" %><br />
+            R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
+          </div>
 
       <br>
       <div class="actions">

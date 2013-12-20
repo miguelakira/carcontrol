@@ -30,17 +30,17 @@
 <table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">  
   <tr>
     <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= number_to_currency(@valor_total) %> </td>
   </tr>
   
   <tr>
     <th class = 'begin'>Valor Total Pago</th>
-    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
+    <td><%= number_to_currency(@valor_pago) %>  </td>
   </tr>
 
   <tr>
     <th class = 'begin'>Saldo Devedor Total</th>
-    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
+    <td><%= number_to_currency(@saldo_devedor) %>  </td>
   </tr>
 
 </table>

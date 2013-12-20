@@ -43,15 +43,15 @@ CNPJ: <%= @empresa.cnpj %> <br>
 <table id="mytable" cellspacing="0" summary="Fretes" style="width:600px">
   <tr>
     <th style="width:180px">Valor Total dos Fretes</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= number_to_currency(@valor_total) %> </td>
   </tr>
   <tr>
     <th>Valor Total Pago</th>
-    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
+    <td><%= number_to_currency(@valor_pago) %>  </td>
   </tr>
   <tr>
     <th>Saldo Devedor Total</th>
-    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
+    <td><%= number_to_currency(@saldo_devedor) %>  </td>
   </tr>
 </table>
 
@@ -90,12 +90,12 @@ CNPJ: <%= @empresa.cnpj %> <br>
     <td class = "<%= @row_class %>"><%= "#{car.modelo} - #{car.placa}" %></td>
     <td class = "<%= @row_class %>"><% unless car.cidade_origem.nil? %><%= Cidade.find(car.cidade_origem).text %>, <%= Estado.find(car.estado_origem).sigla %><% end -%> </td>
     <td class = "<%= @row_class %>"><% unless car.cidade_destino.nil? %><%= Cidade.find(car.cidade_destino).text %>, <%= Estado.find(car.estado_destino).sigla %><% end -%></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_frete)%></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_plataforma) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_despacho) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.desconto) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_pago) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.saldo_devedor) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.valor_frete)%></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.taxa_plataforma) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.taxa_despacho) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.desconto) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.valor_pago) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.saldo_devedor) %></td>
     <td class = "<%= @row_class %>"><%= car.debito.data_pagamento.strftime("%d/%m/%Y") unless car.debito.data_pagamento.nil? %></td>
   </tr>
 <% end -%>
@@ -135,12 +135,12 @@ CNPJ: <%= @empresa.cnpj %> <br>
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
     <td class = "<%= @row_class %>"><%= "#{car.modelo} - #{car.placa}" %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_frete)%></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_plataforma) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_despacho) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.desconto) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_pago) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.saldo_devedor) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.valor_frete)%></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.taxa_plataforma) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.taxa_despacho) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.desconto) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.valor_pago) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.saldo_devedor) %></td>
     <td class = "<%= @row_class %>"><%= car.debito.data_pagamento.strftime("%d/%m/%Y") unless car.debito.data_pagamento.nil? %></td>
   </tr>
 <% end -%>
@@ -179,12 +179,12 @@ CNPJ: <%= @empresa.cnpj %> <br>
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
     <td class = "<%= @row_class %>"><%= "#{car.modelo} - #{car.placa}" %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_frete)%></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_plataforma) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.taxa_despacho) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.desconto) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_pago) %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.saldo_devedor) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.valor_frete)%></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.taxa_plataforma) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.taxa_despacho) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.desconto) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.valor_pago) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.saldo_devedor) %></td>
     <td class = "<%= @row_class %>"><%= car.debito.data_pagamento.strftime("%d/%m/%Y") unless car.debito.data_pagamento.nil? %></td>
   </tr>
 <% end -%>
@@ -220,8 +220,8 @@ CNPJ: <%= @empresa.cnpj %> <br>
     <td class = "<%= @row_class %> none"> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %> begin "><%= car.data_compra.strftime("%d/%m") %></td>
     <td class = "<%= @row_class %>"><%= "#{car.modelo} - #{car.placa}" %></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_total)%></td>
-    <td class = "<%= @row_class %>"><%= retorna_valor_monetario(car.debito.valor_pago) %></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.valor_total)%></td>
+    <td class = "<%= @row_class %>"><%= number_to_currency(car.debito.valor_pago) %></td>
     <td class = "<%= @row_class %>"><%= car.debito.data_pagamento.strftime("%d/%m/%Y") unless car.debito.data_pagamento.nil? %></td>
     <td class = "<%= @row_class %>"><%= car.comprador.observacao %></td>
 

@@ -6,7 +6,8 @@ class CarsController < ApplicationController
   def index
     # para o sidebar
     @car = Car.find(params[:car_id]) if params[:car_id]
-    @cars = Car.order(:data_compra).where(:ativo => [1,2,3,4,5,6])
+    @cars = Car.order(:data_compra).where("ativo != #{VEHICLE_STATUS.index 'DELIVERED'}")
+
     @cars.empty? ? @mensagem = "Nenhum Cliente Cadastrado" : @mensagem = "Clientes Ativos"
 
     respond_to do |format|
@@ -19,7 +20,7 @@ class CarsController < ApplicationController
     # para o sidebar
     @car = Car.find(params[:car_id]) if params[:car_id]
 
-    @cars = Car.order(:data_compra).where(:ativo => 0)
+    @cars = Car.order(:data_compra).where("ativo = #{VEHICLE_STATUS.index 'DELIVERED'}")
     @cars.empty? ? @mensagem = "Nenhum Cliente Finalizado" : @mensagem = "Clientes Finalizados"
 
     respond_to do |format|
@@ -28,8 +29,6 @@ class CarsController < ApplicationController
     end
   end
 
-  # GET /cars/1
-  # GET /cars/1.json
   def show
     @car = Car.find(params[:id])
 
@@ -41,8 +40,6 @@ class CarsController < ApplicationController
     end
   end
 
-  # GET /cars/new
-  # GET /cars/new.json
   def new
     @car = Car.new
     if params[:pessoa_juridica]
@@ -63,9 +60,6 @@ class CarsController < ApplicationController
     end
   end
 
-
-  # POST /POST
-  # cars /cars.json
   def create
     @car = Car.new(params[:car])
     @status_pagamentos = StatusPagamento.all
@@ -96,9 +90,6 @@ class CarsController < ApplicationController
 
       respond_to do |format|
       if @car.save
-        # faz update da contagem de carros da cegonha
-       contagem_carros(Cegonha.all) unless Cegonha.all.nil?
-       contagem_carros(Parceiro.all) unless Parceiro.all.nil?
        ativar_status_de_carro_com_terceiros(@car.cegonha.id, @car.cegonha.class.to_s)  unless @car.cegonha.nil?
         if params[:editar_localizacao]
           # se ao criar o carro, ele foi inserido na cegonha, pega a localizacao atual dela
@@ -146,7 +137,6 @@ class CarsController < ApplicationController
     end
     respond_to do |format|
       if @car.update_attributes(params[:car])
-        # faz update da contagem de carros da cegonha
           format.html { redirect_to @car, notice: 'Dados atualizados com sucesso.' }
           format.json { head :no_content }
       else
@@ -156,8 +146,6 @@ class CarsController < ApplicationController
     end
   end
 
-  # PUT /cars/1
-  # PUT /cars/1.json
   def update
     @car = Car.find(params[:id])
 
@@ -216,10 +204,6 @@ class CarsController < ApplicationController
     respond_to do |format|
 
       if @car.update_attributes(params[:car])
-        # faz update da contagem de carros da cegonha
-        contagem_carros(Parceiro.all) unless Parceiro.all.nil?
-        contagem_carros(Cegonha.all) unless Cegonha.all.nil?
-
         if params[:editar_localizacao]
           flash[:notice] = 'Dados atualizados com sucesso!'
           redirect_to :action => :edit, :car => @car, :editar_localizacao => true  and return
@@ -234,8 +218,6 @@ class CarsController < ApplicationController
     end
   end
 
-  # DELETE /cars/1
-  # DELETE /cars/1.json
   def destroy
     @car = Car.find(params[:id])
     @car.destroy

@@ -23,12 +23,13 @@ class Car < ActiveRecord::Base
 
   validates :status_pagamento_id, :car_not_paid => true
 
-  before_save :transforma_placa_em_maiuscula, :transforma_modelo_em_minuscula,
-      :eliminar_da_cegonha_caso_inativo, :ajusta_nome
+  before_save :license_plate_uppercase, :car_model_downcase, :remove_from_carrier_if_delivered, 
+    :person_or_company_name
 
-  after_find :capitaliza_modelo, :verifica_pagamento
+  after_find :titleize_model, :check_payments
 
-  def ajusta_nome
+
+  def person_or_company_name
     if self.nome.nil?
       if self.comprador
         self.nome = self.comprador.nome
@@ -38,28 +39,50 @@ class Car < ActiveRecord::Base
     end
   end
 
-  def eliminar_da_cegonha_caso_inativo
-    if self.ativo == 0
+  def remove_from_carrier_if_delivered
+    if self.is_delivered?
       self.cegonha = nil
     end
   end
 
-  def transforma_placa_em_maiuscula
+  def self.search(search, search_by)
+    if search
+      if search_by == 'placa'
+        search.gsub!(/[^[:alnum:]]/, '')
+        search.insert(3, '-')
+        where{{placa.like => "%#{search}%"}}
+      elsif search_by == 'cliente'
+        search = search.split(" ")
+        joins(:comprador).where{(comprador.firstname.like_any search) | (comprador.middlename.like_any search) | (comprador.lastname.like_any search)}
+      elsif search_by == 'empresa'
+        search = search.split(" ")
+        search.collect! {|s| s + "%"} # coloca '%' no final pra procurar por nomes incompletos - 'jul' acha 'juliano' e 'julio'
+        joins(:empresa).where{(empresa.nome.like_any search)}
+      end
+    else
+      scoped
+    end
+  end
+
+  def license_plate_uppercase
   	self.placa.upcase!
   end
 
-  def transforma_modelo_em_minuscula
+  def car_model_downcase
   	self.modelo.downcase!
   end
 
-  def capitaliza_modelo
+  def titleize_model
   	self.modelo = self.modelo.titleize
   end
 
-  def verifica_pagamento
+  def check_payments
     if self.pagamentos.empty?
       self.pagamentos.new(:valor => 0)
     end
   end
 
+  def is_delivered?
+    return self.ativo == VEHICLE_STATUS.index('DELIVERED')
+  end
 end

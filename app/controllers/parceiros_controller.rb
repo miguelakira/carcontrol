@@ -17,7 +17,6 @@ class ParceirosController < ApplicationController
 
   def create
     @parceiro = Parceiro.new(params[:parceiro])
-    @parceiro.carros = 0
 
 	  respond_to do |format|
   	  if @parceiro.save
@@ -64,12 +63,10 @@ class ParceirosController < ApplicationController
 
   def update
     @parceiro = Parceiro.find(params[:id])
-    @parceiro.carros = @parceiro.cars.count
 
     respond_to do |format|
       if @parceiro.update_attributes(params[:parceiro])
         # se chegou no destino, todos os carros saem da parceiro e o status deles muda para descarregados.
-        contagem_carros(Parceiro.all)
         ativar_status_de_carro_com_terceiros(@parceiro.id, @parceiro.class.to_s)
 
         if params[:editar_localizacao]

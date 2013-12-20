@@ -12,32 +12,32 @@
           <th width = "120px">Ações</th>
       <% end -%>
     </tr>
-  </thead>
-  <tbody>
-    <% x = 0%>
-    <% @parceiros.each_with_index do |parceiro, index| %>
-      <tr>
-        <td class = "<%= @row_class %>"> <%= index + 1 %>. </td>
-        <td class = "<%= @row_class %>">
-          <% if !parceiro.cpf.nil? %>
+    </thead>
+<tbody><% x = 0%>
+
+<% @parceiros.each_with_index do |parceiro, index| %>
+
+  <tr>
+    <td class = "<%= @row_class %>"> <%= index + 1 %>. </td>
+    <td class = "<%= @row_class %>">
+        <% if !parceiro.cpf.nil? %>
             <%= link_to(parceiro.cpf, parceiro) %>
-          <% else %>
-            <%= link_to(parceiro.cnpj, parceiro) %>
-          <% end -%>
-        </td>
-        <td class = "<%= @row_class %>"><%= link_to parceiro.nome, parceiro %> </td>
-        <td class = "<%= @row_class %>"><%= parceiro.contato %> </td>
-        <td class = "<%= @row_class %>"><%= parceiro.telefone %> </td>
-        <td> <%= (carros_com_parceiro(parceiro)).html_safe %> </td>
-        <td><%= retorna_valor_dos_fretes(parceiro) %></td>
-        <% if current_user.admin? %>
-        <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), parceiro %> &nbsp;
-            <%= link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_parceiro_path(parceiro) %> &nbsp;
-            <%= link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), parceiro, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
-        <% end -%>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
+    <% else %>
+       <%= link_to(parceiro.cnpj, parceiro) %>
+    <% end -%>
+    </td>
+    <td class = "<%= @row_class %>"><%= parceiro.nome %> </td>
+    <td class = "<%= @row_class %>"><%= parceiro.contato %> </td>
+    <td class = "<%= @row_class %>"><%= parceiro.telefone %> </td>
+    <td> <%= (carros_com_parceiro(parceiro)).html_safe %> </td>
+    <td><%= number_to_currency(parceiro.total_freight) %></td>
+    <% if current_user.admin? %>
+    <td class = "<%= @row_class %>"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), parceiro %> &nbsp;
+        <%= link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_parceiro_path(parceiro) %> &nbsp;
+        <%= link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), parceiro, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete %>
+    <% end -%>
+
+  </tr>
+<% end %></tbody>
 </table>
 </div>

@@ -12,8 +12,7 @@ class Parceiro < ActiveRecord::Base
 
   accepts_nested_attributes_for :cars, :pagamentos, :compradores
 
-  validates	:nome,
-  			:presence => { :message => "- O nome nao pode ser deixada em branco!" }
+  validates	:nome, :presence => { :message => "- O nome nao pode ser deixada em branco!" }
 
   before_save :capitaliza_nome
 
@@ -26,6 +25,9 @@ class Parceiro < ActiveRecord::Base
   def carros_ativos
     self.cars.reject {|c| c.ativo == 0}.count
   end
-
+ 
+  def total_freight
+    self.cars.map {|car| car.pagamento.valor_total}.inject(0, &:+)
+  end
 
 end

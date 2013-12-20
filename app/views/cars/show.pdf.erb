@@ -86,6 +86,7 @@
       </tr>
     </table>
   <% end -%>
+<<<<<<< HEAD
 
   <table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:450px">
     <caption><h5>Detalhes do Carro</h5></caption>
@@ -130,7 +131,7 @@
     </tr>
     <tr>
       <th>Status do Carro</th>
-      <td><%= StatusVeiculo::estados[@car.ativo] %></td>
+      <td><%= t(VEHICLE_STATUS[@car.ativo]) %></td>
     </tr>
     <tr>
       <th>Data Prevista da Entrega</th>
@@ -151,35 +152,35 @@
     </tr>
     <tr>
       <th>Valor do Frete</th>
-      <td> <%= retorna_valor_monetario(@car.debito.valor_frete) %></td>
+      <td> <%= number_to_currency(@car.debito.valor_frete) %></td>
     </tr>
     <tr>
       <th>Taxa de Plataforma</th>
-      <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma) %></td>
+      <td><%= number_to_currency(@car.debito.taxa_plataforma) %></td>
     </tr>
     <tr>
       <th>Taxa de Plataforma Origem</th>
-      <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma_origem) %></td>
+      <td><%= number_to_currency(@car.debito.taxa_plataforma_origem) %></td>
     </tr>
     <tr>
       <th>Taxa de Plataforma Destino</th>
-      <td><%= retorna_valor_monetario(@car.debito.taxa_plataforma_destino) %></td>
+      <td><%= number_to_currency(@car.debito.taxa_plataforma_destino) %></td>
     </tr>
     <tr>
       <th>Taxa de Balsa</th>
-      <td><%= retorna_valor_monetario(@car.debito.taxa_balsa) %></td>
+      <td><%= number_to_currency(@car.debito.taxa_balsa) %></td>
     </tr>
     <tr>
       <th>Taxa de Redespacho</th>
-      <td><%= retorna_valor_monetario(@car.debito.taxa_despacho) %></td>
+      <td><%= number_to_currency(@car.debito.taxa_despacho) %></td>
     </tr>
     <tr>
       <th>Desconto</th>
-      <td>-<%= retorna_valor_monetario(@car.debito.desconto) %></td>
+      <td>-<%= number_to_currency(@car.debito.desconto) %></td>
     </tr>
     <tr>
       <th>Total do Frete</th>
-      <td><%= retorna_valor_monetario(@car.debito.valor_total) %></td>
+      <td><%= number_to_currency(@car.debito.valor_total) %></td>
     </tr>
     <tr>
       <th style = "height:50px">Observação</th>
@@ -192,9 +193,9 @@
     <tr>
       <th width=100px style='border-left: 1px solid #C1DAD7;'>Total Pago</th>
       <% if @car.comprador %>
-      <td style='border-top: 1px solid #C1DAD7;'><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.comprador)) %></td>
+      <td style='border-top: 1px solid #C1DAD7;'><%= number_to_currency(soma_dos_pagamentos_efetuados(@car.comprador)) %></td>
       <% elsif @car.empresa %>
-      <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(@car.empresa)) %></td>
+      <td><%= number_to_currency(soma_dos_pagamentos_efetuados(@car.empresa)) %></td>
       <% end %>
     </tr>
     <tr>
@@ -205,7 +206,7 @@
           @row_class = 'red'
         end
       %>
-      <td><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(@owner)) %></span></td>
+      <td><span class = "<%= @row_class %>"><%= number_to_currency(saldo_devedor_do_cliente(@owner)) %></span></td>
     </tr>
   </table>
 
@@ -226,9 +227,9 @@
       <% if pagamento.data_pagamento.month == Time.now.month && pagamento.data_pagamento.year == Time.now.year  %>
       <tr>
         <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
-        <td><%= retorna_valor_monetario(pagamento.valor) %></td>
+        <td><%= number_to_currency(pagamento.valor) %></td>
         <td><%= pagamento.forma_pagamento %></td>
-        <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
+        <td class = "<%= row_class %>"><%= number_to_currency(pagamento.saldo) %></td>
       </tr>
       <% end %>
     <% end %>

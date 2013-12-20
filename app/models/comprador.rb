@@ -18,26 +18,24 @@ class Comprador < ActiveRecord::Base
         :presence => { :message => "- O CPF do comprador não pode ser deixaod em branco." },
         :uniqueness => { :message => "- CPF já existente." }
 
-  before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula, :sanitiza_documentos, :split_nomes
+  before_save :downcase_name, :downcase_email, :sanitize_documents, :split_names
 
-  after_find :capitaliza_nome
+  after_find :titleize_name
 
-  def transforma_nome_em_minuscula
-  	self.nome.downcase!
+  def downcase_name
+    self.nome.downcase!
   end
 
-  def transforma_email_em_minuscula
-  	if self.email
-  		self.email.downcase!
-  	end
+  def downcase_email
+    self.email.downcase!
   end
 
-  def devedor?
-    devedor = cars.select { |c| c.debito.saldo_devedor > 0}
+  def has_debts?
+    devedor = self.cars.select { |c| c.pagamento.saldo_devedor > 0}
     devedor.empty? ? false : true
   end
 
-  def split_nomes
+  def split_names
     self.firstname, self.middlename, self.lastname = nil
     nome_array = nome.split
     self.firstname = nome_array.first
@@ -48,16 +46,20 @@ class Comprador < ActiveRecord::Base
 
   #limpa pontuaçao de documentos
   # RG - 41.065.522-5 vira 410655225
-  def sanitiza_documentos
+  def sanitize_documents
   	self.rg.gsub!(/[^[:alnum:]]/, '')
   end
 
-  def capitaliza_nome
+  def titleize_name
     self.nome = self.nome.titleize unless self.nome.nil?
   end
 
   def carros_ativos
     self.cars.reject {|c| c.ativo == 0}.count
+  end
+
+  def total_debt
+    self.cars.map {|car| car.pagamento.valor_total}.inject(0, &:+)
   end
 
 end

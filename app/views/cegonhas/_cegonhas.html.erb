@@ -31,7 +31,7 @@
 
           <td> <%= (carros_na_cegonha(cegonha)).html_safe %> </td>
 
-          <td><%= retorna_valor_dos_fretes(cegonha) %></td>
+          <td><%= number_to_currency(cegonha.total_freight) %></td>
           <% if current_user.admin? %>
 
             <td class = "<%= @row_class %>" style="text-align:center;"><%= link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), cegonha %> &nbsp;

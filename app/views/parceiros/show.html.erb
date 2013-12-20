@@ -57,17 +57,17 @@
 
   <tr>
     <th style="width:180px" class = 'begin'>Valor Total dos Fretes</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@valor_total) %> </td>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= number_to_currency(@valor_total) %> </td>
   </tr>
 
   <tr>
     <th class = 'begin'>Valor Total Pago</th>
-    <td><%= retorna_valor_monetario(@valor_pago) %>  </td>
+    <td><%= number_to_currency(@valor_pago) %>  </td>
   </tr>
 
   <tr>
     <th class = 'begin'>Saldo Devedor Total</th>
-    <td><%= retorna_valor_monetario(@saldo_devedor) %>  </td>
+    <td><%= number_to_currency(@saldo_devedor) %>  </td>
   </tr>
 
 </table>
@@ -94,7 +94,7 @@
   <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">
       <caption><p><b>HISTÓRICO</b></p>
 
-        <p><%= "Frete Total: #{retorna_valor_monetario(frete_total)}, Saldo Devedor: #{retorna_valor_monetario(saldo_devedor)}" %> </p> </caption>
+        <p><%= "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}" %> </p> </caption>
 
     <% if @parceiro.historicos.empty? %>
       <th style = "text-align:left;">Nenhum carro no histórico</th>

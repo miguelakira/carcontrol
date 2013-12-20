@@ -87,37 +87,37 @@
 
       <tr>
         <th style="width:180px">Valor do Frete</th>
-        <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@cegonha.debito.valor_frete) %></td>
+        <td style='border-top: 1px solid #C1DAD7;'> <%= number_to_currency(@cegonha.debito.valor_frete) %></td>
       </tr>
 
       <tr>
         <th>Taxa de Redespacho</th>
-        <td><%= retorna_valor_monetario(@cegonha.debito.taxa_despacho) %></td>
+        <td><%= number_to_currency(@cegonha.debito.taxa_despacho) %></td>
       </tr>
 
       <tr>
         <th>Taxa de Plataforma</th>
-        <td><%= retorna_valor_monetario(@cegonha.debito.taxa_plataforma) %></td>
+        <td><%= number_to_currency(@cegonha.debito.taxa_plataforma) %></td>
       </tr>
 
       <tr>
         <th>Desconto</th>
-        <td>-<%= retorna_valor_monetario(@cegonha.debito.desconto) %></td>
+        <td>-<%= number_to_currency(@cegonha.debito.desconto) %></td>
       </tr>
 
       <tr>
         <th>Valor Pago</th>
-        <td>-<%= retorna_valor_monetario(@cegonha.debito.valor_pago) %></td>
+        <td>-<%= number_to_currency(@cegonha.debito.valor_pago) %></td>
       </tr>
 
       <tr>
         <th>Valor Total</th>
-        <td><%= retorna_valor_monetario(@cegonha.debito.valor_total) %></td>
+        <td><%= number_to_currency(@cegonha.debito.valor_total) %></td>
       </tr>
 
       <tr>
         <th>Saldo Devedor</th>
-        <td><%= retorna_valor_monetario(@cegonha.debito.saldo_devedor) %></td>
+        <td><%= number_to_currency(@cegonha.debito.saldo_devedor) %></td>
       </tr>
 
       <tr>
@@ -146,7 +146,7 @@
     <table id="mytable" cellspacing="0" summary="Histórico da Cegonha" style="width:900px">
       <% if i == @cegonha.rotas %>
         <caption><h5><%= "Rota Atual #{@cegonha.get_nome_rota}" %></h5> </caption>
-        <caption><p><%= "Frete Total: #{retorna_valor_monetario(frete_total)}, Saldo Devedor: #{retorna_valor_monetario(saldo_devedor)}" %> </p> </caption>
+        <caption><p><%= "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}" %> </p> </caption>
       <% else %>
         <% h_nome = Historico.find_all_by_rota(i)
           nome_rota = ""
@@ -155,7 +155,7 @@
           end
         %>
         <caption><h5><%= "Rota #{i} #{nome_rota}" %></h5> </caption>
-        <caption><p><%= "Frete Total: #{retorna_valor_monetario(frete_total)}, Saldo Devedor: #{retorna_valor_monetario(saldo_devedor)}" %> </p> </caption>
+        <caption><p><%= "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}" %> </p> </caption>
       <% end -%>
 
       <% if carros_na_rota.empty? %>

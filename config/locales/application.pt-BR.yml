@@ -1,0 +1,8 @@
+pt-BR:
+  WAITING_TO_BE_LOADED: 'Aguardando Carregamento'
+  ON_TRANSIT: 'Em Trânsito'
+  UNLOADED: 'Descarregado no Pátio'
+  WITH_HIRED_CARRIER: Com Transportadora Contratada
+  WAITING_FOR_CLIENT: 'Aguardando Retirada pelo Cliente'
+  IN_LOGISTICS: 'Em Logística'
+  DELIVERED: 'Entregue ao Cliente'

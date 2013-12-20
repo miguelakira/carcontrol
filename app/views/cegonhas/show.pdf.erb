@@ -98,38 +98,38 @@
 
 <tr>
     <th style="width:180px">Valor do Frete</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= retorna_valor_monetario(@cegonha.pagamento.valor_frete) %></td>
+    <td style='border-top: 1px solid #C1DAD7;'> <%= number_to_currency(@cegonha.pagamento.valor_frete) %></td>
   </tr>
 
 <tr>
     <th>Taxa de Redespacho</th>
-    <td><%= retorna_valor_monetario(@cegonha.pagamento.taxa_despacho) %></td>
+    <td><%= number_to_currency(@cegonha.pagamento.taxa_despacho) %></td>
 </tr>
 
 <tr>
     <th>Taxa de Plataforma</th>
-    <td><%= retorna_valor_monetario(@cegonha.pagamento.taxa_plataforma) %></td>
+    <td><%= number_to_currency(@cegonha.pagamento.taxa_plataforma) %></td>
 </tr>
 
 <tr>
     <th>Desconto</th>
     
-    <td>-<%= retorna_valor_monetario(@cegonha.pagamento.desconto) %></td>
+    <td>-<%= number_to_currency(@cegonha.pagamento.desconto) %></td>
 </tr>
 
 <tr>
     <th>Valor Pago</th>
-    <td>-<%= retorna_valor_monetario(@cegonha.pagamento.valor_pago) %></td>
+    <td>-<%= number_to_currency(@cegonha.pagamento.valor_pago) %></td>
 </tr>
   
 <tr>
     <th>Valor Total</th>
-    <td><%= retorna_valor_monetario(@cegonha.pagamento.valor_total) %></td>
+    <td><%= number_to_currency(@cegonha.pagamento.valor_total) %></td>
 </tr> 
 
   <tr>
     <th>Saldo Devedor</th>
-    <td><%= retorna_valor_monetario(@cegonha.pagamento.saldo_devedor) %></td>
+    <td><%= number_to_currency(@cegonha.pagamento.saldo_devedor) %></td>
   </tr>
 
   <tr>

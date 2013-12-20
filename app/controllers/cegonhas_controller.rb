@@ -152,7 +152,6 @@ class CegonhasController < ApplicationController
 
         #  redirect_to logistica_cegonha_path(@cegonha) and return
         chegou_no_destino?(@cegonha)
-        contagem_carros(Cegonha.all)
         ativar_status_de_carro_com_terceiros(@cegonha.id, @cegonha.class.to_s)
         if params[:salvar_localizacao]
           if checar_logistica_carros(@cegonha.id)
@@ -242,7 +241,6 @@ class CegonhasController < ApplicationController
         car.save
       end
     end
-    contagem_carros(Cegonha.all)
     redirect_to @cegonha
   end
 

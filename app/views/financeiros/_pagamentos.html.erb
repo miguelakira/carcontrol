@@ -41,12 +41,12 @@
 
   <tr>
     <th>Valor Total Pago</th>
-    <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(cliente)) %></td>
+    <td><%= number_to_currency(frete_total_do_cliente(cliente)) %></td>
   </tr>
 
   <tr>
     <th class = "last">Saldo Devedor Total</th>
-    <td class = "last"><span class = "<%= @row_class %>"><%= retorna_valor_monetario(saldo_devedor_do_cliente(cliente)) %></span></td>
+    <td class = "last"><span class = "<%= @row_class %>">number_to_currency(saldo_devedor_do_cliente(cliente)) %></span></td>
   </tr>
 
 </style>
@@ -122,12 +122,11 @@
       end
         %>
 
-
   <tr>
       <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
       <td><%= retorna_valor_monetario(pagamento.valor) %></td>
       <td><%= pagamento.forma_pagamento %></td>
-      <td class = "<%= row_class %>"><%= retorna_valor_monetario(pagamento.saldo) %></td>
+      <td class = "<%= row_class %>"<%= number_to_currency(pagamento.saldo) %></td>
       <td><%= pagamento.observacao %> </td>
     </tr>
   <% end %>

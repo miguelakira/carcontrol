@@ -13,9 +13,9 @@ class Cegonha < ActiveRecord::Base
   			:presence => { :message => "- A placa não pode ser deixada em branco!" },
   			:uniqueness => { :message => "- A placa já existe no banco de dados. É preciso que seja única." }
 
-  before_save :check_rotas, :salva_nome_do_motorista
+  before_save :check_routes, :salva_nome_do_motorista
 
-  def check_rotas
+  def check_routes
     if rotas.nil?
       rotas = 1
     end
@@ -28,11 +28,14 @@ class Cegonha < ActiveRecord::Base
     end
   end
 
-  def get_nome_rota
+  def route_name
     if cidade_origem and estado_origem and estado_destino and cidade_destino
-      nome_rota = "#{Cidade.find(cidade_origem).text}, #{Estado.find(estado_origem).sigla} -  #{Cidade.find(cidade_destino).text}, #{Estado.find(estado_destino).sigla}"
-      return nome_rota
+      return "#{Cidade.find(cidade_origem).text}, #{Estado.find(estado_origem).sigla} -  #{Cidade.find(cidade_destino).text}, #{Estado.find(estado_destino).sigla}"
     end
   end
+
+   def total_freight
+     self.cars.map {|car| car.pagamento.valor_total}.inject(0, &:+)
+   end
 
 end

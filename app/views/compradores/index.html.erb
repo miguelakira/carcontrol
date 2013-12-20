@@ -22,8 +22,8 @@
         <td><%= comprador.cpf %></td>
         <td><%= comprador.telefone %></td>
         <td width = 100px><%= carros_ativos_do_cliente(comprador).html_safe %></td>
-        <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(comprador)) %>  </td>
-        <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(comprador)) %></td>
+        <td><%= number_to_currency(soma_dos_pagamentos_efetuados(comprador)) %>  </td>
+        <td>-<%= number_to_currency(saldo_devedor_do_cliente(comprador)) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -54,8 +54,8 @@
         <td><%= empresa.telefone %></td>
         <td><%= empresa.celular %></td>
         <td><%= carros_ativos_do_cliente(empresa).html_safe %></td>
-        <td><%= retorna_valor_monetario(soma_dos_pagamentos_efetuados(empresa)) %> </td>
-        <td><%= retorna_valor_monetario(saldo_devedor_do_cliente(empresa)) %></td>
+        <td><%= number_to_currency(soma_dos_pagamentos_efetuados(empresa)) %> </td>
+        <td><%= number_to_currency(saldo_devedor_do_cliente(empresa)) %></td>
       </tr>
     <% end %>
   </tbody>
