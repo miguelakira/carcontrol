@@ -1,4 +1,4 @@
-<% if @car.ativo != 0 %>
+<% if @car.ativo != "#{VEHICLE_STATUS.index 'DELIVERED'}" %>
 
 <% empresas = Empresa.all %>
 <% compradores = Comprador.all %>

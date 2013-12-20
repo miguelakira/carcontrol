@@ -19,7 +19,6 @@ class Cegonha < ActiveRecord::Base
     if rotas.nil?
       rotas = 1
     end
-
   end
 
   def salva_nome_do_motorista
@@ -35,7 +34,7 @@ class Cegonha < ActiveRecord::Base
   end
 
    def total_freight
-     self.cars.map {|car| car.pagamento.valor_total}.inject(0, &:+)
+     self.cars.map {|car| car.debito.valor_total}.inject(0, &:+)
    end
 
 end
