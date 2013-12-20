@@ -1,4 +1,4 @@
-<% if @car.ativo != "#{VEHICLE_STATUS.index 'DELIVERED'}" %>
+<% if @car.ativo != VEHICLE_STATUS.index('DELIVERED') %>
 
 <% empresas = Empresa.all %>
 <% compradores = Comprador.all %>
@@ -265,7 +265,8 @@
       </div>
     <% end -%>
   <% end -%>
-<% end -%>
+  <% end -%>
+  <% end -%>
 
 
 <!-- javascript & ruby -->
