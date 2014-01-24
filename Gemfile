@@ -10,7 +10,7 @@ gem 'rails', '3.2.13'
 gem 'exception_notification'
 
 gem 'pg'
-gem 'devise', '2.0.4'
+gem 'devise', '2.2.7'
 gem 'heroku'
 
 gem 'will_paginate', '3.0.3'

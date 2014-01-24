@@ -80,7 +80,6 @@ class CegonhasController < ApplicationController
     end
   end
 
-
     respond_to do |format|
       if @cegonha.save
         if params[:editar_localizacao]

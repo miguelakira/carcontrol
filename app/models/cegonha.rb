@@ -13,19 +13,13 @@ class Cegonha < ActiveRecord::Base
     :presence => { :message => "- A placa não pode ser deixada em branco!" },
     :uniqueness => { :message => "- A placa já existe no banco de dados. É preciso que seja única." }
 
-  before_save :check_routes, :salva_nome_do_motorista
+  before_save :check_routes
 
-  after_save :unload_cars_if_arrived_at_destination
+  after_update :unload_cars_if_arrived_at_destination
 
   def check_routes
     if rotas.nil?
       rotas = 1
-    end
-  end
-
-  def salva_nome_do_motorista
-    if self.nome.nil?
-      self.nome = self.motorista.nome
     end
   end
 
@@ -64,7 +58,6 @@ class Cegonha < ActiveRecord::Base
       self.cidade_destino = nil
       self.estado_origem = nil
       self.estado_destino = nil
-      self.save
     end
   end
 
