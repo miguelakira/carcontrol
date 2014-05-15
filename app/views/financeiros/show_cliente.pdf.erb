@@ -15,48 +15,106 @@
 
 <% if @cars_cpf %>
 
-<p><h5>Transações Financeiras do Cliente</h5> </p>
-
-<div class 'floating_box' style = "width:1200px;">
-<fieldset style = "width:300px; float:left; margin-top: 20px;" >
-Nome: <%= @cliente.nome %>  <br />
-CPF: <%= @cliente.cpf %> <br>
-<%= "Telefone: #{@cliente.telefone}" unless @cliente.telefone.empty? %> 
-</fieldset>
-
-<table id="mytable" cellspacing="0" summary="Carros" style="width:300px">  
+<div class = "floating_box" style = "min-height:100px">
+<fieldset class = 'financeiros'>
+    <legend><h5 style="font-size: 1.3em">Dados do Cliente</h5></legend>
+<table id = "blank">
   <tr>
-    <th style="width:180px; border: 1px solid #C1DAD7;">Carros Ativos</th>
-    <td style='border: 1px solid #C1DAD7;'><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
+    <th>Nome:</th>
+    <td><%= @cliente.nome %> </b></td>
   </tr>
-  
+
+  <% if defined?(@cliente.cpf) %>
+    <tr>
+      <th>CPF:</th>
+      <td><%= @cliente.cpf %> </td>
+    </tr>
+  <% else %>
+    <tr>
+      <th> CNPJ:</th>
+      <td><%= @cliente.cnpj %> </td>
+    </tr>
+    <tr>
+      <th>Contato na Empresa:</th>
+      <td><%= @empresa.contato unless @empresa.contato.empty? %> </td>
+    </tr>
+  <% end %>
+  <tr>
+    <th class = "last">Telefone:</th>
+    <td class = "last"> <%= "#{@cliente.telefone}" unless @cliente.telefone.empty? %></td>
+  </tr>
+  <tr>
+    <th>Valor Total dos Fretes</th>
+    <td> <%= number_to_currency(frete_total_do_cliente(@cliente)) %> </td>
+  </tr>
+
+  <tr>
+    <th>Valor Total Pago</th>
+    <td><%= number_to_currency(frete_total_do_cliente(@cliente)) %></td>
+  </tr>
+
+  <tr>
+    <th class = "last">Saldo Devedor Total</th>
+    <td class = "last"><span class = "<%= @row_class %>"><%= number_to_currency(saldo_devedor_do_cliente(@cliente)) %></span></td>
+  </tr>
+
+</style>
+  <tr>
+    <th>Carros Ativos do Cliente</th>
+    <td><%= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' %> </td>
+  </tr>
+
   <tr>
     <th>Carros Finalizados</th>
     <td><%= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' %> </td>
   </tr>
 </table>
+</fieldset>
 
-<table id="mytable" cellspacing="0" summary="Fretes" style="width:300px">  
-  <tr>
-    <th style="width:180px">Valor Total dos Fretes</th>
-    <td style='border-top: 1px solid #C1DAD7;'> <%= number_to_currency(@valor_total) %> </td>
-  </tr>
-  
-  <tr>
-    <th>Valor Total Pago</th>
-    <td><%= number_to_currency(@valor_pago) %>  </td>
-  </tr>
-
-  <tr>
-    <th>Saldo Devedor Total</th>
-    <td><%= number_to_currency(@saldo_devedor) %>  </td>
-  </tr>
-
-</table>
-</div>
 <div style="clear: both;"></div>
 
 <br>
+
+ <legend><h5 style="font-size: 1.3em">Detalhes dos Pagamentos Efetuados</h5></legend>
+
+  <% if @cliente.pagamentos.count == 0 and @cliente.pagamentos.last.id == nil %>
+    <p>Este cliente não efetuou nenhum pagamento até o momento.</p>
+  <% else %>
+  <table style = "width:1200px" id="mytable" cellspacing="0" summary="Detalhe de Pagamentos" >  
+    <thead>
+    <tr>
+      <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
+      <th width=120px>Valor do <br> Pagamento</th>
+      <th width=120px>Forma de <br> Pagamento</th>
+      <th width=120px>Saldo </th>
+      <th>Observação</th>
+    </tr>
+
+  <tbody>
+  <% @cliente.pagamentos.each do |pagamento| %>
+    <% unless pagamento.id.nil? %>
+      <% if pagamento.saldo >= 0
+        row_class  = 'blue'
+      else
+        row_class = 'red'
+      end
+        %>
+
+  <tr>
+      <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
+      <td><%= number_to_currency(pagamento.valor) %></td>
+      <td><%= pagamento.forma_pagamento %></td>
+      <td class = "<%= row_class %>"<%= number_to_currency(pagamento.saldo) %></td>
+      <td><%= pagamento.observacao %> </td>
+    </tr>
+  <% end %>
+  <% end %>
+  </tbody>
+  </table>
+<% end %>
+<div style="clear: both;"></div>
+
+
 <div class="page-break">
 
 <p><b>CARROS ATIVOS</b></p>

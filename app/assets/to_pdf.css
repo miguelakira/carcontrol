@@ -6,6 +6,8 @@
 table, tr, td, th, tbody, thead, tfoot {
 
 }
+
+
 @media print {
  #container {
         width: auto;
@@ -13,6 +15,12 @@ table, tr, td, th, tbody, thead, tfoot {
         padding: 0;
         border: none;
     }
+
+  table { page-break-after:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+  td    { page-break-inside:avoid; page-break-after:auto }
+  thead { display:table-header-group }
+  tfoot { display:table-footer-group }
 }
 
  #line items {
@@ -232,3 +240,38 @@ hr.small{
 .right {
   float: right;
 }
+
+.financeiros {
+  border: 2px solid #E4E4E4;
+  width:350px;
+  float:left;
+  height: 280px;
+  margin-right:30px;
+}
+
+
+#blank th {
+  text-align: left;
+  padding:2px 0px 0px 4px;
+  border: none;
+}
+
+#blank th.last {
+  padding-bottom: 12px;
+}
+
+#blank td.last {
+  padding-bottom: 12px;
+}
+
+#blank tr {
+  padding:0px 0px 0px 4px;
+}
+
+#blank td {
+  text-align: left;
+  padding:0px;
+  border: none;
+  height: 0;
+}
+
