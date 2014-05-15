@@ -46,7 +46,7 @@
 
   <tr>
     <th class = "last">Saldo Devedor Total</th>
-    <td class = "last"><span class = "<%= @row_class %>">number_to_currency(saldo_devedor_do_cliente(cliente)) %></span></td>
+    <td class = "last"><span class = "<%= @row_class %>"><%= number_to_currency(saldo_devedor_do_cliente(cliente)) %></span></td>
   </tr>
 
 </style>
