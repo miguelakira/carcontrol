@@ -55,11 +55,6 @@ class CegonhasController < ApplicationController
     @cegonha = Cegonha.new(params[:cegonha])
     @cegonha.carros = 0
 
-    if !(params[:cegonha][:pagamento_attributes]).nil?
-
-      converter_string_to_bigdecimal(@cegonha, params[:cegonha][:pagamento_attributes])
-    end
-
   if @cegonha.motorista
     motoristas = Motorista.all
     motorista_existente = motoristas.collect{|motorista| if motorista.cpf == @cegonha.motorista.cpf; motorista; end}
@@ -98,11 +93,6 @@ class CegonhasController < ApplicationController
     @cegonha = Cegonha.find(params[:id])
     @cegonha.carros = @cegonha.cars.count
 
-    if defined?(params[:cegonha][:pagamento_attributes])
-      if !(params[:cegonha][:pagamento_attributes]).nil?
-        converter_string_to_bigdecimal(@cegonha, params[:cegonha][:pagamento_attributes])
-      end
-    end
     if params[:salvar_localizacao]
 
       @cegonha.estado_id = params[:estado_id]

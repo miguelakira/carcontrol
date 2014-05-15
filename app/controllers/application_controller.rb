@@ -112,13 +112,4 @@ def atualiza_historico_parceiro(car)
       end
     end
   end
-
-  def converter_string_to_bigdecimal(veiculo, valores)
-    valores.each do |valor|
-      unless valor[0] == 'observacao' || valor[0] == 'id'
-        valor[1].gsub!('.', '')
-        valor[1].gsub!(',','.')
-      end
-    end
-  end
 end

@@ -38,4 +38,12 @@ class Pagamento < ActiveRecord::Base
       self.destroy
     end
   end
+
+  def valor=(num)
+    if num.is_a?(String)
+      num.gsub!('.', '')
+      num.gsub!(',','.')
+      self[:valor] = num
+    end
+  end
 end

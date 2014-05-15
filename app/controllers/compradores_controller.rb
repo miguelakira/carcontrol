@@ -65,7 +65,6 @@ class CompradoresController < ApplicationController
     # ajusta o valor da string do valor do pagamento pra bigdecimal
 
     if params[:comprador][:pagamentos_attributes]
-      converter_string_to_bigdecimal(@comprador, params[:comprador][:pagamentos_attributes]['0'])
       respond_to do |format|
         if @comprador.update_attributes(params[:comprador])
           # redireciona para o financeiros ao efetuar novo pagamento. Separa por cliente ou empresa

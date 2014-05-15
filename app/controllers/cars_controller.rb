@@ -66,8 +66,6 @@ class CarsController < ApplicationController
     @car.ativo = params[:ativo] unless params[:ativo].nil?
 
     # vai ajustar o formato para converter pra BigDecimal
-    converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
-    converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0'])
     if @car.comprador
       compradores = Comprador.all
       comprador_existente = compradores.collect{|comprador| if comprador.cpf == @car.comprador.cpf; comprador; end}
@@ -129,12 +127,7 @@ class CarsController < ApplicationController
   def limited_edit
     @car = Car.find(params[:id])
     @status_pagamentos = StatusPagamento.all
-    if defined?(params[:car][:debito_attributes])
-      converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
-    end
-    if defined?(params[:car][:pagamentos_attributes])
-      converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0']) unless params[:car][:pagamentos_attributes].nil?
-    end
+
     respond_to do |format|
       if @car.update_attributes(params[:car])
           format.html { redirect_to @car, notice: 'Dados atualizados com sucesso.' }
@@ -152,12 +145,6 @@ class CarsController < ApplicationController
     @car.ativo = params[:ativo] unless params[:ativo].nil?
     # vai ajustar o formato para converter pra BigDecimal
 
-    if defined?(params[:car][:debito_attributes])
-      converter_string_to_bigdecimal(@car, params[:car][:debito_attributes])
-    end
-    #if defined?(params[:car][:pagamentos_attributes])
-    #  converter_string_to_bigdecimal(@car, params[:car][:pagamentos_attributes]['0'])
-    #end
     if params[:salvar_localizacao]
       if !@car.estado_origem.nil?
         @car.cegonha_id = nil
