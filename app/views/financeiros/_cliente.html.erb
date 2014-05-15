@@ -1,4 +1,5 @@
-<p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :comprador_cpf => @cliente %></b></p>
+<p><b><%= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @cliente, :comprador_cpf => @cliente.cpf %></b></p>
+
 <p><h5>Transações Financeiras do Cliente</h5> </p>
 
   <%= render 'pagamentos', :cliente => @cliente %>

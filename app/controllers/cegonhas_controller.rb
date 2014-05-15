@@ -163,11 +163,10 @@ class CegonhasController < ApplicationController
     filename = "#{Rails.root}/public/Relatorio_#{@cegonha.placa}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
     html = render_to_string(:template => "/cegonhas/show.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
     kit = PDFKit.new(html, :disable_javascript => true )
-    kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/to_pdf.css"
+    kit.stylesheets << "#{Rails.root}/app/assets/to_pdf.css"
     pdf = kit.to_pdf
     file = kit.to_file(filename)
     send_file filename, :type => 'application/pdf'
-    File.delete(filename)
   end
 
   # quando o destino do carro == atualizacao atual da cegonha

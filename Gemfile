@@ -19,7 +19,7 @@ gem 'pjax_rails'
 
 gem 'squeel'
 gem 'pdfkit'
-
+gem 'wkhtmltopdf-binary'
 gem 'taps'
 
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'

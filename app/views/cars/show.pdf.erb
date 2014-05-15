@@ -86,7 +86,6 @@
       </tr>
     </table>
   <% end -%>
-<<<<<<< HEAD
 
   <table id="mytable" cellspacing="0" summary="Detalhes do Carro" style="width:450px">
     <caption><h5>Detalhes do Carro</h5></caption>
@@ -217,7 +216,7 @@
       <th>Forma de <br> Pagamento</th>
       <th>Saldo </th>
     </tr>
-    <% @owner.pagamentos.each do |pagamento| %>
+    <% @owner.pagamentos.where(:data_pagamento => (Time.now.beginning_of_month..Time.now.end_of_day)).find_each do |pagamento| %>
       <% if pagamento.saldo >= 0
           row_class  = 'blue'
         else
