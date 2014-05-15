@@ -17,7 +17,6 @@
 
 <p><h5>Transações Financeiras do Cliente</h5> </p>
 
-
 <div class 'floating_box' style = "width:1200px;">
 <fieldset style = "width:300px; float:left; margin-top: 20px;" >
 Nome: <%= @cliente.nome %>  <br />
@@ -58,6 +57,7 @@ CPF: <%= @cliente.cpf %> <br>
 <div style="clear: both;"></div>
 
 <br>
+<div class="page-break">
 
 <p><b>CARROS ATIVOS</b></p>
   <table style = "width:1200px" id="mytable" cellspacing="0" summary="Carros Ativos" >  
@@ -239,7 +239,7 @@ CPF: <%= @cliente.cpf %> <br>
 <% end -%>
 
 </div>
-
+</div>
 <% end -%>
 <%= stylesheet_link_tag 'application' %>
 <%= stylesheet_link_tag 'default' %>

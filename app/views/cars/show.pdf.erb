@@ -14,7 +14,9 @@
 
   <p id="notice"><%= notice %></p>
 
+<div class = "floating_box">
 <% if @car.comprador %>
+
  <table id="mytable" cellspacing="0" summary="Detalhes do Cliente" style="width:450px">
       <caption><h5>Detalhes do Cliente</h5></caption>
       <tr>
@@ -142,8 +144,12 @@
     </tr>
   </table>
 </div>
+</div>
+<div style="clear: both;"></div>
 
-  <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px">
+<div class="page-break">
+<div class = "floating_box">
+  <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px" class="page-break">
     <caption><h5>Detalhes do frete</h5></caption>
     <tr>
       <th style="width:180px">Status do Pagamento <br> do Carro</th>
@@ -186,7 +192,6 @@
       <td><%= @car.debito.observacao %></td>
     </tr>
   </table>
-
   <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-bottom:10px;">
     <caption><h5>Detalhes dos Pagamentos</h5></caption>
     <tr>
@@ -208,7 +213,7 @@
       <td><span class = "<%= @row_class %>"><%= number_to_currency(saldo_devedor_do_cliente(@owner)) %></span></td>
     </tr>
   </table>
-
+</div>
   <table id="mytable" cellspacing="0" summary="Detalhes do Pagamento" style="width:450px; margin-top:0px;" >
     <tr>
       <th width=50px style='border-left: 1px solid #C1DAD7;'>Data do <br>Pagamento</th>
@@ -235,6 +240,7 @@
   </table>
 </div>
 <div style="clear: both;"></div>
+</div>
 
 
 <%= stylesheet_link_tag 'application' %>

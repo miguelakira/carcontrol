@@ -1,5 +1,8 @@
-.page-break { display:block; clear:both; page-break-after:always; }
-
+.page-break { 
+  clear: both !important;
+  display: block !important;
+  page-break-before: always !important;
+}
 table, tr, td, th, tbody, thead, tfoot {
 
 }
@@ -15,6 +18,13 @@ table, tr, td, th, tbody, thead, tfoot {
  #line items {
     clear: both; page-break-before: always;
 
+}
+#mytable {
+  width: 980px;
+  padding: 0;
+  margin: 0;
+  float:left;
+  margin: 20px 15px 30px 10px;
 }
 
 #mytable th.none {
@@ -175,6 +185,47 @@ hr.small{
     float: left;
     text-align: left;
 }
+
+.floating_box {
+  width: 1000px;
+  margin: 0;
+  min-height: 300px;
+  margin-bottom: 50px; }
+
+.floating-left {
+  width: 1250px;
+  float: left; }
+
+.floating_form {
+  width: 500px;
+  float: left; }
+
+#sidebar {
+  float: right;
+  width: 15%;
+  position: relative;
+  z-index: 9;
+  padding: 6px;
+  margin: 0px 5px 0 5px;
+  min-height: 520px;
+  background-color: whitesmoke;
+  border: solid 1px #cccccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 6px #666666;
+  webkit-border-radius: 5px;
+  mozilla-border-radius: 5px; }
+  #sidebar dt, #sidebar dd {
+    margin: 0;
+    padding: 0; }
+  #sidebar dt {
+    margin-top: 15px;
+    margin-bottom: 4px; }
+  #sidebar dd {
+    font-weight: bold; }
+  #sidebar h3 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-color: black; }
 
 
 /*-------- texto ---------) */
