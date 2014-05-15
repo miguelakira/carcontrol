@@ -254,6 +254,11 @@
             R$<%= builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
           </div>
 
+          <div class="field">
+            <%= builder.label :data_pagamento, "Data do Pagamento" %><br>
+            <%= builder.date_select :data_pagamento, :order => [:day, :month, :year], :start_year => Time.now.year - 1  %>
+          </div>
+
       <br>
       <div class="actions">
         <% if @car.id.nil? %>
