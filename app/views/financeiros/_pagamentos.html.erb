@@ -124,7 +124,7 @@
 
   <tr>
       <td style='border-left: 1px solid #C1DAD7;'><%= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil? %></td>
-      <td><%= retorna_valor_monetario(pagamento.valor) %></td>
+      <td><%= number_to_currency(pagamento.valor) %></td>
       <td><%= pagamento.forma_pagamento %></td>
       <td class = "<%= row_class %>"<%= number_to_currency(pagamento.saldo) %></td>
       <td><%= pagamento.observacao %> </td>
