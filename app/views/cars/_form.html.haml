@@ -90,47 +90,46 @@
               
         <!-- fim dos dados do comprador -->
 
-        %br
         <!-- dados do veículo -->
         %fieldset
           %legend
             %h5{ :style => "font-size: 1.3em" }
               Dados do Veículo
-            .floating_form
-              .field
-                = f.label :placa
-                = f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15'
-              .field
-                = f.label "Modelo* (Por exemplo: Ford Ka)"
-                = f.text_field :modelo 
-              .field
-                = f.label :data_compra, "Início da Prestação de Serviços"
-                = f.date_select :data_compra, :order => [:day, :month, :year], :start_year => Time.now.year - 1 
-              .field
-                = f.label :data_prevista, "Data Prevista de Entrega"
-                = f.date_select :data_prevista, :order => [:day, :month, :year], :start_year => Time.now.year, :include_blank => true 
-              .field
-                = f.label :status_pagamento_id, "Status do Pagamento"
-                = f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] } 
-              
-              -@cegonhas.nil? ? @cegonhas = Cegonha.all : nil
-              
-              .field
-                = f.label :cegonha_id, "Cegonha"
-                = f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }, :onchange => "parceiroOrCegonhaNotBoth(this,'parceiro');", :id => 'cegonha'
-              
-              -@parceiros.nil? ? @parceiros = Parceiro.all : nil
-              
-              .field
-                = f.label :parceiro_id, "Parceiro"
-                = f.select :parceiro_id, @parceiros.collect {|p| [ p.nome, p.id ] }, { :include_blank => true}, :onchange => "parceiroOrCegonhaNotBoth(this,'cegonha');", :id => :parceiro  
-              .field
-                = f.label :ativo, "Status do Carro"
-                = select_tag :ativo, options_for_select(vehicle_status_as_array_with_index, @car.ativo)
-              .field
-                = f.label :observacao, "Observação"
-                = f.text_area :observacao, :cols => 40, :rows => 7
-          <!-- fim dos dados do veículo -->
+          .floating_form
+            .field
+              = f.label :placa
+              = f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15'
+            .field
+              = f.label "Modelo* (Por exemplo: Ford Ka)"
+              = f.text_field :modelo 
+            .field
+              = f.label :data_compra, "Início da Prestação de Serviços"
+              = f.date_select :data_compra, :order => [:day, :month, :year], :start_year => Time.now.year - 1 
+            .field
+              = f.label :data_prevista, "Data Prevista de Entrega"
+              = f.date_select :data_prevista, :order => [:day, :month, :year], :start_year => Time.now.year, :include_blank => true 
+            .field
+              = f.label :status_pagamento_id, "Status do Pagamento"
+              = f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] } 
+            
+            -@cegonhas.nil? ? @cegonhas = Cegonha.all : nil
+            
+            .field
+              = f.label :cegonha_id, "Cegonha"
+              = f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }, :onchange => "parceiroOrCegonhaNotBoth(this,'parceiro');", :id => 'cegonha'
+            
+            -@parceiros.nil? ? @parceiros = Parceiro.all : nil
+            
+            .field
+              = f.label :parceiro_id, "Parceiro"
+              = f.select :parceiro_id, @parceiros.collect {|p| [ p.nome, p.id ] }, { :include_blank => true}, :onchange => "parceiroOrCegonhaNotBoth(this,'cegonha');", :id => :parceiro  
+            .field
+              = f.label :ativo, "Status do Carro"
+              = select_tag :ativo, options_for_select(vehicle_status_as_array_with_index, @car.ativo)
+            .field
+              = f.label :observacao, "Observação"
+              = f.text_area :observacao, :cols => 40, :rows => 7
+        <!-- fim dos dados do veículo -->
 
         <!-- dados do debito -->
         %fieldset
