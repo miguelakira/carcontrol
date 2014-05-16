@@ -1,8 +1,7 @@
 #encoding: UTF-8
 class Car < ActiveRecord::Base
   attr_accessible :localizacao, :modelo, :placa, :rota_id, :status_pagamento_id, :ativo, :estado_id, :cidade_id, :data_compra,
-        :data_prevista, :cegonha_id, :comprador_attributes, :empresa_attributes, :debito_attributes, :observacao,
-        :parceiro_id, :pagamentos_attributes
+        :data_prevista, :cegonha_id, :comprador_attributes, :empresa_attributes, :debito_attributes, :observacao, :parceiro_id, :pagamentos_attributes
 
   belongs_to :status_pagamento
   belongs_to :cegonha
