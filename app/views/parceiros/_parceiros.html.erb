@@ -20,11 +20,7 @@
   <tr>
     <td class = "<%= @row_class %>"> <%= index + 1 %>. </td>
     <td class = "<%= @row_class %>">
-        <% if !parceiro.cpf.nil? %>
-            <%= link_to(parceiro.cpf, parceiro) %>
-    <% else %>
-       <%= link_to(parceiro.cnpj, parceiro) %>
-    <% end -%>
+      <%= parceiro.cpf.empty? ? link_to(parceiro.cnpj, parceiro) : link_to(parceiro.cpf, parceiro) %>
     </td>
     <td class = "<%= @row_class %>"><%= parceiro.nome %> </td>
     <td class = "<%= @row_class %>"><%= parceiro.contato %> </td>
