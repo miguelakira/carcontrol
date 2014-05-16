@@ -1,0 +1,356 @@
+-if @car.ativo != VEHICLE_STATUS.index('DELIVERED')
+  -empresas = Empresa.all
+  -compradores = Comprador.all 
+
+  -if !current_user.admin?
+    Desculpe, você precisa ter direitos administrativos para visualizar esta página!
+  -else
+    -if @editar_localizacao
+      -render 'editar_localizacao'
+    -else
+      =form_for(@car) do |f|
+        -if @car.errors.any?
+          #error_explanation
+            %h1
+              =pluralize(@car.errors.count, "erro") 
+              impediram que o cliente fosse atualizado:
+            %ul
+              -@car.errors.full_messages.each do |msg|
+                %li
+                  = msg
+
+        -if @car.empresa
+          <!-- Dados da empresa -->
+          %fieldset
+            %legend
+              %h5{ :style => "font-size: 1.3em" }
+                Dados da Empresa
+          =f.fields_for :empresa do |builder|
+            .floating_form
+              .field
+                =builder.label :cnpj, "CNPJ*"
+                =builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj'
+              .field
+                = builder.label :nome, "Nome da Empresa*"
+                = builder.text_field :nome, :id => 'empresa_nome'
+              
+              .field
+                = builder.label :contato, "Nome do Contato"
+                = builder.text_field :contato, :id => 'empresa_contato'
+              .field
+                =builder.label :email, "E-Mail"
+                =builder.text_field :email, :id => 'empresa_email'
+              .field
+                =builder.label :telefone
+                =builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone'
+              .field
+                =builder.label :celular
+                =builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular'
+              .field
+                =builder.label :observacao, "Observação"
+                =builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'empresa_observacao'
+
+        -elsif @car.comprador
+          %br
+          <!-- Dados do cliente-->
+          %fieldset
+            %legend
+              %h5{ :style => "font-size: 1.3em"}
+                Dados do Cliente
+            = f.fields_for :comprador do |builder|
+              %br
+              .floating_form
+                .field
+                  =builder.label :cpf, "Digite o CPF cliente*"
+                  =builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsComprador(this)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf'
+                .field
+                  =builder.label :nome, "Nome Completo*"
+                  =builder.text_field :nome, :id => 'comprador_nome'
+                .field
+                  =builder.label :email, "E-Mail"
+                  =builder.text_field :email, :id => 'comprador_email'
+                .field
+                  =builder.label :rg, "RG"
+                  =builder.text_field :rg , :id => 'comprador_rg'
+                .field
+                  =builder.label :telefone
+                  =builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_telefone'
+                .field
+                  =builder.label :celular
+                  =builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_celular'
+                .field
+                  =builder.label :parente, "Parente ou Conhecido do Cliente"
+                  =builder.text_field :parente, :id => 'comprador_parente'
+                .field
+                  =builder.label :telefone_parente, "Telefone do Parente ou Conhecido do Cliente"
+                  =builder.text_field :telefone_parente, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_telefone_parente'
+                .field
+                  =builder.label :observacao, "Observação"
+                  =builder.text_area "observacao".gsub("<br>", "\r\n"), :cols => 40, :rows => 7, :id => 'comprador_observacao'
+              
+        <!-- fim dos dados do comprador -->
+
+        %br
+        <!-- dados do veículo -->
+        %fieldset
+          %legend
+            %h5{ :style => "font-size: 1.3em" }
+              Dados do Veículo
+            .floating_form
+              .field
+                = f.label :placa
+                = f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15'
+              .field
+                = f.label "Modelo* (Por exemplo: Ford Ka)"
+                = f.text_field :modelo 
+              .field
+                = f.label :data_compra, "Início da Prestação de Serviços"
+                = f.date_select :data_compra, :order => [:day, :month, :year], :start_year => Time.now.year - 1 
+              .field
+                = f.label :data_prevista, "Data Prevista de Entrega"
+                = f.date_select :data_prevista, :order => [:day, :month, :year], :start_year => Time.now.year, :include_blank => true 
+              .field
+                = f.label :status_pagamento_id, "Status do Pagamento"
+                = f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] } 
+              
+              -@cegonhas.nil? ? @cegonhas = Cegonha.all : nil
+              
+              .field
+                = f.label :cegonha_id, "Cegonha"
+                = f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }, :onchange => "parceiroOrCegonhaNotBoth(this,'parceiro');", :id => 'cegonha'
+              
+              -@parceiros.nil? ? @parceiros = Parceiro.all : nil
+              
+              .field
+                = f.label :parceiro_id, "Parceiro"
+                = f.select :parceiro_id, @parceiros.collect {|p| [ p.nome, p.id ] }, { :include_blank => true}, :onchange => "parceiroOrCegonhaNotBoth(this,'cegonha');", :id => :parceiro  
+              .field
+                = f.label :ativo, "Status do Carro"
+                <%= select_tag :ativo, options_for_select(vehicle_status_as_array_with_index, @car.ativo)
+              .field
+                = f.label :observacao, "Observação"
+                = f.text_area :observacao, :cols => 40, :rows => 7
+          <!-- fim dos dados do veículo -->
+
+  /       <!-- dados do debito -->
+  /       <fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
+  /         <%= f.fields_for :debito do |builder| %>
+  /           <div class = 'floating_form'>
+  /             .field
+  /               =builder.label :valor_frete, "Valor do Frete" %><br>
+  /               R$=builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /             </div>
+
+  /             .field
+  /               =builder.label :taxa_plataforma, "Taxa de Plataforma" %><br>
+  /               R$=builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /             </div>
+
+  /             .field
+  /               =builder.label :taxa_plataforma_origem, "Taxa de Plataforma Origem" %><br>
+  /               R$=builder.text_field :taxa_plataforma_origem, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_origem, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /             </div>
+
+  /             .field
+  /               =builder.label :taxa_plataforma_destino, "Taxa de Plataforma Destino" %><br>
+  /               R$=builder.text_field :taxa_plataforma_destino, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_destino, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /             </div>
+  /           </div>
+
+  /           .field
+  /             =builder.label :taxa_balsa, "Taxa de Balsa" %><br>
+  /             R$=builder.text_field :taxa_balsa, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_balsa, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /           </div>
+
+  /           .field
+  /             =builder.label :taxa_despacho, "Taxa de Redespacho" %><br>
+  /             R$=builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /           </div>
+
+  /           .field
+  /             =builder.label :desconto, "Desconto" %><br>
+  /             R$=builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /           </div>
+  /           <br>
+  /           <br>
+  /           <br>
+
+  /           .field
+  /             =builder.label :observacao, "Observação" %><br>
+  /             =builder.text_area :observacao, :cols => 40, :rows => 7 %>
+  /           </div>
+  /         <% end -%>
+  /       </fieldset>
+
+  /       <fieldset><legend><h5 style="font-size: 1.3em">Dados dos Pagamentos</h5></legend>
+  /         <%= f.fields_for :pagamentos, @car.pagamentos.build do |builder| %>
+  /           .field
+  /             <% if @car.comprador %>
+  /               Total Pago pelo Cliente: <b><%= number_to_currency(soma_dos_pagamentos_efetuados(@car.comprador)) %></b>
+  /             <% elsif @car.empresa %>
+  /               Total Pago pela Empresa: <b><%= number_to_currency(soma_dos_pagamentos_efetuados(@car.empresa)) %></b>
+  /             <% end %>
+  /           </div>
+
+  /           .field
+  /             <% if @car.comprador %>
+  /             Dívida Restante do Cliente: <b><span class = "red"><%= number_to_currency(saldo_devedor_do_cliente(@car.comprador)) %></span></b>
+  /             <% elsif @car.empresa %>
+  /             Dívida Restante da Empresa: <b><span class = "red"><%= number_to_currency(saldo_devedor_do_cliente(@car.empresa)) %></span></b>
+  /             <% end %>
+  /           </div>
+
+  /           .field
+  /             =builder.label :forma_pagamento, "Forma do Novo Pagamento" %><br />
+  /             &nbsp;&nbsp;&nbsp;=builder.text_field :forma_pagamento %>
+  /           </div>
+
+  /           .field
+  /             =builder.label :valor, "Valor do Novo Pagamento" %><br />
+  /             R$=builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""%>
+  /           </div>
+
+  /           .field
+  /             =builder.label :data_pagamento, "Data do Pagamento" %><br>
+  /             =builder.date_select :data_pagamento, :order => [:day, :month, :year], :start_year => Time.now.year - 1  %>
+  /           </div>
+
+  /       <br>
+  /       <div class="actions">
+  /         <% if @car.id.nil? %>
+  /           <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
+  /         <% else -%>
+  /           <%= f.submit "Salvar" %>
+  /           <%= f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car %>
+  /         <% end -%>
+  /       </div>
+  /     <% end -%>
+  /   <% end -%>
+  /   <% end -%>
+  /   <% end -%>
+
+
+  / <!-- javascript & ruby -->
+  / <%= javascript_include_tag :defaults %>
+
+  / <script type = "text/javascript">
+
+  / function fillFieldsComprador(oSel)
+  / {
+  /   var oForm = oSel.form;
+
+  /   switch (oSel.value)
+  /   {
+  /     <% compradores.each do |comprador| %>
+  /     case '<%= comprador.cpf %>':
+  /       oForm.comprador_nome.value='<%= comprador.nome%>';
+  /       oForm.comprador_email.value='<%= comprador.email%>';
+  /       oForm.comprador_rg.value='<%= comprador.rg%>';
+  /       oForm.comprador_cpf.value='<%= comprador.cpf%>';
+  /       oForm.comprador_telefone.value='<%= comprador.telefone%>';
+  /       oForm.comprador_celular.value='<%= comprador.celular%>';
+  /       oForm.comprador_telefone_parente.value='<%= comprador.telefone_parente%>';
+  /       oForm.comprador_parente.value='<%= comprador.parente%>';
+  /        <% if comprador.observacao.include?("\r\n") %>
+  /       <% comprador.observacao = comprador.observacao.gsub("\r\n", "   ") %>
+  /       <% end -%>
+  /       oForm.comprador_observacao.value= '<%= comprador.observacao %>';
+
+  /     break;
+
+  /     <%end%>
+  /     case '':
+  /       oForm.comprador_nome.value='';
+  /       oForm.comprador_email.value='';
+  /       oForm.comprador_rg.value='';
+  /       oForm.comprador_cpf.value='';
+  /       oForm.comprador_telefone.value='';
+  /       oForm.comprador_celular.value='';
+  /       oForm.comprador_observacao.value='';
+  /       oForm.comprador_telefone_parente.value='';
+  /       oForm.comprador_parente.value='';
+  /       break;
+  /   }
+  / }
+
+  / function fillFieldsEmpresa(oSel)
+  / {
+  /   var oForm = oSel.form;
+
+  /   switch (oSel.value)
+  /   {
+  /     <% empresas.each do |empresa| %>
+  /     case '<%= empresa.cnpj %>':
+  /       oForm.empresa_nome.value='<%= empresa.nome%>';
+  /       oForm.empresa_email.value='<%= empresa.email%>';
+  /       oForm.empresa_contato.value='<%= empresa.contato%>';
+  /       oForm.empresa_cnpj.value='<%= empresa.cnpj%>';
+  /       oForm.empresa_telefone.value='<%= empresa.telefone%>';
+  /       oForm.empresa_celular.value='<%= empresa.celular%>';
+  /       oForm.empresa_observacao.value='<%= empresa.observacao%>';
+
+  /     break;
+
+  /     <%end%>
+  /     case '':
+  /       oForm.empresa_nome.value='';
+  /       oForm.empresa_email.value='';
+  /       oForm.empresa_contato.value='';
+  /       oForm.empresa_cnpj.value='';
+  /       oForm.empresa_telefone.value='';
+  /       oForm.empresa_celular.value='';
+  /       oForm.empresa_observacao.value='';
+  /       break;
+  /   }
+  / }
+  / </script>
+
+  / <% else %>
+  /   <%= form_for(@car, :url => {:id => @car.id, :action => "limited_edit"},:method => :put) do |f| %>
+  /     <fieldset><legend><h5 style="font-size: 1.3em">Dados do Frete</h5></legend>
+  /       <!-- dados do débito -->
+  /       .field
+  /         <%= f.label :status_pagamento_id %><br>
+  /         <%= f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] }  %>
+  /       </div>
+  /       <br>
+  /       <%= f.fields_for :debito do |builder| %>
+  /         .field
+  /           =builder.label :forma_pagamento, "Forma de Pagamento" %><br>
+  /           &nbsp;&nbsp;&nbsp;=builder.text_field :forma_pagamento %>
+  /         </div>
+
+  /         .field
+  /           =builder.label :valor_frete, "Valor do Frete" %><br>
+  /           R$=builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /         </div>
+
+  /         .field
+  /           =builder.label :taxa_plataforma, "Taxa de Plataforma" %><br>
+  /           R$=builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /         </div>
+
+  /         .field
+  /           =builder.label :taxa_despacho, "Taxa de Redespacho" %><br>
+  /           R$=builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /         </div>
+
+  /         .field
+  /           =builder.label :desconto, "Desconto" %><br>
+  /           R$=builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '') %>
+  /         </div>
+
+  /         .field
+  /           =builder.label :valor_pago, "Valor Pago pelo Cliente" %><br>
+  /           R$=builder.text_field :valor_pago, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')%>
+  /         </div>
+
+  /         .field
+  /           =builder.label :observacao, "Observação" %><br>
+  /           =builder.text_area :observacao, :cols => 40, :rows => 7 %>
+  /         </div>
+  /       <% end -%>
+  /     </fieldset>
+  /     <%= f.submit "Salvar" %>
+  /   <% end -%>
+  / <% end -%>

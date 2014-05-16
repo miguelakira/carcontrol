@@ -104,6 +104,12 @@ GEM
       thor (>= 0.18.1)
     guard-rspec (0.7.3)
       guard (>= 0.10.0)
+    haml (3.1.8)
+    haml-rails (0.3.5)
+      actionpack (>= 3.1, < 4.1)
+      activesupport (>= 3.1, < 4.1)
+      haml (~> 3.1)
+      railties (>= 3.1, < 4.1)
     heroku (3.2.1)
       heroku-api (~> 0.3.7)
       launchy (>= 0.3.2)
@@ -272,6 +278,7 @@ DEPENDENCIES
   faker (~> 1.0.1)
   gon
   guard-rspec (~> 0.7.0)
+  haml-rails
   heroku
   jquery-datatables-rails!
   jquery-rails

@@ -9,7 +9,8 @@ gem 'rails', '3.2.18'
 
 gem 'exception_notification'
 
-gem 'pg'
+gem "haml-rails"
+
 gem 'devise', '2.2.7'
 gem 'heroku'
 
