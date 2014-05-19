@@ -1,0 +1,56 @@
+.floating-left
+  %table#cegonhas.display
+    %thead
+      %tr>
+        %th{ :width => "5px"}
+          Nº
+        %th{ :width => "90px"}
+          Placa 
+        %th
+          Motorista 
+        %th{ :width => "200px"}
+          Localização Atual
+        %th
+          Origem
+        %th
+          Destino
+        %th
+          Carros
+        %th{ :width => "110px" }
+          Frete Total <br>dos Carros
+        - if current_user.admin?
+          %th{ :width => "120px" }
+          Ações
+    %tbody
+      - x = 0
+      - @cegonhas.each_with_index do |cegonha, index|
+        %tr
+          %td{ :class => @row_class }
+            = index + 1
+          %td{ :class => @row_class }
+            = link_to(cegonha.placa, cegonha)
+          %td{ :class => @row_class }
+            = cegonha.motorista.nome
+          %td{ :class => @row_class }
+            - unless cegonha.localizacao.nil?
+              = cegonha.localizacao
+              = link_to image_tag("edit_local.png", :border=>0), edit_cegonha_path(cegonha, :editar_localizacao => true, :cegonha => cegonha.id), :class => 'right' 
+          %td{ :class => @row_class }
+            - unless cegonha.cidade_origem.nil?
+              = Cidade.find(cegonha.cidade_origem).text
+              = Estado.find(cegonha.estado_origem).sigla
+          %td{ :class => @row_class }
+            - unless cegonha.cidade_destino.nil?
+              = Cidade.find(cegonha.cidade_destino).text
+              = Estado.find(cegonha.estado_destino).sigla
+          %td 
+            = (carros_na_cegonha(cegonha)).html_safe
+          %td
+            = number_to_currency(cegonha.total_freight)
+          - if current_user.admin?
+            %td{ :class => @row_class, :style => "text-align:center;"}
+              = link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), cegonha
+              &nbsp;
+              = link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_cegonha_path(cegonha)
+              &nbsp;
+              = link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), cegonha, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete

@@ -1,0 +1,13 @@
+- if !current_user.admin?
+  Desculpe, você precisa ter direitos administrativos para visualizar esta página!
+- else
+  %p
+    %h1
+    Editando Cegonha
+  - if @editar_localizacao
+    = render 'editar_localizacao'
+  - else
+    = render 'form'
+
+= link_to 'Detalhes', @cegonha |
+= link_to 'Voltar', cegonhas_path

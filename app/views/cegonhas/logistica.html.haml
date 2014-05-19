@@ -1,0 +1,36 @@
+%p
+  %h1
+    Logística
+%p
+  = " #{@cars.count} carros chegaram no destino (#{@cegonha.localizacao})"
+%p
+  Selecione quais carros irão ficar em logística aguardando para embarcar em outra cegonha ou parceiro</p>
+
+.floating_box{ :style => "min-height:100px" }
+  %table#mytable{ :cellspacing => "0", :summary => "Carros", :style => "width:300px;" }
+    %tr
+      %th.begin{ :style => "width:180px" }
+      Cegonha</th>
+      %td{:style => 'border-top: 1px solid #C1DAD7;' }
+        = @cegonha.placa
+    %tr
+      %th.begin
+        Localização Atual</th>
+      %td
+        = @cegonha.localizacao
+
+.clear
+
+= form_tag(logistica_save_cegonha_path(@cegonha), :method => 'post') do
+
+%dl
+  = @cars.each do |car|
+    %dt
+      Carro = car.placa
+    = check_box_tag 'finalizados[]', car.id 
+    Logística?
+    = hidden_field_tag 'cars[]', car.id
+  = submit_tag "Salvar"
+
+
+
