@@ -14,5 +14,7 @@
 /log/*.log
 /tmp
 
-# Ignore precompiled assets 
+# Ignore precompiled assets
 /public/assets
+
+.DS_STORE
