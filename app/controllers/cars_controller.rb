@@ -5,6 +5,7 @@ class CarsController < ApplicationController
 
   def index
     # para o sidebar
+    gon.cars = Car.limit(10)
     @car = Car.find(params[:car_id]) if params[:car_id]
     @cars = Car.order(:data_compra).where("ativo != #{VEHICLE_STATUS.index 'DELIVERED'}")
 
@@ -107,6 +108,7 @@ class CarsController < ApplicationController
 
   # GET /cars/1/edit
   def edit
+    gon.compradores = Comprador.all
 
     @editar_localizacao = params[:editar_localizacao]
     @car = Car.find(params[:id])

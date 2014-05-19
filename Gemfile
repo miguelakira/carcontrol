@@ -13,6 +13,7 @@ gem 'pg'
 gem 'devise', '2.2.7'
 gem 'heroku'
 
+gem 'gon'
 gem 'will_paginate', '3.0.3'
 gem 'thin'
 gem 'pjax_rails'

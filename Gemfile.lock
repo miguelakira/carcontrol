@@ -93,6 +93,9 @@ GEM
       i18n (~> 0.4)
     ffi (1.9.3)
     formatador (0.2.4)
+    gon (5.0.4)
+      actionpack (>= 2.3.0)
+      json
     guard (2.2.5)
       formatador (>= 0.2.4)
       listen (~> 2.1)
@@ -267,6 +270,7 @@ DEPENDENCIES
   execjs
   factory_girl_rails (~> 3.2.0)
   faker (~> 1.0.1)
+  gon
   guard-rspec (~> 0.7.0)
   heroku
   jquery-datatables-rails!
