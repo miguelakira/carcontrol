@@ -1,54 +1,53 @@
 -if @car
-  .sidebar
+  #sidebar
     -if saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa) >= 0
-      = row_class = 'blue'
+      - row_class = 'blue'
     -else
-      = row_class = 'red'
-      %dl
-        %h3
-          = @car.placa
-        %dt
-          Saldo Devedor do Cliente
-        %dd{ :class => "#{row_class}" }
-          = number_to_currency(saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa))
-        %dt 
-          Localização Atual:
-        %dd 
-          -unless @car.localizacao.nil? 
-            = @car.localizacao
-        %dt 
-          Cidade de Origem:
-        %dd 
-          -unless @car.cidade_origem.nil?
-            = Cidade.find(@car.cidade_origem).text
-            = Estado.find(@car.estado_origem).sigla
-        %dt 
-          Cidade de Destino:
-        %dd 
-          -unless @car.cidade_destino.nil?
-            = Cidade.find(@car.cidade_destino).text
-            = Estado.find(@car.estado_destino).sigla
-        %dt 
-          Previsão de Entrega:
-        %dd 
-          = @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil?
-        %dt 
-          Status do Pagamento
-        %dd 
-          = @car.status_pagamento.status
-        %dt 
-          Status do Veículo
-        %dd 
-          = t(VEHICLE_STATUS[@car.ativo])
-        %dt 
-          Modelo
-        %dd 
-          = @car.modelo.titleize
-        %p.acoes
-          = link_to "Detalhes", @car
-          = link_to "Editar", edit_car_path(@car)
-          = link_to "Deletar", @car, method: :delete, confirm: "Are you sure?"
-
+      - row_class = 'red'
+    %dl
+      %h3
+        = @car.placa
+      %dt
+        Saldo Devedor do Cliente
+      %dd{ :class => "#{row_class}" }
+        = number_to_currency(saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa))
+      %dt 
+        Localização Atual:
+      %dd 
+        -unless @car.localizacao.nil? 
+          = @car.localizacao
+      %dt 
+        Cidade de Origem:
+      %dd 
+        -unless @car.cidade_origem.nil?
+          = Cidade.find(@car.cidade_origem).text
+          = Estado.find(@car.estado_origem).sigla
+      %dt 
+        Cidade de Destino:
+      %dd 
+        -unless @car.cidade_destino.nil?
+          = Cidade.find(@car.cidade_destino).text
+          = Estado.find(@car.estado_destino).sigla
+      %dt 
+        Previsão de Entrega:
+      %dd 
+        = @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil?
+      %dt 
+        Status do Pagamento
+      %dd 
+        = @car.status_pagamento.status
+      %dt 
+        Status do Veículo
+      %dd 
+        = t(VEHICLE_STATUS[@car.ativo])
+      %dt 
+        Modelo
+      %dd 
+        = @car.modelo.titleize
+      %p.acoes
+        = link_to "Detalhes", @car
+        = link_to "Editar", edit_car_path(@car)
+        = link_to "Deletar", @car, method: :delete, confirm: "Are you sure?"
 
 .floating-left
   %table#cars.display{ :style => "float: left;"}
