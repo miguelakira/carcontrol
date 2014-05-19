@@ -50,6 +50,7 @@
           = link_to "Editar", edit_car_path(@car)
           = link_to "Deletar", @car, method: :delete, confirm: "Are you sure?"
 
+
 .floating-left
   %table#cars.display{ :style => "float: left;"}
     %thead
@@ -92,13 +93,16 @@
             = index + 1
           %td{ :class => @row_class }
             = car.data_compra.strftime("%d/%m/%y")
-          / %td{ :class => @row_class }
-          /   = link_to car.placa, :car_id => car.idlink_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :car => car.id), :class => 'right'
+          %td{ :class => @row_class }
+            = link_to car.placa, :car_id => car.id
+            = link_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :car => car.id), :class => 'right'
           %td{ :class => @row_class }
             = car.modelo.titleize
-          / %td{ :class =>  @row_class }
-          /   -unless car.localizacao.nil?car.localizacao
-          /     -if car.ativo?link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'
+          %td{ :class =>  @row_class }
+            -unless car.localizacao.nil? 
+              = car.localizacao
+            -if car.ativo? 
+              = link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'
           %td{ :class =>  @row_class }
             = car.comprador ? car.comprador.nome : car.empresa.nome
           %td{ :class =>  @row_class }
