@@ -81,11 +81,11 @@
       - @cars.each_with_index do |car, index|
         
         -if car.status_pagamento.value == 1
-          = @row_class = 'nao-pago'
+          - @row_class = 'nao-pago'
         - elsif car.status_pagamento.value == 2
-          = @row_class = 'pendente'
+          - @row_class = 'pendente'
         - else
-          = @row_class = '';
+          - @row_class = '';
         %tr
           %td{ :class => @row_class} 
             = index + 1
