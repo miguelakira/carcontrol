@@ -1,0 +1,90 @@
+%p
+  %h1
+    = @mensagem_compradores
+
+%table#compradores.display{ :style => "float: left;"}
+  %thead
+    %tr
+      %td{ :width => "150px"}
+        Nome
+      %td{ :width => "80px"}
+        Email
+      %td{ :width => "50px"}
+        RG
+      %td{ :width => "70px"}
+        CPF
+      %td{ :width => "80px"}
+        Telefone
+      %td{ :width => "50px"}
+        Carros <br>Ativos
+      %td{ :width => "80px"}
+        Valor Pago <br> Total
+      %td{ :width => "80px"}
+        Saldo <br> Devedor
+    
+  %tbody
+    - @compradores.each do |comprador|
+      %tr
+        %td{ :style => 'border-left: 1px solid #C1DAD7;'}
+          = link_to comprador.nome, comprador  
+          = link_to image_tag("edit_local.png", :border=>0),edit_comprador_path(comprador, :comprador => comprador.id), :class => 'right' 
+        %td
+          = comprador.email
+        %td{ :width => '50px'}
+          = comprador.rg
+        %td
+          = comprador.cpf
+        %td
+          = comprador.telefone
+        %td{ :width => '100px'}
+          = carros_ativos_do_cliente(comprador).html_safe
+        %td
+          = number_to_currency(soma_dos_pagamentos_efetuados(comprador))  
+        %td
+          = number_to_currency(saldo_devedor_do_cliente(comprador))
+      
+%br
+%p
+  %h1
+    = @mensagem_empresas
+%table#empresas.display{ :style => "float: left;"}
+  %thead
+    %tr
+      %td{ :width => "200px"}
+        Nome
+      %th
+        Email
+      %th
+        CNPJ
+      %td{ :width => "100px"}
+        Telefone
+      %td{ :width => "100px"}
+        Celular
+      %th
+        Carros <br>Ativos
+      %td{ :width => "100px"}
+        Valor Pago <br> Total
+      %th
+        Saldo <br> Devedor
+  %tbody
+    - @empresas.each do |empresa|
+
+      %tr
+        %td{ :style => 'border-left: 1px solid #C1DAD7;'}
+          = link_to empresa.nome, empresa 
+          = link_to image_tag("edit_local.png", :border=>0), edit_empresa_path(empresa, :empresa => empresa.id), :class => 'right' 
+        %td
+          = empresa.email
+        %td
+          = empresa.cnpj
+        %td
+          = empresa.telefone
+        %td
+          = empresa.celular
+        %td
+          = carros_ativos_do_cliente(empresa).html_safe
+        %td
+          = number_to_currency(soma_dos_pagamentos_efetuados(empresa)) 
+        %td
+          = number_to_currency(saldo_devedor_do_cliente(empresa))
+%br
