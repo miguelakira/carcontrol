@@ -21,6 +21,9 @@ class CegonhasController < ApplicationController
   end
 
   def new
+    gon.motoristas = Motorista.all
+    gon.empresas = Empresa.all
+    
     @cegonha = Cegonha.new
     @editar_localizacao = params[:editar_localizacao]
     @cegonha.build_motorista
@@ -36,6 +39,8 @@ class CegonhasController < ApplicationController
     end
   end
   def edit
+    gon.motoristas = Motorista.all
+    gon.empresas = Empresa.all
     @editar_localizacao = params[:editar_localizacao]
     @cegonha = Cegonha.find(params[:id])
 
