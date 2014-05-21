@@ -73,13 +73,3 @@
     Este parceiro pagou todos os carros
 - else
   = render 'cars', :carros => @cars_nao_pagos, :status => "_nao_pagos"
-
-%p
-  %b
-    CARROS PAGOS
-- if @cars_pagos.empty?
-  %p
-    Este parceiro não possui carros pagos.
-- else
-  = render 'cars_pagos', :carros => @cars_pagos
-

@@ -177,24 +177,21 @@
                 Total Pago pela Empresa: 
                 %b
                   = number_to_currency(soma_dos_pagamentos_efetuados(@car.empresa))
-
             .field
               -if @car.comprador
                 Dívida Restante do Cliente: 
-                %b
-                  %span.red
-                    = number_to_currency(saldo_devedor_do_cliente(@car.comprador))
+                %span.red
+                  = number_to_currency(saldo_devedor_do_cliente(@car.comprador))
                 -elsif @car.empresa
                   Dívida Restante da Empresa: 
-                  %b
-                    %span.red
-                      = number_to_currency(saldo_devedor_do_cliente(@car.empresa))
-
+                  %span.red
+                    = number_to_currency(saldo_devedor_do_cliente(@car.empresa))
             .field
               =builder.label :forma_pagamento, "Forma do Novo Pagamento"
               =builder.text_field :forma_pagamento
             .field
               =builder.label :valor, "Valor do Novo Pagamento"
+              R$
               =builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""
             .field
               =builder.label :data_pagamento, "Data do Pagamento"
