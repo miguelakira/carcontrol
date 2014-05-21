@@ -77,7 +77,7 @@ function fillFieldsMotorista(oSel) {
 function fillFieldsEmpresaCegonha(oSel) {
   var oForm = oSel.form;
   if (oSel.value === '') {
-   oForm.empresa_nome.value = '';
+    oForm.empresa_nome.value = '';
     oForm.empresa_email.value = '';
     oForm.empresa_contato.value = '';
     oForm.empresa_cnpj.value = '';
@@ -93,6 +93,36 @@ function fillFieldsEmpresaCegonha(oSel) {
       oForm.empresa_cnpj.value = gon.empresas[i].cnpj;
       oForm.empresa_telefone.value = gon.empresas[i].telefone;
       oForm.empresa_celular.value = gon.empresas[i].celular;
+    }
+  }
+}
+
+function fillFieldsParceiro(oSel) {
+  var oForm = oSel.form;
+  if (oSel.value === '') {
+    oForm.parceiro_nome.value = '';
+    oForm.parceiro_email.value = '';
+    oForm.parceiro_telefone.value = '';
+    oForm.parceiro_celular.value = '';
+    oForm.parceiro_observacao.value = '';
+  }
+  else {
+    for (var i = 0; i < gon.parceiros.length; i++) {
+      if (oSel.value === gon.parceiros[i].cpf) {
+        oForm.parceiro_nome.value = gon.parceiros[i].nome;
+        oForm.parceiro_email.value = gon.parceiros[i].email;
+        oForm.parceiro_telefone.value = gon.parceiros[i].telefone;
+        oForm.parceiro_celular.value = gon.parceiros[i].celular;
+        oForm.parceiro_observacao.value = gon.parceiros[i].observacao;
+      }
+      else if (oSel.value === gon.parceiros[i].cnpj) {
+        oForm.parceiro_nome.value = gon.parceiros[i].nome;
+        oForm.parceiro_email.value = gon.parceiros[i].email;
+        oForm.parceiro_telefone.value = gon.parceiros[i].telefone;
+        oForm.parceiro_celular.value = gon.parceiros[i].celular;
+        oForm.parceiro_observacao.value = gon.parceiros[i].observacao;
+
+      }
     }
   }
 }

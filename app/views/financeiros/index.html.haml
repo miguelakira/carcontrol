@@ -26,7 +26,7 @@
         %td
           = number_to_currency(soma_dos_pagamentos_efetuados(comprador))
         %td
-          = "#{pluralize(comprador.carros_ativos, 'carro')}"
+          = "#{pluralize(comprador.active_cars.count, 'carro')}"
 
 %p
   %h1
@@ -56,7 +56,7 @@
         %td
           = number_to_currency(soma_dos_pagamentos_efetuados(empresa))
         %td
-          = "#{pluralize(empresa.carros_ativos, 'carro')}"
+          = "#{pluralize(empresa.active_cars.count, 'carro')}"
 
 %p
   %h1
@@ -86,4 +86,4 @@
         %td
           = number_to_currency(soma_dos_pagamentos_efetuados(parceiro)) 
         %td
-          = "#{pluralize(parceiro.carros_ativos, 'carro')}"
+          = "#{pluralize(parceiro.active_cars.count, 'carro')}"

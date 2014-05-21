@@ -92,7 +92,8 @@
         %td
           = @car.empresa.email
       %tr
-        %th style = "height:50px">Observação
+        %th{ :style => "height:50px"}
+          Observação
         %td
           = @car.empresa.observacao
  
@@ -163,7 +164,7 @@
 
 %br
 
-#floating_box
+.floating_box
   %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Pagamento", :style => "width:450px" }
     %caption
       %h5
@@ -254,6 +255,7 @@
       %td
         %span{ :class => @row_class }
           = number_to_currency(pagamentos_provisionados(@owner))
+  
   %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Pagamento", :style => "width:450px; margin-top:0px; margin-bottom:10px;"}
     %tr
       %th{ :width => '50px', :style => 'border-left: 1px solid #C1DAD7;'}

@@ -5,21 +5,21 @@
 %table#compradores.display{ :style => "float: left;"}
   %thead
     %tr
-      %td{ :width => "150px"}
+      %th{ :width => "150px"}
         Nome
-      %td{ :width => "80px"}
+      %th{ :width => "80px"}
         Email
-      %td{ :width => "50px"}
+      %th{ :width => "50px"}
         RG
-      %td{ :width => "70px"}
+      %th{ :width => "70px"}
         CPF
-      %td{ :width => "80px"}
+      %th{ :width => "80px"}
         Telefone
-      %td{ :width => "50px"}
+      %th{ :width => "50px"}
         Carros <br>Ativos
-      %td{ :width => "80px"}
+      %th{ :width => "80px"}
         Valor Pago <br> Total
-      %td{ :width => "80px"}
+      %th{ :width => "80px"}
         Saldo <br> Devedor
     
   %tbody
@@ -50,25 +50,24 @@
 %table#empresas.display{ :style => "float: left;"}
   %thead
     %tr
-      %td{ :width => "200px"}
+      %th{ :width => "200px"}
         Nome
       %th
         Email
       %th
         CNPJ
-      %td{ :width => "100px"}
+      %th{ :width => "100px"}
         Telefone
-      %td{ :width => "100px"}
+      %th{ :width => "100px"}
         Celular
       %th
         Carros <br>Ativos
-      %td{ :width => "100px"}
+      %th{ :width => "100px"}
         Valor Pago <br> Total
       %th
         Saldo <br> Devedor
   %tbody
     - @empresas.each do |empresa|
-
       %tr
         %td{ :style => 'border-left: 1px solid #C1DAD7;'}
           = link_to empresa.nome, empresa 

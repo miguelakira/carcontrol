@@ -1,14 +1,12 @@
-<p><h1><%= @mensagem %> </h1></p>
-<% if !@parceiros.empty? %>
+%p
+  %h1
+    = @mensagem
+- if !@parceiros.empty? 
+  = render 'parceiros' 
+%br
 
-<%= render 'parceiros' %>
+.clear
+%br
 
-<br />
-
-<% end -%>
-<div style="clear: both;"></div>
-<br>
-<% if current_user.admin? %>
-  <%= button('Adicionar Parceiro', new_parceiro_path)%>
-
-<% end -%>
+- if current_user.admin? 
+  = button('Adicionar Parceiro', new_parceiro_path)

@@ -22,10 +22,9 @@ class Parceiro < ActiveRecord::Base
     end
   end
 
-  def carros_ativos
-    self.cars.reject {|c| c.ativo == 0}.count
-  end
- 
+def active_cars
+    self.cars.reject {|c| c.ativo == VEHICLE_STATUS.index('DELIVERED')}
+  end 
   def total_freight
     self.cars.map {|car| car.debito.valor_total}.inject(0, &:+)
   end

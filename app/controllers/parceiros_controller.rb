@@ -7,6 +7,7 @@ class ParceirosController < ApplicationController
   end
 
    def new
+    gon.parceiros = Parceiro.all
     @parceiro = Parceiro.new
 
     respond_to do |format|
@@ -57,8 +58,8 @@ class ParceirosController < ApplicationController
 
 
   def edit
+    gon.parceiros = Parceiro.all
     @parceiro = Parceiro.find(params[:id])
-
   end
 
   def update

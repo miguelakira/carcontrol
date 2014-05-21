@@ -54,8 +54,8 @@ class Comprador < ActiveRecord::Base
     self.nome = self.nome.titleize unless self.nome.nil?
   end
 
-  def carros_ativos
-    self.cars.reject {|c| c.ativo == 0}.count
+  def active_cars
+    self.cars.reject {|c| c.ativo == VEHICLE_STATUS.index('DELIVERED')}
   end
 
   def total_debt

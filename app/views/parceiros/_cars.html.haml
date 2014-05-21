@@ -13,15 +13,15 @@
     %th{ :width => '60'}
       Frete
     %th{ :width => '60'}
-      Taxa de<br/>Plataforma 
+      Taxa de Plataforma 
     %th{ :width => '60'}
-      Taxa de<br/>Plataforma Origem
+      Taxa de Plataforma Origem
     %th{ :width => '60'}
-      Taxa de<br/>Plataforma Destino
+      Taxa de Plataforma Destino
     %th{ :width => '60'}
-      Taxa de<br/>Balsa
+      Taxa de Balsa
     %th{ :width => '60'}
-      Taxa de<br/>Redespacho
+      Taxa de Redespacho
     %th{ :width => '60'}
       Desconto
     %th{ :width => '60'}
@@ -29,51 +29,49 @@
     %th{ :width => '60'}
       Saldo Devedor
     %th{ :width => '60'}
-      Data de<br/>Pagamento
-  
-
+      Data de Pagamento
   - carros.each_with_index do |car, index|
-  - if car.status_pagamento.value == 1
-    - @row_class = 'nao-pago'
-  - elsif car.status_pagamento.value == 2
-    - @row_class = 'pendente'
-  - else
-    - @row_class = '';
+    - if car.status_pagamento.value == 1
+      - @row_class = 'nao-pago'
+    - elsif car.status_pagamento.value == 2
+      - @row_class = 'pendente'
+    - else
+      - @row_class = '';
 
-  %tr
-    %td.none
-      = index + 1
-    %td.begin{ :class => @row_class }
-      = car.data_compra.strftime("%d/%m")
-    %td{ :class => @row_class }
-      = link_to "#{car.modelo} - #{car.placa}", car
-    %td{ :class => @row_class }
-      - unless car.cidade_origem.nil?
-        = Cidade.find(car.cidade_origem).text
-        = Estado.find(car.estado_origem).sigla
-    %td{ :class => @row_class }
-      - unless car.cidade_destino.nil?
-        = Cidade.find(car.cidade_destino).text
-        = Estado.find(car.estado_destino).sigla
-    %td{ :class => @row_class }
-      = number_to_currency(car.debito.valor_frete)
-    %td{ :class => @row_class }
-      = number_to_currency(car.debito.taxa_plataforma)
-    %td{ :class => @row_class }
-      = number_to_currency(car.debito.taxa_plataforma_origem)
-    %td{ :class => @row_class }
-      = number_to_currency(car.debito.taxa_plataforma_destino)
-    %td{ :class => @row_class }
-      = number_to_currency(car.debito.taxa_balsa)
-    %td{ :class => @row_class }
-      = number_to_currency(car.debito.taxa_despacho)
-    %td{ :class => @row_class }
-      = number_to_currency(car.debito.desconto)
-    %td{ :class => @row_class }
-      = number_to_currency(car.debito.valor_pago)
-    %td{ :class => @row_class }
-      = number_to_currency(car.debito.saldo_devedor)
-    %td{ :class => @row_class }
-      = car.debito.data_pagamento.strftime("%d/%m/%Y") unless car.debito.data_pagamento.nil?
+    %tr
+      %td.none
+        = index + 1
+      %td.begin{ :class => @row_class }
+        = car.data_compra.strftime("%d/%m")
+      %td{ :class => @row_class }
+        = link_to "#{car.modelo} - #{car.placa}", car
+      %td{ :class => @row_class }
+        - unless car.cidade_origem.nil?
+          = Cidade.find(car.cidade_origem).text
+          = Estado.find(car.estado_origem).sigla
+      %td{ :class => @row_class }
+        - unless car.cidade_destino.nil?
+          = Cidade.find(car.cidade_destino).text
+          = Estado.find(car.estado_destino).sigla
+      %td{ :class => @row_class }
+        = number_to_currency(car.debito.valor_frete)
+      %td{ :class => @row_class }
+        = number_to_currency(car.debito.taxa_plataforma)
+      %td{ :class => @row_class }
+        = number_to_currency(car.debito.taxa_plataforma_origem)
+      %td{ :class => @row_class }
+        = number_to_currency(car.debito.taxa_plataforma_destino)
+      %td{ :class => @row_class }
+        = number_to_currency(car.debito.taxa_balsa)
+      %td{ :class => @row_class }
+        = number_to_currency(car.debito.taxa_despacho)
+      %td{ :class => @row_class }
+        = number_to_currency(car.debito.desconto)
+      %td{ :class => @row_class }
+        = number_to_currency(car.debito.valor_pago)
+      %td{ :class => @row_class }
+        = number_to_currency(car.debito.saldo_devedor)
+      %td{ :class => @row_class }
+        = car.debito.data_pagamento.strftime("%d/%m/%Y") unless car.debito.data_pagamento.nil?
   
 = stylesheet_link_tag "default"

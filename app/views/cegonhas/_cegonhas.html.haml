@@ -1,7 +1,7 @@
 .floating-left
   %table#cegonhas.display
     %thead
-      %tr>
+      %tr
         %th{ :width => "5px"}
           Nº
         %th{ :width => "90px"}
@@ -20,7 +20,7 @@
           Frete Total <br>dos Carros
         - if current_user.admin?
           %th{ :width => "120px" }
-          Ações
+            Ações
     %tbody
       - x = 0
       - @cegonhas.each_with_index do |cegonha, index|

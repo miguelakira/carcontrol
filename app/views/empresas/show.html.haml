@@ -2,55 +2,45 @@
   = notice
 
 .floating_box
-  %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Cliente", :style => "width:450px" }
+  %table#mytable{ :cellspacing => "0", :summary => "Detalhes da Empresa", :style => "width:450px" }
     %caption
       %h5
-        Detalhes do Cliente
-    %tr
-      %th{ :style => "width:180px "}
-        Nome do Cliente
-      %td{ :style => 'border-top: 1px solid #C1DAD7;'}
-        = @comprador.nome 
-    %tr
-      %th
-        RG
-      %td
-        = @comprador.rg
-    %tr
-      %th
-        CPF
-      %td
-        = @comprador.cpf
-    %tr
-      %th
-        Telefone
-      %td
-        = @comprador.telefone
-    %tr
-      %th
-        Celular
-      %td
-        = @comprador.celular
-    %tr
-      %th
-        E-Mail
-      %td
-        = @comprador.email
-    %tr
-      %th
-        Nome de Parente <br> ou Conhecido
-      %td
-        = @comprador.parente
-    %tr
-      %th
-        Telefone de Parente <br> ou Conhecido
-      %td
-        = @comprador.telefone_parente
-    %tr
-      %th{ :style => "height:50px" }
-        Observação
-      %td
-        = @comprador.observacao
+        Detalhes da Empresa
+      %tr
+        %th{ :style => "width:180px"}
+          Nome da Empresa
+        %td{ :style => 'border-top: 1px solid #C1DAD7;'}
+          = @empresa.nome 
+      %tr
+        %th
+          Nome do Contato
+        %td
+          = @empresa.contato
+      %tr
+        %th
+          CNPJ
+        %td
+          = @empresa.cnpj
+      %tr
+        %th
+          Telefone
+        %td
+          = @empresa.telefone
+      %tr
+        %th
+          Celular
+        %td
+          = @empresa.celular
+      %tr
+        %th
+          E-Mail
+        %td
+          = @empresa.email
+      %tr
+        %th{ :style => "height:50px"}
+          Observação
+        %td
+          = @empresa.observacao
     
   %table#mytable{ :cellspacing => "0", :summary => "Detalhes dos Carros", :style => "width:450px" }
     %caption
@@ -60,22 +50,22 @@
       %th{ :style => "width:130px" }
         Carros Ativos
       %td{ :style => 'border-top: 1px solid #C1DAD7;' }
-        = carros_ativos_do_cliente(@comprador).html_safe
+        = carros_ativos_do_cliente(@empresa).html_safe
     %tr
       %th
         Frete Total dos <br> Carros Ativos
       %td
-        = number_to_currency(frete_total_do_cliente(@comprador)) 
+        = number_to_currency(frete_total_do_cliente(@empresa)) 
     %tr
       %th
         Pagamento Total <br> Efetuado
       %td
-        = number_to_currency(soma_dos_pagamentos_efetuados(@comprador)) 
+        = number_to_currency(soma_dos_pagamentos_efetuados(@empresa)) 
     %tr
       %th
         Saldo Devedor
       %td
-        = number_to_currency(saldo_devedor_do_cliente(@comprador)) 
+        = number_to_currency(saldo_devedor_do_cliente(@empresa)) 
     %tr
       %th{ :style => "height:50px" }
         Observação
@@ -96,10 +86,8 @@
         Forma de <br> Pagamento
       %th
         Saldo
-    
 
-    - @comprador ? owner = @comprador : owner = @empresa
-    - owner.pagamentos.each do |pagamento|
+    - @empresa.pagamentos.each do |pagamento|
       - if pagamento.saldo >= 0
         - row_class  = 'blue'
       - else
@@ -116,5 +104,5 @@
       
 .clear
 
-= button 'Editar', edit_comprador_path(@comprador)
+= button 'Editar', edit_comprador_path(@empresa)
 = button 'Voltar', compradores_path

@@ -1389,6 +1389,10 @@ caption {
   margin-right:30px;
 }
 
-label {display:block}
-fieldset {display:block}
+label {
+  display:block;}
+fieldset {
+  display:block;
+  margin-bottom:15px;
+}
 
