@@ -1,0 +1,38 @@
+%p
+  %b
+    = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @cliente, :comprador_cpf => @cliente.cpf
+
+%p
+  %h5
+    Transações Financeiras do Cliente
+
+  = render 'pagamentos', :cliente => @cliente
+%br
+
+%legend
+  %h5{ :style => "font-size: 1.3em"} 
+    Carros Ativos
+  = render 'cars', :carros => @cars_ativos, :status => "_ativos"
+%br
+
+
+%legend
+  %h5{ :style => "font-size: 1.3em"} 
+    Carros Não-Pagos
+
+- if @cars_nao_pagos.empty?
+  %p
+    Este cliente pagou todos os carros
+- else
+  = render 'cars', :carros => @cars_nao_pagos, :status => "_nao_pagos"
+
+%legend
+  %h5{ :style => "font-size: 1.3em"} 
+    Carros Finalizados
+
+- if @cars_inativos.empty?
+  %p
+    Não há carros finalizados para este cliente
+- else
+  = render 'cars', :carros => @cars_inativos, :status => "_inativos"
+
