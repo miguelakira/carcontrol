@@ -1,0 +1,85 @@
+%p
+  %b
+    = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :comprador_cpf => @parceiro
+%p
+  %h5
+    Transações Financeiras do Parceiro
+%br
+
+.floating_box{ :style => "min-height:100px"}
+  %fieldset{ :style => "width:320px; float:left; margin-top: 20px;" }
+    %p
+      = "Nome: #{@parceiro.nome}"
+    - if !@parceiro.cpf.nil?
+      %p
+        = "CPF: #{@parceiro.cpf}"
+    - else
+      %p
+        = "CNPJ: #{@parceiro.cnpj}"
+    = "Telefone: #{@parceiro.telefone}" unless @parceiro.telefone.empty? 
+
+  %table#mytable{ :cellspacing => "0", :summary => "Carros", :style => "width:300px;" }
+    %tr
+      %th.begin{ :style => "width:180px"}
+        Carros Ativos do Parceiro
+      %td{ :style => 'border-top: 1px solid #C1DAD7;'}
+        = !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo'
+    %tr
+      %th.begin
+        Carros Finalizados
+      %td
+        = !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado'
+    
+  %table#mytable{ :cellspacing => "0", :summary => "Fretes", :style => "width:300px" }
+    %tr
+      %th.begin{ :style => "width:180px"}
+        Valor Total dos Fretes
+      %td{ :style => 'border-top: 1px solid #C1DAD7;'} 
+        = number_to_currency(@valor_total)
+    %tr
+      %th.begin
+        Valor Total Pago
+      %td
+        = number_to_currency(@valor_pago) 
+    %tr
+      %th.begin
+        Saldo Devedor Total
+      %td
+        = number_to_currency(@saldo_devedor) 
+    
+.clear
+%br
+
+%p
+  %b
+    CARROS ATIVOS
+  = render 'cars', :carros => @cars_ativos, :status => "_ativos"
+%br
+
+%p
+  %b
+    CARROS FINALIZADOS
+- if @cars_inativos.empty?
+  %p
+    Não há carros finalizados para este Parceiro
+- else
+  = render 'cars', :carros => @cars_inativos, :status => "_inativos"
+
+%p
+  %b
+    CARROS NÃO PAGOS
+- if @cars_nao_pagos.empty?
+  %p
+    Este parceiro pagou todos os carros
+- else
+  = render 'cars', :carros => @cars_nao_pagos, :status => "_nao_pagos"
+
+%p
+  %b
+    CARROS PAGOS
+- if @cars_pagos.empty?
+  %p
+    Este parceiro não possui carros pagos.
+- else
+  = render 'cars_pagos', :carros => @cars_pagos
+

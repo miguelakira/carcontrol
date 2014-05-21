@@ -1,0 +1,26 @@
+%p#notice
+  = notice
+
+- if defined? @cliente and @cliente.nil?
+  %p
+    %h1
+      Nenhuma transação encontrada para este CPF!
+- elsif defined? @empresa and @empresa.nil?
+  %p
+    %h1
+      Nenhuma transação encontrada para este CNPJ!
+- elsif defined? @parceiro and @parceiro.nil?
+  %p
+    %h1
+      Nenhuma transação encontrada para este parceiro!
+
+- else
+  - if @cars_cpf
+    = render 'cliente'
+  - elsif @cars_cnpj
+    = render 'empresa'
+  - elsif @cars_parceiro
+    = render 'parceiro'
+
+
+

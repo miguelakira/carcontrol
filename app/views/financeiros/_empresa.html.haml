@@ -7,12 +7,13 @@
 
 .floating_box{ :style => "min-height:100px" }
   %fieldset{ :style => "width:300px; float:left; margin-top: 20px;" }
-    %b
-      Nome da Empresa: = @empresa.nome   <br />
-    %b
-      Contato na Empresa: = @empresa.contato unless @empresa.contato.empty?   <br />
-    %b
+    %p
+      = "Nome da Empresa: #{@empresa.nome}"
+    %p
+      = "Contato na Empresa: #{@empresa.contato}" unless @empresa.contato.empty?
+    %p
       = "CNPJ: #{@empresa.cnpj}"
+    %p
       = "Telefone: #{@empresa.telefone}" unless @empresa.telefone.empty? 
   
   %table#mytable{ :cellspacing => "0", :summary => "Carros", :style => "width:300px" }
@@ -50,7 +51,7 @@
 %p
   %b
     CARROS ATIVOS
-  = render 'cars', :carros => @cars_ativos 
+  = render 'cars', :carros => @cars_ativos, :status => "_ativos"
 %br
 
 %p
@@ -60,7 +61,7 @@
   %p
     Não há carros finalizados para esta empresa
 - else 
-  = render 'cars', :carros => @cars_inativos 
+  = render 'cars', :carros => @cars_inativos, :status => "_inativos"
 - end -
 
 %p
@@ -70,7 +71,7 @@
   %p
     Esta empresa pagou todos os carros
 - else 
-  = render 'cars', :carros => @cars_nao_pagos 
+  = render 'cars', :carros => @cars_nao_pagos, :status => "_nao_pagos"
 
 %p
   %b

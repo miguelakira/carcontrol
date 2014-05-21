@@ -1,0 +1,89 @@
+%p
+  %h1
+    Clientes
+%table.display#compradores_financeiro{ :style => "float: left;" }
+  %thead
+    %tr
+      %th{ :width => '150px' }
+        Nome
+      %th{ :width => '80px' }
+        CPF
+      %th{ :width => '100px' }
+        Débito Total
+      %th{ :width => '100px' }
+        Pagamento Total
+      %th{ :width => '100px' }
+        Quantia de Carros Ativos
+  %tbody
+    - @compradores.each do |comprador|
+      %tr
+        %td{ :style => 'border-left: 1px solid #C1DAD7;' }
+          = link_to comprador.nome, financeiro_path(:show, :comprador_cpf => comprador.cpf)
+        %td
+          = comprador.cpf
+        %td
+          = number_to_currency(saldo_devedor_do_cliente(comprador))
+        %td
+          = number_to_currency(soma_dos_pagamentos_efetuados(comprador))
+        %td
+          = "#{pluralize(comprador.carros_ativos, 'carro')}"
+
+%p
+  %h1
+    Empresas
+%table.display#empresas_financeiro{ :style => "float: left;" }
+  %thead
+    %tr
+      %th{ :width => '150px' }
+        Nome
+      %th{ :width => '80px' }
+        CNPJ
+      %th{ :width => '100px' }
+        Débito Total
+      %th{ :width => '100px' }
+        Pagamento Total
+      %th{ :width => '100px' }
+        uantia de Carros Ativos
+  %tbody
+    - @empresas.each do |empresa|
+      %tr
+        %td{ :style => 'border-left: 1px solid #C1DAD7;' }
+          = link_to empresa.nome, financeiro_path(:show, :comprador_cnpj => empresa.cnpj)
+        %td
+          = empresa.cnpj
+        %td
+          = number_to_currency(saldo_devedor_do_cliente(empresa))
+        %td
+          = number_to_currency(soma_dos_pagamentos_efetuados(empresa))
+        %td
+          = "#{pluralize(empresa.carros_ativos, 'carro')}"
+
+%p
+  %h1
+    Parceiros
+%table.display#parceiros_financeiro{ :style => "float: left;" }
+  %thead
+    %tr
+      %th{ :width => '150px' }
+        Nome
+      %th{ :width => '80px' }
+        CPF/CNPJ
+      %th{ :width => '100px' }
+        Débito Total
+      %th{ :width => '100px' }
+        Pagamento Total
+      %th{ :width => '100px' }
+        Quantia de Carros Ativos
+  %tbody
+    - @parceiros.each do |parceiro|
+      %tr
+        %td{ :style => 'border-left: 1px solid #C1DAD7;' }
+          = parceiro.cpf ? link_to(parceiro.nome, financeiro_path(:show, :parceiro_cpf => parceiro.cpf)) : link_to(parceiro.nome, financeiro_path(:show, :parceiro_cnpj => parceiro.cnpj))
+        %td
+          = parceiro.cpf ? parceiro.cpf : parceiro.cnpj 
+        %td
+          = number_to_currency(saldo_devedor_do_cliente(parceiro))
+        %td
+          = number_to_currency(soma_dos_pagamentos_efetuados(parceiro)) 
+        %td
+          = "#{pluralize(parceiro.carros_ativos, 'carro')}"
