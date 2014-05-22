@@ -1,49 +1,135 @@
 %p
   %b
-    = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :comprador_cnpj => @empresa 
+    = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @empresa, :comprador_cnpj => @empresa.cnpj
 %p
   %h5
     Transações Financeiras da Empresa 
 
-.floating_box{ :style => "min-height:100px" }
-  %fieldset{ :style => "width:300px; float:left; margin-top: 20px;" }
-    %p
-      = "Nome da Empresa: #{@empresa.nome}"
-    %p
-      = "Contato na Empresa: #{@empresa.contato}" unless @empresa.contato.empty?
-    %p
-      = "CNPJ: #{@empresa.cnpj}"
-    %p
-      = "Telefone: #{@empresa.telefone}" unless @empresa.telefone.empty? 
-  
-  %table#mytable{ :cellspacing => "0", :summary => "Carros", :style => "width:300px" }
-    %tr
-      %th.begin{ :style => "width:180px"}
-        Carros Ativos da Empresa
-      %td{ :style => 'border-top: 1px solid #C1DAD7;' } 
-        = !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo'
-    %tr
-      %th.begin
-        Carros Finalizados
-      %td
-        = !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado'
+- if saldo_devedor_do_cliente(@empresa) >= 0
+  - @row_class  = 'blue'
+- else
+  - @row_class = 'red'
+    
+%br
 
-  %table#mytable{ :cellspacing => "0", :summary => "Fretes", :style => "width:300px" }
-    %tr
-      %th.begin{ :style => "width:180px"}
-        Valor Total dos Fretes
-      %td{ :style => 'border-top: 1px solid #C1DAD7;'} 
-        = number_to_currency(@valor_total)  
-    %tr
-      %th.begin
-        Valor Total Pago
-      %td
-        = number_to_currency(@valor_pago)   
-    %tr
-      %th.begin
-        Saldo Devedor Total
-      %td
-        = number_to_currency(@saldo_devedor)   
+.floating_box{ :style => "min-height:100px" }
+  %fieldset.financeiros
+    %legend
+      %h5{ :style => "font-size: 1.3em" }
+        Dados da Empresa
+    %table#blank
+      %tr
+        %th
+          Nome:
+        %td
+          = @empresa.nome 
+        %tr
+          %th
+            CNPJ:
+          %td
+            = @empresa.cnpj 
+        %tr
+          %th
+            Contato na Empresa:
+          %td
+            = @empresa.contato unless @empresa.nil? 
+      %tr
+        %th.last
+          Telefone:
+        %td.last 
+          = "#{@empresa.telefone}" unless @empresa.telefone.empty?
+      %tr
+        %th
+          Valor Total dos Fretes
+        %td
+          = number_to_currency(frete_total_do_cliente(@empresa)) 
+      %tr
+        %th
+          Valor Total Pago
+        %td
+          = number_to_currency(frete_total_do_cliente(@empresa))
+      %tr
+        %th.last
+          Saldo Devedor Total
+        %td.last
+          %span{ :class => @row_class }
+            = number_to_currency(saldo_devedor_do_cliente(@empresa))
+      %tr
+        %th
+          Carros Ativos da Empresa
+        %td
+          = !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' 
+      %tr
+        %th
+          Carros Finalizados
+        %td
+          = !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' 
+
+  %fieldset.financeiros
+    %legend
+      %h5{ :style => "font-size: 1.3em;" }
+        Novo Pagamento
+    = form_for(@empresa) do |f|
+      = f.fields_for :pagamentos, @empresa.pagamentos.build do |builder|
+        .field
+          = builder.label :data_pagamento, "Data do Novo Pagamento"
+          = builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today  
+        .field
+          = builder.label :forma_pagamento, "Forma do Novo Pagamento"
+          = builder.text_field :forma_pagamento
+        .field
+          = builder.label :valor, "Valor do Novo Pagamento"
+          R$
+          = builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""
+        .field
+          = builder.label :observacao, "Observação"
+          = builder.text_area :observacao, :cols => 40, :rows => 3
+
+      = f.submit "Salvar"
+
+.clear
+
+%br
+%br
+
+  %legend
+    %h5{ :style => "font-size: 1.3em" }
+      Detalhes dos Pagamentos Efetuados
+  - if @empresa.pagamentos.count == 0 and @empresa.pagamentos.last.id == nil
+    %P
+      Esta empresa não efetuou nenhum pagamento até o momento.
+  - else
+    %table#cars.display{ :style => "float: left;"}
+      %thead
+        %tr
+          %th{ :width => '50px', :style => 'border-left: 1px solid #C1DAD7;'}
+            Data do Pagamento
+          %th{ :width => '120px'}
+            Valor do Pagamento
+          %th{ :width => '120px'}
+            Forma de Pagamento
+          %th{ :width => '120px'}
+            Saldo 
+          %th
+            Observação
+      %tbody
+        - @empresa.pagamentos.each do |pagamento|
+          - unless pagamento.id.nil?
+            - if pagamento.saldo >= 0
+              - row_class  = 'blue'
+            - else
+              - row_class = 'red'
+          %tr
+            %td{ :style => 'border-left: 1px solid #C1DAD7;'}
+              = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
+            %td
+              = number_to_currency(pagamento.valor)
+            %td
+              = pagamento.forma_pagamento
+            %td{ :class => row_class} 
+              = number_to_currency(pagamento.saldo)
+            %td
+              = pagamento.observacao 
 .clear
 
 %br

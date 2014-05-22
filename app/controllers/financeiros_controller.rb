@@ -63,7 +63,6 @@ class FinanceirosController < ApplicationController
   end
 
   def generate_pdf
-
     if params[:comprador_cnpj]
       @empresa = Empresa.find_by_cnpj(params[:comprador_cnpj])
       @cars_cnpj = @empresa.cars

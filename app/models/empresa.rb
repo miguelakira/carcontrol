@@ -1,7 +1,7 @@
 #encoding: UTF-8
 class Empresa < ActiveRecord::Base
   attr_accessible :car_id, :celular, :cnpj, :contato, :created_at, :email, :nome, :telefone, :updated_at, :parceiro_id,
-      :observacao
+      :observacao, :pagamentos_attributes
 
   belongs_to :parceiro
   has_many :cars

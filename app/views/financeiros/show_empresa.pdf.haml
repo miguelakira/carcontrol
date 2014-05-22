@@ -14,11 +14,12 @@
 
   %p#notice
     = notice
+
   %p
     %h5
-      Transações Financeiras do Cliente
+      Transações Financeiras do Empresa
 
-    - if saldo_devedor_do_cliente(@cliente) >= 0
+    - if saldo_devedor_do_cliente(@empresa) >= 0
       - @row_class  = 'blue'
     - else
       - @row_class = 'red'
@@ -28,54 +29,42 @@
     %fieldset.financeiros
       %legend
         %h5{ :style => "font-size: 1.3em" }
-          Dados do Cliente
+          Dados da Empresa
       %table#blank
         %tr
           %th
             Nome:
           %td
-            = @cliente.nome 
-          - if defined?(@cliente.cpf)
-            %tr
-              %th
-                CPF:
-              %td
-                = @cliente.cpf 
-          - else
-            %tr
-              %th
-                CNPJ:
-              %td
-                = @cliente.cnpj 
+            = @empresa.nome 
           %tr
             %th
-              Contato na Empresa:
+              CNPJ:
             %td
-              = @empresa.contato unless @empresa.nil? 
+              = @empresa.cnpj 
         %tr
           %th.last
             Telefone:
           %td.last 
-            = "#{@cliente.telefone}" unless @cliente.telefone.empty?
+            = "#{@empresa.telefone}" unless @empresa.telefone.empty?
         %tr
           %th
             Valor Total dos Fretes
           %td
-            = number_to_currency(frete_total_do_cliente(@cliente)) 
+            = number_to_currency(frete_total_do_cliente(@empresa)) 
         %tr
           %th
             Valor Total Pago
           %td
-            = number_to_currency(frete_total_do_cliente(@cliente))
+            = number_to_currency(frete_total_do_cliente(@empresa))
         %tr
           %th.last
             Saldo Devedor Total
           %td.last
             %span{ :class => @row_class }
-              = number_to_currency(saldo_devedor_do_cliente(@cliente))
+              = number_to_currency(saldo_devedor_do_cliente(@empresa))
         %tr
           %th
-            Carros Ativos do Cliente
+            Carros Ativos da Empresa
           %td
             = !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' 
         %tr
@@ -93,9 +82,9 @@
   %legend
     %h5{ :style => "font-size: 1.3em" }
       Detalhes dos Pagamentos Efetuados
-  - if @cliente.pagamentos.empty?
+  - if @empresa.pagamentos.empty?
     %P
-      Este cliente não efetuou nenhum pagamento até o momento.
+      Esta empresa não efetuou nenhum pagamento até o momento.
   - else
     %table#mytable{ :cellspacing => 0, :summary => "Detalhes de Pagamentos"}
       %thead
@@ -111,7 +100,7 @@
           %th
             Observação
       %tbody
-        - @cliente.pagamentos.each do |pagamento|
+        - @empresa.pagamentos.each do |pagamento|
           - unless pagamento.id.nil?
             - if pagamento.saldo >= 0
               - row_class  = 'blue'
