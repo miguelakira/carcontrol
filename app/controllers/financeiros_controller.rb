@@ -21,7 +21,6 @@ class FinanceirosController < ApplicationController
       end
   	elsif params[:comprador_cpf]
   		@cliente = Comprador.find_by_cpf(params[:comprador_cpf])
-      #@cliente.pagamentos.build
 
   		unless @cliente.nil?
         @cars_cpf = @cliente.cars
@@ -82,6 +81,16 @@ class FinanceirosController < ApplicationController
       @cars_nao_pagos = @cars_cpf.reject {|c| c.status_pagamento_id == 3 }
       @cars_pagos = @cars_cpf.reject {|c| c.status_pagamento_id != 3 }
       cpf = @cliente.cpf
+
+    elsif params[:parceiro_cnpj]
+      @parceiro = Parceiro.find_by_cnpj(params[:parceiro_cnpj])
+      @cars_cnpj = @parceiro.cars
+
+      @cars_ativos = @cars_cnpj.reject {|c| c.ativo == 0}
+      @cars_inativos = @cars_cnpj.reject {|c| c.ativo != 0}
+      @cars_nao_pagos = @cars_cnpj.reject {|c| c.status_pagamento_id == 3 }
+      @cars_pagos = @cars_cnpj.reject {|c| c.status_pagamento_id != 3 }
+      cnpj = @parceiro.cnpj
     end
 
     unless @cars_ativos.nil?
@@ -100,11 +109,15 @@ class FinanceirosController < ApplicationController
       filename = "#{Rails.root}/public/Relatorio_#{@cliente.firstname.gsub(/[^\w\s]/, '')}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
     elsif @empresa
       filename = "#{Rails.root}/public/Relatorio_#{@empresa.nome.gsub(/[^\w\s]/, '')}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
+    elsif @parceiro
+      filename = "#{Rails.root}/public/Relatorio_#{@parceiro.nome.gsub(/[^\w\s]/, '')}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
     end
     if @cliente
       html = render_to_string(:template => "/financeiros/show_cliente.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
     elsif @empresa
       html = render_to_string(:template => "/financeiros/show_empresa.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
+    elsif @parceiro
+      html = render_to_string(:template => "/financeiros/show_parceiro.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")
     end
     kit = PDFKit.new(html, :disable_javascript => true )
     kit.stylesheets << "#{Rails.root}/app/assets/to_pdf.css"

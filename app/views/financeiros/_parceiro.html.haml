@@ -1,52 +1,93 @@
+- if saldo_devedor_do_cliente(@parceiro) >= 0
+  - @row_class  = 'blue'
+- else
+  - @row_class = 'red'
+    
+%br
+
 %p
   %b
-    = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :comprador_cpf => @parceiro
+    = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @parceiro, :parceiro_cnpj => @parceiro.cnpj
 %p
   %h5
     Transações Financeiras do Parceiro
 %br
 
-.floating_box{ :style => "min-height:100px"}
-  %fieldset{ :style => "width:320px; float:left; margin-top: 20px;" }
-    %p
-      = "Nome: #{@parceiro.nome}"
-    - if !@parceiro.cpf.nil?
-      %p
-        = "CPF: #{@parceiro.cpf}"
-    - else
-      %p
-        = "CNPJ: #{@parceiro.cnpj}"
-    = "Telefone: #{@parceiro.telefone}" unless @parceiro.telefone.empty? 
+.floating_box{ :style => "min-height:100px" }
+  %fieldset.financeiros
+    %legend
+      %h5{ :style => "font-size: 1.3em" }
+        Dados da Empresa
+    %table#blank
+      %tr
+        %th
+          Nome:
+        %td
+          = @parceiro.nome 
+        %tr
+          %th
+            CNPJ:
+          %td
+            = @parceiro.cnpj 
+        %tr
+          %th
+            Contato na Empresa:
+          %td
+            = @parceiro.contato unless @parceiro.nil? 
+      %tr
+        %th.last
+          Telefone:
+        %td.last 
+          = "#{@parceiro.telefone}" unless @parceiro.telefone.empty?
+      %tr
+        %th
+          Valor Total dos Fretes
+        %td
+          = number_to_currency(frete_total_do_cliente(@parceiro)) 
+      %tr
+        %th
+          Valor Total Pago
+        %td
+          = number_to_currency(frete_total_do_cliente(@parceiro))
+      %tr
+        %th.last
+          Saldo Devedor Total
+        %td.last
+          %span{ :class => @row_class }
+            = number_to_currency(saldo_devedor_do_cliente(@parceiro))
+      %tr
+        %th
+          Carros Ativos da Empresa
+        %td
+          = !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' 
+      %tr
+        %th
+          Carros Finalizados
+        %td
+          = !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' 
 
-  %table#mytable{ :cellspacing => "0", :summary => "Carros", :style => "width:300px;" }
-    %tr
-      %th.begin{ :style => "width:180px"}
-        Carros Ativos do Parceiro
-      %td{ :style => 'border-top: 1px solid #C1DAD7;'}
-        = !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo'
-    %tr
-      %th.begin
-        Carros Finalizados
-      %td
-        = !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado'
-    
-  %table#mytable{ :cellspacing => "0", :summary => "Fretes", :style => "width:300px" }
-    %tr
-      %th.begin{ :style => "width:180px"}
-        Valor Total dos Fretes
-      %td{ :style => 'border-top: 1px solid #C1DAD7;'} 
-        = number_to_currency(@valor_total)
-    %tr
-      %th.begin
-        Valor Total Pago
-      %td
-        = number_to_currency(@valor_pago) 
-    %tr
-      %th.begin
-        Saldo Devedor Total
-      %td
-        = number_to_currency(@saldo_devedor) 
-    
+  %fieldset.financeiros
+    %legend
+      %h5{ :style => "font-size: 1.3em;" }
+        Novo Pagamento
+    = form_for(@parceiro) do |f|
+      = f.fields_for :pagamentos, @parceiro.pagamentos.build do |builder|
+        .field
+          = builder.label :data_pagamento, "Data do Novo Pagamento"
+          = builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today  
+        .field
+          = builder.label :forma_pagamento, "Forma do Novo Pagamento"
+          = builder.text_field :forma_pagamento
+        .field
+          = builder.label :valor, "Valor do Novo Pagamento"
+          R$
+          = builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""
+        .field
+          = builder.label :observacao, "Observação"
+          = builder.text_area :observacao, :cols => 40, :rows => 3
+
+      = f.submit "Salvar"
+
 .clear
 %br
 
