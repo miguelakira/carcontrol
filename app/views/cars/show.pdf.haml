@@ -1,0 +1,334 @@
+!!!
+%html
+  %head
+    %meta{'http-equiv' => 'Content-Type', :content => 'text/html'}
+      %title
+        Controle de Transporte
+      = stylesheet_link_tag    "application", :media => "all"
+      = javascript_include_tag "application"
+      = csrf_meta_tags
+
+  %body
+    #wrapper
+      = pdf_image_tag('/app/assets/images/logo.png', :style=>"margin:0px;padding:0px")
+
+  %p#notice
+    = notice
+
+    .floating_box
+      - if @car.comprador 
+        %table#mytable{ :cellspacing => 0, :summary => "Detalhes do Cliente", :style => "width:450px"}
+          %caption
+            %h5
+              Detalhes do Cliente
+          %tr
+            %th{ :style => "width:180px"}
+              Nome do Cliente
+            %td{ :style => 'border-top: 1px solid #C1DAD7;'}
+              = @car.comprador.nome 
+          %tr
+            %th
+              RG
+            %td
+              = @car.comprador.rg
+          %tr
+            %th
+              CPF
+            %td
+              = @car.comprador.cpf
+          %tr
+            %th
+              Telefone
+            %td
+              = @car.comprador.telefone
+          %tr
+            %th
+              Celular
+            %td
+              = @car.comprador.celular
+          %tr
+            %th
+              E-Mail
+            %td
+              = @car.comprador.email
+          %tr
+            %th
+              Nome de Parente ou Conhecido
+            %td
+              = @car.comprador.parente
+          %tr
+            %th
+              Telefone de Parente ou Conhecido
+            %td
+              = @car.comprador.telefone_parente
+          %tr
+            %th{ :style => "height:50px"} 
+              Observação
+            %td
+              = @car.comprador.observacao
+          
+      - elsif @car.empresa 
+        %table#mytable{ :cellspacing => "0", :summary => "Detalhes da Empresa", :style => "width:450px"}
+          %caption
+            %h5
+              Detalhes da Empresa
+          %tr
+            %th{ :style => "width:180px"}
+              Nome da Empresa
+            %td{ :style => 'border-top: 1px solid #C1DAD7;'}
+              = @car.empresa.nome 
+          %tr
+            %th
+              Nome do Contato
+            %td
+              = @car.empresa.contato
+          %tr
+            %th
+              CNPJ
+            %td
+              = @car.empresa.cnpj
+          %tr
+            %th
+              Telefone
+            %td
+              = @car.empresa.telefone
+          %tr
+            %th
+              Celular
+            %td
+              = @car.empresa.celular
+          %tr
+            %th
+              E-Mail
+            %td
+              = @car.empresa.email
+          %tr
+            %th{ :style => "height:50px"}
+              Observação
+            %td
+              = @car.empresa.observacao
+     
+
+      %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Carro", :style => "width:450px" }
+        %caption
+          %h5
+            Detalhes do Carro
+        %tr
+          %th{ :style => "width:180px"}
+            Modelo do Carro
+          %td{ :style => 'border-top: 1px solid #C1DAD7;'} 
+            =  @car.modelo
+        %tr
+          %th
+            Placa
+          %td
+            = @car.placa
+        - if @car.cegonha 
+          %tr
+            %th
+              Cegonha
+            %td
+              = link_to(@car.cegonha.placa, @car.cegonha)
+        - elsif @car.parceiro
+          %tr
+            %th
+              Parceiro
+            %td
+              = link_to(@car.parceiro.nome, @car.parceiro)
+        %tr
+          %th
+            Localização Atual
+          %td
+            = @car.localizacao
+        - unless @car.cidade_origem.nil? && @car.estado_origem.nil? 
+          %tr
+            %th
+              Origem
+            %td
+              = Cidade.find(@car.cidade_origem).text , = Estado.find(@car.estado_origem).sigla
+        - unless @car.cidade_origem.nil? && @car.estado_origem.nil? 
+          %tr
+            %th
+              Destino
+            %td
+              = Cidade.find(@car.cidade_destino).text , =  Estado.find(@car.estado_destino).sigla
+        %tr
+          %th
+            Data da Compra
+          %td
+            = @car.data_compra.strftime("%d/%m/%Y") unless @car.data_compra.nil?
+        %tr
+          %th
+            Status do Carro
+          %td
+            = t(VEHICLE_STATUS[@car.ativo])
+        %tr
+          %th
+            Data Prevista da Entrega
+          %td
+            = @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil?
+        %tr
+          %th{ :style => "height:50px"} 
+            Observação
+          %td
+            = @car.observacao
+
+    %br
+    %br
+
+    .floating_box
+      %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Frete", :style => "width:450px" }
+        %caption
+          %h5
+            Detalhes do frete
+        %tr
+          %th{ :style => "width:180px"}
+            Status do Pagamento <br> do Carro
+          %td{ :style => 'border-top: 1px solid #C1DAD7;'}
+            = @car.status_pagamento.status
+        %tr
+          %th
+            Valor do Frete
+          %td
+            = number_to_currency(@car.debito.valor_frete)
+        %tr
+          %th
+            Taxa de Plataforma
+          %td
+            = number_to_currency(@car.debito.taxa_plataforma)
+        %tr
+          %th
+            Taxa de Plataforma Origem
+          %td
+            = number_to_currency(@car.debito.taxa_plataforma_origem)
+        %tr
+          %th
+            Taxa de Plataforma Destino
+          %td
+            = number_to_currency(@car.debito.taxa_plataforma_destino)
+        %tr
+          %th
+            Taxa de Balsa
+          %td
+            = number_to_currency(@car.debito.taxa_balsa)
+        %tr
+          %th
+            Taxa de Redespacho
+          %td
+            = number_to_currency(@car.debito.taxa_despacho)
+        %tr
+          %th
+            Desconto
+          %td
+            = number_to_currency(@car.debito.desconto)
+        %tr
+          %th
+            Total do Frete
+          %td
+            = number_to_currency(@car.debito.valor_total)
+        %tr
+          %th{ :style => "height:50px" }
+            Observação
+          %td
+            = @car.debito.observacao
+    
+    .page-break
+      .floating_box_small
+        %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Pagamento", :style => "width:450px; margin-bottom:10px;"}
+          %caption
+            %h5
+              Detalhes dos Pagamentos
+          %tr
+            %th{ :width => '100px', :style => 'border-left: 1px solid #C1DAD7;' }
+              Total Pago
+            - if @car.comprador 
+              %td{ :style => 'border-top: 1px solid #C1DAD7;'}
+                = number_to_currency(soma_dos_pagamentos_efetuados(@car.comprador))
+            - elsif @car.empresa 
+              %td{ :style => 'border-top: 1px solid #C1DAD7;' }
+                = number_to_currency(soma_dos_pagamentos_efetuados(@car.empresa))
+          %tr
+            %th{ :style => 'border-left: 1px solid #C1DAD7;'}
+              Saldo Devedor
+            - if saldo_devedor_do_cliente(@owner) >= 0
+              - @row_class  = 'blue'
+            - else
+              - @row_class = 'red'
+            
+            %td
+              %span{ :class => @row_class}
+                =  number_to_currency(saldo_devedor_do_cliente(@owner))
+          %tr
+            %th{ :style => 'border-left: 1px solid #C1DAD7;'}
+              Provisionados
+            - if saldo_devedor_do_cliente(@owner) >= 0
+              - @row_class  = 'red'
+            - else
+              - @row_class = 'blue'
+
+            %td
+              %span{ :class => @row_class }
+                = number_to_currency(pagamentos_provisionados(@owner))
+        
+      .floating_box_small
+      
+        %table#mytable{ :cellspacing => "0", :summary => "Datas dos Pagamentos", :style => "width:450px; margin-top:0px; margin-bottom:10px;"}
+          %tr
+            %th{ :width => '50px', :style => 'border-left: 1px solid #C1DAD7;'}
+              Data do <br>Pagamento
+            %th
+              Valor do <br> Pagamento
+            %th
+              Forma de <br> Pagamento
+            %th
+              Saldo 
+          
+          - @owner.pagamentos.where(:data_pagamento => (Time.now.beginning_of_month..Time.now.end_of_day)).find_each do |pagamento| 
+            - if pagamento.saldo >= 0
+              - row_class  = 'blue'
+            - else
+              - row_class = 'red'
+                
+            - if pagamento.data_pagamento.month == Time.now.month && pagamento.data_pagamento.year == Time.now.year  
+              %tr
+                %td{ :style => 'border-left: 1px solid #C1DAD7;'}
+                  = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
+                %td
+                  = number_to_currency(pagamento.valor)
+                %td
+                  = pagamento.forma_pagamento
+                %td{ :class => row_class }
+                  = number_to_currency(pagamento.saldo)
+            
+        %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Provisionamento", :style => "width:450px; margin-top:0px;" }
+          %tr
+            %th{ :width => '50px', :style => 'border-left: 1px solid #C1DAD7;'}
+              Provisionado Para Dia
+            %th
+              Valor <br> Provisionado
+            %th
+              Forma de <br> Pagamento
+            %th
+              Saldo 
+
+          - @owner.pagamentos.where(:data_pagamento => (Time.now + 1.day..Time.now + 10.years)).find_each do |pagamento| 
+            - if pagamento.saldo >= 0
+              - row_class  = 'blue'
+            - else
+              - row_class = 'red'
+
+            %tr
+              %td{ :style => 'border-left: 1px solid #C1DAD7;'}
+                = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
+              %td
+                = number_to_currency(pagamento.valor)
+              %td
+                = pagamento.forma_pagamento
+              %td{ :class => row_class }
+                = number_to_currency(pagamento.saldo)
+
+        %div.clear
+    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'default'
+    = stylesheet_link_tag 'devise'
+

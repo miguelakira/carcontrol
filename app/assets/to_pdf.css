@@ -7,7 +7,6 @@ table, tr, td, th, tbody, thead, tfoot {
 
 }
 
-
 @media print {
  #container {
         width: auto;
@@ -32,14 +31,14 @@ table, tr, td, th, tbody, thead, tfoot {
   padding: 0;
   margin: 0;
   float:left;
-  margin: 20px 15px 30px 10px;
+  margin: 20px 15px 10px 10px;
 }
 
 #mytable th.none {
   background: #fff;
   color: black;
   border: none;
-  padding:2px 2px 2px 4px;
+  padding:0;
 }
 
 #mytable th {
@@ -48,10 +47,10 @@ table, tr, td, th, tbody, thead, tfoot {
   border-bottom: 1px solid #C1DAD7;
   border-top: 1px solid #C1DAD7;
   text-align: center;
-  padding: 3px 3px 3px 6px;
+  padding: 0;
   background: #CAE8EA  no-repeat;
   cursor: default;
-  font-size: 14px;
+  font-size: 12px;
 
 }
 
@@ -69,16 +68,16 @@ th.nobg {
 
 tr {
   height: 15px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 td {
   border-right: 1px solid #C1DAD7;
   border-bottom: 1px solid #C1DAD7;
-  padding: 6px 6px 6px 12px;
+  padding: 0;
   color: #4f6b72;
   height: 100%;
-  font-size: 14px;
+  font-size: 12px;
 }
 td a:link {
   text-decoration: none;
@@ -99,7 +98,7 @@ td.begin_total {
   border-left: 1px solid #C1DAD7;
   border-bottom: 1px solid #C1DAD7;
 
-  padding: 6px 6px 6px 12px;
+  padding: 0;
   color: #4f6b72;
 }
 
@@ -146,7 +145,7 @@ td.none {
   background: #fff;
   color: black;
   border: none;
-  padding:2px 2px 2px 4px;
+  padding:0;
 
 }
 
@@ -181,12 +180,12 @@ h5 {
 
 p.margin_left {
   margin-left: 2px;
-  font-size:14px;
+  font-size:12px;
 }
 
 p {
 
-   font-size:14px;
+   font-size:12px;
 }
 hr.small{
     width:980px;
@@ -197,8 +196,14 @@ hr.small{
 .floating_box {
   width: 1000px;
   margin: 0;
-  min-height: 300px;
-  margin-bottom: 50px; }
+  min-height: 250px;
+  margin-bottom: 10px; }
+
+.floating_box_small {
+  width: 1000px;
+  margin: 0;
+  min-height: 130px;
+  margin-bottom: 10px; }
 
 .floating-left {
   width: 1250px;
@@ -207,33 +212,6 @@ hr.small{
 .floating_form {
   width: 500px;
   float: left; }
-
-#sidebar {
-  float: right;
-  width: 15%;
-  position: relative;
-  z-index: 9;
-  padding: 6px;
-  margin: 0px 5px 0 5px;
-  min-height: 520px;
-  background-color: whitesmoke;
-  border: solid 1px #cccccc;
-  border-radius: 5px;
-  box-shadow: 2px 2px 6px #666666;
-  webkit-border-radius: 5px;
-  mozilla-border-radius: 5px; }
-  #sidebar dt, #sidebar dd {
-    margin: 0;
-    padding: 0; }
-  #sidebar dt {
-    margin-top: 15px;
-    margin-bottom: 4px; }
-  #sidebar dd {
-    font-weight: bold; }
-  #sidebar h3 {
-    margin-top: 10px;
-    font-size: 18px;
-    font-color: black; }
 
 
 /*-------- texto ---------) */
@@ -252,16 +230,16 @@ hr.small{
 
 #blank th {
   text-align: left;
-  padding:2px 0px 0px 4px;
+  padding:0;
   border: none;
 }
 
 #blank th.last {
-  padding-bottom: 12px;
+  padding-bottom: 5px;
 }
 
 #blank td.last {
-  padding-bottom: 12px;
+  padding-bottom: 5px;
 }
 
 #blank tr {
@@ -270,7 +248,7 @@ hr.small{
 
 #blank td {
   text-align: left;
-  padding:0px;
+  padding-left:3px;
   border: none;
   height: 0;
 }
