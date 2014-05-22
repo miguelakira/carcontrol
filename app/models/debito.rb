@@ -14,4 +14,41 @@ class Debito < ActiveRecord::Base
   def calcula_valor_total
     self.valor_total = self.valor_frete + self.taxa_despacho + self.taxa_plataforma + self.taxa_plataforma_origem + self.taxa_plataforma_destino + self.taxa_balsa
   end
+
+  def desconto=(num)
+    self[:desconto] = convert_string_to_bigdecimal(num)
+  end
+
+  def valor_frete=(num)
+    self[:valor_frete] = convert_string_to_bigdecimal(num)
+  end
+
+  def taxa_despacho=(num)
+    self[:taxa_despacho] = convert_string_to_bigdecimal(num)
+  end
+
+  def taxa_plataforma=(num)
+    self[:taxa_plataforma] = convert_string_to_bigdecimal(num)
+  end
+
+  def taxa_plataforma_destino=(num)
+    self[:taxa_plataforma_destino] = convert_string_to_bigdecimal(num)
+  end
+
+  def taxa_plataforma_origem=(num)
+    self[:taxa_plataforma_origem] = convert_string_to_bigdecimal(num)
+  end
+
+  def taxa_balsa=(num)
+    self[:taxa_balsa] = convert_string_to_bigdecimal(num)
+  end
+
+  def convert_string_to_bigdecimal(num)
+    if num.is_a?(String)
+      num.gsub!('.', '')
+      num.gsub!(',','.')
+      return num
+    end
+  end
+
 end
