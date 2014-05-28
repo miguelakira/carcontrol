@@ -1,9 +1,7 @@
-%p
-  %h1
-    = @mensagem 
+%h1
+  = @mensagem 
 -if !@cars.empty?
   = render 'cars'
-  %br 
 
 - elsif current_user.admin?
   = button('Novo Cliente (Pessoa Física)', new_car_path)
