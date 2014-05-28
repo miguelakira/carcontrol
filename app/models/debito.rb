@@ -12,7 +12,7 @@ class Debito < ActiveRecord::Base
 
     # valor total sem descontos ou pagamentos
   def calcula_valor_total
-    self.valor_total = self.valor_frete + self.taxa_despacho + self.taxa_plataforma + self.taxa_plataforma_origem + self.taxa_plataforma_destino + self.taxa_balsa
+    self.valor_total = self.valor_frete + self.taxa_plataforma + self.taxa_plataforma_origem + self.taxa_plataforma_destino + self.taxa_balsa
   end
 
   def desconto=(num)
