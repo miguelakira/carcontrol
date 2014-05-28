@@ -37,15 +37,16 @@
             %td{ :class => @row_class }
               = car.data_compra.strftime("%d/%m/%y")
             %td{ :class => @row_class }
-              = link_to car.placa, :car_id => car.id
               = link_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :car => car.id), :class => 'right'
+              = link_to car.placa, :car_id => car.id
+              
             %td{ :class => @row_class }
               = car.modelo.titleize
             %td{ :class =>  @row_class }
-              -unless car.localizacao.nil? 
-                = car.localizacao
               -if car.ativo? 
                 = link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'
+              -unless car.localizacao.nil? 
+                = car.localizacao
             %td{ :class =>  @row_class }
               = car.comprador ? car.comprador.nome : car.empresa.nome
             %td{ :class =>  @row_class }
@@ -58,6 +59,11 @@
               = car.cegonha ? link_to(car.cegonha.placa, car.cegonha) : ""
             %td{ :class =>  @row_class }
               = car.parceiro ? link_to(car.parceiro.nome, car.parceiro) : ""
+
+    - if current_user.admin?
+      = link_to 'Novo Cliente (Pessoa Física)', new_car_path, :class => 'button'
+      = link_to 'Novo Cliente (Pessoa Jurídica)', {:action => :new, :pessoa_juridica => true}, :class => 'button'
+
 
   -if @car
     %div{ :class => "large-2 columns" }
@@ -106,6 +112,8 @@
         %dd 
           = @car.modelo.titleize
         %p.acoes
-          = link_to "Detalhes", @car
+          = link_to "Detalhes", @car 
+          |
           = link_to "Editar", edit_car_path(@car)
+          |
           = link_to "Deletar", @car, method: :delete, confirm: "Are you sure?"

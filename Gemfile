@@ -9,13 +9,11 @@ gem 'rails', '3.2.18'
 
 gem 'exception_notification'
 
-gem "haml-rails"
-
-gem 'devise', '2.2.7'
+gem 'devise'
 gem 'heroku'
 
 gem 'gon'
-gem 'zurb-foundation'
+gem 'foundation-rails'
 gem 'will_paginate', '3.0.3'
 gem 'thin'
 gem 'pjax_rails'
@@ -32,8 +30,9 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 # como disse, só com terapia
 
 group :assets do
-  gem 'sass-rails',   '3.2.5'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails',   '>= 3.2.3'
+  gem "haml-rails"
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'uglifier', '>= 1.0.3'
@@ -43,6 +42,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'rails_layout'
   gem 'mysql2'
   gem 'rspec-rails', '~> 2.0'
   gem 'factory_girl_rails', '~> 3.2.0'

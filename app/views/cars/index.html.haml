@@ -5,10 +5,6 @@
   = render 'cars'
   %br 
 
-%br
-%div.clear{:style => "clear: both"}
-%floating_box
-  %br
-    - if current_user.admin?
-      = button('Novo Cliente (Pessoa Física)', new_car_path)
-      = button('Novo Cliente (Pessoa Jurídica)', :action => :new, :pessoa_juridica => true)
+- elsif current_user.admin?
+  = button('Novo Cliente (Pessoa Física)', new_car_path)
+  = button('Novo Cliente (Pessoa Jurídica)', :action => :new, :pessoa_juridica => true)
