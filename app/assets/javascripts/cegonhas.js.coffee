@@ -3,8 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
         $('#cegonhas').dataTable
-          bJQueryUI: true
-          sPaginationType: "full_numbers"
+          sPaginationType: "foundation"
           aLengthMenu: [ 10, 30, 50, 100 ],
           iDisplayLength: 30
           oLanguage:

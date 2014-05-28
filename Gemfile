@@ -15,6 +15,7 @@ gem 'devise', '2.2.7'
 gem 'heroku'
 
 gem 'gon'
+gem 'zurb-foundation'
 gem 'will_paginate', '3.0.3'
 gem 'thin'
 gem 'pjax_rails'
@@ -25,7 +26,6 @@ gem 'wkhtmltopdf-binary'
 gem 'taps'
 
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
-gem 'jquery-ui-rails'
 
 # Gems used only for assets and not requiredg
 # in production environments by default.

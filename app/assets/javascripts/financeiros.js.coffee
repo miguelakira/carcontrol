@@ -3,8 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
         $('#compradores_financeiro').dataTable
-          bJQueryUI: true
-          sPaginationType: "full_numbers"
+          sPaginationType: "foundation"
           aLengthMenu: [ 10, 30, 50, 100 ],
           iDisplayLength: 10
           oLanguage:
@@ -26,8 +25,7 @@ jQuery ->
 
 jQuery ->
         $('#empresas_financeiro').dataTable
-          bJQueryUI: true
-          sPaginationType: "full_numbers"
+          sPaginationType: "foundation"
           aLengthMenu: [ 10, 30, 50, 100 ],
           iDisplayLength: 10
           oLanguage:
@@ -49,8 +47,7 @@ jQuery ->
 
 jQuery ->
         $('#parceiros_financeiro').dataTable
-          bJQueryUI: true
-          sPaginationType: "full_numbers"
+          sPaginationType: "foundation"
           aLengthMenu: [ 10, 30, 50, 100 ],
           iDisplayLength: 10
           oLanguage:
@@ -72,8 +69,7 @@ jQuery ->
 
 jQuery ->
         $('#cars_financeiro_ativos').dataTable
-          bJQueryUI: true
-          sPaginationType: "full_numbers"
+          sPaginationType: "foundation"
           aLengthMenu: [ 10, 30, 50, 100 ],
           iDisplayLength: 10
           oLanguage:

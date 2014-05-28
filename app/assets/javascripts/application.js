@@ -13,8 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require dataTables/jquery.dataTables
+//= require dataTables/jquery.dataTables.foundation
+//= require foundation
 //= require jquery.pjax
 //= require_tree .
 $(function() {
   $('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])').pjax('[data-pjax-container]');
 });
+
+$(function(){ $(document).foundation(); });

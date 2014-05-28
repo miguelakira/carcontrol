@@ -1,115 +1,111 @@
--if @car
-  #sidebar
-    -if saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa) >= 0
-      - row_class = 'blue'
-    -else
-      - row_class = 'red'
-    %dl
-      %h3
-        = @car.placa
-      %dt
-        Saldo Devedor do Cliente
-      %dd{ :class => "#{row_class}" }
-        = number_to_currency(saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa))
-      %dt 
-        Localização Atual:
-      %dd 
-        -unless @car.localizacao.nil? 
-          = @car.localizacao
-      %dt 
-        Cidade de Origem:
-      %dd 
-        -unless @car.cidade_origem.nil?
-          = Cidade.find(@car.cidade_origem).text
-          = Estado.find(@car.estado_origem).sigla
-      %dt 
-        Cidade de Destino:
-      %dd 
-        -unless @car.cidade_destino.nil?
-          = Cidade.find(@car.cidade_destino).text
-          = Estado.find(@car.estado_destino).sigla
-      %dt 
-        Previsão de Entrega:
-      %dd 
-        = @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil?
-      %dt 
-        Status do Pagamento
-      %dd 
-        = @car.status_pagamento.status
-      %dt 
-        Status do Veículo
-      %dd 
-        = t(VEHICLE_STATUS[@car.ativo])
-      %dt 
-        Modelo
-      %dd 
-        = @car.modelo.titleize
-      %p.acoes
-        = link_to "Detalhes", @car
-        = link_to "Editar", edit_car_path(@car)
-        = link_to "Deletar", @car, method: :delete, confirm: "Are you sure?"
-
-.floating-left
-  %table#cars.display{ :style => "float: left;"}
-    %thead
-      %tr
-        %th{ :title => "Sequência em que veículo foi adicioando no sistema"}
-          Nº 
-        %th
-          Início
-        %th{ :width => "90px" }
-          Placa
-        %th
-          Modelo
-        %th{ :width => "200px" }
-          Localização Atual
-        %th
-          Cliente
-        %th
-          Telefone
-        %th{ :width => "130px" }
-          CPF/CNPJ
-        %th{ :title => "Custo total do frete - desconto" }
-          Frete <br>Total
-        %th
-          Cegonha 
-        %th
-          Parceiro 
-
-    %tbody
-      - x = 0
-      - @cars.each_with_index do |car, index|
-        
-        -if car.status_pagamento.value == 1
-          - @row_class = 'nao-pago'
-        - elsif car.status_pagamento.value == 2
-          - @row_class = 'pendente'
-        - else
-          - @row_class = '';
+.row
+  %div{ :class => "large-10 columns" }
+    %table#cars.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
+      %thead
         %tr
-          %td{ :class => @row_class} 
-            = index + 1
-          %td{ :class => @row_class }
-            = car.data_compra.strftime("%d/%m/%y")
-          %td{ :class => @row_class }
-            = link_to car.placa, :car_id => car.id
-            = link_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :car => car.id), :class => 'right'
-          %td{ :class => @row_class }
-            = car.modelo.titleize
-          %td{ :class =>  @row_class }
-            -unless car.localizacao.nil? 
-              = car.localizacao
-            -if car.ativo? 
-              = link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'
-          %td{ :class =>  @row_class }
-            = car.comprador ? car.comprador.nome : car.empresa.nome
-          %td{ :class =>  @row_class }
-            = car.comprador ? car.comprador.telefone : car.empresa.telefone
-          %td{ :class =>  @row_class }
-            = car.comprador ? car.comprador.cpf : car.empresa.cnpj 
-          %td{ :class =>  @row_class }
-            = number_to_currency(car.debito.valor_total)
-          %td{ :class =>  @row_class }
-            = car.cegonha ? link_to(car.cegonha.placa, car.cegonha) : ""
-          %td{ :class =>  @row_class }
-            = car.parceiro ? link_to(car.parceiro.nome, car.parceiro) : ""
+          %th
+            Início
+          %th
+            Placa
+          %th
+            Modelo
+          %th
+            Localização Atual
+          %th
+            Cliente
+          %th
+            Telefone
+          %th
+            CPF/CNPJ
+          %th
+            Frete Total
+          %th
+            Cegonha 
+          %th
+            Parceiro 
+
+      %tbody
+        - @cars.each_with_index do |car, index|
+          
+          -if car.status_pagamento.value == 1
+            - @row_class = 'nao-pago'
+          - elsif car.status_pagamento.value == 2
+            - @row_class = 'pendente'
+          - else
+            - @row_class = '';
+          %tr
+            %td{ :class => @row_class }
+              = car.data_compra.strftime("%d/%m/%y")
+            %td{ :class => @row_class }
+              = link_to car.placa, :car_id => car.id
+              = link_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :car => car.id), :class => 'right'
+            %td{ :class => @row_class }
+              = car.modelo.titleize
+            %td{ :class =>  @row_class }
+              -unless car.localizacao.nil? 
+                = car.localizacao
+              -if car.ativo? 
+                = link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'
+            %td{ :class =>  @row_class }
+              = car.comprador ? car.comprador.nome : car.empresa.nome
+            %td{ :class =>  @row_class }
+              = car.comprador ? car.comprador.telefone : car.empresa.telefone
+            %td{ :class =>  @row_class }
+              = car.comprador ? car.comprador.cpf : car.empresa.cnpj 
+            %td{ :class =>  @row_class }
+              = number_to_currency(car.debito.valor_total)
+            %td{ :class =>  @row_class }
+              = car.cegonha ? link_to(car.cegonha.placa, car.cegonha) : ""
+            %td{ :class =>  @row_class }
+              = car.parceiro ? link_to(car.parceiro.nome, car.parceiro) : ""
+
+  -if @car
+    %div{ :class => "large-2 columns" }
+      -if saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa) >= 0
+        - row_class = 'blue'
+      -else
+        - row_class = 'red'
+      %dl
+        %h3
+          = @car.placa
+        %dt
+          Saldo Devedor do Cliente
+        %dd{ :class => "#{row_class}" }
+          = number_to_currency(saldo_devedor_do_cliente(@car.comprador ? @car.comprador : @car.empresa))
+        %dt 
+          Localização Atual:
+        %dd 
+          -unless @car.localizacao.nil? 
+            = @car.localizacao
+        %dt 
+          Cidade de Origem:
+        %dd 
+          -unless @car.cidade_origem.nil?
+            = Cidade.find(@car.cidade_origem).text
+            = Estado.find(@car.estado_origem).sigla
+        %dt 
+          Cidade de Destino:
+        %dd 
+          -unless @car.cidade_destino.nil?
+            = Cidade.find(@car.cidade_destino).text
+            = Estado.find(@car.estado_destino).sigla
+        %dt 
+          Previsão de Entrega:
+        %dd 
+          = @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil?
+        %dt 
+          Status do Pagamento
+        %dd 
+          = @car.status_pagamento.status
+        %dt 
+          Status do Veículo
+        %dd 
+          = t(VEHICLE_STATUS[@car.ativo])
+        %dt 
+          Modelo
+        %dd 
+          = @car.modelo.titleize
+        %p.acoes
+          = link_to "Detalhes", @car
+          = link_to "Editar", edit_car_path(@car)
+          = link_to "Deletar", @car, method: :delete, confirm: "Are you sure?"
