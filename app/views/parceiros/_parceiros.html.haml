@@ -1,44 +1,40 @@
-.floating-left{ :width => "1000px"}
-  %table.display#parceiros
-    %thead
-      %tr
-        %th{ :width => "1px"}
-          Nº
-        %th{ :width => "140px"}
-          CPF/CNPJ
-        %th
-          Nome
-        %th
-          Contato
-        %th{ :width => "100px"}
-          Telefone
-        %th 
-          Carros
-        %th{ :width => "120px"}
-          Frete Total<br>dos Carros
-        - if current_user.admin?
-          %th{ :width => "120px"}
-            Ações
-    %tbody
-      - x = 0
-      - @parceiros.each_with_index do |parceiro, index|
+.row
+  %div{ :class => "large-12 columns" }
+    %table.display#parceiros{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
+      %thead
         %tr
-          %td{ :class => @row_class} 
-            = index + 1
-          %td{ :class => @row_class}
-            = parceiro.cpf.empty? ? link_to(parceiro.cnpj, parceiro) : link_to(parceiro.cpf, parceiro)
-          %td{ :class => @row_class}
-            = parceiro.nome
-          %td{ :class => @row_class}
-            = parceiro.contato
-          %td{ :class => @row_class}
-            = parceiro.telefone
-          %td
-            = (carros_com_parceiro(parceiro)).html_safe
-          %td
-            = number_to_currency(parceiro.total_freight)
+          %th
+            CPF/CNPJ
+          %th
+            Nome
+          %th
+            Contato
+          %th
+            Telefone
+          %th 
+            Carros
+          %th
+            Frete Total dos Carros
           - if current_user.admin?
+            %th{ :width => "130px"}
+              Ações
+      %tbody
+        - @parceiros.each do |parceiro|
+          %tr
             %td{ :class => @row_class}
-              = link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), parceiro;
-              = link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_parceiro_path(parceiro);
-              = link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), parceiro, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete
+              = parceiro.cpf.empty? ? link_to(parceiro.cnpj, parceiro) : link_to(parceiro.cpf, parceiro)
+            %td{ :class => @row_class}
+              = parceiro.nome
+            %td{ :class => @row_class}
+              = parceiro.contato
+            %td{ :class => @row_class}
+              = parceiro.telefone
+            %td
+              = (carros_com_parceiro(parceiro)).html_safe
+            %td
+              = number_to_currency(parceiro.total_freight)
+            - if current_user.admin?
+              %td{ :class => "#{@row_class} nowrap"}
+                = link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), parceiro;
+                = link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_parceiro_path(parceiro);
+                = link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), parceiro, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete

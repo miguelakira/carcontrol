@@ -1,12 +1,7 @@
-%p
-  %h1
-    = @mensagem
+%h1
+  = @mensagem
 - if !@parceiros.empty? 
   = render 'parceiros' 
-%br
-
-.clear
-%br
 
 - if current_user.admin? 
   = button('Adicionar Parceiro', new_parceiro_path)

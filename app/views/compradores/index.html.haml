@@ -1,89 +1,86 @@
-%p
-  %h1
-    = @mensagem_compradores
-
-%table#compradores.display{ :style => "float: left;"}
-  %thead
-    %tr
-      %th{ :width => "150px"}
-        Nome
-      %th{ :width => "80px"}
-        Email
-      %th{ :width => "50px"}
-        RG
-      %th{ :width => "70px"}
-        CPF
-      %th{ :width => "80px"}
-        Telefone
-      %th{ :width => "50px"}
-        Carros <br>Ativos
-      %th{ :width => "80px"}
-        Valor Pago <br> Total
-      %th{ :width => "80px"}
-        Saldo <br> Devedor
-    
-  %tbody
-    - @compradores.each do |comprador|
-      %tr
-        %td{ :style => 'border-left: 1px solid #C1DAD7;'}
-          = link_to comprador.nome, comprador  
-          = link_to image_tag("edit_local.png", :border=>0),edit_comprador_path(comprador, :comprador => comprador.id), :class => 'right' 
-        %td
-          = comprador.email
-        %td{ :width => '50px'}
-          = comprador.rg
-        %td
-          = comprador.cpf
-        %td
-          = comprador.telefone
-        %td{ :width => '100px'}
-          = carros_ativos_do_cliente(comprador).html_safe
-        %td
-          = number_to_currency(soma_dos_pagamentos_efetuados(comprador))  
-        %td
-          = number_to_currency(saldo_devedor_do_cliente(comprador))
+%h1<= @mensagem_compradores
+.row
+  %div{ :class => "large-12 columns" }
+    %table#compradores.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
+      %thead
+        %tr
+          %th
+            Nome
+          %th
+            Email
+          %th
+            RG
+          %th
+            CPF
+          %th
+            Telefone
+          %th
+            Carros Ativos
+          %th
+            Valor Pago Total
+          %th
+            Saldo Devedor
+        
+      %tbody
+        - @compradores.each do |comprador|
+          %tr
+            %td{ :style => 'border-left: 1px solid #C1DAD7;'}
+              = link_to comprador.nome, comprador  
+              = link_to image_tag("edit_local.png", :border=>0),edit_comprador_path(comprador, :comprador => comprador.id), :class => 'right' 
+            %td
+              = comprador.email
+            %td
+              = comprador.rg
+            %td
+              = comprador.cpf
+            %td
+              = comprador.telefone
+            %td
+              = carros_ativos_do_cliente(comprador).html_safe
+            %td
+              = number_to_currency(soma_dos_pagamentos_efetuados(comprador))  
+            %td
+              = number_to_currency(saldo_devedor_do_cliente(comprador))
       
-%br
-%p
-  %h1
-    = @mensagem_empresas
-%table#empresas.display{ :style => "float: left;"}
-  %thead
-    %tr
-      %th{ :width => "200px"}
-        Nome
-      %th
-        Email
-      %th
-        CNPJ
-      %th{ :width => "100px"}
-        Telefone
-      %th{ :width => "100px"}
-        Celular
-      %th
-        Carros <br>Ativos
-      %th{ :width => "100px"}
-        Valor Pago <br> Total
-      %th
-        Saldo <br> Devedor
-  %tbody
-    - @empresas.each do |empresa|
-      %tr
-        %td{ :style => 'border-left: 1px solid #C1DAD7;'}
-          = link_to empresa.nome, empresa 
-          = link_to image_tag("edit_local.png", :border=>0), edit_empresa_path(empresa, :empresa => empresa.id), :class => 'right' 
-        %td
-          = empresa.email
-        %td
-          = empresa.cnpj
-        %td
-          = empresa.telefone
-        %td
-          = empresa.celular
-        %td
-          = carros_ativos_do_cliente(empresa).html_safe
-        %td
-          = number_to_currency(soma_dos_pagamentos_efetuados(empresa)) 
-        %td
-          = number_to_currency(saldo_devedor_do_cliente(empresa))
-%br
+%h1<= @mensagem_empresas
+.row
+  %div{ :class => "large-12 columns" }
+    %table#empresas.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
+      %thead
+        %tr
+          %th
+            Nome
+          %th
+            Email
+          %th
+            CNPJ
+          %th
+            Telefone
+          %th
+            Celular
+          %th
+            Carros Ativos
+          %th
+            Valor Pago Total
+          %th
+            Saldo Devedor
+      %tbody
+        - @empresas.each do |empresa|
+          %tr
+            %td{ :style => 'border-left: 1px solid #C1DAD7;'}
+              = link_to empresa.nome, empresa 
+              = link_to image_tag("edit_local.png", :border=>0), edit_empresa_path(empresa, :empresa => empresa.id), :class => 'right' 
+            %td
+              = empresa.email
+            %td
+              = empresa.cnpj
+            %td
+              = empresa.telefone
+            %td
+              = empresa.celular
+            %td
+              = carros_ativos_do_cliente(empresa).html_safe
+            %td
+              = number_to_currency(soma_dos_pagamentos_efetuados(empresa)) 
+            %td
+              = number_to_currency(saldo_devedor_do_cliente(empresa))

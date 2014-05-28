@@ -1,14 +1,13 @@
-.floating-left
-  %table#cegonhas.display
+.row
+  %div{ :class => "large-12 columns" }
+  %table#cegonhas.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
     %thead
       %tr
-        %th{ :width => "5px"}
-          Nº
-        %th{ :width => "90px"}
+        %th
           Placa 
         %th
           Motorista 
-        %th{ :width => "200px"}
+        %th
           Localização Atual
         %th
           Origem
@@ -16,17 +15,14 @@
           Destino
         %th
           Carros
-        %th{ :width => "110px" }
-          Frete Total <br>dos Carros
+        %th
+          Frete Total dos Carros
         - if current_user.admin?
-          %th{ :width => "120px" }
+          %th{ :width => '130px'}
             Ações
     %tbody
-      - x = 0
-      - @cegonhas.each_with_index do |cegonha, index|
+      - @cegonhas.each do |cegonha|
         %tr
-          %td{ :class => @row_class }
-            = index + 1
           %td{ :class => @row_class }
             = link_to(cegonha.placa, cegonha)
           %td{ :class => @row_class }
@@ -48,9 +44,9 @@
           %td
             = number_to_currency(cegonha.total_freight)
           - if current_user.admin?
-            %td{ :class => @row_class, :style => "text-align:center;"}
+            %td{ :class => "#{@row_class} nowrap", :style => "text-align:center;"}
               = link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), cegonha
-              &nbsp;
+              
               = link_to image_tag("edit.png", :border=>0, :alt => "Editar", :mouseover => "edit_black.png", :title => "Editar Entrada"), edit_cegonha_path(cegonha)
-              &nbsp;
+              
               = link_to image_tag("delete-item.png", :border=>0, :mouseover => "delete-item_red.png", :title => "Apagar Entrada"), cegonha, confirm: 'Tem certeza que deseja apagar a venda? Esta ação é irreversível!', method: :delete
