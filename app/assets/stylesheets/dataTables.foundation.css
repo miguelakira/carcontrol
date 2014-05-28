@@ -1,10 +1,5 @@
 div.dataTables_wrapper {
   margin-bottom: 1.25em;
-  
-}
-
-div.dataTables_wrapper th td {
-  font-size:12px;
 }
 
 div.dataTables_length label,

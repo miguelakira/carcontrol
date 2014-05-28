@@ -2,7 +2,7 @@
   %div{ :class => "large-10 columns" }
     %table#cars.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
       %thead
-        %tr
+        %tr.nowrap
           %th
             Início
           %th
@@ -17,7 +17,7 @@
             Telefone
           %th
             CPF/CNPJ
-          %th
+          %th{ :style => 'width: 100px;'}
             Frete Total
           %th
             Cegonha 
@@ -26,7 +26,6 @@
 
       %tbody
         - @cars.each_with_index do |car, index|
-          
           -if car.status_pagamento.value == 1
             - @row_class = 'nao-pago'
           - elsif car.status_pagamento.value == 2
@@ -53,7 +52,7 @@
               = car.comprador ? car.comprador.telefone : car.empresa.telefone
             %td{ :class =>  @row_class }
               = car.comprador ? car.comprador.cpf : car.empresa.cnpj 
-            %td{ :class =>  @row_class }
+            %td{ :class =>  "#{@row_class} nowrap" }
               = number_to_currency(car.debito.valor_total)
             %td{ :class =>  @row_class }
               = car.cegonha ? link_to(car.cegonha.placa, car.cegonha) : ""
@@ -111,9 +110,10 @@
           Modelo
         %dd 
           = @car.modelo.titleize
-        %p.acoes
-          = link_to "Detalhes", @car 
-          |
-          = link_to "Editar", edit_car_path(@car)
-          |
-          = link_to "Deletar", @car, method: :delete, confirm: "Are you sure?"
+        %ul.button-group.small
+          %li
+            = link_to "Detalhes", @car, :class => "custom-button-tiny" 
+          %li
+            = link_to "Editar", edit_car_path(@car), :class => "custom-button-tiny" 
+          %li
+            = link_to "Deletar", @car, method: :delete, confirm: "Are you sure?", :class => "custom-button-tiny" 

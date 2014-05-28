@@ -48,9 +48,28 @@ section {
   }
 
 .row {
-  max-width: 90rem;
+  max-width: 100rem;
 }
 
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
-  font-size: 12px;
+  font-size: 13px;
 }
+
+.nowrap {
+  white-space: nowrap
+}
+
+dl dt {
+  font-size: 13px
+}
+
+.small {
+  font-size: small;
+}
+
+$padding: 0.2rem;
+
+.custom-button-tiny { 
+  @include button($padding);  
+}
+

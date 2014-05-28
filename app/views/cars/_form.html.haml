@@ -182,10 +182,10 @@
                 Dívida Restante do Cliente: 
                 %span.red
                   = number_to_currency(saldo_devedor_do_cliente(@car.comprador))
-                -elsif @car.empresa
-                  Dívida Restante da Empresa: 
-                  %span.red
-                    = number_to_currency(saldo_devedor_do_cliente(@car.empresa))
+              -elsif @car.empresa
+                Dívida Restante da Empresa: 
+                %span.red
+                  = number_to_currency(saldo_devedor_do_cliente(@car.empresa))
             .field
               =builder.label :forma_pagamento, "Forma do Novo Pagamento"
               =builder.text_field :forma_pagamento
