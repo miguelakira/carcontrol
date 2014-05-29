@@ -3,10 +3,10 @@
 %p.small
   = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @car.id
 
-.row
-  %div{ :class => "large-4 columns" }
+.row{ 'data-equalizer' => ""}
+  %div.large-4.columns
     - if @car.comprador 
-      %table{ :cellspacing => 0, :summary => "Detalhes do Cliente" }
+      %table.text-left{ :cellspacing => 0, :summary => "Detalhes do Cliente" , 'data-equalizer-watch' => ''}
         %caption
           %h4
             Detalhes do Cliente
@@ -57,7 +57,7 @@
             = @car.comprador.observacao
         
     - elsif @car.empresa 
-      %table{ :cellspacing => "0", :summary => "Detalhes da Empresa" }
+      %table.text-left{ :cellspacing => "0", :summary => "Detalhes da Empresa" }
         %caption
           %h4
             Detalhes da Empresa
@@ -97,8 +97,8 @@
           %td
             = @car.empresa.observacao
  
-  %div{ :class => "large-4 columns" }
-    %table{ :cellspacing => "0", :summary => "Detalhes do Carro" }
+  %div.large-4.columns
+    %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Carro" , 'data-equalizer-watch' => ''}
       %caption
         %h4
           Detalhes do Carro
@@ -162,8 +162,8 @@
         %td
           = @car.observacao
 
-  %div{ :class => "large-4 columns end" }
-    %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento" }
+  %div.large-4.columns.end
+    %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Pagamento", 'data-equalizer-watch' => '' }
       %caption
         %h4
           Detalhes do frete
@@ -219,7 +219,7 @@
           = @car.debito.observacao
     
 .row
-  %div{ :class => "large-12 columns" }
+  %div.large-12.columns
     %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento" }
       %caption
         %h4

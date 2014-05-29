@@ -41,6 +41,7 @@
 main {
   @include twelve-columns;
   background-color: #eee;
+  min-height: 100%;
   }
 section {
   @extend .row;
@@ -73,3 +74,45 @@ $padding: 0.2rem;
   @include button($padding);  
 }
 
+.custom-dropdown-date{
+  width: 30%;
+  margin-right: 10px;
+  float: left;
+  display: inline !important;
+}
+
+.alert-box {
+  margin-top: 10px;
+}
+
+#sticky-footer {
+    height: 50px;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    line-height: 50px;
+    color: #aaa;
+    background: #333;
+    text-align: center;
+    width: 100%;
+}
+
+#footer {
+    bottom: 0px;
+    left: 0px;
+    color: #aaa;
+    background: #333;
+    text-align: center;
+    width: 100%;
+}
+
+#footer p {
+  margin-bottom: 0;
+}
+
+.bottom-bar{
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  margin-bottom: 0px;
+}
