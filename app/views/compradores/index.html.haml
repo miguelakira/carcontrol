@@ -67,7 +67,7 @@
       %tbody
         - @empresas.each do |empresa|
           %tr
-            %td{ :style => 'border-left: 1px solid #C1DAD7;'}
+            %td
               = link_to empresa.nome, empresa 
               = link_to image_tag("edit_local.png", :border=>0), edit_empresa_path(empresa, :empresa => empresa.id), :class => 'right' 
             %td

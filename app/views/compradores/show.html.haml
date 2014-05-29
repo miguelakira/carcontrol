@@ -1,120 +1,115 @@
-%p.notice
-  = notice
-
-.floating_box
-  %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Cliente", :style => "width:450px" }
-    %caption
-      %h5
-        Detalhes do Cliente
-    %tr
-      %th{ :style => "width:180px "}
-        Nome do Cliente
-      %td{ :style => 'border-top: 1px solid #C1DAD7;'}
-        = @comprador.nome 
-    %tr
-      %th
-        RG
-      %td
-        = @comprador.rg
-    %tr
-      %th
-        CPF
-      %td
-        = @comprador.cpf
-    %tr
-      %th
-        Telefone
-      %td
-        = @comprador.telefone
-    %tr
-      %th
-        Celular
-      %td
-        = @comprador.celular
-    %tr
-      %th
-        E-Mail
-      %td
-        = @comprador.email
-    %tr
-      %th
-        Nome de Parente <br> ou Conhecido
-      %td
-        = @comprador.parente
-    %tr
-      %th
-        Telefone de Parente <br> ou Conhecido
-      %td
-        = @comprador.telefone_parente
-    %tr
-      %th{ :style => "height:50px" }
-        Observação
-      %td
-        = @comprador.observacao
-    
-  %table#mytable{ :cellspacing => "0", :summary => "Detalhes dos Carros", :style => "width:450px" }
-    %caption
-      %h5
-        Detalhes dos Carros
-    %tr
-      %th{ :style => "width:130px" }
-        Carros Ativos
-      %td{ :style => 'border-top: 1px solid #C1DAD7;' }
-        = carros_ativos_do_cliente(@comprador).html_safe
-    %tr
-      %th
-        Frete Total dos <br> Carros Ativos
-      %td
-        = number_to_currency(frete_total_do_cliente(@comprador)) 
-    %tr
-      %th
-        Pagamento Total <br> Efetuado
-      %td
-        = number_to_currency(soma_dos_pagamentos_efetuados(@comprador)) 
-    %tr
-      %th
-        Saldo Devedor
-      %td
-        = number_to_currency(saldo_devedor_do_cliente(@comprador)) 
-    %tr
-      %th{ :style => "height:50px" }
-        Observação
-      %td
-        = @observacao
-
-.floating_left
-  %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Pagamento", :style => "width:450px" }
-    %caption
-      %h5
-        Detalhes dos Pagamentos
-    %tr
-      %th{ :width => '50px', :style => 'border-left: 1px solid #C1DAD7;' }
-        Data do <br>Pagamento
-      %th
-        Valor do <br> Pagamento
-      %th
-        Forma de <br> Pagamento
-      %th
-        Saldo
-    
-
-    - @comprador ? owner = @comprador : owner = @empresa
-    - owner.pagamentos.each do |pagamento|
-      - if pagamento.saldo >= 0
-        - row_class  = 'blue'
-      - else
-        - row_class = 'red'
+.row
+  .large-4.columns
+    %table{ :cellspacing => "0", :summary => "Detalhes do Cliente"}
+      %caption
+        %h5
+          Detalhes do Cliente
       %tr
-        %td{ :style => 'border-left: 1px solid #C1DAD7;' }
-          = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
+        %th{ :style => "width:180px "}
+          Nome do Cliente
         %td
-          = number_to_currency(pagamento.valor)
+          = @comprador.nome 
+      %tr
+        %th
+          RG
         %td
-          = pagamento.forma_pagamento
-        %td{ :class => row_class }
-          = number_to_currency(pagamento.saldo)
+          = @comprador.rg
+      %tr
+        %th
+          CPF
+        %td
+          = @comprador.cpf
+      %tr
+        %th
+          Telefone
+        %td
+          = @comprador.telefone
+      %tr
+        %th
+          Celular
+        %td
+          = @comprador.celular
+      %tr
+        %th
+          E-Mail
+        %td
+          = @comprador.email
+      %tr
+        %th
+          Nome de Parente <br> ou Conhecido
+        %td
+          = @comprador.parente
+      %tr
+        %th
+          Telefone de Parente <br> ou Conhecido
+        %td
+          = @comprador.telefone_parente
+      %tr
+        %th{ :style => "height:50px" }
+          Observação
+        %td
+          = @comprador.observacao
+  .large-4.columns 
+    %table{ :cellspacing => "0", :summary => "Detalhes dos Carros" }
+      %caption
+        %h5
+          Detalhes dos Carros
+      %tr
+        %th{ :style => "width:130px" }
+          Carros Ativos
+        %td
+          = carros_ativos_do_cliente(@comprador).html_safe
+      %tr
+        %th
+          Frete Total dos <br> Carros Ativos
+        %td
+          = number_to_currency(frete_total_do_cliente(@comprador)) 
+      %tr
+        %th
+          Pagamento Total <br> Efetuado
+        %td
+          = number_to_currency(soma_dos_pagamentos_efetuados(@comprador)) 
+      %tr
+        %th
+          Saldo Devedor
+        %td
+          = number_to_currency(saldo_devedor_do_cliente(@comprador)) 
+      %tr
+        %th{ :style => "height:50px" }
+          Observação
+        %td
+          = @observacao
+  .large-4.columns.end
+    %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento" }
+      %caption
+        %h5
+          Detalhes dos Pagamentos
+      %tr
+        %th{:width => '50px'}
+          Data do <br>Pagamento
+        %th
+          Valor do <br> Pagamento
+        %th
+          Forma de <br> Pagamento
+        %th
+          Saldo
       
-.clear
 
-= button 'Editar', edit_comprador_path(@comprador)
-= button 'Voltar', compradores_path
+      - @comprador ? owner = @comprador : owner = @empresa
+      - owner.pagamentos.each do |pagamento|
+        - if pagamento.saldo >= 0
+          - row_class  = 'blue'
+        - else
+          - row_class = 'red'
+        %tr
+          %td
+            = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
+          %td
+            = number_to_currency(pagamento.valor)
+          %td
+            = pagamento.forma_pagamento
+          %td{ :class => row_class }
+            = number_to_currency(pagamento.saldo)
+      
+= link_to 'Editar', edit_comprador_path(@comprador), :class => :button
+= link_to 'Voltar', compradores_path, :class => :button
