@@ -3,108 +3,99 @@
 
 - unless @parceiro.nil?
   %p
-    %b
-      = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @parceiro.id
+    %b= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @parceiro.id
 
-  .floating_box
-    %table#mytable{ :cellspacing => "0", :summary => "Detalhes da parceiro", :style => "width:450px" }
-      %caption
-        %h5
-          Detalhes da parceiro
-      %tr
-        - if !@parceiro.cpf.empty?
-          %th{ :style => "width:150px"} 
-            CPF do Parceiro
-          %td{ :style => 'border-top: 1px solid #C1DAD7;'}
-            = @parceiro.cpf 
-        - else
-          %th{ :style => "width:150px" }
-            CNPJ do Parceiro
-          %td{ :style => 'border-top: 1px solid #C1DAD7;' }
-            = @parceiro.cnpj 
-      %tr
-        %th
-          Nome do Parceiro
-        %td
-          = @parceiro.nome
-      %tr
-        %th
-          Carros com Parceiro
-        %td
-          = raw(carros_com_parceiro(@parceiro)).html_safe
-      %tr
-        %th
-          Localização Atual
-        %td
-          = @parceiro.localizacao
-      - unless @parceiro.cidade_origem.nil? && @parceiro.estado_origem.nil?
+  .row{ 'data-equalizer' => ""}
+    .large-6.columns
+      %table.text-left{ :cellspacing => "0", :summary => "Detalhes da parceiro", :style => "width:450px", 'data-equalizer-watch' => '' }
+        %caption
+          %h5
+            Detalhes da parceiro
+        %tr
+          - if !@parceiro.cpf.empty?
+            %th{ :style => "width:150px"} 
+              CPF do Parceiro
+            %td
+              = @parceiro.cpf 
+          - else
+            %th{ :style => "width:150px" }
+              CNPJ do Parceiro
+            %td
+              = @parceiro.cnpj 
         %tr
           %th
-            Origem
+            Nome do Parceiro
           %td
-            = Cidade.find(@parceiro.cidade_origem).text 
-            = Estado.find(@parceiro.estado_origem).sigla
-      - unless @parceiro.cidade_origem.nil? && @parceiro.estado_origem.nil?
+            = @parceiro.nome
         %tr
           %th
-            Destino
+            Carros com Parceiro
           %td
-            = Cidade.find(@parceiro.cidade_destino).text 
-            = Estado.find(@parceiro.estado_destino).sigla
-      %tr
-        %th{ :style => "height:50px" }
-          Observação
-        %td
-          = @parceiro.observacao
+            = raw(carros_com_parceiro(@parceiro)).html_safe
+        %tr
+          %th
+            Localização Atual
+          %td
+            = @parceiro.localizacao
+        - unless @parceiro.cidade_origem.nil? && @parceiro.estado_origem.nil?
+          %tr
+            %th
+              Origem
+            %td
+              = Cidade.find(@parceiro.cidade_origem).text 
+              = Estado.find(@parceiro.estado_origem).sigla
+        - unless @parceiro.cidade_origem.nil? && @parceiro.estado_origem.nil?
+          %tr
+            %th
+              Destino
+            %td
+              = Cidade.find(@parceiro.cidade_destino).text 
+              = Estado.find(@parceiro.estado_destino).sigla
+        %tr
+          %th{ :style => "height:50px" }
+            Observação
+          %td
+            = @parceiro.observacao
 
-    %table#mytable{ :cellspacing => "0", :summary => "Fretes", :style => "width:300px" }
-      %caption
-        %h5
-          Transações Financeiras do Parceiro 
-      %tr
-        %th.begin{ :style => "width:180px" } 
-          Valor Total dos Fretes
-        %td{ :style => 'border-top: 1px solid #C1DAD7;' } 
-          = number_to_currency(@valor_total) 
-      %tr
-        %th.begin
-          Valor Total Pago
-        %td
-          = number_to_currency(@valor_pago)  
-      %tr
-        %th.begin
-          Saldo Devedor Total
-        %td
-          = number_to_currency(@saldo_devedor)  
-
-  .clear
+    .large-6.columns.end
+      %table.text-left{ :cellspacing => "0", :summary => "Fretes", :style => "width:450px", 'data-equalizer-watch' => '' }
+        %caption
+          %h5
+            Transações Financeiras do Parceiro 
+        %tr
+          %th.begin{ :style => "width:180px" } 
+            Valor Total dos Fretes
+          %td
+            = number_to_currency(@valor_total) 
+        %tr
+          %th.begin
+            Valor Total Pago
+          %td
+            = number_to_currency(@valor_pago)  
+        %tr
+          %th.begin
+            Saldo Devedor Total
+          %td
+            = number_to_currency(@saldo_devedor)  
 
   - if !@cars_ativos.empty?
     %p
-      %b
-        CARROS ATIVOS
-      = render 'cars', :carros => @cars_ativos
-      %br
-  - else
-    %p
-      %b
-        Este parceiro não possui carros ativos no momento.
+      %b CARROS ATIVOS
+    = render 'cars', :carros => @cars_ativos
 
-  .clear
   - frete_total = 0
   - saldo_devedor = 0
   - @parceiro.historicos.each do |hist|
     - frete_total = hist.car.debito.valor_total + frete_total
     - saldo_devedor =  hist.car.debito.saldo_devedor + saldo_devedor
-    %table#mytable{ :cellspacing => "0", :summary => "Histórico da Cegonha", :style => "width:900px" }
+    %table{ :cellspacing => "0", :summary => "Histórico da Cegonha", :width => '100%' }
       %caption
         %p
-          %b
-            HISTÓRICO
+          %b HISTÓRICO
         %p
           = "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}"  
       - if @parceiro.historicos.empty?
-        %th{ :style => "text-align:left;" }
+        %th.text-left
           Nenhum carro no histórico
       - else
         %tr
@@ -122,9 +113,9 @@
             Cidade de Saída
         - @parceiro.historicos.each_with_index do |historico, index|
           %tr
-            %td.none 
+            %td
               = index + 1
-            %td.begin
+            %td
               = link_to(historico.car.placa, historico.car) unless historico.car.nil? 
             %td
               = historico.data_entrada.strftime("%d/%m/%Y") unless historico.data_entrada.nil? 
@@ -137,5 +128,5 @@
 
   .clear
 
-  = button('Editar', edit_parceiro_path(@parceiro))
-  = button('Voltar', parceiros_path)
+  = link_to 'Editar', edit_parceiro_path(@parceiro), :class => :button
+  = link_to 'Voltar', parceiros_path, :class => :button

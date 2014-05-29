@@ -10,130 +10,95 @@
   - else
     = form_for(@cegonha) do |f|
       - if @cegonha.errors.any?
-        #error_explanation
-          %h1
-            = "#{pluralize(@cegonha.errors.count, 'erro')} impediram que a compra fosse salva:"
-          %ul
-            - @cegonha.errors.full_messages.each do |msg|
-              %li
-                = msg
+        %h1
+          = "#{pluralize(@cegonha.errors.count, 'erro')} impediram que a compra fosse salva:"
+        %ul
+          - @cegonha.errors.full_messages.each do |msg|
+            %li
+              = msg
 
-      - if @cegonha.empresa
-        %fieldset
-          %legend
-            %h5{ :style => "font-size: 1.3em"}
-              Dados da Empresa
-          = f.fields_for :empresa do |builder|
-            .field
-              = builder.label :cnpj, "CNPJ* da Empresa"
-              = builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresaCegonha(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj'
-            .field
-              = builder.label :nome, "Nome da Empresa*"
-              = builder.text_field :nome, :id => 'empresa_nome'
-            .field
-              = builder.label :contato, "Nome do Contato"
-              = builder.text_field :contato, :id => 'empresa_contato' 
-            .field
+      .row{ 'data-equalizer' => '' }
+        %div{:class => @grid}
+          - if @cegonha.empresa
+            %fieldset{ 'data-equalizer-watch' => '' }
+              %legend
+                %h5{ :style => "font-size: 1.3em"}
+                  Dados da Empresa
+              = f.fields_for :empresa do |builder|
+                = builder.label :cnpj, "CNPJ* da Empresa"
+                = builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresaCegonha(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj'
+                
+                = builder.label :nome, "Nome da Empresa*"
+                = builder.text_field :nome, :id => 'empresa_nome'
+                
+                = builder.label :contato, "Nome do Contato"
+                = builder.text_field :contato, :id => 'empresa_contato' 
+                
+                = builder.label :email, "E-Mail"
+                = builder.text_field :email, :id => 'empresa_email' 
+                
+                = builder.label :telefone
+                = builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone'
+                
+                = builder.label :celular
+                = builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular'
+        %div{:class => @grid}
+          %fieldset{ 'data-equalizer-watch' => '' }
+            %legend
+              %h5{ :style => "font-size: 1.3em"}
+                Dados da Cegonha
+            
+            = f.label :placa
+            = f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15'
+          
+            = raw(carros_na_cegonha(@cegonha))
+          
+            = f.label :observacao, "Observação"
+            = f.text_area :observacao, :cols => 40, :rows => 7
+        %div{:class => @grid} 
+          %fieldset{ 'data-equalizer-watch' => '' }
+            %legend
+              %h5{ :style=> "font-size: 1.3em" }
+                Dados do Motorista
+            = f.fields_for :motorista do |builder|
+              = builder.label :cpf, "CPF do Motorista*"
+              = builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsMotorista(this)",:maxlength=>"14", :size => '30', :id => 'motorista_cpf'
+              
+              = builder.label :nome, "Nome do Motorista*"
+              = builder.text_field :nome, :id => 'motorista_nome'
+              
               = builder.label :email, "E-Mail"
-              = builder.text_field :email, :id => 'empresa_email' 
-            .field
+              = builder.text_field :email, :id => 'motorista_email' 
+              
               = builder.label :telefone
-              = builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone'
-            .field
+              = builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'motorista_telefone'
+              
               = builder.label :celular
-              = builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular'
-
-      %fieldset
-        %legend
-          %h5{ :style => "font-size: 1.3em"}
-            Dados da Cegonha
-        .field
-          = f.label :placa
-          = f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15'
-        .field
-          = raw(carros_na_cegonha(@cegonha))
-        .field
-          = f.label :observacao, "Observação"
-          = f.text_area :observacao, :cols => 40, :rows => 7
-      %fieldset
-        %legend
-          %h5{ :style=> "font-size: 1.3em" }
-            Dados do Motorista
-        = f.fields_for :motorista do |builder|
-          .field
-            = builder.label :cpf, "CPF do Motorista*"
-            = builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsMotorista(this)",:maxlength=>"14", :size => '30', :id => 'motorista_cpf'
-          .field
-            = builder.label :nome, "Nome do Motorista*"
-            = builder.text_field :nome, :id => 'motorista_nome'
-          .field
-            = builder.label :email, "E-Mail"
-            = builder.text_field :email, :id => 'motorista_email' 
-          .field
-            = builder.label :telefone
-            = builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'motorista_telefone'
-          .field
-            = builder.label :celular
-            = builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'motorista_celular'
-          .field
-            = builder.label :observacao, "Observação"
-            = builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'motorista_observacao'
-
-      -  if @cegonha.empresa
-        - if @cegonha.pagamento.valor_frete == 0
-          @cegonha.pagamento.valor_frete = nil
-       
-        - if @cegonha.pagamento.taxa_plataforma == 0
-          @cegonha.pagamento.taxa_plataforma = nil
-       
-        - if @cegonha.pagamento.taxa_despacho == 0
-          @cegonha.pagamento.taxa_despacho = nil
-       
-        - if @cegonha.pagamento.desconto == 0
-          @cegonha.pagamento.desconto = nil
-       
-        - if @cegonha.pagamento.valor_pago == 0
-          @cegonha.pagamento.valor_pago = nil
-
-        %fieldset
-          %legend
-            %h5{ :style=> "font-size: 1.3em" }
-              Dados do Frete
-          = f.fields_for :pagamento do |builder|
-            .field
-              = builder.label :forma_pagamento, "Forma de Pagamento"
-              &nbsp;&nbsp;&nbsp;= builder.text_field :forma_pagamento
-
-            .field
-              = builder.label :valor_frete, "Valor do Frete"
-              R$= builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
-
-            .field
-              = builder.label :taxa_plataforma, "Taxa de Plataforma"
-              R$= builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
-
-            .field
-              = builder.label :taxa_despacho, "Taxa de Redespacho"
-              R$= builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
-
-            .field
-              = builder.label :desconto, "Desconto"
-              R$= builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
-
-            .field
-              = builder.label :valor_pago, "Valor Pago"
-              R$= builder.text_field :valor_pago, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@cegonha.pagamento.valor_pago, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')%>
-
-            .field
+              = builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'motorista_celular'
+              
               = builder.label :observacao, "Observação"
-              = builder.text_area :observacao, :cols => 40, :rows => 7
+              = builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'motorista_observacao'
 
+          -  if @cegonha.empresa
+            - if @cegonha.pagamento.valor_frete == 0
+              @cegonha.pagamento.valor_frete = nil
+           
+            - if @cegonha.pagamento.taxa_plataforma == 0
+              @cegonha.pagamento.taxa_plataforma = nil
+           
+            - if @cegonha.pagamento.taxa_despacho == 0
+              @cegonha.pagamento.taxa_despacho = nil
+           
+            - if @cegonha.pagamento.desconto == 0
+              @cegonha.pagamento.desconto = nil
+           
+            - if @cegonha.pagamento.valor_pago == 0
+              @cegonha.pagamento.valor_pago = nil
       
-      .actions
-        - if @cegonha.id.nil?
-          = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :cegonha => @cegonha
-        - else
-          = f.submit "Salvar"
-          = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :cegonha => @cegonha
+      - if @cegonha.id.nil?
+        = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :cegonha => @cegonha, :class => :button
+      - else
+        = f.submit "Salvar"
+        = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :cegonha => @cegonha, :class => :button
 
 

@@ -10,7 +10,7 @@
     -else
       =form_for(@car) do |f|
         -if @car.errors.any?
-          #error_explanation
+          .alert-box.alert
             %h1
               =pluralize(@car.errors.count, "erro") 
               impediram que o cliente fosse atualizado:

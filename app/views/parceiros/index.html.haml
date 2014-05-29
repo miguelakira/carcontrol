@@ -1,7 +1,7 @@
-%h1
-  = @mensagem
+%p
+  %h1= @mensagem
 - if !@parceiros.empty? 
   = render 'parceiros' 
 
 - if current_user.admin? 
-  = button('Adicionar Parceiro', new_parceiro_path)
+  = link_to 'Adicionar Parceiro', new_parceiro_path, :class => :button

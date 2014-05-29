@@ -10,5 +10,5 @@
 .clear
 
 - if current_user.admin?
-  = button('Adicionar Cegonha', new_cegonha_path)
-  = button('Adicionar Cegonha de Outra Transportadora', :action => :new, :cegonha_contratada => true)
+  = link_to 'Adicionar Cegonha', new_cegonha_path, :class => :button
+  = link_to 'Adicionar Cegonha de Outra Transportadora', {:action => :new, :cegonha_contratada => true}, :class => :button

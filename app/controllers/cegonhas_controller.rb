@@ -14,6 +14,7 @@ class CegonhasController < ApplicationController
 
   def show
     @cegonha = Cegonha.find(params[:id])
+    @grid = set_grid(@cegonha)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @cegonha }
@@ -33,6 +34,8 @@ class CegonhasController < ApplicationController
       @cegonha.build_debito
     end
 
+    @grid = set_grid(@cegonha)
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @cegonha }
@@ -41,9 +44,11 @@ class CegonhasController < ApplicationController
   def edit
     gon.motoristas = Motorista.all
     gon.empresas = Empresa.all
+
     @editar_localizacao = params[:editar_localizacao]
     @cegonha = Cegonha.find(params[:id])
-
+    
+    @grid = set_grid(@cegonha)
     # pega um array com todas as cidades dos estados atualmente no banco, pra encher os forms.
     @locais_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_id})
     @destinos_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_destino})
@@ -246,5 +251,9 @@ private
       return true
     end
 
+  end
+
+  def set_grid(cegonha)
+    cegonha.empresa ? 'large-4 columns' : 'large-6 columns'
   end
 end

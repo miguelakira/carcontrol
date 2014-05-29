@@ -1,164 +1,163 @@
-%p#notice
-  = notice
-
 %p
-  %b
-    = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @cegonha.id
+  %b= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @cegonha.id
 
-.floating_box
-  %table#mytable{  :cellspacing => "0", :summary => "Detalhes da Cegonha", :style => "width:450px" }
-    %caption
-      %h5
-        Detalhes da Cegonha
-    %tr
-      %th{ :style => "width:150px" }
-        Placa da Cegonha
-      %td{ :style => 'border-top: 1px solid #C1DAD7;'}
-        = @cegonha.placa 
-    - if @cegonha.empresa
-      %tr
-        %th 
-          Pertencente à Empresa
-        %td
-          = @cegonha.empresa.nome
-    %tr
-      %th 
-        Carros na Cegonha
-      %td
-        = raw(carros_na_cegonha(@cegonha)).html_safe
-    %tr
-      %th 
-        Localização Atual
-      %td
-        = @cegonha.localizacao
-    - unless @cegonha.cidade_origem.nil? or @cegonha.estado_origem.nil?
-      %tr
-        %th 
-          Origem
-        %td
-          = Cidade.find(@cegonha.cidade_origem).text
-          = Estado.find(@cegonha.estado_origem).sigla
-    
-    - unless @cegonha.cidade_destino.nil? or @cegonha.estado_destino.nil?
-      %tr
-        %th 
-          Destino
-        %td
-          = Cidade.find(@cegonha.cidade_destino).text
-          = Estado.find(@cegonha.estado_destino).sigla
-    %tr
-      %th{ :style => "height:50px" }
-        Observação
-      %td
-        = @cegonha.observacao
-
-  %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Motorista", :style => "width:450px" }
-    %caption
-      %h5
-        Detalhes do Motorista
-    %tr
-      %th{ :style => "width:150px"} 
-        Nome
-      %td{ :style => 'border-top: 1px solid #C1DAD7;'}
-        = @cegonha.motorista.nome 
-    %tr
-      %th 
-        RG
-      %td
-        = @cegonha.motorista.rg
-    %tr
-      %th 
-        CPF
-      %td
-        = @cegonha.motorista.cpf
-    %tr
-      %th 
-        Telefone
-      %td
-        = @cegonha.motorista.telefone
-    %tr
-      %th 
-        Celular
-      %td
-        = @cegonha.motorista.celular
-    %tr
-      %th 
-        E-Mail
-      %td
-        = @cegonha.motorista.email
-    %tr
-      %th{ :style => "height:50px" }
-        Observação
-      %td
-        = @cegonha.motorista.observacao
-
-  - if @cegonha.empresa
-    %table#mytable{ :cellspacing => "0", :summary => "Detalhes do Frete da Empresa", :style => "width:450px" }
+.row{ 'data-equalizer' => ""}
+  %div{:class => @grid}
+    %table.text-left{ :cellspacing => "0", :summary => "Detalhes da Cegonha", :width => '450px', 'data-equalizer-watch' => '' }
       %caption
         %h5
-          Detalhes do Frete da Empresa Contratada
+          Detalhes da Cegonha
       %tr
-        %th{ :style => "width:180px" }
-          Valor do Frete
-        %td{ :style => 'border-top: 1px solid #C1DAD7;' }
-          = number_to_currency(@cegonha.debito.valor_frete)
+        %th
+          Placa da Cegonha
+        %td
+          = @cegonha.placa 
+      - if @cegonha.empresa
+        %tr
+          %th 
+            Pertencente à Empresa
+          %td
+            = @cegonha.empresa.nome
       %tr
         %th 
-          Taxa de Redespacho
+          Carros na Cegonha
         %td
-          = number_to_currency(@cegonha.debito.taxa_despacho)
+          = raw(carros_na_cegonha(@cegonha)).html_safe
       %tr
         %th 
-          Taxa de Plataforma
+          Localização Atual
         %td
-          = number_to_currency(@cegonha.debito.taxa_plataforma)
+          = @cegonha.localizacao
+      - unless @cegonha.cidade_origem.nil? or @cegonha.estado_origem.nil?
+        %tr
+          %th 
+            Origem
+          %td
+            = Cidade.find(@cegonha.cidade_origem).text
+            = Estado.find(@cegonha.estado_origem).sigla
+      
+      - unless @cegonha.cidade_destino.nil? or @cegonha.estado_destino.nil?
+        %tr
+          %th 
+            Destino
+          %td
+            = Cidade.find(@cegonha.cidade_destino).text
+            = Estado.find(@cegonha.estado_destino).sigla
       %tr
-        %th 
-          Desconto
-        %td
-          = number_to_currency(@cegonha.debito.desconto)
-      %tr
-        %th 
-          Valor Pago
-        %td
-          = number_to_currency(@cegonha.debito.valor_pago)
-      %tr
-        %th 
-          Valor Total
-        %td
-          = number_to_currency(@cegonha.debito.valor_total)
-      %tr
-        %th 
-          Saldo Devedor
-        %td
-          = number_to_currency(@cegonha.debito.saldo_devedor)
-      %tr
-        %th 
-          Forma de Pagamento
-        %td
-          = @cegonha.debito.forma_pagamento
-      %tr
-        %th{ :style => "height:50px" }
+        %th
           Observação
         %td
-          = @cegonha.debito.observacao
+          = @cegonha.observacao
 
-  - @cegonha.rotas.downto(1) do |i|
-    - carros_na_rota = @cegonha.historicos.select{|hist| hist.rota == i}
-    - frete_total = 0
-    - saldo_devedor = 0
-    - carros_na_rota.each do |hist|
-      - frete_total = hist.car.debito.valor_total + frete_total unless hist.car.nil?
-      - saldo_devedor =  hist.car.debito.saldo_devedor + saldo_devedor unless hist.car.nil?
+  %div{:class => @grid}
+    %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Motorista", :width => '450px', 'data-equalizer-watch' => '' }
+      %caption
+        %h5
+          Detalhes do Motorista
+      %tr
+        %th
+          Nome
+        %td
+          = @cegonha.motorista.nome 
+      %tr
+        %th 
+          RG
+        %td
+          = @cegonha.motorista.rg
+      %tr
+        %th 
+          CPF
+        %td
+          = @cegonha.motorista.cpf
+      %tr
+        %th 
+          Telefone
+        %td
+          = @cegonha.motorista.telefone
+      %tr
+        %th 
+          Celular
+        %td
+          = @cegonha.motorista.celular
+      %tr
+        %th 
+          E-Mail
+        %td
+          = @cegonha.motorista.email
+      %tr
+        %th
+          Observação
+        %td
+          = @cegonha.motorista.observacao
 
-      %table#mytable{ :cellspacing => "0", :summary => "Histórico da Cegonha", :style => "width:900px" } 
+  - if @cegonha.empresa
+    %div{:class => @grid}
+      %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Frete da Empresa", :width => '450px', 'data-equalizer-watch' => '' }
+        %caption
+          %h5
+            Detalhes do Frete da Empresa Contratada
+        %tr
+          %th
+            Valor do Frete
+          %td
+            = number_to_currency(@cegonha.debito.valor_frete)
+        %tr
+          %th 
+            Taxa de Redespacho
+          %td
+            = number_to_currency(@cegonha.debito.taxa_despacho)
+        %tr
+          %th 
+            Taxa de Plataforma
+          %td
+            = number_to_currency(@cegonha.debito.taxa_plataforma)
+        %tr
+          %th 
+            Desconto
+          %td
+            = number_to_currency(@cegonha.debito.desconto)
+        %tr
+          %th 
+            Valor Pago
+          %td
+            = number_to_currency(@cegonha.debito.valor_pago)
+        %tr
+          %th 
+            Valor Total
+          %td
+            = number_to_currency(@cegonha.debito.valor_total)
+        %tr
+          %th 
+            Saldo Devedor
+          %td
+            = number_to_currency(@cegonha.debito.saldo_devedor)
+        %tr
+          %th 
+            Forma de Pagamento
+          %td
+            = @cegonha.debito.forma_pagamento
+        %tr
+          %th
+            Observação
+          %td
+            = @cegonha.debito.observacao
+
+- @cegonha.rotas.downto(1) do |i|
+  - carros_na_rota = @cegonha.historicos.select{|hist| hist.rota == i}
+  - frete_total = 0
+  - saldo_devedor = 0
+  - carros_na_rota.each do |hist|
+    - frete_total = hist.car.debito.valor_total + frete_total unless hist.car.nil?
+    - saldo_devedor =  hist.car.debito.saldo_devedor + saldo_devedor unless hist.car.nil?
+
+  .row
+    .large-12.end
+      %table.text-left{ :cellspacing => "0", :summary => "Histórico da Cegonha", :width => '100%' } 
         - if i == @cegonha.rotas
-          %caption
-            %h5
-              = "Rota Atual #{@cegonha.route_name}"
-          %caption
-            %p
-              = "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}"
+          %caption.text-left
+            %h5= "Rota Atual #{@cegonha.route_name}"
+          %caption.text-left
+            %p= "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}"
         - else
           - h_nome = Historico.find_all_by_rota(i)
           - nome_rota = ""
@@ -172,13 +171,13 @@
               = "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}"
 
           - if carros_na_rota.empty?
-            %th{ :style => "text-align:left;" }
+            %th
               Nenhum carro na cegonha
           - else
             %tr
-              %th.none{ :width => '1'}
+              %th{ :width => '1'}
                 Nº
-              %th.begin
+              %th
                 Placa
               %th 
                 Data de Entrada
@@ -190,9 +189,9 @@
                 Cidade de Saída
               - carros_na_rota.each_with_index do |historico, index|
                 %tr
-                  %td.none
+                  %td
                     = index + 1
-                  %td.begin
+                  %td
                     = link_to(historico.car.placa, historico.car) unless historico.car.nil? 
                   %td
                     = historico.data_entrada.strftime("%d/%m/%Y") unless historico.data_entrada.nil? 
@@ -202,8 +201,6 @@
                     = historico.data_saida.strftime("%d/%m/%Y") unless historico.data_saida.nil? 
                   %td
                     = historico.localizacao_saida 
-.clear
 
-%br
 = button('Editar', edit_cegonha_path(@cegonha))
 = button('Voltar', cegonhas_path)

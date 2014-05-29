@@ -4,7 +4,7 @@
   = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @car.id
 
 .row{ 'data-equalizer' => ""}
-  %div.large-4.columns
+  .large-4.columns
     - if @car.comprador 
       %table.text-left{ :cellspacing => 0, :summary => "Detalhes do Cliente" , 'data-equalizer-watch' => ''}
         %caption
@@ -97,7 +97,7 @@
           %td
             = @car.empresa.observacao
  
-  %div.large-4.columns
+  .large-4.columns
     %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Carro" , 'data-equalizer-watch' => ''}
       %caption
         %h4
@@ -162,7 +162,7 @@
         %td
           = @car.observacao
 
-  %div.large-4.columns.end
+  .large-4.columns.end
     %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Pagamento", 'data-equalizer-watch' => '' }
       %caption
         %h4

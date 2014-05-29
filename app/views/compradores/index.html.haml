@@ -1,7 +1,7 @@
-%h1<= @mensagem_compradores
+%h1= @mensagem_compradores
 .row
   %div{ :class => "large-12 columns" }
-    %table#compradores.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
+    %table#compradores.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :width => '100%'}
       %thead
         %tr
           %th
@@ -42,10 +42,10 @@
             %td
               = number_to_currency(saldo_devedor_do_cliente(comprador))
       
-%h1<= @mensagem_empresas
+%h1= @mensagem_empresas
 .row
   %div{ :class => "large-12 columns" }
-    %table#empresas.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
+    %table#empresas.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :width => '100%'}
       %thead
         %tr
           %th
