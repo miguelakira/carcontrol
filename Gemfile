@@ -4,8 +4,8 @@ ruby "1.9.3"
 
 gem 'rails', '3.2.18'
 gem "haml-rails"
-gem 'coffee-rails', '~> 3.2.1'
-gem 'sass-rails',   '>= 3.2.3'
+gem 'sass', '~> 3.2.5'
+gem 'sass-rails'
 
 gem 'exception_notification'
 
@@ -23,15 +23,14 @@ gem 'pdfkit'
 gem 'wkhtmltopdf-binary'
 gem 'taps'
 
-gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'jquery-datatables-rails'
 
 # Gems used only for assets and not requiredg
 # in production environments by default.
 # como disse, só com terapia
 
 group :assets do
-
-
+  gem 'coffee-rails', '~> 3.2.1'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'uglifier', '>= 1.0.3'
   gem 'therubyracer'
