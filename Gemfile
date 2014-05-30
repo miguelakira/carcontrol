@@ -3,9 +3,9 @@ source 'https://rubygems.org'
 ruby "1.9.3"
 
 gem 'rails', '3.2.18'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem "haml-rails"
+gem 'coffee-rails', '~> 3.2.1'
+gem 'sass-rails',   '>= 3.2.3'
 
 gem 'exception_notification'
 
@@ -30,9 +30,7 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 # como disse, só com terapia
 
 group :assets do
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'sass-rails',   '>= 3.2.3'
-  gem "haml-rails"
+
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'uglifier', '>= 1.0.3'
