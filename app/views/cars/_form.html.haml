@@ -200,7 +200,7 @@
 
                 =builder.label :data_pagamento, "Data do Pagamento"
                 =builder.date_select :data_pagamento, {:order => [:day, :month, :year], :start_year => Time.now.year - 1}, { :class => 'custom-dropdown-date'}
-        -if @car.id.nil?
+        -if @car.new_record?
           = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car, :class => 'button'
         -else
           = f.submit "Salvar", :class => 'button'

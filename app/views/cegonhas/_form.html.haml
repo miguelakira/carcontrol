@@ -1,6 +1,3 @@
-- empresas = Empresa.all
-- motoristas = Motorista.all
-
 - if !current_user.admin?
   Desculpe, você precisa ter direitos administrativos para visualizar esta página!
 - else
@@ -95,10 +92,10 @@
             - if @cegonha.pagamento.valor_pago == 0
               @cegonha.pagamento.valor_pago = nil
       
-      - if @cegonha.id.nil?
+      - if @cegonha.new_record?
         = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :cegonha => @cegonha, :class => :button
       - else
-        = f.submit "Salvar"
+        = f.submit "Salvar", :class => :button
         = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :cegonha => @cegonha, :class => :button
 
 

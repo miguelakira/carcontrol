@@ -114,7 +114,7 @@
             Observação
       %tbody
         - cliente.pagamentos.each do |pagamento|
-          - unless pagamento.id.nil?
+          - unless pagamento.new_record?
             - if pagamento.saldo >= 0
               - row_class  = 'blue'
             - else

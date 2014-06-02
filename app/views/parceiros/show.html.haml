@@ -1,6 +1,3 @@
-%p.notice
-  = notice
-
 - unless @parceiro.nil?
   %p
     %b= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @parceiro.id

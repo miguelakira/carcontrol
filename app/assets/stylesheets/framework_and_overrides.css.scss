@@ -82,6 +82,14 @@ $padding: 0.2rem;
   margin-top: 10px;
 }
 
+fieldset {
+  border: 2px solid #C1C2C3;
+}
+
+fieldset p {
+  margin-bottom: 0;
+}
+
 #sticky-footer {
     height: 50px;
     position: fixed;
@@ -124,7 +132,6 @@ h1, h2, h3, h4, h5, h6, legend {
   font-family: 'Open Sans Light','Droid Arabic Naskh','Mplus Fulah Light',sans-serif;
   text-shadow: 0 1px 0 rgba(255,255,255,0.75);
 }
-
 .nao-pago {
   color: #f7f7f7;
   background: #f06060;
