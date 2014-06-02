@@ -40,9 +40,10 @@
 // to make views framework-neutral
 main {
   @include twelve-columns;
-  background-color: #eee;
+  background: url(bg-gradient-sand.png) repeat-x,url(bg-sand.png) repeat,#f5f1e8;
   min-height: 100%;
   }
+
 section {
   @extend .row;
   margin-top: 20px;
@@ -50,10 +51,6 @@ section {
 
 .row {
   max-width: 100rem;
-}
-
-table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
-  font-size: 13px;
 }
 
 .nowrap {
@@ -116,3 +113,34 @@ $padding: 0.2rem;
   width: 100%;
   margin-bottom: 0px;
 }
+table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
+  font-size: 13px;
+}
+div.dataTables_length label, div.dataTables_filter label, div.dataTables_info {
+  color: #CC6262;
+}
+
+h1, h2, h3, h4, h5, h6, legend {
+  font-family: 'Open Sans Light','Droid Arabic Naskh','Mplus Fulah Light',sans-serif;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.75);
+}
+
+.nao-pago {
+  color: #f7f7f7;
+  background: #f06060;
+}
+.nao-pago a {
+  color: #48CDF8;
+}
+.nao-pago tr:hover {
+  background: rgba(0,0,0,0.1);
+}
+.pendente {
+  background: #F1EC6C;
+}
+.pendente tr:hover {
+  background: rgba(0,0,0,0.1);
+}
+
+
+

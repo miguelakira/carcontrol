@@ -81,7 +81,7 @@
             = index + 1
           %td{ :class => @row_class }
             = car.data_compra.strftime("%d/%m/%Y")
-          %td{ :class => @row_class }
+          %td{ :class => "#{@row_class} nowrap" }
             = car.placa
           %td{ :class => @row_class }
             = car.modelo.titleize

@@ -23,7 +23,7 @@
     %tbody
       - @cegonhas.each do |cegonha|
         %tr
-          %td{ :class => @row_class }
+          %td{ :class => "#{@row_class} nowrap" }
             = link_to(cegonha.placa, cegonha)
           %td{ :class => @row_class }
             = cegonha.motorista.nome

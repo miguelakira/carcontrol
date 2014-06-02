@@ -35,10 +35,9 @@
           %tr
             %td{ :class => @row_class }
               = car.data_compra.strftime("%d/%m/%y")
-            %td{ :class => @row_class }
+            %td{ :class => "#{@row_class} nowrap" }
               = link_to image_tag("edit_local.png", :border=>0), edit_car_path(car, :car => car.id), :class => 'right'
               = link_to car.placa, :car_id => car.id
-              
             %td{ :class => @row_class }
               = car.modelo.titleize
             %td{ :class =>  @row_class }
