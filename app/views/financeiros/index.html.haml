@@ -19,7 +19,7 @@
         %tbody
           - @compradores.each do |comprador|
             %tr
-              %td{ :style => 'border-left: 1px solid #C1DAD7;' }
+              %td
                 = link_to comprador.nome, financeiro_path(:show, :comprador_cpf => comprador.cpf)
               %td
                 = comprador.cpf
@@ -51,7 +51,7 @@
         %tbody
           - @empresas.each do |empresa|
             %tr
-              %td{ :style => 'border-left: 1px solid #C1DAD7;' }
+              %td
                 = link_to empresa.nome, financeiro_path(:show, :comprador_cnpj => empresa.cnpj)
               %td
                 = empresa.cnpj
@@ -83,7 +83,7 @@
         %tbody
           - @parceiros.each do |parceiro|
             %tr
-              %td{ :style => 'border-left: 1px solid #C1DAD7;' }
+              %td
                 = parceiro.cpf ? link_to(parceiro.nome, financeiro_path(:show, :parceiro_cpf => parceiro.cpf)) : link_to(parceiro.nome, financeiro_path(:show, :parceiro_cnpj => parceiro.cnpj))
               %td
                 = parceiro.cpf ? parceiro.cpf : parceiro.cnpj 

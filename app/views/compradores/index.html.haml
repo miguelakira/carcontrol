@@ -24,7 +24,7 @@
       %tbody
         - @compradores.each do |comprador|
           %tr
-            %td{ :style => 'border-left: 1px solid #C1DAD7;'}
+            %td
               = link_to comprador.nome, comprador  
               = link_to image_tag("edit_local.png", :border=>0),edit_comprador_path(comprador, :comprador => comprador.id), :class => 'right' 
             %td

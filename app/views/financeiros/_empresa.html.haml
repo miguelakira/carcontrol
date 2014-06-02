@@ -120,7 +120,7 @@
             - else
               - row_class = 'red'
           %tr
-            %td{ :style => 'border-left: 1px solid #C1DAD7;'}
+            %td
               = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
             %td
               = number_to_currency(pagamento.valor)
