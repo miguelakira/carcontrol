@@ -154,26 +154,26 @@ class CarsController < ApplicationController
     @car = Car.find(params[:id])
 
     @car.ativo = params[:ativo] unless params[:ativo].nil?
-    # vai ajustar o formato para converter pra BigDecimal
 
     if params[:salvar_localizacao]
       if !@car.estado_origem.nil?
         @car.cegonha_id = nil
       end
-      @car.estado_id = params[:estado_id]
-      @car.estado_origem = params[:estado_origem]
-      @car.estado_destino = params[:estado_destino]
+      # @car.estado_id = params[:estado_id]
+      # @car.estado_origem = params[:estado_origem]
+      # @car.estado_destino = params[:estado_destino]
 
       # atençao! Ele vai pegar a cidade pelo nome, e nao separa por estado - pode ser
       # que se futuramente queira-se comprar a cidade pelo ID, pode dar erro (pegar cidade com mesmo nome mas
       # de estados diferentes )
-      cidade_atual = Cidade.find_by_text(params[:cidade_id]).id unless !params[:cidade_id].present?
-      cidade_origem = Cidade.find_by_text(params[:cidade_origem]).id unless !params[:cidade_origem].present?
-      cidade_destino = Cidade.find_by_text(params[:cidade_destino]).id unless !params[:cidade_destino].present?
+      # cidade_atual = Cidade.find_by_text(params[:cidade_id]).id unless !params[:cidade_id].present?
+      # cidade_origem = Cidade.find_by_text(params[:cidade_origem]).id unless !params[:cidade_origem].present?
+      # cidade_destino = Cidade.find_by_text(params[:cidade_destino]).id unless !params[:cidade_destino].present?
 
-      @car.cidade_id = cidade_atual
-      @car.cidade_origem = cidade_origem
-      @car.cidade_destino = cidade_destino
+      # @car.cidade_id = cidade_atual
+      # @car.cidade_origem = cidade_origem
+      # @car.cidade_destino = cidade_destino
+      raise @car.inspect
       if params[:cidade_id].present? and params[:estado_id].present?
         @car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
       else

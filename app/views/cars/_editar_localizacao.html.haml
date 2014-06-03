@@ -1,0 +1,22 @@
+- @car = Car.find(params[:car])
+
+%fieldset
+  %legend
+    %h5 Dados do Veículo
+  = form_for(@car) do |f|
+    = f.label :localizacao, "Localização Atual"
+    = f.collection_select :estado_id, Estado.order(:nome), :id, :nome, :include_blank => true
+    = f.grouped_collection_select :cidade_id, Estado.order(:nome), :cidades, :nome, :id, :text, include_blank: true
+
+    = f.label :cidade_origem, "Origem do Carro"
+    = f.collection_select :estado_origem, Estado.order(:nome), :id, :nome, :include_blank => true
+    = f.grouped_collection_select :cidade_origem, Estado.order(:nome), :cidades, :nome, :id, :text, include_blank: true
+
+    = f.label :cidade_destino, "Destino do Carro"
+    = f.collection_select :estado_destino, Estado.order(:nome), :id, :nome, :include_blank => true
+    = f.grouped_collection_select :cidade_destino, Estado.order(:nome), :cidades, :nome, :id, :text, include_blank: true
+
+    - if @car.cegonha and !@car.cidade_origem.nil?
+      = f.submit "Salvar", :name => 'salvar_localizacao', confirm: "Ao alterar a localização individual do veículo, ele irá automaticamente ser removido da Cegonha #{@car.cegonha.placa}. Para alterar sua localização sem removê-lo da cegonha, atualize a localização diretamente pela cegonha. Deseja alterar a localização e remover o veículo da cegonha mesmo assim?"
+    - else
+      = f.submit "Salvar", :name => 'salvar_localizacao'
