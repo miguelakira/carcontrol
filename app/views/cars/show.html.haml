@@ -212,10 +212,23 @@
           = @car.debito.observacao
     
 .row
-  %div.large-12.columns
+  .large-3.columns
+    %table{ :cellspacing => "0", :summary => "Carros do Cliente", :width => '250px' }
+      %caption
+        %h4.nowrap
+          Carros do Cliente
+      %tr
+        %th Placa
+        %th Frete
+      - @owner.cars.each do |car|
+        %tr
+          %td= car.placa
+          %td= number_to_currency(car.debito.valor_total)
+
+  .large-3.columns
     %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento" }
       %caption
-        %h4
+        %h4.nowrap
           Detalhes dos Pagamentos
       %tr
         %th
@@ -253,8 +266,12 @@
           Taxa de Redespacho
         %td
           = number_to_currency(@car.debito.taxa_despacho)
-    
+  .large-6.columns
     %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento" }
+      %caption
+        %h4.nowrap
+          Pagamentos do Cliente
+
       %tr
         %th
           Data do Pagamento
