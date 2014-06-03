@@ -197,11 +197,6 @@
           = number_to_currency(@car.debito.taxa_balsa)
       %tr
         %th
-          Taxa de Redespacho
-        %td
-          = number_to_currency(@car.debito.taxa_despacho)
-      %tr
-        %th
           Desconto
         %td
           = number_to_currency(@car.debito.desconto)
@@ -253,6 +248,11 @@
         %td
           %span{ :class => @row_class }
             = number_to_currency(pagamentos_provisionados(@owner))
+      %tr
+        %th
+          Taxa de Redespacho
+        %td
+          = number_to_currency(@car.debito.taxa_despacho)
     
     %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento" }
       %tr
