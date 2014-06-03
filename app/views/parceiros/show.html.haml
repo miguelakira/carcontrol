@@ -86,11 +86,9 @@
     - frete_total = hist.car.debito.valor_total + frete_total
     - saldo_devedor =  hist.car.debito.saldo_devedor + saldo_devedor
     %table{ :cellspacing => "0", :summary => "Histórico da Cegonha", :width => '100%' }
-      %caption
-        %p
-          %b HISTÓRICO
-        %p
-          = "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}"  
+      %caption.text-left
+        %b HISTÓRICO
+        %p= "Frete Total: #{number_to_currency(frete_total)} | Saldo Devedor: #{number_to_currency(saldo_devedor)}"  
       - if @parceiro.historicos.empty?
         %th.text-left
           Nenhum carro no histórico

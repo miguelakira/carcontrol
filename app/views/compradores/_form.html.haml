@@ -9,39 +9,42 @@
         - @comprador.errors.full_messages.each do |msg|
           %li
             = msg
-  %br
+  .row
+    .large-6.end
+      %fieldset
+        %legend
+          %h5{ :style => "font-size: 1.3em" }
+            Dados do Cliente
+        .row
+          .large-6.columns
+            = f.label :nome, "Nome do Cliente"
+            = f.text_field :nome, :id => "comprador_nome" 
+          .large-6.columns
+            = f.label :email, "E-Mail"
+            = f.text_field :email, :id => "comprador_email"
+        .row
+          .large-6.columns
+            = f.label :rg
+            = f.text_field :rg, :id => "comprador_rg"
+          .large-6.columns
+            = f.label :cpf
+            = f.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsComprador(this)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf'
+        .row
+          .large-6.columns
+            = f.label :telefone
+            = f.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_telefone'
+          .large-6.columns  
+            = f.label :celular
+            = f.text_field :celular, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_celular'
+        .row
+          .large-6.columns
+            = f.label :parente, "Parente ou Conhecido do Cliente"
+            = f.text_field :parente, :id => 'comprador_parente'
+          .large-6.columns
+            = f.label :telefone_parente, "Telefone do Parente ou Conhecido do Cliente"
+            = f.text_field :telefone_parente, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_telefone_parente'
+          
+        = f.label :observacao, "Observação"
+        = f.text_area :observacao, :cols => 40, :rows => 7
 
-  %fieldset
-    %legend
-      %h5{ :style => "font-size: 1.3em" }
-        Dados do Cliente
-    .field
-      = f.label :nome, "Nome do Cliente"
-      = f.text_field :nome, :id => "comprador_nome" 
-    .field
-      = f.label :email, "E-Mail"
-      = f.text_field :email, :id => "comprador_email"
-    .field
-      = f.label :rg
-      = f.text_field :rg, :id => "comprador_rg"
-    .field
-      = f.label :cpf
-      = f.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsComprador(this)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf'
-    .field
-      = f.label :telefone
-      = f.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_telefone'
-    .field
-      = f.label :celular
-      = f.text_field :celular, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_celular'
-    .field
-      = f.label :parente, "Parente ou Conhecido do Cliente"
-      = f.text_field :parente, :id => 'comprador_parente'
-    .field
-      = f.label :telefone_parente, "Telefone do Parente ou Conhecido do Cliente"
-      = f.text_field :telefone_parente, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_telefone_parente'
-    .field
-      = f.label :observacao, "Observação"
-      = f.text_area :observacao, :cols => 40, :rows => 7
-
-    .actions
-      = f.submit
+      = f.submit "Salvar", :class => 'button'

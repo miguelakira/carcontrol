@@ -92,8 +92,7 @@ jQuery ->
 
 jQuery ->
         $('#cars_financeiro_pagos').dataTable
-          bJQueryUI: true
-          sPaginationType: "full_numbers"
+          sPaginationType: "foundation"
           aLengthMenu: [ 10, 30, 50, 100 ],
           iDisplayLength: 10
           oLanguage:
@@ -115,8 +114,7 @@ jQuery ->
 
 jQuery ->
         $('#cars_financeiro_nao_pagos').dataTable
-          bJQueryUI: true
-          sPaginationType: "full_numbers"
+          sPaginationType: "foundation"
           aLengthMenu: [ 10, 30, 50, 100 ],
           iDisplayLength: 10
           oLanguage:
@@ -138,8 +136,7 @@ jQuery ->
 
 jQuery ->
         $('#cars_financeiro_inativos').dataTable
-          bJQueryUI: true
-          sPaginationType: "full_numbers"
+          sPaginationType: "foundation"
           aLengthMenu: [ 10, 30, 50, 100 ],
           iDisplayLength: 10
           oLanguage:

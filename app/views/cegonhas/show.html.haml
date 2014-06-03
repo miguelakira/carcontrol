@@ -157,7 +157,7 @@
           %caption.text-left
             %h5= "Rota Atual #{@cegonha.route_name}"
           %caption.text-left
-            %p= "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}"
+            %p= "Frete Total: #{number_to_currency(frete_total)} | Saldo Devedor: #{number_to_currency(saldo_devedor)}"
         - else
           - h_nome = Historico.find_all_by_rota(i)
           - nome_rota = ""
@@ -168,7 +168,7 @@
               = "Rota #{i} #{nome_rota}"
           %caption
             %p
-              = "Frete Total: #{number_to_currency(frete_total)}, Saldo Devedor: #{number_to_currency(saldo_devedor)}"
+              = "Frete Total: #{number_to_currency(frete_total)} | Saldo Devedor: #{number_to_currency(saldo_devedor)}"
 
           - if carros_na_rota.empty?
             %th

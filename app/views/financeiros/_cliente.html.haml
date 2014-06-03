@@ -1,23 +1,17 @@
 %p
-  %b
-    = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @cliente, :comprador_cpf => @cliente.cpf
+  %b= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @cliente, :comprador_cpf => @cliente.cpf
 
 %p
-  %h5
-    Transações Financeiras do Cliente
-
+  %h4 Transações Financeiras do Cliente
   = render 'pagamentos', :cliente => @cliente
-%br
 
 %legend
-  %h5{ :style => "font-size: 1.3em"} 
+  %h4
     Carros Ativos
   = render 'cars', :carros => @cars_ativos, :status => "_ativos"
-%br
-
 
 %legend
-  %h5{ :style => "font-size: 1.3em"} 
+  %h4
     Carros Não-Pagos
 
 - if @cars_nao_pagos.empty?
@@ -27,7 +21,7 @@
   = render 'cars', :carros => @cars_nao_pagos, :status => "_nao_pagos"
 
 %legend
-  %h5{ :style => "font-size: 1.3em"} 
+  %h4
     Carros Finalizados
 
 - if @cars_inativos.empty?
