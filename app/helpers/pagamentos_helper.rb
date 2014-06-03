@@ -2,13 +2,16 @@ module PagamentosHelper
  def soma_dos_pagamentos_efetuados(cliente)
     pagamento_total = 0
     if cliente.pagamentos
-      cliente.pagamentos.where('data_pagamento <= ?', Time.now.end_of_day).find_each do |pagamento|
+
+      pagamentos = cliente.pagamentos.select {|p| p.data_pagamento <= Time.now.end_of_day}
+      pagamentos.each do |pagamento|
       #cliente.pagamentos.each do |pagamento|
-        unless pagamento.nil?
+        unless pagamento.blank?
           pagamento.valor ||= 0
           pagamento_total += pagamento.valor
         end
       end
+
     end
     # codigo legado para pagamentos no sistema antigo
 

@@ -118,6 +118,9 @@ class CarsController < ApplicationController
 
     @editar_localizacao = params[:editar_localizacao]
     @car = Car.find(params[:id])
+
+    @car.comprador ? @owner = @car.comprador : @owner = @car.empresa
+
     @status_pagamentos = StatusPagamento.all
     @cegonhas = Cegonha.all
     @parceiros = Parceiro.all

@@ -28,26 +28,30 @@
                   %h5{ :style => "font-size: 1.3em" }
                     Dados da Empresa
                 =f.fields_for :empresa do |builder|
-                  =builder.label :cnpj, "CNPJ*"
-                  =builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj'
-
-                  = builder.label :nome, "Nome da Empresa*"
-                  = builder.text_field :nome, :id => 'empresa_nome'
+                  .row
+                    %div.large-6.columns
+                      =builder.label :cnpj, "CNPJ*"
+                      =builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj'
+                    %div.large-6.columns
+                      = builder.label :nome, "Nome da Empresa*"
+                      = builder.text_field :nome, :id => 'empresa_nome'
 
                   = builder.label :contato, "Nome do Contato"
                   = builder.text_field :contato, :id => 'empresa_contato'
 
-                =builder.label :email, "E-Mail"
-                =builder.text_field :email, :id => 'empresa_email'
+                  =builder.label :email, "E-Mail"
+                  =builder.text_field :email, :id => 'empresa_email'
 
-                =builder.label :telefone
-                =builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone'
+                  .row
+                    %div.large-6.columns
+                      =builder.label :telefone
+                      =builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone'
+                    %div.large-6.columns
+                      =builder.label :celular
+                      =builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular'
 
-                =builder.label :celular
-                =builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular'
-
-                =builder.label :observacao, "Observação"
-                =builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'empresa_observacao'
+                  =builder.label :observacao, "Observação"
+                  =builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'empresa_observacao'
 
             -elsif @car.comprador
               <!-- Dados do cliente-->
@@ -166,45 +170,53 @@
                 =builder.text_area :observacao, :cols => 40, :rows => 7
 
           %div.large-6.columns
-            %fieldset{ 'data-equalizer-watch' => '' }
+            %fieldset{ 'data-equalizer-watch' => '', :style => 'position: relative' }
               %legend
                 %h5{ :style => "font-size: 1.3em" }
                   Dados dos Pagamentos
               = f.fields_for :pagamentos, @car.pagamentos.build do |builder|
                 -if @car.comprador
                   %p Total Pago pelo Cliente: 
-                    
                   %p
                     %b= number_to_currency(soma_dos_pagamentos_efetuados(@car.comprador))
-                    
-                -elsif @car.empresa
-                  %p Total Pago pela Empresa: 
-                  %b number_to_currency(soma_dos_pagamentos_efetuados(@car.empresa))
-              
-                -if @car.comprador
                   %p Dívida Restante do Cliente: 
                   %span.red
                     %p
                       %b= number_to_currency(saldo_devedor_do_cliente(@car.comprador))
+
                 -elsif @car.empresa
+                  %p Total Pago pela Empresa: 
+                  %p
+                    %b= number_to_currency(soma_dos_pagamentos_efetuados(@car.empresa))
                   %p Dívida Restante da Empresa: 
                   %span.red
                     %p
-                      %b = number_to_currency(saldo_devedor_do_cliente(@car.empresa))
-            
-                =builder.label :forma_pagamento, "Forma do Novo Pagamento"
-                =builder.text_field :forma_pagamento
-
-                =builder.label :valor, "Valor do Novo Pagamento"
-                =builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  "", :placeholder => 'R$'
-
+                      %b= number_to_currency(saldo_devedor_do_cliente(@car.empresa))
+                %br
+                .row
+                  .large-6.columns
+                    =builder.label :forma_pagamento, "Forma do Novo Pagamento"
+                    =builder.text_field :forma_pagamento
+                  .large-6.columns
+                    =builder.label :valor, "Valor do Novo Pagamento"
+                    =builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  "", :placeholder => 'R$'
                 =builder.label :data_pagamento, "Data do Pagamento"
                 =builder.date_select :data_pagamento, {:order => [:day, :month, :year], :start_year => Time.now.year - 1}, { :class => 'custom-dropdown-date'}
+                - if !@car.new_record?
+                  %br
+                  .center
+                    = link_to 'Ver Pagamentos Anteriores', '#', :class => 'button bottom tiny', 'data-reveal-id' => :priceModal
+                  #priceModal.reveal-modal{ 'data-reveal' => ''}
+                    =render 'pagamentos', :car => @car, :owner => @owner
+
+
         -if @car.new_record?
           = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car, :class => 'button'
         -else
           = f.submit "Salvar", :class => 'button'
           = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car, :class => 'button'
+
+  
 
 -else
   = form_for(@car, :url => {:id => @car.id, :action => "limited_edit"},:method => :put) do |f|
