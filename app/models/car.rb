@@ -27,8 +27,9 @@ class Car < ActiveRecord::Base
     :person_or_company_name
   after_save :save_current_location
   after_find :titleize_model, :check_payments
-  after_create :if_in_freighter_get_its_location
+  after_update :if_in_freighter_get_its_location
 
+  has_paper_trail :only => [:cidade_id, :estado_id]
 
   def person_or_company_name
     if self.nome.nil?
@@ -100,11 +101,9 @@ class Car < ActiveRecord::Base
 
   def if_in_freighter_get_its_location
     if self.cegonha
-      self.update_columns(
-        :localizacao => self.cegonha.localizacao, 
-        :cidade_id => self.cegonha.cidade_id, 
-        :estado_id => self.cegonha.estado_id
-      )
+      self.update_column(:localizacao, self.cegonha.localizacao)
+      self.update_column(:cidade_id, self.cegonha.cidade_id)
+      self.update_column(:estado_id, self.cegonha.estado_id)
     end
   end
 end

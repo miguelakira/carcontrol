@@ -66,7 +66,6 @@ class Cegonha < ActiveRecord::Base
 
   def update_locations
     localizacao = "#{Cidade.find(self.cidade_id).text}, #{Estado.find(self.estado_id).sigla}"
-
     unless self.cars.nil?
       self.cars.each do |car|
         car.estado_id = self.estado_id
@@ -76,7 +75,7 @@ class Cegonha < ActiveRecord::Base
       end
     end
     
-    self.update_column(:localizacao => localizacao)
+    self.update_column(:localizacao, localizacao)
   end
 
   # all cars in freighters are being transported.
@@ -87,6 +86,15 @@ class Cegonha < ActiveRecord::Base
         car.save
       end
     end
+  end
+
+  # check if freighter arrived at a car destination.
+  def cars_arrived_at_destination?
+    !self.cars.where(:cidade_destino => self.cidade_id).empty?
+  end
+
+  def cars_to_be_unloaded
+    self.cars.select{ |c| c.cidade_destino == self.cidade_id}
   end
 
 end

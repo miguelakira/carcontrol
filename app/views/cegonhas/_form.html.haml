@@ -90,9 +90,9 @@
             @cegonha.pagamento.valor_pago = nil
     
     - if @cegonha.new_record?
-      = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :cegonha => @cegonha, :class => :button
+      = f.submit "Salvar e Editar Localização", :name => 'edit_location', :cegonha => @cegonha, :class => :button
     - else
       = f.submit "Salvar", :class => :button
-      = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :cegonha => @cegonha, :class => :button
+      = f.submit "Salvar e Editar Localização", :name => 'edit_location', :cegonha => @cegonha, :class => :button
 
 
