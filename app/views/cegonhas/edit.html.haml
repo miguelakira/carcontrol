@@ -6,5 +6,7 @@
       Editando Cegonha
   - if params[:edit_location]
     = render 'editar_localizacao'
+  - elsif params[:logistics]
+    = render 'logistics'
   - else
     = render 'form'

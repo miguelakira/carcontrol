@@ -1,0 +1,22 @@
+%p
+  %h1 Logística
+%p= " #{@cegonha.cars_to_be_unloaded.count} carros chegaram no destino (#{@cegonha.localizacao})"
+%p Selecione quais carros irão ficar em logística aguardando para embarcar em outra cegonha ou parceiro
+%P Os carros não selecionados ficarão em status de Desembarcados.
+
+%table{ :cellspacing => "0", :summary => "Carros", :style => "width:300px;" }
+  %tr
+    %th Cegonha
+    %td= @cegonha.placa
+  %tr
+    %th Localização Atual
+    %td= @cegonha.localizacao
+
+= form_tag(edit_cegonha_path(@cegonha), :method => 'get') do
+  %dl
+    - @cegonha.cars_to_be_unloaded.each do |car|
+      %dt
+        = car.placa
+        = check_box_tag "cars[]", car.id, false
+        Logística?
+  = submit_tag "Salvar", :name => 'logistics_saved', :class => :button

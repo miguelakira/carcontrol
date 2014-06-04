@@ -43,13 +43,20 @@ class CegonhasController < ApplicationController
   end
   
   def edit
-    gon.motoristas = Motorista.all
-    gon.empresas = Empresa.all
-
-    @editar_localizacao = params[:edit_location]
     @cegonha = Cegonha.find(params[:id])
-    
-    @grid = set_grid(@cegonha)
+    if params[:logistics_saved]
+      params[:cars].map!{|c| c.to_i}
+      cars_unloaded = @cegonha.cars_to_be_unloaded.delete_if{ |c| params[:cars].include?(c.id)}
+      cars_unloaded.each(&:save)
+      redirect_to @cegonha and return
+    else
+      gon.motoristas = Motorista.all
+      gon.empresas = Empresa.all
+
+      @editar_localizacao = params[:edit_location]
+      
+      @grid = set_grid(@cegonha)
+    end
   end
 
   def create
@@ -91,32 +98,33 @@ class CegonhasController < ApplicationController
   end
 
   def update
+    
     @cegonha = Cegonha.find(params[:id])
     @cegonha.carros = @cegonha.cars.count
     respond_to do |format|
       if @cegonha.update_attributes(params[:cegonha])
         if params[:saved_location]
           if @cegonha.cars_arrived_at_destination?
-            redirect_to logistica_cegonha_path(@cegonha) and return
+            redirect_to :action => :edit, :cegonha => @cegonha, :logistics => true and return
           else
             format.html { redirect_to @cegonha, notice: 'Dados da cegonha atualizados com sucesso.' }
           end
         elsif params[:edit_location]
           flash[:notice] = 'Dados atualizados com sucesso!'
           redirect_to :action => :edit, :cegonha => @cegonha, :edit_location => true  and return
+        elsif params[:logistics]
+          raise params.inspect
         else
           format.html { redirect_to @cegonha, notice: 'Dados da cegonha atualizados com sucesso.' }
           format.json { head :no_content }
         end
+      
+
       else
           format.html { render action: "edit" }
           format.json { render json: @cegonha.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def logistica
-    @cegonha = Cegonha.find(params[:id])
   end
 
   def destroy
