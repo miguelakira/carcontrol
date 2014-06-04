@@ -1,7 +1,8 @@
 #encoding: UTF-8
 class Cegonha < ActiveRecord::Base
   attr_accessible :carros, :comentario, :destino, :localizacao, :origem, :placa, :motorista_attributes, :pagamento_attributes,
-    :empresa_attributes, :observacao, :empresa_id, :motorista_id, :rotas, :nome_rota
+    :empresa_attributes, :observacao, :empresa_id, :motorista_id, :rotas, :nome_rota, :cidade_id, :estado_id, 
+    :estado_origem, :cidade_origem, :estado_destino, :cidade_destino
   has_one :pagamento
   has_many :cars
   has_many :historicos
@@ -15,7 +16,9 @@ class Cegonha < ActiveRecord::Base
 
   before_save :check_routes
 
-  after_update :unload_cars_if_arrived_at_destination
+  after_update :unload_cars_if_arrived_at_destination, :update_locations, :activate_cars
+
+  has_paper_trail :only => [:cidade_id, :estado_id, :origem, :destino]
 
   def check_routes
     if rotas.nil?
@@ -58,6 +61,31 @@ class Cegonha < ActiveRecord::Base
       self.cidade_destino = nil
       self.estado_origem = nil
       self.estado_destino = nil
+    end
+  end
+
+  def update_locations
+    localizacao = "#{Cidade.find(self.cidade_id).text}, #{Estado.find(self.estado_id).sigla}"
+
+    unless self.cars.nil?
+      self.cars.each do |car|
+        car.estado_id = self.estado_id
+        car.cidade_id = self.cidade_id
+        car.localizacao = localizacao
+        car.save
+      end
+    end
+    
+    self.update_column(:localizacao => localizacao)
+  end
+
+  # all cars in freighters are being transported.
+  def activate_cars
+    unless self.cars.nil?
+      self.cars.each do |car|
+        car.ativo = "#{VEHICLE_STATUS.index 'ON_TRANSIT'}"
+        car.save
+      end
     end
   end
 

@@ -14,6 +14,7 @@ class CegonhasController < ApplicationController
 
   def show
     @cegonha = Cegonha.find(params[:id])
+    @versions = PaperTrail::Version.order('created_at DESC')
     @grid = set_grid(@cegonha)
     respond_to do |format|
       format.html # show.html.erb
@@ -26,69 +27,59 @@ class CegonhasController < ApplicationController
     gon.empresas = Empresa.all
     
     @cegonha = Cegonha.new
-    @editar_localizacao = params[:editar_localizacao]
+    @grid = set_grid(@cegonha)
+
     @cegonha.build_motorista
 
-    if params[:cegonha_contratada]
+    if params[:hired_freighterq]
       @cegonha.build_empresa
       @cegonha.build_debito
     end
-
-    @grid = set_grid(@cegonha)
 
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @cegonha }
     end
   end
+  
   def edit
     gon.motoristas = Motorista.all
     gon.empresas = Empresa.all
 
-    @editar_localizacao = params[:editar_localizacao]
+    @editar_localizacao = params[:edit_location]
     @cegonha = Cegonha.find(params[:id])
     
     @grid = set_grid(@cegonha)
-    # pega um array com todas as cidades dos estados atualmente no banco, pra encher os forms.
-    @locais_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_id})
-    @destinos_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_destino})
-    @origens_atual = Cidade.find(:all, :conditions => {:estado_id => @cegonha.estado_origem})
-    # pega o nome das cidades atualmente no banco (origem, destino e atual)
-    unless @cegonha.cidade_id.nil?
-      @cidade_atual = Cidade.find(@cegonha.cidade_id).text
-      @cidade_origem = Cidade.find(@cegonha.cidade_origem).text unless @cegonha.cidade_origem.nil?
-      @cidade_destino = Cidade.find(@cegonha.cidade_destino).text unless @cegonha.cidade_destino.nil?
-    end
   end
 
   def create
     @cegonha = Cegonha.new(params[:cegonha])
     @cegonha.carros = 0
 
-  if @cegonha.motorista
-    motoristas = Motorista.all
-    motorista_existente = motoristas.collect{|motorista| if motorista.cpf == @cegonha.motorista.cpf; motorista; end}
-    motorista_existente.delete(nil)
-
-    if !motorista_existente.empty?
-      @cegonha.motorista = Motorista.find(motorista_existente[0][:id])
-      @cegonha.motorista.update_attributes(params[:cegonha][:motorista_attributes])
+    if @cegonha.motorista
+      motoristas = Motorista.all
+      motorista_existente = motoristas.collect{|motorista| if motorista.cpf == @cegonha.motorista.cpf; motorista; end}
+      motorista_existente.delete(nil)
+      if !motorista_existente.empty?
+        @cegonha.motorista = Motorista.find(motorista_existente[0][:id])
+        @cegonha.motorista.update_attributes(params[:cegonha][:motorista_attributes])
+      end
     end
-  end
-  if @cegonha.empresa
-    empresas = Empresa.all
-    empresa_existente = empresas.collect{|empresa| if empresa.cnpj == @cegonha.empresa.cnpj; empresa; end}
-    empresa_existente.delete(nil)
-    if !empresa_existente.empty?
-      @cegonha.empresa = Empresa.find(empresa_existente[0][:id])
-      @cegonha.empresa.update_attributes(params[:cegonha][:empresa_attributes])
+    
+    if @cegonha.empresa
+      empresas = Empresa.all
+      empresa_existente = empresas.collect{|empresa| if empresa.cnpj == @cegonha.empresa.cnpj; empresa; end}
+      empresa_existente.delete(nil)
+      if !empresa_existente.empty?
+        @cegonha.empresa = Empresa.find(empresa_existente[0][:id])
+        @cegonha.empresa.update_attributes(params[:cegonha][:empresa_attributes])
+      end
     end
-  end
 
     respond_to do |format|
       if @cegonha.save
-        if params[:editar_localizacao]
-          redirect_to edit_cegonha_path(@cegonha, :editar_localizacao => true, :cegonha => @cegonha)   and return
+        if params[:edit_location]
+          redirect_to edit_cegonha_path(@cegonha, :edit_location => true, :cegonha => @cegonha) and return
         end
         format.html { redirect_to @cegonha, notice: 'Cegonha foi criada com sucesso.' }
         format.json { render json: @cegonha, status: :created, location: @cegonha }
@@ -103,47 +94,17 @@ class CegonhasController < ApplicationController
     @cegonha = Cegonha.find(params[:id])
     @cegonha.carros = @cegonha.cars.count
 
-    if params[:salvar_localizacao]
-
-      @cegonha.estado_id = params[:estado_id]
-      @cegonha.estado_origem = params[:estado_origem]
-      @cegonha.estado_destino = params[:estado_destino]
-
-      # atençao! Ele vai pegar a cidade pelo nome, e nao separa por estado - pode ser
-      # que se futuramente queira-se comprar a cidade pelo ID, pode dar erro (pegar cidade com mesmo nome mas
-      # de estados diferentes )
-      cidade_atual = Cidade.find_by_text(params[:cidade_id]).id
-      cidade_origem = Cidade.find_by_text(params[:cidade_origem]).id
-      cidade_destino = Cidade.find_by_text(params[:cidade_destino]).id
-
-      @cegonha.cidade_id = cidade_atual
-      @cegonha.cidade_origem = cidade_origem
-      @cegonha.cidade_destino = cidade_destino
-
-      # altera a localizacao de todos os carros que estao na cegonha
-      unless @cegonha.cars.nil?
-        @cegonha.cars.each do |car|
-          car.estado_id = @cegonha.estado_id
-          car.cidade_id = @cegonha.cidade_id
-          car.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
-          car.save
-        end
-      end
-      @cegonha.localizacao = "#{params[:cidade_id]}, #{Estado.find(params[:estado_id]).sigla}"
-    end
-
     respond_to do |format|
       if @cegonha.update_attributes(params[:cegonha])
-        ativar_status_de_carro_com_terceiros(@cegonha.id, @cegonha.class.to_s)
-        if params[:salvar_localizacao]
+        if params[:saved_location]
           if checar_logistica_carros(@cegonha.id)
             redirect_to logistica_cegonha_path(@cegonha) and return
           else
             format.html { redirect_to @cegonha, notice: 'Dados da cegonha atualizados com sucesso.' }
           end
-        elsif params[:editar_localizacao]
+        elsif params[:edit_location]
           flash[:notice] = 'Dados atualizados com sucesso!'
-          redirect_to :action => :edit, :cegonha => @cegonha, :editar_localizacao => true  and return
+          redirect_to :action => :edit, :cegonha => @cegonha, :edit_location => true  and return
         else
           format.html { redirect_to @cegonha, notice: 'Dados da cegonha atualizados com sucesso.' }
           format.json { head :no_content }
@@ -197,7 +158,6 @@ class CegonhasController < ApplicationController
   end
 
   def logistica_save
-
     @cegonha = Cegonha.find(params[:id])
     cars_logistica = Car.find_all_by_id(params[:finalizados])
     all_cars = Car.find_all_by_id(params[:cars])
@@ -223,22 +183,6 @@ class CegonhasController < ApplicationController
     redirect_to @cegonha
   end
 
-private
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
-  def sort_column
-    Cegonha.column_names.include?(params[:sort]) ? params[:sort] : "placa"
-  end
-
-  def for_sectionid
-      @subsections = Cidade.find( :all, :conditions => [" estado_id = ?", params[:id]]  ).sort_by{ |k| k['nome'] }
-      respond_to do |format|
-        format.json  { render :json => @subsections }
-      end
-  end
-
  # checa a logistica dos carros
  # se destino do carro == localizacao atual da cegonha, perguntar se ele chegou ao destino
  # ou se vai embarcar em outra cegonha
@@ -250,7 +194,6 @@ private
     else
       return true
     end
-
   end
 
   def set_grid(cegonha)

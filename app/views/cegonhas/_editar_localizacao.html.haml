@@ -1,0 +1,17 @@
+%fieldset
+  %legend
+    %h5 Dados da Cegonha
+  = form_for(@cegonha) do |f|
+    = f.label :localizacao, "Localização Atual"
+    = f.collection_select :estado_id, Estado.order(:nome), :id, :nome, :include_blank => true
+    = f.grouped_collection_select :cidade_id, Estado.order(:nome), :cidades, :nome, :id, :text, include_blank: true
+
+    = f.label :cidade_origem, "Origem da Cegonha"
+    = f.collection_select :estado_origem, Estado.order(:nome), :id, :nome, :include_blank => true
+    = f.grouped_collection_select :cidade_origem, Estado.order(:nome), :cidades, :nome, :id, :text, include_blank: true
+
+    = f.label :cidade_destino, "Destino da Cegonha"
+    = f.collection_select :estado_destino, Estado.order(:nome), :id, :nome, :include_blank => true
+    = f.grouped_collection_select :cidade_destino, Estado.order(:nome), :cidades, :nome, :id, :text, include_blank: true
+
+    = f.submit "Salvar", :name => 'location_saved'

@@ -1,16 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  def ativar_status_de_carro_com_terceiros(id, nome_terceiro)
-    terceiro = eval(nome_terceiro).find(id)
-    unless terceiro.cars.nil?
-      terceiro.cars.each do |car|
-        car.ativo = 1
-        car.save
-      end
-    end
-  end
-
 # recipiente pode ser cegonha ou parceiro
  def atualiza_historico_cegonha(car)
   #caso seja carro de parceiro, nao faz nada

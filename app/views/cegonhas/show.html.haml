@@ -142,6 +142,15 @@
           %td
             = @cegonha.debito.observacao
 
+  .row
+    .large-12
+      %ul
+        - @versions.each do |version|
+          %li
+            = l(version.created_at, format: "%-d.%m.%Y %H:%M:%S %Z") 
+          %li
+            = version.changeset
+
 - @cegonha.rotas.downto(1) do |i|
   - carros_na_rota = @cegonha.historicos.select{|hist| hist.rota == i}
   - frete_total = 0

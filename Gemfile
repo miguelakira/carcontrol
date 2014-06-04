@@ -26,6 +26,7 @@ gem 'taps'
 
 gem 'jquery-datatables-rails'
 
+gem 'paper_trail', '~> 3.0.2'
 # Gems used only for assets and not requiredg
 # in production environments by default.
 # como disse, só com terapia
