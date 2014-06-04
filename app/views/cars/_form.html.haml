@@ -5,216 +5,213 @@
   -if !current_user.admin?
     Desculpe, você precisa ter direitos administrativos para visualizar esta página!
   -else
-    -if @editar_localizacao
-      -render 'editar_localizacao'
-    -else
-      =form_for(@car) do |f|
-        -if @car.errors.any?
-          .alert-box.alert
-            %h1
-              =pluralize(@car.errors.count, "erro") 
-              impediram que o cliente fosse atualizado:
-            %ul
-              -@car.errors.full_messages.each do |msg|
-                %li
-                  = msg
+    =form_for(@car) do |f|
+      -if @car.errors.any?
+        .alert-box.alert
+          %h1
+            =pluralize(@car.errors.count, "erro") 
+            impediram que o cliente fosse atualizado:
+          %ul
+            -@car.errors.full_messages.each do |msg|
+              %li
+                = msg
 
-        .row{ 'data-equalizer' => '' }
-          .large-6.columns
-            -if @car.empresa
-              <!-- Dados da empresa -->
-              %fieldset{ 'data-equalizer-watch' => '' }
-                %legend
-                  %h5{ :style => "font-size: 1.3em" }
-                    Dados da Empresa
-                =f.fields_for :empresa do |builder|
-                  .row
-                    .large-6.columns
-                      =builder.label :cnpj, "CNPJ*"
-                      =builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj'
-                    .large-6.columns
-                      = builder.label :nome, "Nome da Empresa*"
-                      = builder.text_field :nome, :id => 'empresa_nome'
-
-                  = builder.label :contato, "Nome do Contato"
-                  = builder.text_field :contato, :id => 'empresa_contato'
-
-                  =builder.label :email, "E-Mail"
-                  =builder.text_field :email, :id => 'empresa_email'
-
-                  .row
-                    .large-6.columns
-                      =builder.label :telefone
-                      =builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone'
-                    .large-6.columns
-                      =builder.label :celular
-                      =builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular'
-
-                  =builder.label :observacao, "Observação"
-                  =builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'empresa_observacao'
-
-            -elsif @car.comprador
-              <!-- Dados do cliente-->
-              %fieldset{ 'data-equalizer-watch' => '' }
-                %legend
-                  %h5{ :style => "font-size: 1.3em"}
-                    Dados do Cliente
-                = f.fields_for :comprador do |builder|
-                  .row
-                    .large-6.columns
-                      =builder.label :cpf, "Digite o CPF cliente*"
-                      =builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsComprador(this)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf'
-                      
-                      =builder.label :nome, "Nome Completo*"
-                      =builder.text_field :nome, :id => 'comprador_nome'
-                      
-                      =builder.label :email, "E-Mail"
-                      =builder.text_field :email, :id => 'comprador_email'
-                      
-                      =builder.label :rg, "RG"
-                      =builder.text_field :rg , :id => 'comprador_rg'
-                      
-                    .large-6.columns
-                      =builder.label :telefone
-                      =builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_telefone'
-                      
-                      =builder.label :celular
-                      =builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_celular'
-                      
-                      =builder.label :parente, "Parente ou Conhecido do Cliente"
-                      =builder.text_field :parente, :id => 'comprador_parente'
-                      
-                      =builder.label :telefone_parente, "Telefone de Parente ou Conhecido"
-                      =builder.text_field :telefone_parente, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_telefone_parente'
-                        
-                  =builder.label :observacao, "Observação"
-                  =builder.text_area "observacao".gsub("<br>", "\r\n"), :cols => 40, :rows => 7, :id => 'comprador_observacao'
-                  
-            <!-- fim dos dados do comprador -->
-
-          <!-- dados do veículo -->
-          .large-6.columns
+      .row{ 'data-equalizer' => '' }
+        .large-6.columns
+          -if @car.empresa
+            <!-- Dados da empresa -->
             %fieldset{ 'data-equalizer-watch' => '' }
               %legend
                 %h5{ :style => "font-size: 1.3em" }
-                  Dados do Veículo
-              .row
-                .large-7.columns
-                  = f.label :placa
-                  = f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15'
-                  
-                  = f.label "Modelo* (Por exemplo: Ford Ka)"
-                  = f.text_field :modelo 
-                  .row
-                    .large-12
-                      = f.label :data_compra, "Início da Prestação de Serviços"
-                      = f.date_select :data_compra, {:order => [:day, :month, :year], :start_year => Time.now.year - 1}, {:class => 'custom-dropdown-date'}
-                  .row
-                    .large-12
-                      = f.label :data_prevista, "Data Prevista de Entrega"
-                      = f.date_select :data_prevista, {:order => [:day, :month, :year], :start_year => Time.now.year, :include_blank => true}, {:class => 'custom-dropdown-date'}
-              
-                .large-5.columns
-                  = f.label :status_pagamento_id, "Status do Pagamento"
-                  = f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] } 
-                  
-                  -@cegonhas.nil? ? @cegonhas = Cegonha.all : nil
-                  
-                  = f.label :cegonha_id, "Cegonha"
-                  = f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }, :onchange => "parceiroOrCegonhaNotBoth(this,'parceiro');", :id => 'cegonha'
-                  
-                  -@parceiros.nil? ? @parceiros = Parceiro.all : nil
-                  
-                  = f.label :parceiro_id, "Parceiro"
-                  = f.select :parceiro_id, @parceiros.collect {|p| [ p.nome, p.id ] }, { :include_blank => true}, :onchange => "parceiroOrCegonhaNotBoth(this,'cegonha');", :id => :parceiro  
-                  
-                  = f.label :ativo, "Status do Carro"
-                  = select_tag :ativo, options_for_select(vehicle_status_as_array_with_index, @car.ativo)
-                
-              = f.label :observacao, "Observação"
-              = f.text_area :observacao, :cols => 40, :rows => 7
-      
-        <!-- dados do debito -->
-        .row{ 'data-equalizer' => '' }
-          .large-6.columns
-            %fieldset{ 'data-equalizer-watch' => '' }
-              %legend
-                %h5{ :style => "font-size: 1.3em" }
-                  Dados do Frete
-              = f.fields_for :debito do |builder|
+                  Dados da Empresa
+              =f.fields_for :empresa do |builder|
                 .row
                   .large-6.columns
-                    =builder.label :valor_frete, "Valor do Frete"
-                    =builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
-                      
-                    =builder.label :taxa_plataforma, "Taxa de Plataforma"
-                    =builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
-                      
-                    =builder.label :taxa_plataforma_origem, "Taxa de Plataforma Origem"
-                    =builder.text_field :taxa_plataforma_origem, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_origem, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
-
-                    =builder.label :taxa_plataforma_destino, "Taxa de Plataforma Destino"
-                    = builder.text_field :taxa_plataforma_destino, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_destino, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
-                      
+                    =builder.label :cnpj, "CNPJ*"
+                    =builder.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsEmpresa(this)",:maxlength=>"18", :size => '30', :id => 'empresa_cnpj'
                   .large-6.columns
-                    =builder.label :taxa_balsa, "Taxa de Balsa"
-                    =builder.text_field :taxa_balsa, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_balsa, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
-                      
-                    =builder.label :taxa_despacho, "Taxa de Redespacho"
-                    =builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
-                      
-                    =builder.label :desconto, "Desconto"
-                    =builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
+                    = builder.label :nome, "Nome da Empresa*"
+                    = builder.text_field :nome, :id => 'empresa_nome'
+
+                = builder.label :contato, "Nome do Contato"
+                = builder.text_field :contato, :id => 'empresa_contato'
+
+                =builder.label :email, "E-Mail"
+                =builder.text_field :email, :id => 'empresa_email'
+
+                .row
+                  .large-6.columns
+                    =builder.label :telefone
+                    =builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'empresa_telefone'
+                  .large-6.columns
+                    =builder.label :celular
+                    =builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'empresa_celular'
+
+                =builder.label :observacao, "Observação"
+                =builder.text_area :observacao, :cols => 40, :rows => 7, :id => 'empresa_observacao'
+
+          -elsif @car.comprador
+            <!-- Dados do cliente-->
+            %fieldset{ 'data-equalizer-watch' => '' }
+              %legend
+                %h5{ :style => "font-size: 1.3em"}
+                  Dados do Cliente
+              = f.fields_for :comprador do |builder|
+                .row
+                  .large-6.columns
+                    =builder.label :cpf, "Digite o CPF cliente*"
+                    =builder.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsComprador(this)",:maxlength=>"14", :size => '30' , :id => 'comprador_cpf'
+                    
+                    =builder.label :nome, "Nome Completo*"
+                    =builder.text_field :nome, :id => 'comprador_nome'
+                    
+                    =builder.label :email, "E-Mail"
+                    =builder.text_field :email, :id => 'comprador_email'
+                    
+                    =builder.label :rg, "RG"
+                    =builder.text_field :rg , :id => 'comprador_rg'
+                    
+                  .large-6.columns
+                    =builder.label :telefone
+                    =builder.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30' , :id => 'comprador_telefone'
+                    
+                    =builder.label :celular
+                    =builder.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_celular'
+                    
+                    =builder.label :parente, "Parente ou Conhecido do Cliente"
+                    =builder.text_field :parente, :id => 'comprador_parente'
+                    
+                    =builder.label :telefone_parente, "Telefone de Parente ou Conhecido"
+                    =builder.text_field :telefone_parente, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'comprador_telefone_parente'
                       
                 =builder.label :observacao, "Observação"
-                =builder.text_area :observacao, :cols => 40, :rows => 7
+                =builder.text_area "observacao".gsub("<br>", "\r\n"), :cols => 40, :rows => 7, :id => 'comprador_observacao'
+                
+          <!-- fim dos dados do comprador -->
 
-          .large-6.columns
-            %fieldset{ 'data-equalizer-watch' => '', :style => 'position: relative' }
-              %legend
-                %h5{ :style => "font-size: 1.3em" }
-                  Dados dos Pagamentos
-              = f.fields_for :pagamentos, @car.pagamentos.build do |builder|
-                -if @car.comprador
-                  %p Total Pago pelo Cliente: 
-                  %p
-                    %b= number_to_currency(soma_dos_pagamentos_efetuados(@car.comprador))
-                  %p Dívida Restante do Cliente: 
-                  %span.red
-                    %p
-                      %b= number_to_currency(saldo_devedor_do_cliente(@car.comprador))
-
-                -elsif @car.empresa
-                  %p Total Pago pela Empresa: 
-                  %p
-                    %b= number_to_currency(soma_dos_pagamentos_efetuados(@car.empresa))
-                  %p Dívida Restante da Empresa: 
-                  %span.red
-                    %p
-                      %b= number_to_currency(saldo_devedor_do_cliente(@car.empresa))
-                %br
+        <!-- dados do veículo -->
+        .large-6.columns
+          %fieldset{ 'data-equalizer-watch' => '' }
+            %legend
+              %h5{ :style => "font-size: 1.3em" }
+                Dados do Veículo
+            .row
+              .large-7.columns
+                = f.label :placa
+                = f.text_field :placa, :onkeyup => "mascara(this, placa)", :maxlength => '8', :size => '15'
+                
+                = f.label "Modelo* (Por exemplo: Ford Ka)"
+                = f.text_field :modelo 
                 .row
-                  .large-6.columns
-                    =builder.label :forma_pagamento, "Forma do Novo Pagamento"
-                    =builder.text_field :forma_pagamento
-                  .large-6.columns
-                    =builder.label :valor, "Valor do Novo Pagamento"
-                    =builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  "", :placeholder => 'R$'
-                =builder.label :data_pagamento, "Data do Pagamento"
-                =builder.date_select :data_pagamento, {:order => [:day, :month, :year], :start_year => Time.now.year - 1}, { :class => 'custom-dropdown-date'}
-                - if !@car.new_record?
-                  %br
-                  .center
-                    = link_to 'Ver Pagamentos Anteriores', '#', :class => 'button bottom tiny', 'data-reveal-id' => :priceModal
-                  #priceModal.reveal-modal{ 'data-reveal' => ''}
-                    =render 'pagamentos', :car => @car, :owner => @owner
+                  .large-12
+                    = f.label :data_compra, "Início da Prestação de Serviços"
+                    = f.date_select :data_compra, {:order => [:day, :month, :year], :start_year => Time.now.year - 1}, {:class => 'custom-dropdown-date'}
+                .row
+                  .large-12
+                    = f.label :data_prevista, "Data Prevista de Entrega"
+                    = f.date_select :data_prevista, {:order => [:day, :month, :year], :start_year => Time.now.year, :include_blank => true}, {:class => 'custom-dropdown-date'}
+            
+              .large-5.columns
+                = f.label :status_pagamento_id, "Status do Pagamento"
+                = f.select :status_pagamento_id,  StatusPagamento.all.collect {|p| [ p.status, p.id ] } 
+                
+                -@cegonhas.nil? ? @cegonhas = Cegonha.all : nil
+                
+                = f.label :cegonha_id, "Cegonha"
+                = f.select :cegonha_id, @cegonhas.collect {|p| [ p.placa, p.id ] }, { :include_blank => true }, :onchange => "parceiroOrCegonhaNotBoth(this,'parceiro');", :id => 'cegonha'
+                
+                -@parceiros.nil? ? @parceiros = Parceiro.all : nil
+                
+                = f.label :parceiro_id, "Parceiro"
+                = f.select :parceiro_id, @parceiros.collect {|p| [ p.nome, p.id ] }, { :include_blank => true}, :onchange => "parceiroOrCegonhaNotBoth(this,'cegonha');", :id => :parceiro  
+                
+                = f.label :ativo, "Status do Carro"
+                = select_tag :ativo, options_for_select(vehicle_status_as_array_with_index, @car.ativo)
+              
+            = f.label :observacao, "Observação"
+            = f.text_area :observacao, :cols => 40, :rows => 7
+    
+      <!-- dados do debito -->
+      .row{ 'data-equalizer' => '' }
+        .large-6.columns
+          %fieldset{ 'data-equalizer-watch' => '' }
+            %legend
+              %h5{ :style => "font-size: 1.3em" }
+                Dados do Frete
+            = f.fields_for :debito do |builder|
+              .row
+                .large-6.columns
+                  =builder.label :valor_frete, "Valor do Frete"
+                  =builder.text_field :valor_frete, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.valor_frete, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
+                    
+                  =builder.label :taxa_plataforma, "Taxa de Plataforma"
+                  =builder.text_field :taxa_plataforma, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
+                    
+                  =builder.label :taxa_plataforma_origem, "Taxa de Plataforma Origem"
+                  =builder.text_field :taxa_plataforma_origem, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_origem, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
+
+                  =builder.label :taxa_plataforma_destino, "Taxa de Plataforma Destino"
+                  = builder.text_field :taxa_plataforma_destino, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_plataforma_destino, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
+                    
+                .large-6.columns
+                  =builder.label :taxa_balsa, "Taxa de Balsa"
+                  =builder.text_field :taxa_balsa, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_balsa, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
+                    
+                  =builder.label :taxa_despacho, "Taxa de Redespacho"
+                  =builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
+                    
+                  =builder.label :desconto, "Desconto"
+                  =builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => '')
+                    
+              =builder.label :observacao, "Observação"
+              =builder.text_area :observacao, :cols => 40, :rows => 7
+
+        .large-6.columns
+          %fieldset{ 'data-equalizer-watch' => '', :style => 'position: relative' }
+            %legend
+              %h5{ :style => "font-size: 1.3em" }
+                Dados dos Pagamentos
+            = f.fields_for :pagamentos, @car.pagamentos.build do |builder|
+              -if @car.comprador
+                %p Total Pago pelo Cliente: 
+                %p
+                  %b= number_to_currency(soma_dos_pagamentos_efetuados(@car.comprador))
+                %p Dívida Restante do Cliente: 
+                %span.red
+                  %p
+                    %b= number_to_currency(saldo_devedor_do_cliente(@car.comprador))
+
+              -elsif @car.empresa
+                %p Total Pago pela Empresa: 
+                %p
+                  %b= number_to_currency(soma_dos_pagamentos_efetuados(@car.empresa))
+                %p Dívida Restante da Empresa: 
+                %span.red
+                  %p
+                    %b= number_to_currency(saldo_devedor_do_cliente(@car.empresa))
+              %br
+              .row
+                .large-6.columns
+                  =builder.label :forma_pagamento, "Forma do Novo Pagamento"
+                  =builder.text_field :forma_pagamento
+                .large-6.columns
+                  =builder.label :valor, "Valor do Novo Pagamento"
+                  =builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  "", :placeholder => 'R$'
+              =builder.label :data_pagamento, "Data do Pagamento"
+              =builder.date_select :data_pagamento, {:order => [:day, :month, :year], :start_year => Time.now.year - 1}, { :class => 'custom-dropdown-date'}
+              - if !@car.new_record?
+                %br
+                .center
+                  = link_to 'Ver Pagamentos Anteriores', '#', :class => 'button bottom tiny', 'data-reveal-id' => :priceModal
+                #priceModal.reveal-modal{ 'data-reveal' => ''}
+                  =render 'pagamentos', :car => @car, :owner => @owner
 
 
-        -if @car.new_record?
-          = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car, :class => 'button'
-        -else
-          = f.submit "Salvar", :class => 'button'
-          = f.submit "Salvar e Editar Localização", :name => 'editar_localizacao', :car => @car, :class => 'button'
+      -if @car.new_record?
+        = f.submit "Salvar e Editar Localização", :name => 'edit_location', :car => @car, :class => 'button'
+      -else
+        = f.submit "Salvar", :name => 'save_and_return', :class => 'button'
+        = f.submit "Salvar e Editar Localização", :name => 'edit_location', :car => @car, :class => 'button'
 
   
 

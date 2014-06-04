@@ -4,7 +4,7 @@
   %h1
     Editando Dados
 
-  - if @editar_localizacao
+  - if params[:edit_location]
     = render 'editar_localizacao'
   - else
     = render 'form'

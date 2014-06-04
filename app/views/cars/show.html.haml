@@ -132,13 +132,15 @@
           %th
             Origem
           %td
-            = Cidade.find(@car.cidade_origem).text , = Estado.find(@car.estado_origem).sigla
+            = "#{Cidade.find(@car.cidade_origem).text}, "
+            = Estado.find(@car.estado_origem).sigla
       - unless @car.cidade_origem.nil? && @car.estado_origem.nil? 
         %tr
           %th
             Destino
           %td
-            = Cidade.find(@car.cidade_destino).text , =  Estado.find(@car.estado_destino).sigla
+            = "#{Cidade.find(@car.cidade_destino).text}, "
+            =  Estado.find(@car.estado_destino).sigla
       %tr
         %th
           Data da Compra

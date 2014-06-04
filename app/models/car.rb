@@ -1,7 +1,8 @@
 #encoding: UTF-8
 class Car < ActiveRecord::Base
   attr_accessible :localizacao, :modelo, :placa, :rota_id, :status_pagamento_id, :ativo, :estado_id, :cidade_id, :data_compra,
-        :data_prevista, :cegonha_id, :comprador_attributes, :empresa_attributes, :debito_attributes, :observacao, :parceiro_id, :pagamentos_attributes
+        :data_prevista, :cegonha_id, :comprador_attributes, :empresa_attributes, :debito_attributes, :observacao, :parceiro_id, 
+        :pagamentos_attributes, :estado_origem, :cidade_origem, :estado_destino, :cidade_destino
 
   belongs_to :status_pagamento
   belongs_to :cegonha
@@ -24,8 +25,9 @@ class Car < ActiveRecord::Base
 
   before_save :license_plate_uppercase, :car_model_downcase, :remove_from_carrier_if_delivered, 
     :person_or_company_name
-
+  after_save :save_current_location
   after_find :titleize_model, :check_payments
+  after_create :if_in_freighter_get_its_location
 
 
   def person_or_company_name
@@ -87,5 +89,22 @@ class Car < ActiveRecord::Base
 
   def ativo?
     ativo != VEHICLE_STATUS.index('DELIVERED')
+  end
+
+  def save_current_location
+    unless self.cidade_id.nil? || self.estado_id.nil?
+      localizacao = "#{Cidade.find(self.cidade_id).text}, #{Estado.find(self.estado_id).sigla}" 
+      self.update_column(:localizacao, localizacao)
+    end
+  end
+
+  def if_in_freighter_get_its_location
+    if self.cegonha
+      self.update_columns(
+        :localizacao => self.cegonha.localizacao, 
+        :cidade_id => self.cegonha.cidade_id, 
+        :estado_id => self.cegonha.estado_id
+      )
+    end
   end
 end
