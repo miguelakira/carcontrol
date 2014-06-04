@@ -1,4 +1,5 @@
-%h1= @mensagem_compradores
+%p
+  %h1= @mensagem_compradores
 .row
   %div{ :class => "large-12 columns" }
     %table#compradores.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :width => '100%'}
@@ -20,13 +21,13 @@
             Valor Pago Total
           %th
             Saldo Devedor
-        
+
       %tbody
         - @compradores.each do |comprador|
           %tr
             %td
-              = link_to comprador.nome, comprador  
-              = link_to image_tag("edit_local.png", :border=>0),edit_comprador_path(comprador, :comprador => comprador.id), :class => 'right' 
+              = link_to comprador.nome, comprador
+              = link_to image_tag("edit_local.png", :border=>0),edit_comprador_path(comprador, :comprador => comprador.id), :class => 'right'
             %td
               = comprador.email
             %td
@@ -38,10 +39,10 @@
             %td
               = carros_ativos_do_cliente(comprador).html_safe
             %td
-              = number_to_currency(soma_dos_pagamentos_efetuados(comprador))  
+              = number_to_currency(soma_dos_pagamentos_efetuados(comprador))
             %td
               = number_to_currency(saldo_devedor_do_cliente(comprador))
-      
+
 %h1= @mensagem_empresas
 .row
   %div{ :class => "large-12 columns" }
@@ -68,8 +69,8 @@
         - @empresas.each do |empresa|
           %tr
             %td
-              = link_to empresa.nome, empresa 
-              = link_to image_tag("edit_local.png", :border=>0), edit_empresa_path(empresa, :empresa => empresa.id), :class => 'right' 
+              = link_to empresa.nome, empresa
+              = link_to image_tag("edit_local.png", :border=>0), edit_empresa_path(empresa, :empresa => empresa.id), :class => 'right'
             %td
               = empresa.email
             %td
@@ -81,6 +82,6 @@
             %td
               = carros_ativos_do_cliente(empresa).html_safe
             %td
-              = number_to_currency(soma_dos_pagamentos_efetuados(empresa)) 
+              = number_to_currency(soma_dos_pagamentos_efetuados(empresa))
             %td
               = number_to_currency(saldo_devedor_do_cliente(empresa))

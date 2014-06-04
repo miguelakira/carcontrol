@@ -1,6 +1,6 @@
 - unless @compradores.blank?
-  %h1
-    Clientes
+  %p
+    %h1 Clientes
   .row
     .large-12.columns
       %table.display#compradores_financeiro{ :cellpading => 0, :cellspacing => 0, :border => 0, :width => '100%'}
@@ -31,8 +31,8 @@
                 = "#{pluralize(comprador.active_cars.count, 'carro')}"
 
 - unless @empresas.blank?
-  %h1
-    Empresas
+  %p
+    %h1 Empresas
   .row
     .large-12.columns
       %table.display#empresas_financeiro{ :cellpading => 0, :cellspacing => 0, :border => 0, :width => '100%'}
@@ -63,8 +63,8 @@
                 = "#{pluralize(empresa.active_cars.count, 'carro')}"
 
 - unless @parceiros.blank?
-  %h1
-    Parceiros
+  %p
+    %h1 Parceiros
   .row
     .large-12.columns
       %table.display#parceiros_financeiro{ :cellpading => 0, :cellspacing => 0, :border => 0, :width => '100%'}
@@ -86,10 +86,10 @@
               %td
                 = parceiro.cpf ? link_to(parceiro.nome, financeiro_path(:show, :parceiro_cpf => parceiro.cpf)) : link_to(parceiro.nome, financeiro_path(:show, :parceiro_cnpj => parceiro.cnpj))
               %td
-                = parceiro.cpf ? parceiro.cpf : parceiro.cnpj 
+                = parceiro.cpf ? parceiro.cpf : parceiro.cnpj
               %td
                 = number_to_currency(saldo_devedor_do_cliente(parceiro))
               %td
-                = number_to_currency(soma_dos_pagamentos_efetuados(parceiro)) 
+                = number_to_currency(soma_dos_pagamentos_efetuados(parceiro))
               %td
                 = "#{pluralize(parceiro.active_cars.count, 'carro')}"
