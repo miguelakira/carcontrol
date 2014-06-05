@@ -330,5 +330,5 @@
             = number_to_currency(pagamento.saldo)
 
 - if @car.ativo?
-  = button('Editar', edit_car_path(@car))
-  = button('Voltar', cars_path)
+  =  link_to 'Editar', edit_car_path(@car), :class => :button
+  = link_to 'Voltar', cars_path, :class => :button
