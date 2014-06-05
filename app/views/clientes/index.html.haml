@@ -1,21 +1,22 @@
+
 = form_tag :action => :show do 
   %p
-    %h1
-      Bem-vindo, cliente.
+    %h1 Bem-vindo, cliente.
   %p
-    %b
-      Para verificar seu(s) carro(s), digite seu CPF abaixo:
-  = text_field_tag :comprador_cpf,nil, :onkeyup =>"mascara(this,cpf);",:maxlength=>"14", :size => '30' 
-  = submit_tag "Buscar por CPF" 
-%br
+    %b Para verificar seu(s) carro(s), digite seu CPF abaixo:
+  .row
+    .large-4.end
+      = text_field_tag :comprador_cpf,nil, :onkeyup =>"mascara(this,cpf);",:maxlength=>"14"
+      = submit_tag "Buscar por CPF", :class => :button
+
 = form_tag :action => :show do 
   %p
-    %b
-      Ou digite seu CNPJ abaixo:
-  = text_field_tag :comprador_cnpj,nil, :onkeyup =>"mascara(this,cnpj);",:maxlength=>"18", :size => '30' 
-  = submit_tag "Buscar por CNPJ" 
-%br
+    %b Ou digite seu CNPJ abaixo:
+  .row
+    .large-4.end
+      = text_field_tag :comprador_cnpj,nil, :onkeyup =>"mascara(this,cnpj);",:maxlength=>"18"
+      = submit_tag "Buscar por CNPJ", :class => :button
 
 %p
-  Se você for funcionário da Transroyal,  por favor, efetue
+  Se você for funcionário da Transroyal, por favor, efetue
   = link_to('LOGIN NO SISTEMA.', new_user_session_path)

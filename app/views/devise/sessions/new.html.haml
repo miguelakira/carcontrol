@@ -1,0 +1,22 @@
+%p
+  %h2 Faça o login
+
+.row
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    .large-4
+      = f.label :email
+      = f.email_field :email
+    .large-4
+      = f.label :password
+      = f.password_field :password
+
+      - if devise_mapping.rememberable?
+        .row 
+          .large-3
+            = f.check_box :remember_me, :class => 'left inline'
+          .large-8
+            = f.label :remember_me, " Manter Conectado"
+        
+      
+      = f.submit "Entrar", :class => :button
+= render "links"

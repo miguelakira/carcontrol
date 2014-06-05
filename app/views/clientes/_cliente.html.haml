@@ -1,106 +1,93 @@
-- if saldo_devedor_do_cliente(cliente) >= 0
-  - @row_class  = 'blue'
-- else
-  - @row_class = 'red'
-
-%br
-
-.floating_box{ :style => "min-height:100px" }
-
-  %table#mytable{ :cellspacing => "0", :summary => "Fretes", :style => "width:300px"}
-    %tr
-      %th.begin{ :style => "width:180px" }
-        Valor Total dos Fretes
-      %td{ :style => 'border-top: 1px solid #C1DAD7;'} 
-        = number_to_currency(frete_total_do_cliente(cliente)) 
-    %tr
-      %th.begin
-        Valor Total Pago
-      %td
-        = number_to_currency(soma_dos_pagamentos_efetuados(cliente))
-    %tr
-      %th.begin
-        Saldo Devedor Total
-      %td
-        %b
-          %span{ :class => @row_class }
-            = number_to_currency(saldo_devedor_do_cliente(cliente))
-
-  %table#mytable{ :cellspacing => "0", :summary => "Carros", :style => "width:300px;"}
-    %tr
-      %th.begin{ :style => "width:180px" }
-        Carros Ativos do Cliente
-      %td{ :style => 'border-top: 1px solid #C1DAD7;' }
-        = !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' 
-    %tr
-      %th.begin
-        Carros Finalizados
-      %td
-        = !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' 
-.clear
-
-%table#clientes.display
-  %thead
-    %tr
-      %th
-        Nº
-      %th
-        Início da Prestação<br /> de Serviço
-      %th{ :width => "90px"} 
-        Placa 
-      %th
-        Modelo
-      %th
-        Previsão <br>Entrega
-      %th
-        Localização Atual
-      %th
-        Origem
-      %th
-        Destino
-      %th
-        Status do Veículo
-      %th
-        Status do <br>Pagamento
-      %th
-        Frete Total 
-    
-  %tbody
-    - x = 0
-    - @cars_cpf.each_with_index do |car, index|
-      
-      - if car.status_pagamento.value == 1
-        - @row_class = 'nao-pago'
-      - elsif car.status_pagamento.value == 2
-        - @row_class = 'pendente'
-      - else
-        - @row_class = ''
-
+.row{ 'data-equalizer' => '' }
+  .large-6.columns
+    %fieldset{ 'data-equalizer-watch' => '' }
+      %legend
+        %h4
+          Dados do Cliente
+      %table{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
         %tr
-          %td{ :class => @row_class }
-            = index + 1
-          %td{ :class => @row_class }
-            = car.data_compra.strftime("%d/%m/%Y")
-          %td{ :class => "#{@row_class} nowrap" }
-            = car.placa
-          %td{ :class => @row_class }
-            = car.modelo.titleize
-          %td{ :class => @row_class }
-            = car.data_prevista.strftime("%d/%m/%Y") unless car.data_prevista.nil?
-          %td{ :class => @row_class }
-            - unless car.localizacao.nil?
-              = car.localizacao  
-          %td{ :class => @row_class }
-            - unless car.cidade_origem.nil?
-              = Cidade.find(car.cidade_origem).text 
-              = Estado.find(car.estado_origem).sigla
-          %td{ :class => @row_class }
-            - unless car.cidade_destino.nil?
-              = Cidade.find(car.cidade_destino).text
-              = Estado.find(car.estado_destino).sigla
-          %td{ :class => @row_class }
-            = t(VEHICLE_STATUS[car.ativo])
-          %td{ :class => @row_class }
-            = car.status_pagamento.status
-          %td{ :class => @row_class }
-            = number_to_currency(car.debito.valor_total)
+          %th Nome:
+          %td= cliente.nome 
+          - if defined?(cliente.cpf)
+            %tr
+              %th CPF:
+              %td= cliente.cpf 
+          - else
+            %tr
+              %th CNPJ:
+              %td= cliente.cnpj 
+          %tr
+            %th Contato na Empresa:
+            %td= @empresa.contato unless @empresa.nil? 
+        %tr
+          %th Telefone:
+          %td= "#{cliente.telefone}" unless cliente.telefone.empty?
+        %tr
+          %th Valor Total dos Fretes
+          %td= number_to_currency(frete_total_do_cliente(cliente)) 
+        %tr
+          %th Valor Total Pago
+          %td= number_to_currency(frete_total_do_cliente(cliente))
+        %tr
+          %th Saldo Devedor Total
+          %td{ :class => @row_class }= number_to_currency(saldo_devedor_do_cliente(cliente))
+        %tr
+          %th Carros Ativos do Cliente
+          %td= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' 
+        %tr
+          %th Carros Finalizados
+          %td= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' 
+
+.row
+  .large-12
+    %table.display{:id => "cars_financeiro_ativo", :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
+      %thead
+        %tr
+          %th
+            Data da Compra
+          %th{ :width => '140' }
+            Modelo e Placa
+          %th{ :width => '180' }
+            Localização Atual
+          %th{ :width => '180' }
+            Origem 
+          %th{ :width => '180' }
+            Destino
+          %th{ :width => '60' }
+            Status
+          %th{ :width => '60' }
+            Status do Pagamento 
+          %th{ :width => '60' }
+            Frete Total
+      %tbody
+        - @cars_ativos.each do |car, index|
+          - if car.status_pagamento.value == 1
+            - @row_class = 'nao-pago'
+          - elsif car.status_pagamento.value == 2
+            - @row_class = 'pendente'
+          - else
+            - @row_class = '';
+
+          %tr
+            %td{ :class => @row_class }
+              = car.data_compra.strftime("%d/%m")
+            %td{ :class => @row_class }
+              = link_to "#{car.modelo} - #{car.placa}", car
+            %td{ :class => @row_class }
+              - unless car.cidade_origem.nil?
+                = Cidade.find(car.cidade_id).text 
+                = Estado.find(car.estado_id).sigla
+            %td{ :class => @row_class }
+              - unless car.cidade_origem.nil?
+                = Cidade.find(car.cidade_origem).text 
+                = Estado.find(car.estado_origem).sigla
+            %td{ :class => @row_class }
+              - unless car.cidade_destino.nil?
+                = Cidade.find(car.cidade_destino).text 
+                = Estado.find(car.estado_destino).sigla
+            %td{ :class => @row_class }
+              = t(VEHICLE_STATUS[car.ativo])
+            %td{ :class => @row_class }
+              = car.status_pagamento.status
+            %td{ :class => @row_class }
+              = number_to_currency(car.debito.valor_total)

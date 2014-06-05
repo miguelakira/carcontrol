@@ -15,6 +15,7 @@ class Parceiro < ActiveRecord::Base
   validates	:nome, :presence => { :message => "- O nome nao pode ser deixada em branco!" }
 
   before_save :capitaliza_nome
+  after_update :activate_cars
 
   def capitaliza_nome
     if self.nome
@@ -22,11 +23,22 @@ class Parceiro < ActiveRecord::Base
     end
   end
 
-def active_cars
+  def active_cars
     self.cars.reject {|c| c.ativo == VEHICLE_STATUS.index('DELIVERED')}
   end 
+  
   def total_freight
     self.cars.map {|car| car.debito.valor_total}.inject(0, &:+)
   end
+
+    def activate_cars
+    unless self.cars.nil?
+      self.cars.each do |car|
+        car.ativo = "#{VEHICLE_STATUS.index 'ON_TRANSIT'}"
+        car.save
+      end
+    end
+  end
+
 
 end

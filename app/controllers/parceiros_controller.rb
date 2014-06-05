@@ -67,7 +67,6 @@ class ParceirosController < ApplicationController
 
     respond_to do |format|
       if @parceiro.update_attributes(params[:parceiro])
-        ativar_status_de_carro_com_terceiros(@parceiro.id, @parceiro.class.to_s)
 
         if params[:editar_localizacao]
           flash[:notice] = 'Dados atualizados com sucesso!'
