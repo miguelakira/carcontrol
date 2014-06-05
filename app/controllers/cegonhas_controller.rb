@@ -25,7 +25,7 @@ class CegonhasController < ApplicationController
   def new
     gon.motoristas = Motorista.all
     gon.empresas = Empresa.all
-    
+
     @cegonha = Cegonha.new
     @grid = set_grid(@cegonha)
 
@@ -41,20 +41,25 @@ class CegonhasController < ApplicationController
       format.json { render json: @cegonha }
     end
   end
-  
+
   def edit
     @cegonha = Cegonha.find(params[:id])
     if params[:logistics_saved]
       params[:cars].map!{|c| c.to_i}
+      cars_in_logistics = Car.find(params[:cars])
       cars_unloaded = @cegonha.cars_to_be_unloaded.delete_if{ |c| params[:cars].include?(c.id)}
+      cars_unloaded.each{ |c| c.ativo = VEHICLE_STATUS.index('UNLOADED'); c.cegonha = nil }
       cars_unloaded.each(&:save)
+
+      cars_in_logistics.each{ |c| c.ativo = VEHICLE_STATUS.index('IN_LOGISTICS'); c.cegonha = nil }
+      cars_in_logistics.each(&:save)
       redirect_to @cegonha and return
     else
       gon.motoristas = Motorista.all
       gon.empresas = Empresa.all
 
       @editar_localizacao = params[:edit_location]
-      
+
       @grid = set_grid(@cegonha)
     end
   end
@@ -72,7 +77,7 @@ class CegonhasController < ApplicationController
         @cegonha.motorista.update_attributes(params[:cegonha][:motorista_attributes])
       end
     end
-    
+
     if @cegonha.empresa
       empresas = Empresa.all
       empresa_existente = empresas.collect{|empresa| if empresa.cnpj == @cegonha.empresa.cnpj; empresa; end}
@@ -98,7 +103,7 @@ class CegonhasController < ApplicationController
   end
 
   def update
-    
+
     @cegonha = Cegonha.find(params[:id])
     @cegonha.carros = @cegonha.cars.count
     respond_to do |format|
@@ -118,7 +123,7 @@ class CegonhasController < ApplicationController
           format.html { redirect_to @cegonha, notice: 'Dados da cegonha atualizados com sucesso.' }
           format.json { head :no_content }
         end
-      
+
 
       else
           format.html { render action: "edit" }

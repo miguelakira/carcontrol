@@ -86,18 +86,6 @@ ActiveRecord::Schema.define(:version => 20140604175857) do
     t.integer  "parceiro_id"
   end
 
-  create_table "contatos", :force => true do |t|
-    t.string   "especie"
-    t.string   "nome"
-    t.string   "telefone"
-    t.integer  "cidade_id"
-    t.integer  "estado_id"
-    t.integer  "comprador_id"
-    t.string   "email"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
   create_table "debitos", :force => true do |t|
     t.integer  "car_id"
     t.datetime "data_pagamento"

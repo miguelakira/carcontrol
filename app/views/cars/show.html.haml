@@ -1,10 +1,10 @@
 %p.small
-  = link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @car.id
+  %b= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @car.id
 
 .row{ 'data-equalizer' => ""}
   .large-4.columns
-    - if @car.comprador 
-      %table.text-left{ :cellspacing => 0, :summary => "Detalhes do Cliente" , 'data-equalizer-watch' => ''}
+    - if @car.comprador
+      %table.text-left{ :cellspacing => 0, :summary => "Detalhes do Cliente" , 'data-equalizer-watch' => '', :width => 350}
         %caption
           %h4
             Detalhes do Cliente
@@ -12,7 +12,7 @@
           %th
             Nome do Cliente
           %td
-            = @car.comprador.nome 
+            = @car.comprador.nome
         %tr
           %th
             RG
@@ -53,9 +53,9 @@
             Observação
           %td
             = @car.comprador.observacao
-        
-    - elsif @car.empresa 
-      %table.text-left{ :cellspacing => 0, :summary => "Detalhes do Cliente" , 'data-equalizer-watch' => ''}
+
+    - elsif @car.empresa
+      %table.text-left{ :cellspacing => 0, :summary => "Detalhes do Cliente" , 'data-equalizer-watch' => '', :width => 350}
         %caption
           %h4
             Detalhes da Empresa
@@ -63,7 +63,7 @@
           %th
             Nome da Empresa
           %td
-            = @car.empresa.nome 
+            = @car.empresa.nome
         %tr
           %th
             Nome do Contato
@@ -94,9 +94,9 @@
             Observação
           %td
             = @car.empresa.observacao
- 
+
   .large-4.columns
-    %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Carro" , 'data-equalizer-watch' => ''}
+    %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Carro" , 'data-equalizer-watch' => '', :width => 350}
       %caption
         %h4
           Detalhes do Carro
@@ -110,7 +110,7 @@
           Placa
         %td
           = @car.placa
-      - if @car.cegonha 
+      - if @car.cegonha
         %tr
           %th
             Cegonha
@@ -127,14 +127,14 @@
           Localização Atual
         %td
           = @car.localizacao
-      - unless @car.cidade_origem.nil? && @car.estado_origem.nil? 
+      - unless @car.cidade_origem.nil? && @car.estado_origem.nil?
         %tr
           %th
             Origem
           %td
             = "#{Cidade.find(@car.cidade_origem).text}, "
             = Estado.find(@car.estado_origem).sigla
-      - unless @car.cidade_origem.nil? && @car.estado_origem.nil? 
+      - unless @car.cidade_origem.nil? && @car.estado_origem.nil?
         %tr
           %th
             Destino
@@ -157,13 +157,13 @@
         %td
           = @car.data_prevista.strftime("%d/%m/%Y") unless @car.data_prevista.nil?
       %tr
-        %th 
+        %th
           Observação
         %td
           = @car.observacao
 
   .large-4.columns.end
-    %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Pagamento", 'data-equalizer-watch' => '' }
+    %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Pagamento", 'data-equalizer-watch' => '', :width => 350 }
       %caption
         %h4
           Detalhes do frete
@@ -212,7 +212,8 @@
           Observação
         %td
           = @car.debito.observacao
-    
+
+%hr
 .row
   .large-3.columns
     %table{ :cellspacing => "0", :summary => "Carros do Cliente", :width => '250px' }
@@ -235,10 +236,10 @@
       %tr
         %th
           Total Pago
-        - if @car.comprador 
+        - if @car.comprador
           %td
             = number_to_currency(soma_dos_pagamentos_efetuados(@car.comprador))
-        - elsif @car.empresa 
+        - elsif @car.empresa
           %td
             = number_to_currency(soma_dos_pagamentos_efetuados(@car.empresa))
       %tr
@@ -248,7 +249,7 @@
           - @row_class  = 'blue'
         - else
           - @row_class = 'red'
-        
+
         %td
           %span{ :class => @row_class}
             =  number_to_currency(saldo_devedor_do_cliente(@owner))
@@ -282,15 +283,15 @@
         %th
           Forma de Pagamento
         %th
-          Saldo 
-      
-      - @owner.pagamentos.where(:data_pagamento => (Time.now.beginning_of_month..Time.now.end_of_day)).find_each do |pagamento| 
+          Saldo
+
+      - @owner.pagamentos.where(:data_pagamento => (Time.now.beginning_of_month..Time.now.end_of_day)).find_each do |pagamento|
         - if pagamento.saldo >= 0
           - row_class  = 'blue'
         - else
           - row_class = 'red'
-            
-        - if pagamento.data_pagamento.month == Time.now.month && pagamento.data_pagamento.year == Time.now.year  
+
+        - if pagamento.data_pagamento.month == Time.now.month && pagamento.data_pagamento.year == Time.now.year
           %tr
             %td
               = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
@@ -300,7 +301,7 @@
               = pagamento.forma_pagamento
             %td{ :class => row_class }
               = number_to_currency(pagamento.saldo)
-        
+
     %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento" }
       %tr
         %th
@@ -310,9 +311,9 @@
         %th
           Forma de Pagamento
         %th
-          Saldo 
+          Saldo
 
-      - @owner.pagamentos.where(:data_pagamento => (Time.now + 1.day..Time.now + 10.years)).find_each do |pagamento| 
+      - @owner.pagamentos.where(:data_pagamento => (Time.now + 1.day..Time.now + 10.years)).find_each do |pagamento|
         - if pagamento.saldo >= 0
           - row_class  = 'blue'
         - else
@@ -328,6 +329,6 @@
           %td{ :class => row_class }
             = number_to_currency(pagamento.saldo)
 
-- if @car.ativo? 
+- if @car.ativo?
   = button('Editar', edit_car_path(@car))
   = button('Voltar', cars_path)
