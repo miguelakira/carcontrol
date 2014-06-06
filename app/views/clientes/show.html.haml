@@ -21,4 +21,4 @@
     = hidden_field_tag :direction, params[:direction] 
     = hidden_field_tag :sort, params[:sort] 
     %br
-    = button('Voltar', clientes_path) 
+    = link_to 'Voltar', clientes_path, :class => :button
