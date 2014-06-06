@@ -88,7 +88,6 @@ class CarsController < ApplicationController
 
       respond_to do |format|
       if @car.save
-        ativar_status_de_carro_com_terceiros(@car.cegonha.id, @car.cegonha.class.to_s) unless @car.cegonha.nil?
         redirect_to edit_car_path(@car, :edit_location => true, :car => @car)  and return if params[:edit_location]
         format.html { redirect_to @car, notice: 'Compra gerada com sucesso' }
         format.json { render json: @car, status: :created, location: @car }
