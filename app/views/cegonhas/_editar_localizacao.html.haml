@@ -4,6 +4,7 @@
       %legend
         %h5 Dados da Cegonha
       = form_for(@cegonha) do |f|
+        = f.label :cidade_origem, "Localização Atual"
         .row
           .large-5.columns
             = f.collection_select :estado_id, Estado.order(:nome), :id, :nome, :include_blank => true
