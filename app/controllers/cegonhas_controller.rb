@@ -58,8 +58,6 @@ class CegonhasController < ApplicationController
       gon.motoristas = Motorista.all
       gon.empresas = Empresa.all
 
-      @editar_localizacao = params[:edit_location]
-
       @grid = set_grid(@cegonha)
     end
   end

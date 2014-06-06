@@ -30,7 +30,7 @@
           %td{ :class => @row_class }
             - unless cegonha.localizacao.nil?
               = cegonha.localizacao
-              = link_to image_tag("edit_local.png", :border=>0), edit_cegonha_path(cegonha, :editar_localizacao => true, :cegonha => cegonha.id), :class => 'right' 
+              = link_to image_tag("edit_local.png", :border=>0), edit_cegonha_path(cegonha, :edit_location => true, :cegonha => cegonha.id), :class => 'right' 
           %td{ :class => @row_class }
             - unless cegonha.cidade_origem.nil?
               = Cidade.find(cegonha.cidade_origem).text

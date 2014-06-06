@@ -42,7 +42,7 @@
               = car.modelo.titleize
             %td{ :class =>  @row_class }
               -if car.ativo? 
-                = link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :editar_localizacao => true, :car => car.id), :class => 'right'
+                = link_to image_tag("edit_local.png", :border=>0, :title => "Editar Localização"), edit_car_path(car, :edit_location => true, :car => car.id), :class => 'right'
               -unless car.localizacao.nil? 
                 = car.localizacao
             %td{ :class =>  @row_class }
