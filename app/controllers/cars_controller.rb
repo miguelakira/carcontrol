@@ -20,7 +20,8 @@ class CarsController < ApplicationController
   def inativos
     # para o sidebar
     @car = Car.find(params[:car_id]) if params[:car_id]
-
+    @column_class = @car ? 'large-10 columns' : 'large12'
+    
     @cars = Car.order(:data_compra).where("ativo = #{VEHICLE_STATUS.index 'DELIVERED'}")
     @cars.empty? ? @mensagem = "Nenhum Cliente Finalizado" : @mensagem = "Clientes Finalizados"
 
