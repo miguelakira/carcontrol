@@ -12,7 +12,18 @@ class Debito < ActiveRecord::Base
 
     # valor total sem descontos ou pagamentos
   def calcula_valor_total
-    self.valor_total = self.valor_frete + self.taxa_plataforma + self.taxa_plataforma_origem + self.taxa_plataforma_destino + self.taxa_balsa
+    self.valor_total = sum_total_values(
+                            valor_frete,
+                            taxa_plataforma,
+                            taxa_plataforma_origem,
+                            taxa_plataforma_destino,
+                            taxa_balsa
+                        )
+    self.valor_total -= BigDecimal.new(desconto.to_s)
+  end
+
+  def sum_total_values(*args)
+    args.sum { |v| BigDecimal.new(v.to_s) }
   end
 
   def desconto=(num)

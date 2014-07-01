@@ -27,7 +27,7 @@ module PagamentosHelper
   def frete_total_do_cliente(cliente)
     frete_total = 0
     cliente.cars.each do |car|
-      frete_total += car.debito.valor_total - car.debito.desconto
+      frete_total += car.debito.valor_total
     end
     return frete_total
   end
