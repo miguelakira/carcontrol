@@ -12,14 +12,11 @@
           - @parceiro.errors.full_messages.each do |msg|
             %li
               = msg
-
-    <!-- dados do veículo -->
-
     .row
-      .large-6.end
+      .large-6.columns
         %fieldset
           %legend
-            %h5{ :style => "font-size: 1.3em" }
+            %h5
               Dados do Parceiro
           .row
             %p
@@ -46,7 +43,14 @@
 
             = f.label :observacao, "Observação"
             = f.text_area :observacao, :cols => 40, :rows => 7, :id => 'parceiro_observacao'
-          
-    <!-- fim dos dados do veículo -->  
+      .large-6.columns
+        %fieldset
+          %legend
+            %h5 Dados dos Carros
+          = f.fields_for :cars do |builder|
+            - @parceiro.cars.each do |car|
+              = car.placa
+              = builder.label :taxa_despacho, "Taxa de Redespacho"
+              = builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => ''), :placeholder => 'R$'
     
     = f.submit "Salvar", :class => :button

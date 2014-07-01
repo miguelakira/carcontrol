@@ -160,7 +160,7 @@
                   =builder.label :taxa_despacho, "Taxa de Redespacho"
                   =builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => ''), :placeholder => 'R$'
                     
-                  =builder.label :desconto, "Desconto"
+                  =builder.label :desconto, "Desconto", :class => "red"
                   =builder.text_field :desconto, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(@car.debito.desconto, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => ''), :placeholder => '- R$'
                     
               =builder.label :observacao, "Observação"

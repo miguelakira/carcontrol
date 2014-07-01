@@ -7,6 +7,7 @@ class Debito < ActiveRecord::Base
   belongs_to :cegonha
   belongs_to :cliente
   belongs_to :empresa
+  belongs_to :parceiro
 
   before_save :calcula_valor_total
 

@@ -6,7 +6,7 @@ class ParceirosController < ApplicationController
     @parceiros.empty? ? @mensagem = "Nenhum Parceiro Cadastrado" : @mensagem = "Parceiros Cadastrados"
   end
 
-   def new
+  def new
     gon.parceiros = Parceiro.all
     @parceiro = Parceiro.new
 
@@ -36,18 +36,6 @@ class ParceirosController < ApplicationController
     unless @parceiro.cars.nil?
       @cars_cpf = @parceiro.cars
       @cars_ativos = @parceiro.cars.reject {|c| c.ativo == 0}
-    end
-
-    unless @cars_ativos.nil?
-      @valor_total = 0
-      @valor_pago = 0
-      unless @cars_ativos.nil?
-        @cars_ativos.each do |car|
-          @valor_total += car.debito.valor_total unless car.debito.valor_total.nil?
-          @valor_pago += car.debito.valor_pago unless car.debito.valor_pago.nil?
-        end
-      end
-    @saldo_devedor = @valor_total - @valor_pago
     end
 
     respond_to do |format|

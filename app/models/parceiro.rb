@@ -1,8 +1,9 @@
 class Parceiro < ActiveRecord::Base
   attr_accessible :carros, :celular, :cidade_destino, :cidade_id, :cidade_origem, :observacao, :contato,
   		:estado_destino, :estado_id, :estado_origem, :localizacao, :nome, :telefone, :cnpj, :email, :cpf,
-      :pagamentos_attributes
-  has_one :debito
+      :pagamentos_attributes, :debito_attributes, :cars_attributes
+  
+  has_many :debitos, :through => :cars
   has_many :cars
   has_many :historicos
   has_many :pagamentos
@@ -10,7 +11,7 @@ class Parceiro < ActiveRecord::Base
   has_many :empresas
 
 
-  accepts_nested_attributes_for :cars, :pagamentos, :compradores
+  accepts_nested_attributes_for :cars, :pagamentos, :compradores, :debitos
 
   validates	:nome, :presence => { :message => "- O nome nao pode ser deixada em branco!" }
 
