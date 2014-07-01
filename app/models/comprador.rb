@@ -17,7 +17,7 @@ class Comprador < ActiveRecord::Base
   validates :cpf,
         :presence => { :message => "- O CPF do comprador não pode ser deixaod em branco." },
         :uniqueness => { :message => "- CPF já existente." },
-        :format => { :with => /^[0-9]{11}$/, :message => "Verificar se o CPF possui apenas 11 números" }
+        :format => { :with => /^[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}$/, :message => "Verificar se o CPF possui apenas 11 números" }
 
   before_save :downcase_name, :downcase_email, :sanitize_documents, :split_names
 
