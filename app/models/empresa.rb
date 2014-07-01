@@ -14,7 +14,8 @@ class Empresa < ActiveRecord::Base
         :presence => { :message => "- O nome da empresa não pode ser deixada em branco!" }
 
   validates :cnpj,
-        :presence => { :message => "- O CNPJ da empresa não pode ser deixada em branco!" }
+        :presence => { :message => "- O CNPJ da empresa não pode ser deixada em branco!" },
+        :format => { :with => /^[0-9]{14}$/, :message => "Verificar se o CPF possui apenas 14 números" }
 
   before_save :transforma_nome_em_minuscula, :transforma_email_em_minuscula
 
