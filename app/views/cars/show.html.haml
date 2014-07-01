@@ -223,7 +223,7 @@
       %tr
         %th Placa
         %th Frete
-      - @owner.cars.each do |car|
+      - @car.owner.cars.each do |car|
         %tr
           %td= car.placa
           %td= number_to_currency(car.debito.valor_total)
@@ -245,25 +245,25 @@
       %tr
         %th
           Saldo Devedor
-        - if saldo_devedor_do_cliente(@owner) >= 0
+        - if saldo_devedor_do_cliente(@car.owner) >= 0
           - @row_class  = 'blue'
         - else
           - @row_class = 'red'
 
         %td
           %span{ :class => @row_class}
-            =  number_to_currency(saldo_devedor_do_cliente(@owner))
+            =  number_to_currency(saldo_devedor_do_cliente(@car.owner))
       %tr
         %th
           Provisionados
-        - if saldo_devedor_do_cliente(@owner) >= 0
+        - if saldo_devedor_do_cliente(@car.owner) >= 0
           - @row_class  = 'red'
         - else
           - @row_class = 'blue'
 
         %td
           %span{ :class => @row_class }
-            = number_to_currency(pagamentos_provisionados(@owner))
+            = number_to_currency(pagamentos_provisionados(@car.owner))
       %tr
         %th
           Taxa de Redespacho
@@ -285,7 +285,7 @@
         %th
           Saldo
 
-      - @owner.pagamentos.where(:data_pagamento => (Time.now.beginning_of_month..Time.now.end_of_day)).find_each do |pagamento|
+      - @car.owner.pagamentos.where(:data_pagamento => (Time.now.beginning_of_month..Time.now.end_of_day)).find_each do |pagamento|
         - if pagamento.saldo >= 0
           - row_class  = 'blue'
         - else
@@ -313,7 +313,7 @@
         %th
           Saldo
 
-      - @owner.pagamentos.where(:data_pagamento => (Time.now + 1.day..Time.now + 10.years)).find_each do |pagamento|
+      - @car.owner.pagamentos.where(:data_pagamento => (Time.now + 1.day..Time.now + 10.years)).find_each do |pagamento|
         - if pagamento.saldo >= 0
           - row_class  = 'blue'
         - else

@@ -34,8 +34,6 @@ class CarsController < ApplicationController
   def show
     @car = Car.find(params[:id])
 
-    @car.comprador ? @owner = @car.comprador : @owner = @car.empresa
-
     respond_to do |format|
       format.html
       format.json { render json: @car }
@@ -105,8 +103,6 @@ class CarsController < ApplicationController
 
       @car = Car.find(params[:id])
 
-      @car.comprador ? @owner = @car.comprador : @owner = @car.empresa
-
       @status_pagamentos = StatusPagamento.all
       @cegonhas = Cegonha.all
       @parceiros = Parceiro.all
@@ -173,7 +169,6 @@ class CarsController < ApplicationController
 
   def generate_pdf
     @car = Car.find(params[:id])
-    @car.comprador ? @owner = @car.comprador : @owner = @car.empresa
     flash[:notice] = "PDF gerado na data #{Time.now.strftime('%d/%m/%Y')}"
 
     filename = "#{Rails.root}/public/Relatorio_#{@car.placa}_#{Time.now.strftime('%d_%m_%Y')}.pdf"

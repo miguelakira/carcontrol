@@ -204,7 +204,7 @@
                 .center
                   = link_to 'Ver Pagamentos Anteriores', '#', :class => 'button bottom tiny', 'data-reveal-id' => :priceModal
                 #priceModal.reveal-modal{ 'data-reveal' => ''}
-                  =render 'pagamentos', :car => @car, :owner => @owner
+                  =render 'pagamentos', :car => @car
 
 
       -if @car.new_record?

@@ -106,4 +106,8 @@ class Car < ActiveRecord::Base
       self.update_column(:estado_id, self.cegonha.estado_id)
     end
   end
+
+  def owner
+    self.comprador ? self.comprador : self.empresa
+  end
 end
