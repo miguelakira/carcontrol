@@ -17,3 +17,7 @@
 %li.divider
 %li
   = link_to "Controle Financeiro", financeiros_path
+- if @current_user
+  %li.divider
+  %li
+    = link_to('Logout', destroy_user_session_path, :method => :delete)
