@@ -1,19 +1,17 @@
-%table{ :style => "width:1200px", :class => "table_financeiros", :cellspacing => "0", :summary => "Carros Ativos" }
+%table{ :class => "table_financeiros", :cellspacing => "0", :summary => "Carros Ativos" }
   %tr
-    %th.none{ :width => '1'}
-      Nº
-    %th.begin{ :width => '30'}
+    %th{ :width => '30'}
       Data de Compra
     %th{ :width => '140'}
       Modelo e Placa
     %th{ :width => '180'}
-      Origem 
+      Origem
     %th{ :width => '180'}
       Destino
     %th{ :width => '60'}
       Frete
     %th{ :width => '60'}
-      Taxa de Plataforma 
+      Taxa de Plataforma
     %th{ :width => '60'}
       Taxa de Plataforma Origem
     %th{ :width => '60'}
@@ -30,7 +28,7 @@
       Saldo Devedor
     %th{ :width => '60'}
       Data de Pagamento
-  - carros.each_with_index do |car, index|
+  - carros.each do |car|
     - if car.status_pagamento.value == 1
       - @row_class = 'nao-pago'
     - elsif car.status_pagamento.value == 2
@@ -39,9 +37,7 @@
       - @row_class = '';
 
     %tr
-      %td.none
-        = index + 1
-      %td.begin{ :class => @row_class }
+      %td{ :class => @row_class }
         = car.data_compra.strftime("%d/%m")
       %td{ :class => @row_class }
         = link_to "#{car.modelo} - #{car.placa}", car
@@ -73,5 +69,5 @@
         = number_to_currency(car.debito.saldo_devedor)
       %td{ :class => @row_class }
         = car.debito.data_pagamento.strftime("%d/%m/%Y") unless car.debito.data_pagamento.nil?
-  
+
 = stylesheet_link_tag "default"

@@ -78,8 +78,6 @@
         %td
           %b= number_to_currency(@parceiro.total_redispatch_tax)
 
-
-
     .large-3.columns.end
       %table.text-left{ :cellspacing => "0", :summary => "Fretes", 'data-equalizer-watch' => '', :width => "100%" }
         %caption
@@ -142,8 +140,6 @@
               = historico.data_saida.strftime("%d/%m/%Y") unless historico.data_saida.nil? 
             %td
               = historico.localizacao_saida 
-
-  .clear
 
   = link_to 'Editar', edit_parceiro_path(@parceiro), :class => :button
   = link_to 'Voltar', parceiros_path, :class => :button
