@@ -1,7 +1,7 @@
 class Parceiro < ActiveRecord::Base
   attr_accessible :carros, :celular, :cidade_destino, :cidade_id, :cidade_origem, :observacao, :contato,
   		:estado_destino, :estado_id, :estado_origem, :localizacao, :nome, :telefone, :cnpj, :email, :cpf,
-      :pagamentos_attributes, :debito_attributes, :cars_attributes
+      :pagamentos_attributes, :debitos_attributes
   
   has_many :debitos, :through => :cars
   has_many :cars

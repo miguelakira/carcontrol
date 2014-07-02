@@ -47,8 +47,8 @@
         %fieldset
           %legend
             %h5 Dados dos Carros
-          = f.fields_for :cars do |builder|
-            - @parceiro.cars.each do |car|
+          - @parceiro.cars.each do |car|
+            = f.fields_for :debitos, car do |builder|
               = car.placa
               = builder.label :taxa_despacho, "Taxa de Redespacho"
               = builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => ''), :placeholder => 'R$'
