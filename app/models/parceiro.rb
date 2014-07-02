@@ -2,7 +2,7 @@ class Parceiro < ActiveRecord::Base
   attr_accessible :carros, :celular, :cidade_destino, :cidade_id, :cidade_origem, :observacao, :contato,
   		:estado_destino, :estado_id, :estado_origem, :localizacao, :nome, :telefone, :cnpj, :email, :cpf,
       :pagamentos_attributes, :debitos_attributes
-  
+
   has_many :debitos, :through => :cars
   has_many :cars
   has_many :historicos
@@ -26,8 +26,8 @@ class Parceiro < ActiveRecord::Base
 
   def active_cars
     self.cars.reject {|c| c.ativo == VEHICLE_STATUS.index('DELIVERED')}
-  end 
-  
+  end
+
   def total_freight
     self.cars.map {|car| BigDecimal.new(car.debito.valor_total.to_s)}.inject(0, &:+)
   end
@@ -45,5 +45,7 @@ class Parceiro < ActiveRecord::Base
     end
   end
 
-
+  def clients
+    self.cars.map(&:owner).uniq
+  end
 end

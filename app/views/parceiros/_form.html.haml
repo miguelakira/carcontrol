@@ -23,23 +23,23 @@
               Escolha apenas entre CPF ou CNPJ, porém não ambos!
             .large-6.columns
               = f.label :cpf, "CPF* "
-              = f.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsParceiro(this)",:maxlength=>"14", :size => '30', :id => 'parceiro_cpf' 
+              = f.text_field :cpf, :onkeyup =>"mascara(this,cpf); fillFieldsParceiro(this)",:maxlength=>"14", :size => '30', :id => 'parceiro_cpf'
             .large-6.columns
               = f.label :cnpj, "CNPJ*"
-              = f.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsParceiro(this)",:maxlength=>"18", :size => '30', :id => 'parceiro_cnpj' 
+              = f.text_field :cnpj, :onkeyup =>"mascara(this,cnpj); fillFieldsParceiro(this)",:maxlength=>"18", :size => '30', :id => 'parceiro_cnpj'
 
           = f.label :nome
-          = f.text_field :nome, :id => 'parceiro_nome' 
+          = f.text_field :nome, :id => 'parceiro_nome'
 
           = f.label :email, "E-Mail"
-          = f.text_field :email, :id => 'parceiro_email' 
+          = f.text_field :email, :id => 'parceiro_email'
           .row
             .large-6.columns
               = f.label 'telefone*'
-              = f.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'parceiro_telefone' 
+              = f.text_field :telefone, :onkeyup => "mascara(this,telefone)", :maxlength => "14", :size => '30', :id => 'parceiro_telefone'
             .large-6.columns
               = f.label :celular
-              = f.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'parceiro_celular' 
+              = f.text_field :celular, :onkeyup =>"mascara(this,telefone)", :maxlength=>"15", :size => '30' , :id => 'parceiro_celular'
 
             = f.label :observacao, "Observação"
             = f.text_area :observacao, :cols => 40, :rows => 7, :id => 'parceiro_observacao'
@@ -51,7 +51,7 @@
             = f.fields_for :debitos, car do |builder|
               .row
                 .large-3.columns.left
-                  = link_to car.placa, '#', 'data-reveal-id' => :carModal
+                  %p= link_to car.placa, '#', 'data-reveal-id' => :carModal
                   #carModal.reveal-modal{ 'data-reveal' => ''}
                     =render 'shared/car_show', :car => car
                 .large-4.columns.text-left
@@ -64,5 +64,5 @@
                 .large-9.columns
                   = builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => ''), :placeholder => 'R$'
               %br
-    
+
     = f.submit "Salvar", :class => :button

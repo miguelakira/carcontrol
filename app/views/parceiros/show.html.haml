@@ -10,15 +10,15 @@
             Detalhes da parceiro
         %tr
           - if !@parceiro.cpf.empty?
-            %th{ :style => "width:150px"} 
+            %th{ :style => "width:150px"}
               CPF do Parceiro
             %td
-              = @parceiro.cpf 
+              = @parceiro.cpf
           - else
             %th{ :style => "width:150px" }
               CNPJ do Parceiro
             %td
-              = @parceiro.cnpj 
+              = @parceiro.cnpj
         %tr
           %th
             Nome do Parceiro
@@ -39,14 +39,14 @@
             %th
               Origem
             %td
-              = Cidade.find(@parceiro.cidade_origem).text 
+              = Cidade.find(@parceiro.cidade_origem).text
               = Estado.find(@parceiro.estado_origem).sigla
         - unless @parceiro.cidade_origem.nil? && @parceiro.estado_origem.nil?
           %tr
             %th
               Destino
             %td
-              = Cidade.find(@parceiro.cidade_destino).text 
+              = Cidade.find(@parceiro.cidade_destino).text
               = Estado.find(@parceiro.estado_destino).sigla
         %tr
           %th
@@ -54,7 +54,7 @@
           %td
             = @parceiro.observacao
 
-    .large-5.columns
+    .large-4.columns
       %table.text-left{ :cellspacing => "0", :summary => "Fretes", 'data-equalizer-watch' => '', :width => "100%" }
         %caption
           %h4
@@ -73,31 +73,27 @@
             %td= number_to_currency(car.debito.taxa_despacho)
         %th
           Total
-        %td
         %th
         %td
           %b= number_to_currency(@parceiro.total_redispatch_tax)
 
-    .large-3.columns.end
+    .large-4.columns.end
       %table.text-left{ :cellspacing => "0", :summary => "Fretes", 'data-equalizer-watch' => '', :width => "100%" }
         %caption
           %h4
-            Detalhes Financeiros
+            Financeiros
         %tr
-          %th
-            Valor Total dos Fretes
-          %td
-            = number_to_currency(@parceiro.total_freight) 
-        %tr
-          %th
-            Valor Total Pago
-          %td
-            = number_to_currency(@valor_pago)  
-        %tr
-          %th
-            Saldo Devedor Total
-          %td
-            = number_to_currency(@saldo_devedor)  
+          %th Cliente
+          %th Carros
+          %th Saldo Devedor
+        - @parceiro.clients.each do |client|
+          %tr
+            %td
+              = client.nome
+            %td
+              = client.cars.map(&:placa).to_sentence
+            %td.nowrap.red
+              = number_to_currency saldo_devedor_do_cliente(client)
 
   - if !@cars_ativos.empty?
     %p
@@ -112,7 +108,7 @@
     %table{ :cellspacing => "0", :summary => "Histórico do Parceiro", :width => '100%' }
       %caption.text-left
         %b HISTÓRICO
-        %p= "Frete Total: #{number_to_currency(frete_total)} | Saldo Devedor: #{number_to_currency(saldo_devedor)}"  
+        %p= "Frete Total: #{number_to_currency(frete_total)} | Saldo Devedor: #{number_to_currency(saldo_devedor)}"
       - if @parceiro.historicos.empty?
         %th.text-left
           Nenhum carro no histórico
@@ -131,15 +127,15 @@
         - @parceiro.historicos.each do |historico|
           %tr
             %td
-              = link_to(historico.car.placa, historico.car) unless historico.car.nil? 
+              = link_to(historico.car.placa, historico.car) unless historico.car.nil?
             %td
-              = historico.data_entrada.strftime("%d/%m/%Y") unless historico.data_entrada.nil? 
+              = historico.data_entrada.strftime("%d/%m/%Y") unless historico.data_entrada.nil?
             %td
-              = historico.localizacao_entrada 
+              = historico.localizacao_entrada
             %td
-              = historico.data_saida.strftime("%d/%m/%Y") unless historico.data_saida.nil? 
+              = historico.data_saida.strftime("%d/%m/%Y") unless historico.data_saida.nil?
             %td
-              = historico.localizacao_saida 
+              = historico.localizacao_saida
 
   = link_to 'Editar', edit_parceiro_path(@parceiro), :class => :button
   = link_to 'Voltar', parceiros_path, :class => :button
