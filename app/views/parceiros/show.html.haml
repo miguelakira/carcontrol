@@ -87,6 +87,7 @@
           %th Carros
           %th Saldo Devedor
           %th Redespacho Total
+          %th Receber
         - @parceiro.clients.each do |client|
           %tr
             %td
@@ -95,8 +96,10 @@
               = @parceiro.cars_from_client(client).map(&:placa).to_sentence
             %td.nowrap.red
               = number_to_currency saldo_devedor_do_cliente(client)
-            %td
+            %td.nowrap
               = number_to_currency @parceiro.client_total_redispatch_taxes(client)
+            %td.nowrap
+              = number_to_currency (saldo_devedor_do_cliente(client) + @parceiro.client_total_redispatch_taxes(client)) * -1
 
   - if !@cars_ativos.empty?
     %p
