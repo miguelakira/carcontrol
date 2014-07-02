@@ -1,5 +1,5 @@
 class Debito < ActiveRecord::Base
-  attr_accessible :car_id, :data_pagamento, :forma_pagamento, :observacao, :valor_pago, :valor_total,
+  attr_accessible :car_id, :data_pagamento, :forma_pagamento, :observacao, :valor_pago,
   		:taxa_despacho, :taxa_plataforma, :desconto, :valor_frete, :taxa_plataforma_origem, :taxa_plataforma_destino,
       :taxa_balsa
 
@@ -9,18 +9,16 @@ class Debito < ActiveRecord::Base
   belongs_to :empresa
   belongs_to :parceiro
 
-  before_save :calcula_valor_total
-
     # valor total sem descontos ou pagamentos
-  def calcula_valor_total
-    self.valor_total = sum_total_values(
+  def valor_total
+    valor_total = sum_total_values(
                             valor_frete,
                             taxa_plataforma,
                             taxa_plataforma_origem,
                             taxa_plataforma_destino,
                             taxa_balsa
                         )
-    self.valor_total -= BigDecimal.new(desconto.to_s)
+    return valor_total - BigDecimal.new(desconto.to_s)
   end
 
   def sum_total_values(*args)

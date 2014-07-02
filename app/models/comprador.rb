@@ -32,7 +32,7 @@ class Comprador < ActiveRecord::Base
   end
 
   def has_debts?
-    devedor = self.cars.select { |c| c.pagamento.saldo_devedor > 0}
+    devedor = self.cars.select { |c| c.debito.valor_total > 0}
     devedor.empty? ? false : true
   end
 
