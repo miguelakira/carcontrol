@@ -60,7 +60,7 @@ class Comprador < ActiveRecord::Base
   end
 
   def total_debt
-    self.cars.map {|car| car.pagamento.valor_total}.inject(0, &:+)
+    self.cars.map {|car| car.debito.valor_total}.inject(0, &:+)
   end
 
 end

@@ -36,7 +36,7 @@ class Parceiro < ActiveRecord::Base
     self.cars.map {|car| BigDecimal.new(car.debito.taxa_despacho.to_s)}.inject(0, &:+)
   end
 
-    def activate_cars
+  def activate_cars
     unless self.cars.nil?
       self.cars.each do |car|
         car.ativo = "#{VEHICLE_STATUS.index 'ON_TRANSIT'}"
@@ -47,5 +47,14 @@ class Parceiro < ActiveRecord::Base
 
   def clients
     self.cars.map(&:owner).uniq
+  end
+
+  def client_total_redispatch_taxes(client)
+    cars = self.cars_from_client(client)
+    cars.map {|car| BigDecimal.new(car.debito.taxa_despacho.to_s)}.inject(0, &:+)
+  end
+
+  def cars_from_client(client)
+    self.cars.select {|c| c.owner == client}
   end
 end
