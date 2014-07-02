@@ -29,7 +29,11 @@ class Parceiro < ActiveRecord::Base
   end 
   
   def total_freight
-    self.cars.map {|car| car.debito.valor_total}.inject(0, &:+)
+    self.cars.map {|car| BigDecimal.new(car.debito.valor_total.to_s)}.inject(0, &:+)
+  end
+
+  def total_redispatch_tax
+    self.cars.map {|car| BigDecimal.new(car.debito.taxa_despacho.to_s)}.inject(0, &:+)
   end
 
     def activate_cars

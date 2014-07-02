@@ -14,7 +14,9 @@
           %th 
             Carros
           %th
-            Frete Total dos Carros
+            Frete Total
+          %th
+            Taxa de Redespacho Total
           - if current_user.admin?
             %th{ :width => "130px"}
               Ações
@@ -31,8 +33,11 @@
               = parceiro.telefone
             %td
               = (carros_com_parceiro(parceiro)).html_safe
-            %td
+            %td.nowrap
               = number_to_currency(parceiro.total_freight)
+            %td.nowrap
+              = number_to_currency(parceiro.total_redispatch_tax)
+
             - if current_user.admin?
               %td{ :class => "#{@row_class} nowrap"}
                 = link_to image_tag("details.png", :border=>0, :mouseover => "details_black.png", :title => "Ver Detalhes"), parceiro;

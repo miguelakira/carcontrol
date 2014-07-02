@@ -3,10 +3,10 @@
     %b= link_to 'GERAR DOCUMENTO PDF', :action => 'generate_pdf', :id => @parceiro.id
 
   .row{ 'data-equalizer' => ""}
-    .large-6.columns
-      %table.text-left{ :cellspacing => "0", :summary => "Detalhes da parceiro", :style => "width:450px", 'data-equalizer-watch' => '' }
+    .large-4.columns
+      %table.text-left{ :cellspacing => "0", :summary => "Detalhes da parceiro", 'data-equalizer-watch' => '', :width => 350 }
         %caption
-          %h5
+          %h4
             Detalhes da parceiro
         %tr
           - if !@parceiro.cpf.empty?
@@ -49,28 +49,52 @@
               = Cidade.find(@parceiro.cidade_destino).text 
               = Estado.find(@parceiro.estado_destino).sigla
         %tr
-          %th{ :style => "height:50px" }
+          %th
             Observação
           %td
             = @parceiro.observacao
 
-    .large-6.columns.end
-      %table.text-left{ :cellspacing => "0", :summary => "Fretes", :style => "width:450px", 'data-equalizer-watch' => '' }
+    .large-4.columns
+      %table.text-left{ :cellspacing => "0", :summary => "Fretes", 'data-equalizer-watch' => '', :width => 350 }
         %caption
-          %h5
-            Transações Financeiras do Parceiro 
+          %h4
+            Detalhes dos Carros
+          - @parceiro.cars.each do |car|
+            %tr
+              %th
+                Placa
+              %td
+                = car.placa
+              %th
+                Redespacho
+              %td
+                = number_to_currency(car.debito.taxa_despacho)
+          %th
+            Total
+          %td
+          %th
+          %td
+            %b= number_to_currency(@parceiro.total_redispatch_tax)
+
+
+
+    .large-4.columns.end
+      %table.text-left{ :cellspacing => "0", :summary => "Fretes", 'data-equalizer-watch' => '', :width => 350 }
+        %caption
+          %h4
+            Detalhes Financeiros
         %tr
-          %th.begin{ :style => "width:180px" } 
+          %th
             Valor Total dos Fretes
           %td
-            = number_to_currency(@valor_total) 
+            = number_to_currency(@parceiro.total_freight) 
         %tr
-          %th.begin
+          %th
             Valor Total Pago
           %td
             = number_to_currency(@valor_pago)  
         %tr
-          %th.begin
+          %th
             Saldo Devedor Total
           %td
             = number_to_currency(@saldo_devedor)  
@@ -85,7 +109,7 @@
   - @parceiro.historicos.each do |hist|
     - frete_total = hist.car.debito.valor_total + frete_total
     - saldo_devedor =  hist.car.debito.saldo_devedor + saldo_devedor
-    %table{ :cellspacing => "0", :summary => "Histórico da Cegonha", :width => '100%' }
+    %table{ :cellspacing => "0", :summary => "Histórico do Parceiro", :width => '100%' }
       %caption.text-left
         %b HISTÓRICO
         %p= "Frete Total: #{number_to_currency(frete_total)} | Saldo Devedor: #{number_to_currency(saldo_devedor)}"  
@@ -94,8 +118,6 @@
           Nenhum carro no histórico
       - else
         %tr
-          %th.none{ :width => '1'}
-            Nº
           %th.begin
             Placa
           %th
@@ -106,10 +128,8 @@
             Data de Saída
           %th
             Cidade de Saída
-        - @parceiro.historicos.each_with_index do |historico, index|
+        - @parceiro.historicos.each do |historico|
           %tr
-            %td
-              = index + 1
             %td
               = link_to(historico.car.placa, historico.car) unless historico.car.nil? 
             %td
