@@ -4,7 +4,7 @@
 
   .row{ 'data-equalizer' => ""}
     .large-4.columns
-      %table.text-left{ :cellspacing => "0", :summary => "Detalhes da parceiro", 'data-equalizer-watch' => '', :width => 350 }
+      %table.text-left{ :cellspacing => "0", :summary => "Detalhes da parceiro", 'data-equalizer-watch' => '', :width => "100%" }
         %caption
           %h4
             Detalhes da parceiro
@@ -54,32 +54,34 @@
           %td
             = @parceiro.observacao
 
-    .large-4.columns
-      %table.text-left{ :cellspacing => "0", :summary => "Fretes", 'data-equalizer-watch' => '', :width => 350 }
+    .large-5.columns
+      %table.text-left{ :cellspacing => "0", :summary => "Fretes", 'data-equalizer-watch' => '', :width => "100%" }
         %caption
           %h4
             Detalhes dos Carros
-          - @parceiro.cars.each do |car|
-            %tr
-              %th
-                Placa
-              %td
-                = car.placa
-              %th
-                Redespacho
-              %td
-                = number_to_currency(car.debito.taxa_despacho)
-          %th
-            Total
-          %td
-          %th
-          %td
-            %b= number_to_currency(@parceiro.total_redispatch_tax)
+        %tr
+          %th Cliente
+          %th Placa
+          %th Redespacho
+        - @parceiro.cars.each do |car|
+          %tr
+            %td= car.person_or_company_name
+            %td
+              = link_to car.placa, '#', 'data-reveal-id' => :carModal
+              #carModal.reveal-modal{ 'data-reveal' => ''}
+                =render 'shared/car_show', :car => car
+            %td= number_to_currency(car.debito.taxa_despacho)
+        %th
+          Total
+        %td
+        %th
+        %td
+          %b= number_to_currency(@parceiro.total_redispatch_tax)
 
 
 
-    .large-4.columns.end
-      %table.text-left{ :cellspacing => "0", :summary => "Fretes", 'data-equalizer-watch' => '', :width => 350 }
+    .large-3.columns.end
+      %table.text-left{ :cellspacing => "0", :summary => "Fretes", 'data-equalizer-watch' => '', :width => "100%" }
         %caption
           %h4
             Detalhes Financeiros

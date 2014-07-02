@@ -49,8 +49,20 @@
             %h5 Dados dos Carros
           - @parceiro.cars.each do |car|
             = f.fields_for :debitos, car do |builder|
-              = car.placa
-              = builder.label :taxa_despacho, "Taxa de Redespacho"
-              = builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => ''), :placeholder => 'R$'
+              .row
+                .large-3.columns.left
+                  = link_to car.placa, '#', 'data-reveal-id' => :carModal
+                  #carModal.reveal-modal{ 'data-reveal' => ''}
+                    =render 'shared/car_show', :car => car
+                .large-4.columns.text-left
+                  = car.modelo
+                .large-5.columns.left.end
+                  = car.person_or_company_name
+              .row
+                .large-3.columns
+                  = builder.label :taxa_despacho, "Redespacho", :class => :inline
+                .large-9.columns
+                  = builder.text_field :taxa_despacho, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  number_to_currency(car.debito.taxa_despacho, :format => "%u %n", :separator => ",", :delimiter => ".", :unit => ''), :placeholder => 'R$'
+              %br
     
     = f.submit "Salvar", :class => :button

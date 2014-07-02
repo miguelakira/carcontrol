@@ -32,37 +32,12 @@ class Car < ActiveRecord::Base
   has_paper_trail :only => [:cidade_id, :estado_id]
 
   def person_or_company_name
-    if self.nome.nil?
-      if self.comprador
-        self.nome = self.comprador.nome
-      elsif self.empresa
-        self.nome = self.empresa.nome
-      end
-    end
+    self.comprador.try(:nome) || self.empresa.try(:nome)
   end
 
   def remove_from_carrier_if_delivered
     if self.is_delivered?
       self.cegonha = nil
-    end
-  end
-
-  def self.search(search, search_by)
-    if search
-      if search_by == 'placa'
-        search.gsub!(/[^[:alnum:]]/, '')
-        search.insert(3, '-')
-        where{{placa.like => "%#{search}%"}}
-      elsif search_by == 'cliente'
-        search = search.split(" ")
-        joins(:comprador).where{(comprador.firstname.like_any search) | (comprador.middlename.like_any search) | (comprador.lastname.like_any search)}
-      elsif search_by == 'empresa'
-        search = search.split(" ")
-        search.collect! {|s| s + "%"} # coloca '%' no final pra procurar por nomes incompletos - 'jul' acha 'juliano' e 'julio'
-        joins(:empresa).where{(empresa.nome.like_any search)}
-      end
-    else
-      scoped
     end
   end
 

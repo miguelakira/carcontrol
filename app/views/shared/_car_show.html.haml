@@ -1,0 +1,314 @@
+.row{ 'data-equalizer' => ""}
+  .large-4.columns
+    - if car.comprador
+      %table.text-left{ :cellspacing => 0, :summary => "Detalhes do Cliente" , 'data-equalizer-watch' => '', :width => "100%"}
+        %caption
+          %h4
+            Detalhes do Cliente
+        %tr
+          %th
+            Nome do Cliente
+          %td
+            = car.comprador.nome
+        %tr
+          %th
+            RG
+          %td
+            = car.comprador.rg
+        %tr
+          %th
+            CPF
+          %td
+            = car.comprador.cpf
+        %tr
+          %th
+            Telefone
+          %td
+            = car.comprador.telefone
+        %tr
+          %th
+            Celular
+          %td
+            = car.comprador.celular
+        %tr
+          %th
+            E-Mail
+          %td
+            = car.comprador.email
+        %tr
+          %th
+            Nome de Parente ou Conhecido
+          %td
+            = car.comprador.parente
+        %tr
+          %th
+            Telefone de Parente ou Conhecido
+          %td
+            = car.comprador.telefone_parente
+        %tr
+          %th
+            Observação
+          %td
+            = car.comprador.observacao
+
+    - elsif car.empresa
+      %table.text-left{ :cellspacing => 0, :summary => "Detalhes do Cliente" , 'data-equalizer-watch' => '', :width => "100%"}
+        %caption
+          %h4
+            Detalhes da Empresa
+        %tr
+          %th
+            Nome da Empresa
+          %td
+            = car.empresa.nome
+        %tr
+          %th
+            Nome do Contato
+          %td
+            = car.empresa.contato
+        %tr
+          %th
+            CNPJ
+          %td
+            = car.empresa.cnpj
+        %tr
+          %th
+            Telefone
+          %td
+            = car.empresa.telefone
+        %tr
+          %th
+            Celular
+          %td
+            = car.empresa.celular
+        %tr
+          %th
+            E-Mail
+          %td
+            = car.empresa.email
+        %tr
+          %th
+            Observação
+          %td
+            = car.empresa.observacao
+
+  .large-4.columns
+    %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Carro" , 'data-equalizer-watch' => '', :width => "100%"}
+      %caption
+        %h4
+          Detalhes do Carro
+      %tr
+        %th
+          Modelo do Carro
+        %td
+          =  car.modelo
+      %tr
+        %th
+          Placa
+        %td
+          = car.placa
+      - if car.cegonha
+        %tr
+          %th
+            Cegonha
+          %td
+            = link_to(car.cegonha.placa, car.cegonha)
+      - elsif car.parceiro
+        %tr
+          %th
+            Parceiro
+          %td
+            = link_to(car.parceiro.nome, car.parceiro)
+      %tr
+        %th
+          Localização Atual
+        %td
+          = car.localizacao
+      - unless car.cidade_origem.nil? && car.estado_origem.nil?
+        %tr
+          %th
+            Origem
+          %td
+            = "#{Cidade.find(car.cidade_origem).text}, "
+            = Estado.find(car.estado_origem).sigla
+      - unless car.cidade_origem.nil? && car.estado_origem.nil?
+        %tr
+          %th
+            Destino
+          %td
+            = "#{Cidade.find(car.cidade_destino).text}, "
+            =  Estado.find(car.estado_destino).sigla
+      %tr
+        %th
+          Data da Compra
+        %td
+          = car.data_compra.strftime("%d/%m/%Y") unless car.data_compra.nil?
+      %tr
+        %th
+          Status do Carro
+        %td
+          = t(VEHICLE_STATUS[car.ativo])
+      %tr
+        %th
+          Data Prevista da Entrega
+        %td
+          = car.data_prevista.strftime("%d/%m/%Y") unless car.data_prevista.nil?
+      %tr
+        %th
+          Observação
+        %td
+          = car.observacao
+
+  .large-4.columns.end
+    %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Pagamento", 'data-equalizer-watch' => '', :width => "100%" }
+      %caption
+        %h4
+          Detalhes do frete
+      %tr
+        %th
+          Status do Pagamento do Carro
+        %td
+          = car.status_pagamento.status
+      %tr
+        %th
+          Valor do Frete
+        %td
+          = number_to_currency(car.debito.valor_frete)
+      %tr
+        %th
+          Taxa de Plataforma
+        %td
+          = number_to_currency(car.debito.taxa_plataforma)
+      %tr
+        %th
+          Taxa de Plataforma Origem
+        %td
+          = number_to_currency(car.debito.taxa_plataforma_origem)
+      %tr
+        %th
+          Taxa de Plataforma Destino
+        %td
+          = number_to_currency(car.debito.taxa_plataforma_destino)
+      %tr
+        %th
+          Taxa de Balsa
+        %td
+          = number_to_currency(car.debito.taxa_balsa)
+      %tr
+        %th
+          Desconto
+        %td.red
+          = number_to_currency(car.debito.desconto)
+      %tr
+        %th
+          Total do Frete
+        %td
+          = number_to_currency(car.debito.valor_total)
+      %tr
+        %th
+          Observação
+        %td
+          = car.debito.observacao
+
+%hr
+.row
+  .large-3.columns
+    %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento", :width => "100%" }
+      %caption
+        %h4.nowrap
+          Detalhes dos Pagamentos
+      %tr
+        %th
+          Total Pago
+        - if car.comprador
+          %td
+            = number_to_currency(soma_dos_pagamentos_efetuados(car.comprador))
+        - elsif car.empresa
+          %td
+            = number_to_currency(soma_dos_pagamentos_efetuados(car.empresa))
+      %tr
+        %th
+          Saldo Devedor
+        - if saldo_devedor_do_cliente(car.owner) >= 0
+          - @row_class  = 'blue'
+        - else
+          - @row_class = 'red'
+
+        %td
+          %span{ :class => @row_class}
+            =  number_to_currency(saldo_devedor_do_cliente(car.owner))
+      %tr
+        %th
+          Provisionados
+        - if saldo_devedor_do_cliente(car.owner) >= 0
+          - @row_class  = 'red'
+        - else
+          - @row_class = 'blue'
+
+        %td
+          %span{ :class => @row_class }
+            = number_to_currency(pagamentos_provisionados(car.owner))
+      %tr
+        %th
+          Taxa de Redespacho
+        %td
+          = number_to_currency(car.debito.taxa_despacho)
+  .large-8.columns
+    %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento", :width => "100%" }
+      %caption
+        %h4.nowrap
+          Pagamentos do Cliente
+
+      %tr
+        %th
+          Data do Pagamento
+        %th
+          Valor do Pagamento
+        %th
+          Forma de Pagamento
+        %th
+          Saldo
+
+      - car.owner.pagamentos.where(:data_pagamento => (Time.now.beginning_of_month..Time.now.end_of_day)).find_each do |pagamento|
+        - if pagamento.saldo >= 0
+          - row_class  = 'blue'
+        - else
+          - row_class = 'red'
+
+        - if pagamento.data_pagamento.month == Time.now.month && pagamento.data_pagamento.year == Time.now.year
+          %tr
+            %td
+              = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
+            %td
+              = number_to_currency(pagamento.valor)
+            %td
+              = pagamento.forma_pagamento
+            %td{ :class => row_class }
+              = number_to_currency(pagamento.saldo)
+
+    %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento", :width => "100%" }
+      %tr
+        %th
+          Provisionado Para Dia
+        %th
+          Valor Provisionado
+        %th
+          Forma de Pagamento
+        %th
+          Saldo
+
+      - car.owner.pagamentos.where(:data_pagamento => (Time.now + 1.day..Time.now + 10.years)).find_each do |pagamento|
+        - if pagamento.saldo >= 0
+          - row_class  = 'blue'
+        - else
+          - row_class = 'red'
+
+        %tr
+          %td
+            = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
+          %td
+            = number_to_currency(pagamento.valor)
+          %td
+            = pagamento.forma_pagamento
+          %td{ :class => row_class }
+            = number_to_currency(pagamento.saldo)
