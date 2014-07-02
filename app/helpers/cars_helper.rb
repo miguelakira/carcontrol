@@ -1,4 +1,0 @@
-module CarsHelper
-
-
-end
