@@ -30,8 +30,6 @@ class Car < ActiveRecord::Base
   before_update :remove_car_from_freighter_tracking
   after_update :if_in_freighter_get_its_location, :add_car_to_freighter_tracking
 
-  has_paper_trail :only => [:cidade_id, :estado_id]
-
   def person_or_company_name
     self.comprador.try(:nome) || self.empresa.try(:nome)
   end
