@@ -14,7 +14,8 @@ class CegonhasController < ApplicationController
 
   def show
     @cegonha = Cegonha.find(params[:id])
-    @versions = PaperTrail::Version.order('created_at DESC')
+    @route_name = "De #{Cidade.find(@cegonha.tracking.origin).text}/#{Cidade.find(@cegonha.tracking.origin).estado.sigla}
+    para #{Cidade.find(@cegonha.tracking.destination).text}/#{Cidade.find(@cegonha.tracking.destination).estado.sigla}"
     @grid = set_grid(@cegonha)
     respond_to do |format|
       format.html # show.html.erb
@@ -104,6 +105,7 @@ class CegonhasController < ApplicationController
 
     @cegonha = Cegonha.find(params[:id])
     @cegonha.carros = @cegonha.cars.count
+
     respond_to do |format|
       if @cegonha.update_attributes(params[:cegonha])
         if params[:saved_location]

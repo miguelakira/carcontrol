@@ -3,7 +3,9 @@ class Cegonha < ActiveRecord::Base
   attr_accessible :carros, :comentario, :destino, :localizacao, :origem, :placa, :motorista_attributes, :pagamento_attributes,
     :empresa_attributes, :observacao, :empresa_id, :motorista_id, :rotas, :nome_rota, :cidade_id, :estado_id,
     :estado_origem, :cidade_origem, :estado_destino, :cidade_destino
+
   has_one :pagamento
+  has_one :tracking
   has_many :cars
   has_many :historicos
   belongs_to :empresa
@@ -14,21 +16,35 @@ class Cegonha < ActiveRecord::Base
     :presence => { :message => "- A placa não pode ser deixada em branco!" },
     :uniqueness => { :message => "- A placa já existe no banco de dados. É preciso que seja única." }
 
-  before_save :check_routes
+  before_update :check_routes, :check_cars
+  after_update :activate_cars, :unload_cars_if_arrived_at_destination, :update_locations, :set_origin_and_destination
+  after_create :start_tracking
 
-  after_update :activate_cars, :unload_cars_if_arrived_at_destination, :update_locations
+  def start_tracking
+    self.build_tracking.save
+  end
 
-  has_paper_trail :only => [:cidade_id, :estado_id, :origem, :destino]
-
-  def check_routes
-    if rotas.nil?
-      rotas = 1
+  def set_origin_and_destination
+    if self.tracking.origin.nil?
+      self.tracking.update_column(:origin, self.cidade_origem)
+      self.tracking.update_column(:destination, self.cidade_destino)
     end
   end
 
-  def route_name
-    if cidade_origem and estado_origem and estado_destino and cidade_destino
-      return "#{Cidade.find(cidade_origem).text}, #{Estado.find(estado_origem).sigla} -  #{Cidade.find(cidade_destino).text}, #{Estado.find(estado_destino).sigla}"
+  def check_routes
+    if self.cidade_id != Cegonha.find(self.id).cidade_id
+      self.tracking.changes.build(
+        :tracking_id => self.tracking.id,
+        :current_location => self.cidade_id,
+        :previous_location => Cegonha.find(self.id).cidade_id,
+        :current_cars => self.cars.map(&:placa).to_sentence
+        ).save
+    end
+  end
+
+  def check_cars
+    if self.cars != Cegonha.find(self.id).cars
+      self.tracking.routes.last.update_column(:current_cars, self.cars.map(&:placa).to_sentence)
     end
   end
 
@@ -50,7 +66,6 @@ class Cegonha < ActiveRecord::Base
         car.cegonha = nil
         car.save
       end
-      self.update_column(:rotas, self.rotas + 1)
       self.update_column(:cidade_destino, nil)
       self.update_column(:cidade_origem, nil)
     end
