@@ -8,46 +8,34 @@
         %h5
           Detalhes da Cegonha
       %tr
-        %th
-          Placa da Cegonha
-        %td
-          = @cegonha.placa
+        %th Placa da Cegonha
+        %td= @cegonha.placa
       - if @cegonha.empresa
         %tr
-          %th
-            Pertencente à Empresa
-          %td
-            = @cegonha.empresa.nome
+          %th Pertencente à Empresa
+          %td= @cegonha.empresa.nome
       %tr
-        %th
-          Carros na Cegonha
-        %td
-          = raw(carros_na_cegonha(@cegonha)).html_safe
+        %th Carros na Cegonha
+        %td= raw(carros_na_cegonha(@cegonha)).html_safe
       %tr
-        %th
-          Localização Atual
-        %td
-          = @cegonha.localizacao
+        %th Localização Atual
+        %td= @cegonha.localizacao
       - unless @cegonha.cidade_origem.nil? or @cegonha.estado_origem.nil?
         %tr
-          %th
-            Origem
+          %th Origem
           %td
             = Cidade.find(@cegonha.cidade_origem).text
             = Estado.find(@cegonha.estado_origem).sigla
 
       - unless @cegonha.cidade_destino.nil? or @cegonha.estado_destino.nil?
         %tr
-          %th
-            Destino
+          %th Destino
           %td
             = Cidade.find(@cegonha.cidade_destino).text
             = Estado.find(@cegonha.estado_destino).sigla
       %tr
-        %th
-          Observação
-        %td
-          = @cegonha.observacao
+        %th Observação
+        %td= @cegonha.observacao
 
   %div{:class => @grid}
     %table.text-left{ :cellspacing => "0", :summary => "Detalhes do Motorista", :width => '450px', 'data-equalizer-watch' => '' }
@@ -55,40 +43,26 @@
         %h5
           Detalhes do Motorista
       %tr
-        %th
-          Nome
-        %td
-          = @cegonha.motorista.nome
+        %th Nome
+        %td= @cegonha.motorista.nome
       %tr
-        %th
-          RG
-        %td
-          = @cegonha.motorista.rg
+        %th RG
+        %td= @cegonha.motorista.rg
       %tr
-        %th
-          CPF
-        %td
-          = @cegonha.motorista.cpf
+        %th CPF
+        %td= @cegonha.motorista.cpf
       %tr
-        %th
-          Telefone
-        %td
-          = @cegonha.motorista.telefone
+        %th Telefone
+        %td= @cegonha.motorista.telefone
       %tr
-        %th
-          Celular
-        %td
-          = @cegonha.motorista.celular
+        %th Celular
+        %td= @cegonha.motorista.celular
       %tr
-        %th
-          E-Mail
-        %td
-          = @cegonha.motorista.email
+        %th E-Mail
+        %td= @cegonha.motorista.email
       %tr
-        %th
-          Observação
-        %td
-          = @cegonha.motorista.observacao
+        %th Observação
+        %td= @cegonha.motorista.observacao
 
   - if @cegonha.empresa
     %div{:class => @grid}
@@ -97,50 +71,32 @@
           %h5
             Detalhes do Frete da Empresa Contratada
         %tr
-          %th
-            Valor do Frete
-          %td
-            = number_to_currency(@cegonha.debito.valor_frete)
+          %th Valor do Frete
+          %td= number_to_currency(@cegonha.debito.valor_frete)
         %tr
-          %th
-            Taxa de Redespacho
-          %td
-            = number_to_currency(@cegonha.debito.taxa_despacho)
+          %th Taxa de Redespacho
+          %td= number_to_currency(@cegonha.debito.taxa_despacho)
         %tr
-          %th
-            Taxa de Plataforma
-          %td
-            = number_to_currency(@cegonha.debito.taxa_plataforma)
+          %th Taxa de Plataforma
+          %td= number_to_currency(@cegonha.debito.taxa_plataforma)
         %tr
-          %th
-            Desconto
-          %td
-            = number_to_currency(@cegonha.debito.desconto)
+          %th Desconto
+          %td= number_to_currency(@cegonha.debito.desconto)
         %tr
-          %th
-            Valor Pago
-          %td
-            = number_to_currency(@cegonha.debito.valor_pago)
+          %th Valor Pago
+          %td= number_to_currency(@cegonha.debito.valor_pago)
         %tr
-          %th
-            Valor Total
-          %td
-            = number_to_currency(@cegonha.debito.valor_total)
+          %th Valor Total
+          %td= number_to_currency(@cegonha.debito.valor_total)
         %tr
-          %th
-            Saldo Devedor
-          %td
-            = number_to_currency(@cegonha.debito.saldo_devedor)
+          %th Saldo Devedor
+          %td= number_to_currency(@cegonha.debito.saldo_devedor)
         %tr
-          %th
-            Forma de Pagamento
-          %td
-            = @cegonha.debito.forma_pagamento
+          %th Forma de Pagamento
+          %td= @cegonha.debito.forma_pagamento
         %tr
-          %th
-            Observação
-          %td
-            = @cegonha.debito.observacao
+          %th Observação
+          %td= @cegonha.debito.observacao
 
 
 .row
