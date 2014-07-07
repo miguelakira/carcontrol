@@ -156,8 +156,8 @@
       - @cegonha.tracking.changes.each do |change|
         %tr
           %td= change.created_at.strftime("%d/%m/%Y, %H:%M")
-          %td=# "#{Cidade.find(change.previous_location).text}, #{Cidade.find(change.previous_location).estado.sigla}"
-          %td= "#{Cidade.find(change.current_location).text}, #{Cidade.find(change.current_location).estado.sigla}"
+          %td= "#{change.previous_city}/#{change.previous_state}"
+          %td= "#{change.current_city}/#{change.current_state}"
           %td= change.current_cars
 
 = link_to 'Editar', edit_cegonha_path(@cegonha), :class => :button
