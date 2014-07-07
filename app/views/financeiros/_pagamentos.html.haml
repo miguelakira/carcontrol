@@ -2,7 +2,7 @@
   - @row_class  = 'blue'
 - else
   - @row_class = 'red'
-    
+
 .row{ 'data-equalizer' => '' }
   .large-6.columns
     %fieldset{ 'data-equalizer-watch' => '' }
@@ -11,42 +11,29 @@
           Dados do Cliente
       %table{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
         %tr
-          %th
-            Nome:
-          %td
-            = cliente.nome 
+          %th Nome:
+          %td= cliente.nome
           - if defined?(cliente.cpf)
             %tr
-              %th
-                CPF:
-              %td
-                = cliente.cpf 
+              %th CPF:
+              %td= cliente.cpf
           - else
             %tr
-              %th
-                CNPJ:
-              %td
-                = cliente.cnpj 
+              %th CNPJ:
+              %td= cliente.cnpj
           %tr
-            %th
-              Contato na Empresa:
-            %td
-              = @empresa.contato unless @empresa.nil? 
+            %th Contato na Empresa:
+            %td= @empresa.contato unless @empresa.nil?
         %tr
           %th.last
             Telefone:
-          %td.last 
-            = "#{cliente.telefone}" unless cliente.telefone.empty?
+          %td.last= "#{cliente.telefone}" unless cliente.telefone.empty?
         %tr
-          %th
-            Valor Total dos Fretes
-          %td
-            = number_to_currency(frete_total_do_cliente(cliente)) 
+          %th Valor Total dos Fretes
+          %td= number_to_currency(frete_total_do_cliente(cliente))
         %tr
-          %th
-            Valor Total Pago
-          %td
-            = number_to_currency(frete_total_do_cliente(cliente))
+          %th Valor Total Pago
+          %td= number_to_currency(frete_total_do_cliente(cliente))
         %tr
           %th.last
             Saldo Devedor Total
@@ -54,15 +41,11 @@
             %span{ :class => @row_class }
               = number_to_currency(saldo_devedor_do_cliente(cliente))
         %tr
-          %th
-            Carros Ativos do Cliente
-          %td
-            = !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' 
+          %th Carros Ativos do Cliente
+          %td= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo'
         %tr
-          %th
-            Carros Finalizados
-          %td
-            = !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' 
+          %th Carros Finalizados
+          %td= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado'
 
   .large-6.columns
     %fieldset{ 'data-equalizer-watch' => '' }
@@ -70,7 +53,7 @@
         %h4
           Novo Pagamento
       = form_for(cliente) do |f|
-        = f.fields_for :pagamentos, cliente.pagamentos.build do |builder|          
+        = f.fields_for :pagamentos, cliente.pagamentos.build do |builder|
           .row
             .large-6.columns
               = builder.label :forma_pagamento, "Forma do Novo Pagamento"
@@ -84,7 +67,8 @@
 
           = builder.label :observacao, "Observação"
           = builder.text_area :observacao, :cols => 40, :rows => 3
-        = f.submit "Salvar"
+        .center
+          = f.submit "Salvar", :class => "button small"
 
 .row
   .large-12
@@ -92,22 +76,17 @@
       %h4
         Detalhes dos Pagamentos Efetuados
     - if cliente.pagamentos.count == 0 and cliente.pagamentos.last.id == nil
-      %P
+      %p
         Este cliente não efetuou nenhum pagamento até o momento.
     - else
       %table#cars.display{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
         %thead
           %tr
-            %th{ :width => '50px'}
-              Data do Pagamento
-            %th{ :width => '120px'}
-              Valor do Pagamento
-            %th{ :width => '120px'}
-              Forma de Pagamento
-            %th{ :width => '120px'}
-              Saldo 
-            %th
-              Observação
+            %th{ :width => '50px'} Data do Pagamento
+            %th{ :width => '120px'} Valor do Pagamento
+            %th{ :width => '120px'} Forma de Pagamento
+            %th{ :width => '120px'} Saldo
+            %th Observação
         %tbody
           - cliente.pagamentos.each do |pagamento|
             - unless pagamento.new_record?
@@ -116,13 +95,9 @@
               - else
                 - row_class = 'red'
             %tr
-              %td
-                = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
-              %td
-                = number_to_currency(pagamento.valor)
-              %td
-                = pagamento.forma_pagamento
-              %td{ :class => row_class} 
+              %td= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
+              %td= number_to_currency(pagamento.valor)
+              %td= pagamento.forma_pagamento
+              %td{:class => row_class}
                 = number_to_currency(pagamento.saldo)
-              %td
-                = pagamento.observacao 
+              %td= pagamento.observacao

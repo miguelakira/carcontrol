@@ -6,29 +6,19 @@
       %table.display#compradores_financeiro{ :cellpading => 0, :cellspacing => 0, :border => 0, :width => '100%'}
         %thead
           %tr
-            %th
-              Nome
-            %th
-              CPF
-            %th
-              Débito Total
-            %th
-              Pagamento Total
-            %th
-              Quantia de Carros Ativos
+            %th Nome
+            %th CPF
+            %th Débito Total
+            %th Pagamento Total
+            %th Quantia de Carros Ativos
         %tbody
           - @compradores.each do |comprador|
             %tr
-              %td
-                = link_to comprador.nome, financeiro_path(:show, :comprador_cpf => comprador.cpf)
-              %td
-                = comprador.cpf
-              %td
-                = number_to_currency(saldo_devedor_do_cliente(comprador))
-              %td
-                = number_to_currency(soma_dos_pagamentos_efetuados(comprador))
-              %td
-                = "#{pluralize(comprador.active_cars.count, 'carro')}"
+              %td= link_to comprador.nome, financeiro_path(:show, :comprador_cpf => comprador.cpf)
+              %td= comprador.cpf
+              %td= number_to_currency(saldo_devedor_do_cliente(comprador))
+              %td= number_to_currency(soma_dos_pagamentos_efetuados(comprador))
+              %td= "#{pluralize(comprador.active_cars.count, 'carro')}"
 
 - unless @empresas.blank?
   %p
@@ -38,29 +28,19 @@
       %table.display#empresas_financeiro{ :cellpading => 0, :cellspacing => 0, :border => 0, :width => '100%'}
         %thead
           %tr
-            %th
-              Nome
-            %th
-              CNPJ
-            %th
-              Débito Total
-            %th
-              Pagamento Total
-            %th
-              Quantia de Carros Ativos
+            %th Nome
+            %th CNPJ
+            %th Débito Total
+            %th Pagamento Total
+            %th Quantia de Carros Ativos
         %tbody
           - @empresas.each do |empresa|
             %tr
-              %td
-                = link_to empresa.nome, financeiro_path(:show, :comprador_cnpj => empresa.cnpj)
-              %td
-                = empresa.cnpj
-              %td
-                = number_to_currency(saldo_devedor_do_cliente(empresa))
-              %td
-                = number_to_currency(soma_dos_pagamentos_efetuados(empresa))
-              %td
-                = "#{pluralize(empresa.active_cars.count, 'carro')}"
+              %td= link_to empresa.nome, financeiro_path(:show, :comprador_cnpj => empresa.cnpj)
+              %td= empresa.cnpj
+              %td= number_to_currency(saldo_devedor_do_cliente(empresa))
+              %td= number_to_currency(soma_dos_pagamentos_efetuados(empresa))
+              %td= "#{pluralize(empresa.active_cars.count, 'carro')}"
 
 - unless @parceiros.blank?
   %p
@@ -70,26 +50,16 @@
       %table.display#parceiros_financeiro{ :cellpading => 0, :cellspacing => 0, :border => 0, :width => '100%'}
         %thead
           %tr
-            %th
-              Nome
-            %th
-              CPF/CNPJ
-            %th
-              Débito Total
-            %th
-              Pagamento Total
-            %th
-              Quantia de Carros Ativos
+            %th Nome
+            %th CPF/CNPJ
+            %th Débito Total
+            %th Pagamento Total
+            %th Quantia de Carros Ativos
         %tbody
           - @parceiros.each do |parceiro|
             %tr
-              %td
-                = parceiro.cpf ? link_to(parceiro.nome, financeiro_path(:show, :parceiro_cpf => parceiro.cpf)) : link_to(parceiro.nome, financeiro_path(:show, :parceiro_cnpj => parceiro.cnpj))
-              %td
-                = parceiro.cpf ? parceiro.cpf : parceiro.cnpj
-              %td
-                = number_to_currency(saldo_devedor_do_cliente(parceiro))
-              %td
-                = number_to_currency(soma_dos_pagamentos_efetuados(parceiro))
-              %td
-                = "#{pluralize(parceiro.active_cars.count, 'carro')}"
+              %td= parceiro.cpf ? link_to(parceiro.nome, financeiro_path(:show, :parceiro_cpf => parceiro.cpf)) : link_to(parceiro.nome, financeiro_path(:show, :parceiro_cnpj => parceiro.cnpj))
+              %td= parceiro.cpf ? parceiro.cpf : parceiro.cnpj
+              %td= number_to_currency(saldo_devedor_do_cliente(parceiro))
+              %td= number_to_currency(soma_dos_pagamentos_efetuados(parceiro))
+              %td= "#{pluralize(parceiro.active_cars.count, 'carro')}"

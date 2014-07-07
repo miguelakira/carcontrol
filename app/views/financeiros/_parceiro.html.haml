@@ -2,7 +2,7 @@
   - @row_class  = 'blue'
 - else
   - @row_class = 'red'
-    
+
 %br
 
 %p
@@ -11,106 +11,88 @@
 %p
   %h5
     Transações Financeiras do Parceiro
-%br
 
-.floating_box{ :style => "min-height:100px" }
-  %fieldset.financeiros
-    %legend
-      %h5{ :style => "font-size: 1.3em" }
-        Dados da Empresa
-    %table#blank
-      %tr
-        %th
-          Nome:
-        %td
-          = @parceiro.nome 
+.row{ 'data-equalizer' => '' }
+  .large-6.columns
+    %fieldset{ 'data-equalizer-watch' => '' }
+      %legend
+        %h4
+          Dados do Parceiro
+      %table{ :cellpading => 0, :cellspacing => 0, :border => 0, :style => "width: 100%;"}
         %tr
-          %th
-            CNPJ:
-          %td
-            = @parceiro.cnpj 
+          %th Nome:
+          %td= @parceiro.nome
+          %tr
+            %th CNPJ:
+            %td= @parceiro.cnpj
+          %tr
+            %th Contato na Empresa:
+            %td= @parceiro.contato unless @parceiro.nil?
         %tr
-          %th
-            Contato na Empresa:
-          %td
-            = @parceiro.contato unless @parceiro.nil? 
-      %tr
-        %th.last
-          Telefone:
-        %td.last 
-          = "#{@parceiro.telefone}" unless @parceiro.telefone.empty?
-      %tr
-        %th
-          Valor Total dos Fretes
-        %td
-          = number_to_currency(frete_total_do_cliente(@parceiro)) 
-      %tr
-        %th
-          Valor Total Pago
-        %td
-          = number_to_currency(frete_total_do_cliente(@parceiro))
-      %tr
-        %th.last
-          Saldo Devedor Total
-        %td.last
-          %span{ :class => @row_class }
-            = number_to_currency(saldo_devedor_do_cliente(@parceiro))
-      %tr
-        %th
-          Carros Ativos da Empresa
-        %td
-          = !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo' 
-      %tr
-        %th
-          Carros Finalizados
-        %td
-          = !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado' 
+          %th.last Telefone:
+          %td.last= "#{@parceiro.telefone}" unless @parceiro.telefone.empty?
+        %tr
+          %th Valor Total dos Fretes
+          %td= number_to_currency(frete_total_do_cliente(@parceiro))
+        %tr
+          %th Valor Total Pago
+          %td= number_to_currency(frete_total_do_cliente(@parceiro))
+        %tr
+          %th.last Saldo Devedor Total
+          %td.last
+            %span{ :class => @row_class }
+              = number_to_currency(saldo_devedor_do_cliente(@parceiro))
+        %tr
+          %th Carros Ativos da Empresa
+          %td= !@cars_ativos.nil? ?  "#{pluralize(@cars_ativos.count, "carro")}" : 'Nenhum carro ativo'
+        %tr
+          %th Carros Finalizados
+          %td= !@cars_inativos.nil? ? "#{pluralize(@cars_inativos.count, "carro")}" : 'Nenhum carro finalizado'
 
-  %fieldset.financeiros
-    %legend
-      %h5{ :style => "font-size: 1.3em;" }
-        Novo Pagamento
-    = form_for(@parceiro) do |f|
-      = f.fields_for :pagamentos, @parceiro.pagamentos.build do |builder|
-        .field
+  .large-6.columns
+    %fieldset{ 'data-equalizer-watch' => '' }
+      %legend
+        %h4
+          Novo Pagamento
+      = form_for(@parceiro) do |f|
+        = f.fields_for :pagamentos, @parceiro.pagamentos.build do |builder|
+          .row
+            .large-6.columns
+              = builder.label :forma_pagamento, "Forma do Novo Pagamento"
+              = builder.text_field :forma_pagamento
+            .large-6.columns
+              = builder.label :valor, "Valor do Novo Pagamento"
+              = builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  "", :placeholder => 'R$'
+
           = builder.label :data_pagamento, "Data do Novo Pagamento"
-          = builder.date_select :data_pagamento, :order => [:day, :month, :year], :default => Date.today  
-        .field
-          = builder.label :forma_pagamento, "Forma do Novo Pagamento"
-          = builder.text_field :forma_pagamento
-        .field
-          = builder.label :valor, "Valor do Novo Pagamento"
-          R$
-          = builder.text_field :valor, :onkeyup =>"moeda(this)", :style => "text-align: Right", :value =>  ""
-        .field
+          = builder.date_select :data_pagamento, {:order => [:day, :month, :year], :default => Date.today}, {:class => 'custom-dropdown-date'}
+
           = builder.label :observacao, "Observação"
           = builder.text_area :observacao, :cols => 40, :rows => 3
+        .center
+          = f.submit "Salvar", :class => "button small"
 
-      = f.submit "Salvar"
+.row
+  .large-12
+    %legend
+      %h4
+        CARROS ATIVOS
+        = render 'cars', :carros => @cars_ativos, :status => "_ativos"
 
-.clear
-%br
+    %legend
+      %h4
+        CARROS FINALIZADOS
+      - if @cars_inativos.empty?
+        %p
+          Não há carros finalizados para este Parceiro
+      - else
+        = render 'cars', :carros => @cars_inativos, :status => "_inativos"
 
-%p
-  %b
-    CARROS ATIVOS
-  = render 'cars', :carros => @cars_ativos, :status => "_ativos"
-%br
-
-%p
-  %b
-    CARROS FINALIZADOS
-- if @cars_inativos.empty?
-  %p
-    Não há carros finalizados para este Parceiro
-- else
-  = render 'cars', :carros => @cars_inativos, :status => "_inativos"
-
-%p
-  %b
-    CARROS NÃO PAGOS
-- if @cars_nao_pagos.empty?
-  %p
-    Este parceiro pagou todos os carros
-- else
-  = render 'cars', :carros => @cars_nao_pagos, :status => "_nao_pagos"
+    %legend
+      %h4
+        CARROS NÃO PAGOS
+    - if @cars_nao_pagos.empty?
+      %p
+        Este parceiro pagou todos os carros
+    - else
+      = render 'cars', :carros => @cars_nao_pagos, :status => "_nao_pagos"
