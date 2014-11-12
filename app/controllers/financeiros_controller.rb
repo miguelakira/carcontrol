@@ -14,8 +14,8 @@ class FinanceirosController < ApplicationController
   		unless @empresa.nil?
         @cars_cnpj = @empresa.cars
 
-    		@cars_ativos = @cars_cnpj.reject {|c| c.ativo == 0}
-    		@cars_inativos = @cars_cnpj.reject {|c| c.ativo != 0}
+    		@cars_ativos = @cars_cnpj.select {|c| c.ativo != 0}
+    		@cars_inativos = @cars_cnpj.select {|c| c.ativo == 0}
         @cars_nao_pagos = @cars_cnpj.reject {|c| c.status_pagamento_id == 3 }
         @cars_pagos = @cars_cnpj.reject {|c| c.status_pagamento_id != 3 }
       end
@@ -25,8 +25,9 @@ class FinanceirosController < ApplicationController
   		unless @cliente.nil?
         @cars_cpf = @cliente.cars
 
-    		@cars_ativos = @cars_cpf.reject {|c| c.ativo == 0}
-    		@cars_inativos = @cars_cpf.reject {|c| c.ativo != 0}
+    		@cars_ativos = @cars_cpf.select {|c| c.ativo != 0}
+    		@cars_inativos = @cars_cpf.select {|c| c.ativo == 0}
+
         @cars_nao_pagos = @cars_cpf.reject {|c| c.status_pagamento_id == 3 }
         @cars_pagos = @cars_cpf.reject {|c| c.status_pagamento_id != 3 }
       end
@@ -39,8 +40,8 @@ class FinanceirosController < ApplicationController
       unless @parceiro.nil?
         @cars_parceiro = @parceiro.cars
 
-        @cars_ativos = @cars_parceiro.reject {|c| c.ativo == 0}
-        @cars_inativos = @cars_parceiro.reject {|c| c.ativo != 0}
+        @cars_ativos = @cars_parceiro.select {|c| c.ativo != 0}
+        @cars_inativos = @cars_parceiro.select {|c| c.ativo == 0}
         @cars_nao_pagos = @cars_parceiro.reject {|c| c.status_pagamento_id == 3 }
         @cars_pagos = @cars_parceiro.reject {|c| c.status_pagamento_id != 3 }
       end
@@ -66,8 +67,8 @@ class FinanceirosController < ApplicationController
       @empresa = Empresa.find_by_cnpj(params[:comprador_cnpj])
       @cars_cnpj = @empresa.cars
 
-      @cars_ativos = @cars_cnpj.reject {|c| c.ativo == 0}
-      @cars_inativos = @cars_cnpj.reject {|c| c.ativo != 0}
+      @cars_ativos = @cars_cnpj.select {|c| c.ativo != 0}
+      @cars_inativos = @cars_cnpj.select {|c| c.ativo == 0}
       @cars_nao_pagos = @cars_cnpj.reject {|c| c.status_pagamento_id == 3 }
       @cars_pagos = @cars_cnpj.reject {|c| c.status_pagamento_id != 3 }
       cnpj = @empresa.cnpj
@@ -76,8 +77,8 @@ class FinanceirosController < ApplicationController
       @cliente = Comprador.find_by_cpf(params[:comprador_cpf])
       @cars_cpf = @cliente.cars
 
-      @cars_ativos = @cars_cpf.reject {|c| c.ativo == 0}
-      @cars_inativos = @cars_cpf.reject {|c| c.ativo != 0}
+      @cars_ativos = @cars_cpf.select {|c| c.ativo != 0}
+      @cars_inativos = @cars_cpf.select {|c| c.ativo == 0}
       @cars_nao_pagos = @cars_cpf.reject {|c| c.status_pagamento_id == 3 }
       @cars_pagos = @cars_cpf.reject {|c| c.status_pagamento_id != 3 }
       cpf = @cliente.cpf
@@ -86,8 +87,8 @@ class FinanceirosController < ApplicationController
       @parceiro = Parceiro.find_by_cnpj(params[:parceiro_cnpj])
       @cars_cnpj = @parceiro.cars
 
-      @cars_ativos = @cars_cnpj.reject {|c| c.ativo == 0}
-      @cars_inativos = @cars_cnpj.reject {|c| c.ativo != 0}
+      @cars_ativos = @cars_cnpj.select {|c| c.ativo != 0}
+      @cars_inativos = @cars_cnpj.select {|c| c.ativo == 0}
       @cars_nao_pagos = @cars_cnpj.reject {|c| c.status_pagamento_id == 3 }
       @cars_pagos = @cars_cnpj.reject {|c| c.status_pagamento_id != 3 }
       cnpj = @parceiro.cnpj
