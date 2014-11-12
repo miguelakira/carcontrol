@@ -21,7 +21,7 @@ class CarsController < ApplicationController
     # para o sidebar
     @car = Car.find(params[:car_id]) if params[:car_id]
     @column_class = @car ? 'large-10 columns' : 'large12'
-    
+
     @cars = Car.order(:data_compra).where("ativo = #{VEHICLE_STATUS.index 'DELIVERED'}")
     @cars.empty? ? @mensagem = "Nenhum Cliente Finalizado" : @mensagem = "Clientes Finalizados"
 
@@ -43,17 +43,17 @@ class CarsController < ApplicationController
   def new
     gon.compradores = Comprador.all
     gon.empresas = Empresa.all
-    
+
     @car = Car.new
     @cegonhas = Cegonha.all
     @parceiros = Parceiro.all
     @status_pagamentos = StatusPagamento.all
-    
+
     params[:pessoa_juridica] ? @car.build_empresa : @car.build_comprador
 
     @car.build_debito
     @car.pagamentos.build
-    
+
     respond_to do |format|
       format.html
       format.json { render json: @car }
@@ -130,7 +130,7 @@ class CarsController < ApplicationController
     # saving car information
     if (params[:save_and_return] || params[:edit_location])
       respond_to do |format|
-        if @car.update_attributes(params[:car]) 
+        if @car.update_attributes(params[:car])
           format.html { redirect_to @car, notice: 'Dados atualizados com sucesso.' } if params[:save_and_return]
           format.html { redirect_to :action => :edit, :car => @car, :edit_location => true, notice: 'Dados atualizados com sucesso.' } if params[:edit_location]
           format.json { head :no_content }

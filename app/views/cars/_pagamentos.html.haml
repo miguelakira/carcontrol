@@ -1,54 +1,37 @@
 %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento", :width => '100%' }
+  %caption
+    %h4.nowrap Pagamentos do Cliente
+
   %tr
-    %th
-      Data do Pagamento
-    %th
-      Valor do Pagamento
-    %th
-      Forma de Pagamento
-    %th
-      Saldo 
-  
-  - car.owner.pagamentos.where(:data_pagamento => (Time.now.beginning_of_month..Time.now.end_of_day)).find_each do |pagamento| 
+    %th Data do Pagamento
+    %th Valor do Pagamento
+    %th Forma de Pagamento
+
+  - car.owner.pagamentos.where("data_pagamento <= ?", Date.today).each do |pagamento|
     - if pagamento.saldo >= 0
       - row_class  = 'blue'
     - else
       - row_class = 'red'
-        
-    - if pagamento.data_pagamento.month == Time.now.month && pagamento.data_pagamento.year == Time.now.year  
+
+    - if pagamento.data_pagamento.month == Time.now.month && pagamento.data_pagamento.year == Time.now.year
       %tr
-        %td
-          = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
-        %td
-          = number_to_currency(pagamento.valor)
-        %td
-          = pagamento.forma_pagamento
-        %td{ :class => row_class }
-          = number_to_currency(pagamento.saldo)
-    
+        %td= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
+        %td= number_to_currency(pagamento.valor)
+        %td= pagamento.forma_pagamento
+
 %table{ :cellspacing => "0", :summary => "Detalhes do Pagamento", :width => '100%' }
   %tr
-    %th
-      Provisionado Para Dia
-    %th
-      Valor Provisionado
-    %th
-      Forma de Pagamento
-    %th
-      Saldo 
+    %th Provisionado Para Dia
+    %th Valor Provisionado
+    %th Forma de Pagamento
 
-  - car.owner.pagamentos.where(:data_pagamento => (Time.now + 1.day..Time.now + 10.years)).find_each do |pagamento| 
+  - car.owner.pagamentos.where("data_pagamento > ?", Date.today).each do |pagamento|
     - if pagamento.saldo >= 0
       - row_class  = 'blue'
     - else
       - row_class = 'red'
 
     %tr
-      %td
-        = pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
-      %td
-        = number_to_currency(pagamento.valor)
-      %td
-        = pagamento.forma_pagamento
-      %td{ :class => row_class }
-        = number_to_currency(pagamento.saldo)
+      %td= pagamento.data_pagamento.strftime('%d/%m/%Y') unless pagamento.data_pagamento.nil?
+      %td= number_to_currency(pagamento.valor)
+      %td= pagamento.forma_pagamento

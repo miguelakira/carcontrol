@@ -1,0 +1,36 @@
+%table{ :cellspacing => "0", :summary => "Resumo do Pagamento" }
+  %caption
+    %h4.nowrap
+      Resumo dos Pagamentos
+  %tr
+    %th
+      Total Pago
+      %td
+        = number_to_currency(soma_dos_pagamentos_efetuados(car.owner))
+  %tr
+    %th
+      Saldo Devedor
+    - if saldo_devedor_do_cliente(car.owner) >= 0
+      - @row_class  = 'blue'
+    - else
+      - @row_class = 'red'
+
+    %td
+      %span{ :class => @row_class}
+        =  number_to_currency(saldo_devedor_do_cliente(car.owner))
+  %tr
+    %th
+      Provisionados
+    - if saldo_devedor_do_cliente(car.owner) >= 0
+      - @row_class  = 'red'
+    - else
+      - @row_class = 'blue'
+
+    %td
+      %span{ :class => @row_class }
+        = number_to_currency(pagamentos_provisionados(car.owner))
+  %tr
+    %th
+      Taxa de Redespacho
+    %td
+      = number_to_currency(car.debito.taxa_despacho)

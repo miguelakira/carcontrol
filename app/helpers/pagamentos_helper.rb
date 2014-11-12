@@ -37,9 +37,10 @@ module PagamentosHelper
   end
 
   def pagamentos_provisionados(cliente)
+
     pagamento_total = 0
-    if cliente.pagamentos
-      cliente.pagamentos.where('data_pagamento > ?', Time.now.end_of_day).find_each do |pagamento|
+    if !cliente.pagamentos.empty?
+      cliente.pagamentos.where('data_pagamento > ?', Date.today).find_each do |pagamento|
         unless pagamento.nil?
           pagamento.valor ||= 0
           pagamento_total += pagamento.valor
