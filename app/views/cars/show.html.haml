@@ -145,7 +145,7 @@
 %hr
 .row
   .large-3.columns
-    %table{ :cellspacing => "0", :summary => "Carros do Cliente", :width => '250px' }
+    %table{ :cellspacing => "0", :summary => "Carros do Cliente", :width => '100%' }
       %caption
         %h4.nowrap
           Carros do Cliente
@@ -157,9 +157,9 @@
           %td= car.placa
           %td= number_to_currency(car.debito.valor_total)
 
-  .large-3.columns
+  .large-4.columns
     =render 'payments_summary', car: @car
-  .large-6.columns
+  .large-5.columns
     =render 'pagamentos', car: @car
 
 - if @car.ativo?
