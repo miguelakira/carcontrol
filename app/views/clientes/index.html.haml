@@ -1,5 +1,5 @@
 
-= form_tag :action => :show do 
+= form_tag :action => :show do
   %p
     %h1 Bem-vindo, cliente.
   %p
@@ -9,7 +9,7 @@
       = text_field_tag :comprador_cpf,nil, :onkeyup =>"mascara(this,cpf);",:maxlength=>"14"
       = submit_tag "Buscar por CPF", :class => :button
 
-= form_tag :action => :show do 
+= form_tag :action => :show do
   %p
     %b Ou digite seu CNPJ abaixo:
   .row
@@ -18,5 +18,5 @@
       = submit_tag "Buscar por CNPJ", :class => :button
 
 %p
-  Se você for funcionário da Transroyal, por favor, efetue
+  Se você for funcionário da Transeder, por favor, efetue
   = link_to('LOGIN NO SISTEMA.', new_user_session_path)

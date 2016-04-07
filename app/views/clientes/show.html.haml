@@ -1,24 +1,24 @@
-= raw(@mensagem).html_safe 
-- if defined? @cliente and @cliente.nil? 
+= raw(@mensagem).html_safe
+- if defined? @cliente and @cliente.nil?
   %p
     %h1
       CPF não encontrado.
   %p
     %b
-      Por favor verifique se todos os dados estão corretos ou entre em contato com a Transroyal.
-- elsif defined? @empresa and @empresa.nil? 
+      Por favor verifique se todos os dados estão corretos ou entre em contato com a Transeder.
+- elsif defined? @empresa and @empresa.nil?
   %p
     %h1
       CNPJ não encontrado.
   %p
     %b
-      Por favor verifique se todos os dados estão corretos ou entre em contato com a Transroyal.
-- else 
-  - if @cars_cpf 
-    = render 'cliente', :cliente => @cliente 
-  - elsif @cars_cnpj 
-    = render 'empresa', :cliente => @empresa 
-    = hidden_field_tag :direction, params[:direction] 
-    = hidden_field_tag :sort, params[:sort] 
+      Por favor verifique se todos os dados estão corretos ou entre em contato com a Transeder.
+- else
+  - if @cars_cpf
+    = render 'cliente', :cliente => @cliente
+  - elsif @cars_cnpj
+    = render 'empresa', :cliente => @empresa
+    = hidden_field_tag :direction, params[:direction]
+    = hidden_field_tag :sort, params[:sort]
     %br
     = link_to 'Voltar', clientes_path, :class => :button
