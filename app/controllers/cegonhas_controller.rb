@@ -144,8 +144,10 @@ class CegonhasController < ApplicationController
 
   def generate_pdf
     @cegonha = Cegonha.find(params[:id])
-
+    @route_name = "De #{Cidade.find(@cegonha.tracking.origin).text}/#{Cidade.find(@cegonha.tracking.origin).estado.sigla}
+    para #{Cidade.find(@cegonha.tracking.destination).text}/#{Cidade.find(@cegonha.tracking.destination).estado.sigla}"
     flash[:notice] = "PDF gerado na data #{Time.now.strftime('%d/%m/%Y')}"
+
 
     filename = "#{Rails.root}/public/Relatorio_#{@cegonha.placa}_#{Time.now.strftime('%d_%m_%Y')}.pdf"
     html = render_to_string(:template => "/cegonhas/show.pdf.erb", :layout => false,:content_type => "text/html", :charset => "utf-8")

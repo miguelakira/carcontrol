@@ -95,35 +95,23 @@ ActiveRecord::Schema.define(:version => 20140703163816) do
     t.integer  "parceiro_id"
   end
 
-  create_table "contatos", :force => true do |t|
-    t.string   "especie"
-    t.string   "nome"
-    t.string   "telefone"
-    t.integer  "cidade_id"
-    t.integer  "estado_id"
-    t.integer  "comprador_id"
-    t.string   "email"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
   create_table "debitos", :force => true do |t|
     t.integer  "car_id"
     t.datetime "data_pagamento"
     t.string   "forma_pagamento"
-    t.datetime "created_at",                                                              :null => false
-    t.datetime "updated_at",                                                              :null => false
-    t.decimal  "valor_pago",              :precision => 8,  :scale => 2
+    t.datetime "created_at",                                                             :null => false
+    t.datetime "updated_at",                                                             :null => false
+    t.decimal  "valor_pago",              :precision => 8, :scale => 2
     t.string   "observacao"
-    t.decimal  "taxa_despacho",           :precision => 10, :scale => 0
-    t.decimal  "taxa_plataforma",         :precision => 10, :scale => 0
-    t.decimal  "desconto",                :precision => 10, :scale => 0
-    t.decimal  "saldo_devedor",           :precision => 8,  :scale => 2, :default => 0.0
+    t.decimal  "taxa_despacho"
+    t.decimal  "taxa_plataforma"
+    t.decimal  "desconto"
+    t.decimal  "saldo_devedor",           :precision => 8, :scale => 2, :default => 0.0
     t.integer  "cegonha_id"
-    t.decimal  "valor_frete",             :precision => 10, :scale => 0
-    t.decimal  "taxa_plataforma_origem",  :precision => 10, :scale => 0
-    t.decimal  "taxa_plataforma_destino", :precision => 10, :scale => 0
-    t.decimal  "taxa_balsa",              :precision => 10, :scale => 0
+    t.decimal  "valor_frete"
+    t.decimal  "taxa_plataforma_origem"
+    t.decimal  "taxa_plataforma_destino"
+    t.decimal  "taxa_balsa"
     t.integer  "comprador_id"
     t.integer  "empresa_id"
   end

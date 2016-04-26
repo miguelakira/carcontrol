@@ -24,34 +24,34 @@
         %th{ :style => "width:150px" }
           Placa da Cegonha
         %td{ :style => 'border-top: 1px solid #C1DAD7;'}
-          = @cegonha.placa 
+          = @cegonha.placa
       - if @cegonha.empresa
         %tr
-          %th 
+          %th
             Pertencente à Empresa
           %td
             = @cegonha.empresa.nome
       %tr
-        %th 
+        %th
           Carros na Cegonha
         %td
           = raw(carros_na_cegonha(@cegonha)).html_safe
       %tr
-        %th 
+        %th
           Localização Atual
         %td
           = @cegonha.localizacao
       - unless @cegonha.cidade_origem.nil? or @cegonha.estado_origem.nil?
         %tr
-          %th 
+          %th
             Origem
           %td
             = Cidade.find(@cegonha.cidade_origem).text
             = Estado.find(@cegonha.estado_origem).sigla
-      
+
       - unless @cegonha.cidade_destino.nil? or @cegonha.estado_destino.nil?
         %tr
-          %th 
+          %th
             Destino
           %td
             = Cidade.find(@cegonha.cidade_destino).text
@@ -67,32 +67,32 @@
         %h5
           Detalhes do Motorista
       %tr
-        %th{ :style => "width:150px"} 
+        %th{ :style => "width:150px"}
           Nome
         %td{ :style => 'border-top: 1px solid #C1DAD7;'}
-          = @cegonha.motorista.nome 
+          = @cegonha.motorista.nome
       %tr
-        %th 
+        %th
           RG
         %td
           = @cegonha.motorista.rg
       %tr
-        %th 
+        %th
           CPF
         %td
           = @cegonha.motorista.cpf
       %tr
-        %th 
+        %th
           Telefone
         %td
           = @cegonha.motorista.telefone
       %tr
-        %th 
+        %th
           Celular
         %td
           = @cegonha.motorista.celular
       %tr
-        %th 
+        %th
           E-Mail
         %td
           = @cegonha.motorista.email
@@ -113,37 +113,37 @@
           %td{ :style => 'border-top: 1px solid #C1DAD7;' }
             = number_to_currency(@cegonha.debito.valor_frete)
         %tr
-          %th 
+          %th
             Taxa de Redespacho
           %td
             = number_to_currency(@cegonha.debito.taxa_despacho)
         %tr
-          %th 
+          %th
             Taxa de Plataforma
           %td
             = number_to_currency(@cegonha.debito.taxa_plataforma)
         %tr
-          %th 
+          %th
             Desconto
           %td
             = number_to_currency(@cegonha.debito.desconto)
         %tr
-          %th 
+          %th
             Valor Pago
           %td
             = number_to_currency(@cegonha.debito.valor_pago)
         %tr
-          %th 
+          %th
             Valor Total
           %td
             = number_to_currency(@cegonha.debito.valor_total)
         %tr
-          %th 
+          %th
             Saldo Devedor
           %td
             = number_to_currency(@cegonha.debito.saldo_devedor)
         %tr
-          %th 
+          %th
             Forma de Pagamento
           %td
             = @cegonha.debito.forma_pagamento
@@ -161,7 +161,7 @@
         - frete_total = hist.car.debito.valor_total + frete_total unless hist.car.nil?
         - saldo_devedor =  hist.car.debito.saldo_devedor + saldo_devedor unless hist.car.nil?
 
-        %table#mytable{ :cellspacing => "0", :summary => "Histórico da Cegonha", :style => "width:900px" } 
+        %table#mytable{ :cellspacing => "0", :summary => "Histórico da Cegonha", :style => "width:900px" }
           - if i == @cegonha.rotas
             %caption
               %h5
@@ -190,30 +190,48 @@
                   Nº
                 %th.begin
                   Placa
-                %th 
+                %th
                   Data de Entrada
-                %th 
+                %th
                   Cidade de Entrada
-                %th 
+                %th
                   Data de Saída
-                %th 
+                %th
                   Cidade de Saída
                 - carros_na_rota.each_with_index do |historico, index|
                   %tr
                     %td.none
                       = index + 1
                     %td.begin
-                      = link_to(historico.car.placa, historico.car) unless historico.car.nil? 
+                      = link_to(historico.car.placa, historico.car) unless historico.car.nil?
                     %td
-                      = historico.data_entrada.strftime("%d/%m/%Y") unless historico.data_entrada.nil? 
+                      = historico.data_entrada.strftime("%d/%m/%Y") unless historico.data_entrada.nil?
                     %td
-                      = historico.localizacao_entrada 
+                      = historico.localizacao_entrada
                     %td
-                      = historico.data_saida.strftime("%d/%m/%Y") unless historico.data_saida.nil? 
+                      = historico.data_saida.strftime("%d/%m/%Y") unless historico.data_saida.nil?
                     %td
-                      = historico.localizacao_saida 
+                      = historico.localizacao_saida
   .clear
 
+  .row
+  .large-12.end
+    %table#mytable.text-left{ :cellspacing => "0", :summary => "Histórico da Cegonha", :width => '100%' }
+      %caption.text-left
+        %h5= "Rota Atual - #{@route_name}"
+        %p.small
+          O horário não indica quando a situação ocorreu, mas sim quando os dados foram recebidos pelo sistema.
+      %tr
+        %th.begin Data
+        %th Saiu de
+        %th Chegou em
+        %th Carros
+      - @cegonha.tracking.changes.each do |change|
+        %tr
+          %td.begin= change.created_at.strftime("%d/%m/%Y, %H:%M")
+          %td= "#{change.previous_city}/#{change.previous_state}"
+          %td= "#{change.current_city}/#{change.current_state}"
+          %td= change.current_cars
 
   = stylesheet_link_tag 'application'
   = stylesheet_link_tag 'default'
